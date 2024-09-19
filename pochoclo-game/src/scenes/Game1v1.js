@@ -36,6 +36,7 @@ export class Game1v1 extends Scene {
         barra = false;
       } else {
         this.scene.stop("battleScene", {});
+        this.scene.stop("Hud", {});
         barra = true;
       }
     });

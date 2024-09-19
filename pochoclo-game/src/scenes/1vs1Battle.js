@@ -1,6 +1,7 @@
 import { Scene } from "phaser";
 import { Particles } from "../entitities/particles";
 import { MoveBar } from "../entitities/movebar";
+import { PopCorn } from "../entitities/popcorn";
 // scenes/BattleScene.js
 export class BattleScene extends Scene {
   constructor() {
@@ -9,14 +10,14 @@ export class BattleScene extends Scene {
 
   points1 = 0; // Puntos para el jugador 1
   points2 = 0; // Puntos para el jugador 2
-  game_over_timeout = 30; // Tiempo inicial en segundos
+  game_over_timeout; // Tiempo inicial en segundos
   timer_event;
 
   init(data) {
     // Reset points
     this.points1 = data.points1 || 0; // Puntaje inicial jugador 1
     this.points2 = data.points2 || 0; // Puntaje inicial jugador 2
-    this.game_over_timeout = 30; // Tiempo límite de 30 segundos
+    this.game_over_timeout = 10; // Tiempo límite de 30 segundos
 
     // Lanzar la escena del HUD, pasando el tiempo y los puntajes iniciales
     this.scene.launch("Hud", {
@@ -27,7 +28,7 @@ export class BattleScene extends Scene {
 
     // Temporizador
     this.timer_event = this.time.addEvent({
-      delay: 1000,  // Ejecutar cada segundo
+      delay: 1000, // Ejecutar cada segundo
       loop: true,
       callback: () => {
         this.game_over_timeout--;
@@ -37,77 +38,45 @@ export class BattleScene extends Scene {
 
         // Comprobar si el tiempo ha terminado
         if (this.game_over_timeout <= 0) {
-          this.scene.stop("Hud");
-          this.scene.start("GameOver");  // Cambia a la escena GameOver
+          this.scene.get("Hud").update_cameras();
+
+          setTimeout(() => {
+            this.scene.stop("Hud");
+            this.scene.start("GameOver"); // Cambia a la escena GameOver
+          }, 980);
         }
       },
     });
   }
 
   create() {
-    let barHeigth = 95;
     let width = this.game.config.width;
     let height = this.game.config.height;
-
-    // create animations Personaje
-    this.anims.create({
-      key: "appear",
-      frames: this.anims.generateFrameNumbers("pochoclo-anims", {
-        start: 0,
-        end: 7,
-      }),
-      frameRate: 10,
-    });
 
     // Crear la barra principal
     let barraX = width / 2; // Posición Barra en X
     let barraY = (height * 4.3) / 5; // Posición de alto en las barras Y
-    this.mainBar = this.add.rectangle(barraX, barraY, 840, barHeigth, 0x272736);
+    this.mainBar = this.add.rectangle(barraX, barraY, 840, 95, 0x272736);
 
-    const myColors = [0x5f574f, 0xfff1e8, 0x121213, 0x3ca370, 0xffe478]; // 0 GRIS , 1 BLANCO, 2 NEGRO , 3 VERDE, 4 AMARILLO
-    let color1 = true;
     let border = 30.2;
 
     // Array para almacenar los recolectables
     this.collectibles = [];
-    // Variable para almacenar el recolectable en colisión
-    this.collidingCollectible = null;
 
     for (let i = 0; i < 28; i++) {
       let keysX = width / 4.6 + i * border;
-      let keysY = barraY;
-      let rect;
-
-      if (color1) {
-        // Fondo
-        rect = this.add.rectangle(keysX, keysY, border, barHeigth, myColors[0]); // Barra color
-        color1 = false;
-      } else {
-        rect = this.add.rectangle(keysX, keysY, border, barHeigth, myColors[0]); // Barra color
-        color1 = true;
-      }
+      let barraY = (height * 4.3) / 5;
 
       // Crear el rectángulo pequeño en medio de la barra principal
-      let collectibleRect = this.physics.add
-        .sprite(
-          keysX, // Posición en X centrada
-          barraY - 30, // Misma posición Y que la barra principal
-          "pochoclo"
-        )
-        .setScale(0.68);
+      let collectibleSprite = new PopCorn(
+        this,
+        keysX,
+        barraY - 30,
+        "pochoclo"
+      );
 
       // Añadir el recolectable al array
-      this.collectibles.push(collectibleRect);
-
-      collectibleRect.anims.play("appear", true);
-
-      // Cuando la animación termine, cambiar la textura a una imagen estática
-      collectibleRect.on("animationcomplete", () => {
-        collectibleRect.setTexture("pochoclo"); // Cambiar a la imagen estática
-      });
-
-      collectibleRect.setImmovable(true);
-      collectibleRect.body.allowGravity = false;
+      this.collectibles.push(collectibleSprite);
     }
 
     // Crear barras móviles usando la clase MoveBar
@@ -146,7 +115,7 @@ export class BattleScene extends Scene {
     // Añadir detección de colisión para recolectables
     this.physics.add.overlap(
       this.movingBar1.bar,
-      this.collectibles,
+      this.collectibles.map((c) => c.collectable),
       this.collectItem,
       null,
       this
@@ -154,7 +123,7 @@ export class BattleScene extends Scene {
 
     this.physics.add.overlap(
       this.movingBar2.bar,
-      this.collectibles,
+      this.collectibles.map((c) => c.collectable),
       this.collectItem,
       null,
       this
@@ -212,8 +181,8 @@ export class BattleScene extends Scene {
         let width = this.game.config.width;
         // Incrementar puntaje según la barra que lo recolecta
         if (movingBar === this.movingBar1.bar) {
-          this.points1++;  // Incrementar el puntaje del jugador 1
-          this.scene.get("Hud").update_points(1, this.points1);  // Actualizar el HUD
+          this.points1++; // Incrementar el puntaje del jugador 1
+          this.scene.get("Hud").update_points(1, this.points1); // Actualizar el HUD
 
           // Crear partículas que se mueven hacia el punto (10, 10)
           new Particles(
@@ -225,8 +194,8 @@ export class BattleScene extends Scene {
             true
           );
         } else if (movingBar === this.movingBar2.bar) {
-          this.points2++;  // Incrementar el puntaje del jugador 2
-          this.scene.get("Hud").update_points(2, this.points2);  // Actualizar el HUD
+          this.points2++; // Incrementar el puntaje del jugador 2
+          this.scene.get("Hud").update_points(2, this.points2); // Actualizar el HUD
 
           // Crear partículas que se mueven hacia el punto (10, 10)
           new Particles(

@@ -20,9 +20,10 @@ export class GameOver extends Scene
         }).setOrigin(0.5);
 
         this.input.once('pointerdown', () => {
-
-            this.scene.start('MainMenu');
-
+            this.scene.stop('Game1vs1');
+            this.scene.stop('GameCo-Op');
+            this.scene.stop('Hud');
+            this.scene.start('Boot');
         });
     }
 }

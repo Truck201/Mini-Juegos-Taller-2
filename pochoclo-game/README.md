@@ -47,6 +47,8 @@ ROJO ff004d
 AZUL 29adff
 
 
+const myColors = [0x5f574f, 0xfff1e8, 0x121213, 0x3ca370, 0xffe478]; // 0 GRIS , 1 BLANCO, 2 NEGRO , 3 VERDE, 4 AMARILLO
+
 ITEMS TAMAÑO X FRAME 
 pororo
 w: 48

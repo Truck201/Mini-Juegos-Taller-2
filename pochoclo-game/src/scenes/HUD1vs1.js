@@ -57,4 +57,8 @@ export class Hud extends Scene {
       console.warn("remaining_time_text is not defined yet.");
     }
   }
+
+  update_cameras() {
+    this.cameras.main.fadeOut(980, 0, 0, 0);
+  }
 }
