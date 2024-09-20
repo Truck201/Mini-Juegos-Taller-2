@@ -19,17 +19,26 @@ export class Preloader extends Scene {
 
   preload() {
     //this.load.image('logo', 'logo.png');
+
     //  Main Menu
     // LOGO
     this.load.image("logo", "../public/assets/menu/logo.png");
+
     //  Game
     //  Personajes
-    this.load.image("mimbo", "../public/assets/mimbo/mimbo.png");
-    this.load.image("luho", "../public/assets/luho/luho.png");
-
+    this.load.image("mimbo", "../public/assets/mimbo/mimbo.png"); // Neutral
+    this.load.image("luho", "../public/assets/luho/luho.png");  // Neutral
+    //   Emociones
+    this.load.image("logo", "../public/assets/menu/logo.png"); // Victoria
+    this.load.image("logo", "../public/assets/menu/logo.png"); // Derrota
+    this.load.image("logo", "../public/assets/menu/logo.png"); // Daño
+    
+    this.load.image("logo", "../public/assets/menu/logo.png"); // Victoria
+    this.load.image("logo", "../public/assets/menu/logo.png"); // Derrota
+    this.load.image("logo", "../public/assets/menu/logo.png"); // Daño
     //   Pochoclos
     this.load.image("pochoclo", "../public/assets/barra/static-pororo.png");
-
+    //   Anims
     this.load.spritesheet(
       "pochoclo-anims",
       "../public/assets/anims/plop-pororo.png",
@@ -38,7 +47,6 @@ export class Preloader extends Scene {
         frameHeight: 114,
       }
     );
-
     //   Opacidad
     this.load.image("l-opacidad", "../public/assets/opacidad.png");
 

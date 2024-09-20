@@ -50,8 +50,8 @@ export class BattleScene extends Scene {
   }
 
   create() {
-    let width = this.game.config.width;
-    let height = this.game.config.height;
+    let width = this.game.scale.width;
+    let height = this.game.scale.height;
 
     // Crear la barra principal
     let barraX = width / 2; // Posición Barra en X

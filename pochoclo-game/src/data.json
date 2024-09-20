@@ -1,0 +1,27 @@
+{
+    "dialogue": {
+        "Kid Korn": [],
+        "Luho": [],
+        "Mimbo": [],
+        "Televison": []
+    },
+    "powerUps": {
+        "type": [
+            "speed",
+            "strength",
+            "shield",
+            "health"
+        ],
+        "duration": [
+            10,
+            20,
+            30
+        ],
+        "rarity": [
+            "common",
+            "rare",
+            "epic",
+            "legendary"
+        ]
+    }
+}

@@ -24,9 +24,11 @@ export class PauseMenu extends Scene {
         })
         .setInteractive()
         .on("pointerdown", () => {
-          this.scene.stop("PauseMenu");
+          this.mainScene.scene.stop("battleScene");
+          this.mainScene.scene.stop("Hud");
           this.mainScene.scene.stop();
-          this.scene.start("MainMenu");
+          this.mainScene.scene.start("MainMenu");
+          this.scene.stop();
         });
   
       mainMenuButton.on("pointerover", () => {
