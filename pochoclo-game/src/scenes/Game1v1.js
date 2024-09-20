@@ -44,10 +44,10 @@ export class Game1v1 extends Scene {
     });
 
     // Añadir Cuadro de Personaje Uno
-    let personaje1 = new Character(this, "mimbo", true);
+    let personaje1 = new Character(this, "mimbo", true, false);
 
     // Añadir Cuadro de Personaje Uno
-    let personaje2 = new Character(this, "luho", false);
+    let personaje2 = new Character(this, "luho", false, false);
 
     // Posición
     let teleY = height / 2 - 60;

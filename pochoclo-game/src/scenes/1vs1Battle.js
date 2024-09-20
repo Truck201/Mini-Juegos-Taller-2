@@ -1,6 +1,7 @@
 import { Scene } from "phaser";
 import { Particles } from "../entitities/particles";
 import { MoveBar } from "../entitities/movebar";
+import { Character } from "../entitities/character";
 import { PopCorn } from "../entitities/popcorn";
 // scenes/BattleScene.js
 export class BattleScene extends Scene {
@@ -12,6 +13,12 @@ export class BattleScene extends Scene {
   points2 = 0; // Puntos para el jugador 2
   game_over_timeout; // Tiempo inicial en segundos
   timer_event;
+
+  comboCount1 = 0; // Contador de combo para el jugador 1
+  comboCount2 = 0; // Contador de combo para el jugador 2
+  comboTimer1; // Temporizador de combo para el jugador 1
+  comboTimer2; // Temporizador de combo para el jugador 2
+  comboDuration = 3000; // Duración del combo (3 segundos)
 
   init(data) {
     // Reset points
@@ -52,6 +59,11 @@ export class BattleScene extends Scene {
   create() {
     let width = this.game.scale.width;
     let height = this.game.scale.height;
+
+    // Crear instancias de Character
+    this.player1 = new Character(this, 'mimbo', true, true) // Jugador 1
+    this.player2 = new Character(this, 'luho', false, true) // Jugador 2
+
 
     // Crear la barra principal
     let barraX = width / 2; // Posición Barra en X
@@ -184,6 +196,8 @@ export class BattleScene extends Scene {
           this.points1++; // Incrementar el puntaje del jugador 1
           this.scene.get("Hud").update_points(1, this.points1); // Actualizar el HUD
 
+          this.player1.handleCombo(1);
+
           // Crear partículas que se mueven hacia el punto (10, 10)
           new Particles(
             this,
@@ -193,9 +207,12 @@ export class BattleScene extends Scene {
             200,
             true
           );
+          // Agregar función de Emoción
         } else if (movingBar === this.movingBar2.bar) {
           this.points2++; // Incrementar el puntaje del jugador 2
           this.scene.get("Hud").update_points(2, this.points2); // Actualizar el HUD
+
+          this.player1.handleCombo(2);
 
           // Crear partículas que se mueven hacia el punto (10, 10)
           new Particles(
@@ -206,6 +223,7 @@ export class BattleScene extends Scene {
             200,
             false
           );
+          // Agregar función de Emoción
         }
       }
     }
