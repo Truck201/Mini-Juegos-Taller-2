@@ -3,6 +3,7 @@ import { Particles } from "../entitities/particles";
 import { MoveBar } from "../entitities/movebar";
 import { Character } from "../entitities/character";
 import { PopCorn } from "../entitities/popcorn";
+import { Television } from "../entitities/television";
 // scenes/BattleScene.js
 export class BattleScene extends Scene {
   constructor() {
@@ -60,17 +61,18 @@ export class BattleScene extends Scene {
     let width = this.game.scale.width;
     let height = this.game.scale.height;
 
-    // Crear instancias de Character
-    this.player1 = new Character(this, 'mimbo', true, true) // Jugador 1
-    this.player2 = new Character(this, 'luho', false, true) // Jugador 2
+    this.television = new Television(this);
 
+    // Crear instancias de Character
+    this.player1 = new Character(this, "mimbo", true, true); // Jugador 1
+    this.player2 = new Character(this, "luho", false, true); // Jugador 2
 
     // Crear la barra principal
     let barraX = width / 2; // Posición Barra en X
     let barraY = (height * 4.3) / 5; // Posición de alto en las barras Y
     this.mainBar = this.add.rectangle(barraX, barraY, 840, 95, 0x272736);
-    this.imagenBar = this.add.sprite(barraX, barraY, "imagen-barra")
-    this.imagenBar.setScale(0.685)
+    this.imagenBar = this.add.sprite(barraX, barraY, "imagen-barra");
+    this.imagenBar.setScale(0.685);
 
     let border = 30.2;
 
@@ -82,12 +84,7 @@ export class BattleScene extends Scene {
       let barraY = (height * 4.3) / 5;
 
       // Crear el rectángulo pequeño en medio de la barra principal
-      let collectibleSprite = new PopCorn(
-        this,
-        keysX,
-        barraY - 30,
-        "pochoclo"
-      );
+      let collectibleSprite = new PopCorn(this, keysX, barraY - 30, "pochoclo");
 
       // Añadir el recolectable al array
       this.collectibles.push(collectibleSprite);
@@ -150,6 +147,10 @@ export class BattleScene extends Scene {
     this.enterKey = this.input.keyboard.addKey(
       Phaser.Input.Keyboard.KeyCodes.ENTER
     ); // Jugador 2
+
+    // Resetear combos al iniciar la escena
+    this.player1.resetCombo();
+    this.player2.resetCombo();
   }
 
   update() {
@@ -165,6 +166,9 @@ export class BattleScene extends Scene {
     if (Phaser.Input.Keyboard.JustDown(this.enterKey)) {
       this.collectItem(this.movingBar2.bar);
     }
+
+    // Actualizar el texto de la televisión según el tiempo restante
+    this.television.updateText(this.game_over_timeout);
   }
 
   update_points(points) {
