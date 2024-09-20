@@ -23,7 +23,7 @@ export class MoveBar {
     this.mainBar = mainBar;
 
     // Crear la barra
-    this.bar = scene.add.rectangle(x, y, width, height, color);
+    this.bar = scene.add.rectangle(x, y, width, height, color) 
 
     // Añadir teclas de control
     this.keyLeft = scene.input.keyboard.addKey(controls.left);

@@ -69,6 +69,8 @@ export class BattleScene extends Scene {
     let barraX = width / 2; // Posición Barra en X
     let barraY = (height * 4.3) / 5; // Posición de alto en las barras Y
     this.mainBar = this.add.rectangle(barraX, barraY, 840, 95, 0x272736);
+    this.imagenBar = this.add.sprite(barraX, barraY, "imagen-barra")
+    this.imagenBar.setScale(0.685)
 
     let border = 30.2;
 
