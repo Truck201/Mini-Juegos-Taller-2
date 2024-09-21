@@ -1,8 +1,8 @@
-import { Scene } from "phaser";
+import { Scene } from 'phaser';
 
 export class MainMenu extends Scene {
   constructor() {
-    super("MainMenu");
+    super('MainMenu');
     this.movingIcon = null;
     this.allicons = null;
   }
@@ -17,34 +17,34 @@ export class MainMenu extends Scene {
 
     //Title
     this.background = this.add
-      .sprite(width / 2, height / 2, "l-opacidad")
+      .sprite(width / 2, height / 2, 'l-opacidad')
       .setScale(2);
 
     //Button
-    miImagen = this.add.text(100, 240, "Play", {
-      fontSize: "33px",
-      fill: "#fff",
+    miImagen = this.add.text(100, 240, 'Play', {
+      fontSize: '33px',
+      fill: '#fff',
     });
-    //this.add.image(width / 2, height / 2, "").setScale(0.15);
+    //this.add.image(width / 2, height / 2, '').setScale(0.15);
     miImagen.setInteractive();
 
     //Button Animations Hover, Down, Out
-    miImagen.on("pointerover", () => {
+    miImagen.on('pointerover', () => {
       // Cambia el tamaño de la imagen al pasar el mouse
       miImagen.setScale(1.1);
-      console.log("on");
+      console.log('on');
     });
 
-    miImagen.on("pointerout", () => {
+    miImagen.on('pointerout', () => {
       // Cambia el tamaño de la imagen al pasar el mouse
       miImagen.setScale(1);
-      console.log("off");
+      console.log('off');
     });
 
-    miImagen.on("pointerdown", () => {
+    miImagen.on('pointerdown', () => {
       miImagen.setScale(1.2); // Vuelve al tamaño original
-      console.log("active");
-      // this.add.image(width / 2, height / 2, "").setScale(0.37); //Explosión
+      console.log('active');
+      // this.add.image(width / 2, height / 2, '').setScale(0.37); //Explosión
       this.time.addEvent({
         delay: 900, // demora 1 segundo en iniciar
         loop: true,
@@ -63,35 +63,35 @@ export class MainMenu extends Scene {
     });
 
     // Detectar movimiento del mouse
-    this.input.on("pointermove", () => {
+    this.input.on('pointermove', () => {
       this.resetInactivityTimer();
     });
 
     let options; // Botón de opciones
 
     //Button
-    options = this.add.text(100, 310, "Options", {
-      fontSize: "27px",
-      fill: "#fff",
+    options = this.add.text(100, 310, 'Options', {
+      fontSize: '27px',
+      fill: '#fff',
     });
-    //this.add.image(width / 2, height / 2, "").setScale(0.15);
+    //this.add.image(width / 2, height / 2, '').setScale(0.15);
     options.setInteractive();
 
     //Button Animations Hover, Down, Out
-    options.on("pointerover", () => {
+    options.on('pointerover', () => {
       // Cambia el tamaño de la imagen al pasar el mouse
       options.setScale(1.1);
     });
 
-    options.on("pointerout", () => {
+    options.on('pointerout', () => {
       // Cambia el tamaño de la imagen al pasar el mouse
       options.setScale(1);
     });
 
-    options.on("pointerdown", () => {
+    options.on('pointerdown', () => {
       options.setScale(0.9); // Vuelve al tamaño original
-      console.log("active");
-      // this.add.image(width / 2, height / 2, "").setScale(0.37); //Explosión
+      console.log('active');
+      // this.add.image(width / 2, height / 2, '').setScale(0.37); //Explosión
       this.time.addEvent({
         delay: 300, // demora 1 segundo en iniciar
         loop: true,
@@ -131,7 +131,7 @@ export class MainMenu extends Scene {
       .image(
         Phaser.Math.Between(0, width), // Posición inicial X aleatoria
         Phaser.Math.Between(0, height), // Posición inicial Y aleatoria
-        "logo"
+        'logo'
       )
       .setScale(0.5);
 
@@ -143,7 +143,7 @@ export class MainMenu extends Scene {
       duration: Phaser.Math.Between(2000, 6000), // Duración aleatoria del movimiento
       repeat: -1,
       yoyo: true,
-      ease: "Sine.easeInOut", // Movimiento más suave
+      ease: 'Sine.easeInOut', // Movimiento más suave
     });
 
     // Guardar el ícono en el array
@@ -154,7 +154,7 @@ export class MainMenu extends Scene {
   }
 
   toOptionsScene() {
-    this.scene.start("opcionesScene"); //Ir a escena Opciones
+    this.scene.start('opcionesScene'); //Ir a escena Opciones
   }
 
   transitionToNextScene() {
@@ -163,7 +163,7 @@ export class MainMenu extends Scene {
 
     // Esperar un poco antes de iniciar la siguiente escena
     this.time.delayedCall(1500, () => {
-      this.scene.start("Game1vs1"); //Ir a escena Main
+      this.scene.start('Game1vs1'); //Ir a escena Main
     });
   }
 }

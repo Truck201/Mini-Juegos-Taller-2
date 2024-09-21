@@ -55,6 +55,7 @@ export class Preloader extends Scene {
     this.load.image('l-opacidad', '../public/assets/opacidad.png');
 
     //  Tienda
+    this.load.image('background', '../public/assets/tienda/background.png')
     this.load.spritesheet(
       'pororo-tienda',
       '../public/assets/tienda/idle-pororo.png',

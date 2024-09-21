@@ -25,7 +25,7 @@ export class BattleScene extends Scene {
     // Reset points
     this.points1 = data.points1 || 0; // Puntaje inicial jugador 1
     this.points2 = data.points2 || 0; // Puntaje inicial jugador 2
-    this.game_over_timeout = 10; // Tiempo límite de 30 segundos
+    this.game_over_timeout = 5; // Tiempo límite de 30 segundos
 
     // Lanzar la escena del HUD, pasando el tiempo y los puntajes iniciales
     this.scene.launch("Hud", {
@@ -50,7 +50,9 @@ export class BattleScene extends Scene {
 
           setTimeout(() => {
             this.scene.stop("Hud");
-            this.scene.start("GameOver"); // Cambia a la escena GameOver
+            this.scene.stop("Game1vs1");
+            this.scene.stop("battleScene");
+            this.scene.start("Shop"); // Cambia a la escena Shop
           }, 980);
         }
       },

@@ -7,6 +7,7 @@ import { MainMenu } from './scenes/MainMenu';
 import { MenuOpciones } from './scenes/MenuOpciones';
 import { PauseMenu }  from './scenes/PauseMenu';
 import { Preloader } from './scenes/Preloader';
+import { Shop } from './scenes/Shop';
 
 //  Find out more information about the Game Config at:
 //  https://newdocs.phaser.io/docs/3.70.0/Phaser.Types.Core.GameConfig
@@ -38,6 +39,7 @@ const config = {
         BattleScene,
         MenuOpciones,
         Hud,
+        Shop
     ]
 };
 
