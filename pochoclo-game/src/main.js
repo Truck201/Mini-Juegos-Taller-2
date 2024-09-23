@@ -3,6 +3,7 @@ import { Boot } from './scenes/Boot';
 import { Game1v1 } from './scenes/Game1v1';
 import { GameOver } from './scenes/GameOver';
 import { Hud } from './scenes/HUD1vs1';
+import { HudShop } from './scenes/HudShop';
 import { MainMenu } from './scenes/MainMenu';
 import { MenuOpciones } from './scenes/MenuOpciones';
 import { PauseMenu }  from './scenes/PauseMenu';
@@ -39,7 +40,8 @@ const config = {
         BattleScene,
         MenuOpciones,
         Hud,
-        Shop
+        Shop,
+        HudShop,
     ]
 };
 

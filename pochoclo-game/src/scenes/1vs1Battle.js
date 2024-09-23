@@ -52,7 +52,7 @@ export class BattleScene extends Scene {
             this.scene.stop("Hud");
             this.scene.stop("Game1vs1");
             this.scene.stop("battleScene");
-            this.scene.start("Shop"); // Cambia a la escena Shop
+            this.scene.start("Shop", { points1: this.points1, points2: this.points2 }); // Cambia a la escena Shop
           }, 980);
         }
       },

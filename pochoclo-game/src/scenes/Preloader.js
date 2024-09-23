@@ -60,8 +60,8 @@ export class Preloader extends Scene {
       'pororo-tienda',
       '../public/assets/tienda/idle-pororo.png',
       {
-        frameWidth: 48,
-        frameHeight: 51,
+        frameWidth: 60,
+        frameHeight: 67,
       }
     );
 
@@ -75,7 +75,7 @@ export class Preloader extends Scene {
     );
 
     this.load.spritesheet('pizza', '../public/assets/tienda/zapi.png', {
-      frameWidth: 72,
+      frameWidth: 59,
       frameHeight: 69,
     });
 

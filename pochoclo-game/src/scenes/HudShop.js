@@ -1,19 +1,19 @@
 import { Scene } from 'phaser';
 
 // The HUD scene is the scene that shows the points and the remaining time.
-export class Hud extends Scene {
+export class HudShop extends Scene {
   remaining_time = 0;
 
   remaining_time_text;
   points_text;
 
   constructor() {
-    super('Hud');
+    super('hudShop');
   }
 
   init(data) {
     this.cameras.main.fadeIn(1400, 0, 0, 0);
-    this.remaining_time = data.remaining_time || 12;
+    this.remaining_time = data.remaining_time || 25;
     this.points1 = data.points1 || 0; // Puntaje inicial del jugador 1
     this.points2 = data.points2 || 0; // Puntaje inicial del jugador 2
   }
@@ -22,7 +22,7 @@ export class Hud extends Scene {
     this.points_text1 = this.add.text(
       (this.scale.width * 0.3) / 8,
       200,
-      `P1 SCORE: ${this.points1}`,
+      `P1 Points: ${this.points1}`,
       {
         fontSize: '24px',
         color: '#ffffff',
@@ -30,9 +30,9 @@ export class Hud extends Scene {
     );
 
     this.points_text2 = this.add.text(
-      (this.scale.width * 7) / 8,
+      (this.scale.width * 6.3) / 8,
       200,
-      `P2 SCORE: ${this.points2}`,
+      `P2 Points:: ${this.points2}`,
       {
         fontSize: '24px',
         color: '#ffffff',
@@ -52,9 +52,9 @@ export class Hud extends Scene {
 
   update_points(player, points) {
     if (player === 1) {
-      this.points_text1.setText(`P1 SCORE: ${points}`);
+      this.points_text1.setText(`P1 Points: ${points}`);
     } else if (player === 2) {
-      this.points_text2.setText(`P2 SCORE: ${points}`);
+      this.points_text2.setText(`P2 Points: ${points}`);
     }
   }
 
