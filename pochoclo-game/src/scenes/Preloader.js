@@ -60,8 +60,8 @@ export class Preloader extends Scene {
       'pororo-tienda',
       '../public/assets/tienda/idle-pororo.png',
       {
-        frameWidth: 60,
-        frameHeight: 67,
+        frameWidth: 65,
+        frameHeight: 64,
       }
     );
 
@@ -70,13 +70,13 @@ export class Preloader extends Scene {
       '../public/assets/tienda/caramelo-azul.png',
       {
         frameWidth: 60,
-        frameHeight: 72,
+        frameHeight: 70,
       }
     );
 
     this.load.spritesheet('pizza', '../public/assets/tienda/zapi.png', {
-      frameWidth: 59,
-      frameHeight: 69,
+      frameWidth: 60,
+      frameHeight: 68,
     });
 
     // Partículas

@@ -12,6 +12,9 @@ export class ItemsCase {
       0x272736
     );
 
+    // Inicializar animaciones
+    this.initAnimations();
+
     this.items = [];
     this.selectedItemsPlayer1 = [];
     this.selectedItemsPlayer2 = [];
@@ -19,6 +22,13 @@ export class ItemsCase {
     this.player2Position = { row: 0, col: 4 };
 
     this.createItems();
+
+    // Crear los cuadros que indican la posición de cada jugador
+    this.player1Indicator = this.scene.add.rectangle(0, 0, 75, 75);
+    this.player1Indicator.setStrokeStyle(4, 0xff0000); // Rojo para jugador 1
+
+    this.player2Indicator = this.scene.add.rectangle(0, 0, 75, 75);
+    this.player2Indicator.setStrokeStyle(4, 0x0000ff); // Azul para jugador 2
 
     // Teclas para cada jugador
     // Teclas para cada jugador
@@ -38,12 +48,13 @@ export class ItemsCase {
       select: Phaser.Input.Keyboard.KeyCodes.ENTER,
     });
 
-    // Inicializar animaciones
-    this.initAnimations();
-
     // Seleccionar los primeros cuadrados al inicio
     this.paintPlayerPosition(this.player1Position, 0xff0000, 0.3); // Jugador 1
     this.paintPlayerPosition(this.player2Position, 0x0000ff, 0.3); // Jugador 2
+
+    // Posicionar los indicadores sobre los ítems iniciales
+    this.updateIndicatorPosition(this.player1Indicator, this.player1Position);
+    this.updateIndicatorPosition(this.player2Indicator, this.player2Position);
 
     this.canSelect = true;
   }
@@ -53,9 +64,9 @@ export class ItemsCase {
       key: "pororo_idle",
       frames: this.scene.anims.generateFrameNumbers("pororo-tienda", {
         start: 0,
-        end: 7,
+        end: 5,
       }),
-      frameRate: 10,
+      frameRate: 4,
       repeat: -1, // La animación se repite indefinidamente
     });
 
@@ -63,9 +74,9 @@ export class ItemsCase {
       key: "caramelo_idle",
       frames: this.scene.anims.generateFrameNumbers("caramelo", {
         start: 0,
-        end: 7,
+        end: 5,
       }),
-      frameRate: 10,
+      frameRate: 4,
       repeat: -1,
     });
 
@@ -73,9 +84,9 @@ export class ItemsCase {
       key: "pizza_idle",
       frames: this.scene.anims.generateFrameNumbers("pizza", {
         start: 0,
-        end: 7,
+        end: 5,
       }),
-      frameRate: 10,
+      frameRate: 4,
       repeat: -1,
     });
   }
@@ -101,7 +112,7 @@ export class ItemsCase {
       "pizza",
     ];
 
-    const randomItems = Phaser.Utils.Array.Shuffle(avalibleItems).slice(0, 9);
+    const randomItems = Phaser.Utils.Array.Shuffle(avalibleItems).slice(0, 10);
 
     let index = 0;
     // Crear la cuadrícula de elementos
@@ -116,7 +127,7 @@ export class ItemsCase {
         item.setImmovable;
         item.body.allowGravity = false;
         item.setInteractive();
-        item.setScale(0.9);
+        item.setScale(0.91);
 
         item.isSelected = false; // Estado de selección
         item.selectedBy = null; // Jugador que lo seleccionó
@@ -127,10 +138,13 @@ export class ItemsCase {
         // Iniciar la animación dependiendo del tipo de ítem
         if (ItemType === "pororo-tienda") {
           item.play("pororo_idle");
+          console.log("hola");
         } else if (ItemType === "caramelo") {
           item.play("caramelo_idle");
+          console.log("hola");
         } else if (ItemType === "pizza") {
           item.play("pizza_idle");
+          console.log("hola");
         }
 
         index++;
@@ -153,6 +167,10 @@ export class ItemsCase {
       0x0000ff
     ); // Azul para jugador 2
 
+    // Actualizar la posición del indicador de cada jugador
+    this.updateIndicatorPosition(this.player1Indicator, this.player1Position);
+    this.updateIndicatorPosition(this.player2Indicator, this.player2Position);
+
     // Lógica de selección de jugadores
     this.handleSelection(
       1,
@@ -166,6 +184,18 @@ export class ItemsCase {
       this.player2Keys,
       0x0000ff
     ); // Jugador 2 azul
+  }
+
+  // Mover el indicador a la posición correcta
+  updateIndicatorPosition(indicator, playerPosition) {
+    const item = this.items.find(
+      (item) =>
+        item.row === playerPosition.row && item.col === playerPosition.col
+    );
+
+    if (item) {
+      indicator.setPosition(item.x, item.y); // Posicionar el cuadro sobre el ítem
+    }
   }
 
   handlePlayerMovement(player, playerPosition, keys, color) {
@@ -187,7 +217,7 @@ export class ItemsCase {
 
     // Pintar la nueva posición del jugador
     this.paintPlayerPosition(prevPosition, 0xffffff); // Limpia la posición anterior
-    this.paintPlayerPosition(playerPosition, color, 0.3); // Actualiza la nueva posición
+    this.paintPlayerPosition(playerPosition, color, 0.2); // Actualiza la nueva posición
   }
 
   handleSelection(player, selectedItems, keys, color) {
@@ -215,12 +245,21 @@ export class ItemsCase {
           this.returnPoints(player);
         }
       } else if (!item.isSelected && selectedItems.length < 3) {
-        this.purchaseItem(player);
-        item.setTint(0x555555);
-        item.setAlpha(0.5);
-        item.isSelected = true;
-        item.selectedBy = player;
-        selectedItems.push(item);
+        if (player === 1 && this.scene.points1 >= 5) {
+          this.purchaseItem(player);
+          item.setTint(0xff0000);
+          item.setAlpha(0.5);
+          item.isSelected = true;
+          item.selectedBy = player;
+          selectedItems.push(item);
+        } else if (player === 2 && this.scene.points2 >= 5) {
+          this.purchaseItem(player);
+          item.setTint(0x0000ff);
+          item.setAlpha(0.5);
+          item.isSelected = true;
+          item.selectedBy = player;
+          selectedItems.push(item);
+        }
       }
     }
   }
