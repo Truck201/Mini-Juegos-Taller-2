@@ -4,10 +4,10 @@ import { MoveBar } from "../entitities/movebar";
 import { Character } from "../entitities/character";
 import { PopCorn } from "../entitities/popcorn";
 import { Television } from "../entitities/television";
-// scenes/BattleScene.js
-export class BattleScene extends Scene {
+
+export class RecolectScene extends Scene {
   constructor() {
-    super("battleScene");
+    super("recolectScene");
   }
 
   points1 = 0; // Puntos para el jugador 1
@@ -51,7 +51,7 @@ export class BattleScene extends Scene {
           setTimeout(() => {
             this.scene.stop("Hud");
             this.scene.stop("Game1vs1");
-            this.scene.stop("battleScene");
+            this.scene.stop("recolectScene");
             this.scene.start("Shop", { points1: this.points1, points2: this.points2 }); // Cambia a la escena Shop
           }, 980);
         }

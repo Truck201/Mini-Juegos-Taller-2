@@ -24,7 +24,7 @@ export class PauseMenu extends Scene {
         })
         .setInteractive()
         .on('pointerdown', () => {
-          this.mainScene.scene.stop('battleScene');
+          this.mainScene.scene.stop('recolectScene');
           this.mainScene.scene.stop('Hud');
           this.mainScene.scene.stop();
           this.mainScene.scene.start('MainMenu');
@@ -52,7 +52,7 @@ export class PauseMenu extends Scene {
         if (currentTime - this.lastKeyPressTime > 250) {
           this.lastKeyPressTime = currentTime;
           this.mainScene.scene.resume();
-          this.scene.resume('battleScene')
+          this.scene.resume('recolectScene')
           this.scene.stop('PauseMenu');
           console.log('Reanude Game');
         }

@@ -1,4 +1,4 @@
-import  { BattleScene }  from './scenes/1vs1Battle';
+import  { RecolectScene }  from './scenes/RecolectScene';
 import { Boot } from './scenes/Boot';
 import { Game1v1 } from './scenes/Game1v1';
 import { GameOver } from './scenes/GameOver';
@@ -37,7 +37,7 @@ const config = {
         Game1v1,
         GameOver,
         PauseMenu,
-        BattleScene,
+        RecolectScene,
         MenuOpciones,
         Hud,
         Shop,

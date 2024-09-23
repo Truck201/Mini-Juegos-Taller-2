@@ -23,7 +23,7 @@ export class Game1v1 extends Scene {
       if (currentTime - this.lastKeyPressTime > 250) {
         // 700 ms de delay
         this.lastKeyPressTime = currentTime;
-        this.scene.pause("battleScene");
+        this.scene.pause("recolectScene");
         this.scene.pause("Game1vs1");
         console.log("Pause Game");
         this.scene.launch("PauseMenu", { mainScene: this });
@@ -34,10 +34,23 @@ export class Game1v1 extends Scene {
       console.log("Start Battle");
       // Atacar
       if (barra) {
-        this.scene.launch("battleScene", {});
+        this.scene.launch("recolectScene", {});
         barra = false;
       } else {
-        this.scene.stop("battleScene", {});
+        this.scene.stop("recolectScene", {});
+        this.scene.stop("Hud", {});
+        barra = true;
+      }
+    });
+
+    this.input.keyboard.on("keydown-T", () => {
+      console.log("Start Battle");
+      // Atacar
+      if (barra) {
+        this.scene.launch("recolectScene", {});
+        barra = false;
+      } else {
+        this.scene.stop("recolectScene", {});
         this.scene.stop("Hud", {});
         barra = true;
       }
