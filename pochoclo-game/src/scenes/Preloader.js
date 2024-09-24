@@ -28,6 +28,13 @@ export class Preloader extends Scene {
     //  Personajes
     this.load.image('mimbo', '../public/assets/mimbo/mimbo.png'); // Neutral
     this.load.image('luho', '../public/assets/luho/luho.png');  // Neutral
+
+    // Kid Korn
+    this.load.image('kid-korn1', '../public/assets/barra/korn-defrente.png');
+    this.load.image('kid-korn2', '../public/assets/barra/korn-frente.png');
+    this.load.image('kid-kornFrente', '../public/assets/barra/korn-izq.png');
+    this.load.image('kid-kornFrente2', '../public/assets/barra/kron-derecha.png');
+
     //   Emociones
     this.load.image('logo', '../public/assets/menu/logo.png'); // Victoria
     this.load.image('logo', '../public/assets/menu/logo.png'); // Derrota
@@ -36,6 +43,7 @@ export class Preloader extends Scene {
     this.load.image('logo', '../public/assets/menu/logo.png'); // Victoria
     this.load.image('logo', '../public/assets/menu/logo.png'); // Derrota
     this.load.image('logo', '../public/assets/menu/logo.png'); // Daño
+
     //   Pochoclos
     this.load.image('pochoclo', '../public/assets/barra/static-pororo.png');
     //   Anims
@@ -49,7 +57,9 @@ export class Preloader extends Scene {
     );
 
     //   Main Barra Sprite
-    this.load.image('imagen-barra', '../public/assets/barra/sprite1.png');
+    this.load.image('imagen-barra', '../public/assets/barra/barra-1v1.png');
+    this.load.image('anilla-azul', '../public/assets/barra/barra-azul.png');
+    this.load.image('anilla-roja', '../public/assets/barra/barra-roja.png');
 
     //   Opacidad
     this.load.image('l-opacidad', '../public/assets/opacidad.png');

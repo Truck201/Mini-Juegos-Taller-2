@@ -13,53 +13,45 @@ export class Character {
       this.x = this.scene.game.config.width / 1.07;
     }
 
+    let character = this.scene.physics.add.sprite(
+      this.x,
+      this.y,
+      this.sprite
+    );
+
+    character.setImmovable;
+    character.body.allowGravity = false;
+
+    this.scene.add.text(this.x - 35, this.y + 70, this.sprite.toUpperCase(), {
+      fontSize: "16px",
+      fontFamily: "Arial Black, Gadget, sans-serif",
+      fill: "#ff004d", // ROJO
+      fontWeight: "bold",
+      padding: { x: 6, y: 3 },
+      backgroundColor: "#ffffff",
+      border: "60px solid #000000",
+    });
+
     if (this.condicion) {
-      
+      if (isPlayeyOne) {
+        this.statsBar = this.scene.add.rectangle(this.x + 180, this.y - 50, 200, 60, 0xbbbbbb); // left
+      } else {
+        this.statsBar = this.scene.add.rectangle(this.x - 180, this.y - 50, 200, 60, 0xbbbbbb); // right
+      }
     } else if (!this.condicion){
-      // Animations Sprites
-      this.scene.anims.create({
-        key: "idle",
-        frames: this.scene.anims.generateFrameNumbers("pochoclo-anims", {
-          start: 0,
-          end: 7,
-        }),
-        frameRate: 10,
-      });
+      this.comboText1 = this.scene.add.text(this.scene.scale.width *0.13, this.y +160, '', {
+        fontSize: "70px",
+        color: "#fff1e8",
+      }).setDepth(3).setVisible(false);
 
-      let character = this.scene.physics.add.sprite(
-        this.x,
-        this.y,
-        this.sprite
-      );
+      this.comboText2 = this.scene.add.text(this.scene.scale.width *0.8, this.y +160, '', {
+        fontSize: "70px",
+        color: "#fff1e8",
+      }).setDepth(3).setVisible(false);
 
-      character.setImmovable;
-      character.body.allowGravity = false;
-
-      this.scene.add.text(this.x - 35, this.y + 70, this.sprite.toUpperCase(), {
-        fontSize: "16px",
-        fontFamily: "Arial Black, Gadget, sans-serif",
-        fill: "#ff004d", // ROJO
-        fontWeight: "bold",
-        padding: { x: 6, y: 3 },
-        backgroundColor: "#ffffff",
-        border: "60px solid #000000",
-      });
-
+      this.scene.comboDuration = 3000
+      this.resetCombo();
     }
-
-    this.comboText1 = this.scene.add.text(this.scene.scale.width *0.13, this.y +160, '', {
-      fontSize: "70px",
-      color: "#fff1e8",
-    }).setDepth(3).setVisible(false);
-
-    this.comboText2 = this.scene.add.text(this.scene.scale.width *0.8, this.y +160, '', {
-      fontSize: "70px",
-      color: "#fff1e8",
-    }).setDepth(3).setVisible(false);
-
-    this.scene.comboDuration = 3000
-    
-    this.resetCombo();
   }
 
   // Añadir Estados, linkear a la función de Collectar pochoclos

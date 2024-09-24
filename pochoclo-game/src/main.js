@@ -10,6 +10,7 @@ import { PauseMenu }  from './scenes/PauseMenu';
 import { Preloader } from './scenes/Preloader';
 import { Shop } from './scenes/Shop';
 import { BattleScene } from './scenes/BattleScene';
+import { HudBattle } from './scenes/HudBattle';
 
 //  Find out more information about the Game Config at:
 //  https://newdocs.phaser.io/docs/3.70.0/Phaser.Types.Core.GameConfig
@@ -43,7 +44,8 @@ const config = {
         Hud,
         Shop,
         HudShop,
-        BattleScene
+        BattleScene,
+        HudBattle
     ]
 };
 

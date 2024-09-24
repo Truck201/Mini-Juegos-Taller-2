@@ -96,3 +96,29 @@ toggleOptions() {
   }
 
 
+Shake imagen 
+
+// Función para que el sprite tiemble y luego suba
+function shakeAndMoveUp(sprite, duration, targetY) {
+  // Tween para el temblor (shake)
+  this.tweens.add({
+    targets: sprite,
+    x: sprite.x + 5, // Movimiento horizontal (puedes ajustar la intensidad del temblor)
+    duration: 50, // Duración del temblor
+    ease: 'Power2',
+    yoyo: true, // Movimiento de ida y vuelta
+    repeat: 5, // Número de repeticiones del temblor
+    onComplete: () => {
+      // Una vez que el temblor se completa, se inicia el movimiento hacia arriba
+      this.tweens.add({
+        targets: sprite,
+        y: targetY, // La posición Y a la que el sprite debe subir
+        duration: duration, // Duración del movimiento ascendente
+        ease: 'Cubic.easeOut', // Puedes ajustar la facilidad de movimiento
+      });
+    }
+  });
+}
+
+// Llamar a la función para un sprite
+shakeAndMoveUp.call(this, mySprite, 1000, 100); // Subir el sprite a la posición Y = 100 en 1000ms

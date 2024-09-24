@@ -6,7 +6,7 @@ export class MoveBar {
     width,
     height,
     movingSpeed,
-    color,
+    sprite,
     controls,
     isMovingRight,
     mainBar
@@ -17,13 +17,14 @@ export class MoveBar {
     this.width = width;
     this.height = height;
     this.movingSpeed = movingSpeed;
-    this.color = color;
+    this.sprite = sprite;
     this.controls = controls;
     this.isMovingRight = isMovingRight; // Estado de movimiento
     this.mainBar = mainBar;
 
     // Crear la barra
-    this.bar = scene.add.rectangle(x, y, width, height, color) 
+    this.bar = scene.add.sprite(x, y, sprite);
+    this.bar.setScale(0.7);
 
     // Añadir teclas de control
     this.keyLeft = scene.input.keyboard.addKey(controls.left);

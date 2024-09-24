@@ -5,12 +5,19 @@ export class ItemsCase {
     this.height = height;
 
     this.mainItemCase = this.scene.add.rectangle(
-      this.width / 2,
-      this.height / 2,
-      840,
-      500,
+      this.width / 2 - 35, // Posicion ancho
+      this.height / 1.21,
+      360, // Dimension Ancho
+      380,
       0x272736
     );
+
+    // Definición de atributos de los ítems
+    this.itemAttributes = {
+      candy: { speedBoost: 50 },
+      popcorn: { extraLife: 1 },
+      pizza: { evadeChance: 10 },
+    };
 
     // Inicializar animaciones
     this.initAnimations();
@@ -49,8 +56,8 @@ export class ItemsCase {
     });
 
     // Seleccionar los primeros cuadrados al inicio
-    this.paintPlayerPosition(this.player1Position, 0xff0000, 0.3); // Jugador 1
-    this.paintPlayerPosition(this.player2Position, 0x0000ff, 0.3); // Jugador 2
+    this.paintPlayerPosition(this.player1Position, 0xff0000, 0.3); // Jugador 1  0xff0000
+    this.paintPlayerPosition(this.player2Position, 0x0000ff, 0.3); // Jugador 2 0x0000ff
 
     // Posicionar los indicadores sobre los ítems iniciales
     this.updateIndicatorPosition(this.player1Indicator, this.player1Position);
@@ -94,9 +101,9 @@ export class ItemsCase {
   createItems() {
     const rows = 4;
     const cols = 5;
-    const itemSize = 80;
+    const itemSize = 70;
     const offsetX = this.width / 2 - (cols * itemSize) / 2;
-    const offsetY = this.height / 2 - (rows * itemSize) / 2;
+    const offsetY = this.height / 1.23 - (rows * itemSize) / 2;
 
     // Solo 9 items
     const avalibleItems = [
@@ -110,9 +117,19 @@ export class ItemsCase {
       "caramelo",
       "pizza",
       "pizza",
+      "pororo-tienda",
+      "caramelo",
+      "pizza",
+      "pororo-tienda",
+      "caramelo",
+      "pizza",
+      "pororo-tienda",
+      "caramelo",
+      "pizza",
+      "caramelo",
     ];
 
-    const randomItems = Phaser.Utils.Array.Shuffle(avalibleItems).slice(0, 10);
+    const randomItems = Phaser.Utils.Array.Shuffle(avalibleItems).slice(0, 20);
 
     let index = 0;
     // Crear la cuadrícula de elementos
@@ -127,7 +144,7 @@ export class ItemsCase {
         item.setImmovable;
         item.body.allowGravity = false;
         item.setInteractive();
-        item.setScale(0.91);
+        item.setScale(0.9);
 
         item.isSelected = false; // Estado de selección
         item.selectedBy = null; // Jugador que lo seleccionó
@@ -138,13 +155,10 @@ export class ItemsCase {
         // Iniciar la animación dependiendo del tipo de ítem
         if (ItemType === "pororo-tienda") {
           item.play("pororo_idle");
-          console.log("hola");
         } else if (ItemType === "caramelo") {
           item.play("caramelo_idle");
-          console.log("hola");
         } else if (ItemType === "pizza") {
           item.play("pizza_idle");
-          console.log("hola");
         }
 
         index++;
@@ -243,22 +257,28 @@ export class ItemsCase {
         if (index !== -1) {
           selectedItems.splice(index, 1);
           this.returnPoints(player);
+          this.removeItemAttributes(
+            player === 1 ? this.scene.player1 : this.scene.player2,
+            item.texture.key
+          );
         }
       } else if (!item.isSelected && selectedItems.length < 3) {
         if (player === 1 && this.scene.points1 >= 5) {
           this.purchaseItem(player);
-          item.setTint(0xff0000);
+          item.setTint(0x272736); //  0xff0000  Rojo
           item.setAlpha(0.5);
           item.isSelected = true;
           item.selectedBy = player;
           selectedItems.push(item);
+          this.applyItemAttributes(this.scene.player1, item.texture.key); // Asignar atributos al jugador 1
         } else if (player === 2 && this.scene.points2 >= 5) {
           this.purchaseItem(player);
-          item.setTint(0x0000ff);
+          item.setTint(0x272736); //  0x0000ff  Azul
           item.setAlpha(0.5);
           item.isSelected = true;
           item.selectedBy = player;
           selectedItems.push(item);
+          this.applyItemAttributes(this.scene.player2, item.texture.key); // Asignar atributos al jugador 2
         }
       }
     }
@@ -302,6 +322,36 @@ export class ItemsCase {
     } else if (player === 2) {
       this.scene.points2 += 5;
       hudScene.update_points(2, this.scene.points2);
+    }
+  }
+
+  applyItemAttributes(player, itemType) {
+    const attributes = this.itemAttributes[itemType];
+    if (attributes) {
+      if (attributes.speedBoost) {
+        player.speed += attributes.speedBoost;
+      }
+      if (attributes.extraLife) {
+        player.life += attributes.extraLife;
+      }
+      if (attributes.evadeChance) {
+        player.evadeChance += attributes.evadeChance;
+      }
+    }
+  }
+
+  removeItemAttributes(player, itemType) {
+    const attributes = this.itemAttributes[itemType];
+    if (attributes) {
+      if (attributes.speedBoost) {
+        player.speed -= attributes.speedBoost;
+      }
+      if (attributes.extraLife) {
+        player.life -= attributes.extraLife;
+      }
+      if (attributes.evadeChance) {
+        player.evadeChance -= attributes.evadeChance;
+      }
     }
   }
 }

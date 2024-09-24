@@ -53,7 +53,7 @@ export class RecolectScene extends Scene {
             this.scene.stop("Game1vs1");
             this.scene.stop("recolectScene");
             this.scene.start("Shop", { points1: this.points1, points2: this.points2 }); // Cambia a la escena Shop
-          }, 980);
+          }, 500);
         }
       },
     });
@@ -66,23 +66,22 @@ export class RecolectScene extends Scene {
     this.television = new Television(this);
 
     // Crear instancias de Character
-    this.player1 = new Character(this, "mimbo", true, true); // Jugador 1
-    this.player2 = new Character(this, "luho", false, true); // Jugador 2
+    this.player1 = new Character(this, "mimbo", true, false); // Jugador 1
+    this.player2 = new Character(this, "luho", false, false); // Jugador 2
 
     // Crear la barra principal
     let barraX = width / 2; // Posición Barra en X
     let barraY = (height * 4.3) / 5; // Posición de alto en las barras Y
-    this.mainBar = this.add.rectangle(barraX, barraY, 840, 95, 0x272736);
+    this.mainBar = this.add.rectangle(barraX, barraY, 1000, 95, 0x272736);
     this.imagenBar = this.add.sprite(barraX, barraY, "imagen-barra");
-    this.imagenBar.setScale(0.685);
 
-    let border = 30.2;
+    let border = 35;
 
     // Array para almacenar los recolectables
     this.collectibles = [];
 
     for (let i = 0; i < 28; i++) {
-      let keysX = width / 4.6 + i * border;
+      let keysX = width / 5.83 + i * border;
       let barraY = (height * 4.3) / 5;
 
       // Crear el rectángulo pequeño en medio de la barra principal
@@ -95,12 +94,12 @@ export class RecolectScene extends Scene {
     // Crear barras móviles usando la clase MoveBar
     this.movingBar1 = new MoveBar(
       this,
-      barraX - 432,
+      barraX - 500,
       barraY,
       20,
       105,
       3.4,
-      0xff004d,
+      'anilla-roja',
       {
         left: Phaser.Input.Keyboard.KeyCodes.A,
         right: Phaser.Input.Keyboard.KeyCodes.D,
@@ -109,14 +108,15 @@ export class RecolectScene extends Scene {
       this.mainBar
     );
 
+   
     this.movingBar2 = new MoveBar(
       this,
-      barraX + 432,
+      barraX + 500,
       barraY,
       20,
       105,
       3.4,
-      0x29adff,
+      'anilla-azul',
       {
         left: Phaser.Input.Keyboard.KeyCodes.LEFT,
         right: Phaser.Input.Keyboard.KeyCodes.RIGHT,
@@ -124,7 +124,7 @@ export class RecolectScene extends Scene {
       false,
       this.mainBar
     );
-
+    
     // Añadir detección de colisión para recolectables
     this.physics.add.overlap(
       this.movingBar1.bar,

@@ -49,6 +49,19 @@ export class Shop extends Scene {
 
   create() {
     this.itemsCase = new ItemsCase(this, this.scale.width, this.scale.height);
+
+    this.input.keyboard.on("keydown-ESC", () => {
+      const currentTime = this.time.now;
+      console.log("pres scape");
+      // Verificar si ha pasado suficiente tiempo desde la última pulsación
+      if (currentTime - this.lastKeyPressTime > 250) {
+        // 700 ms de delay
+        this.lastKeyPressTime = currentTime;
+        this.scene.pause("Shop");
+        console.log("Pause Game");
+        this.scene.launch("PauseMenu", { mainScene: this });
+      }
+    });
   }
 
   update() {
