@@ -4,6 +4,7 @@ import { ItemsCase } from "../entitities/itemscase";
 export class Shop extends Scene {
   game_over_timeout;
   timer_event;
+  purchasedItems = [];
 
   constructor() {
     super("Shop");
@@ -14,6 +15,7 @@ export class Shop extends Scene {
     this.points1 = data.points1 || 0; // Puntaje inicial jugador 1
     this.points2 = data.points2 || 0; // Puntaje inicial jugador 2
     this.game_over_timeout = 15;
+    this.lastKeyPressTime = 0;
 
     // Lanzar la escena del HUD, pasando el tiempo y los puntajes iniciales
     this.scene.launch("hudShop", {
@@ -37,8 +39,11 @@ export class Shop extends Scene {
           this.scene.get("hudShop").update_cameras();
 
           this.time.delayedCall(980, () => {
-            this.scene.stop("Game1vs1");
-            this.scene.start("Game1vs1");
+            this.scene.start("battleScene", {
+              points1: this.points1,
+              points2: this.points2,
+              purchasedItems: this.purchasedItems, // Pasar los ítems adquiridos
+            });
             this.scene.stop("hudShop");
             this.scene.stop("Shop");
           });
@@ -49,6 +54,20 @@ export class Shop extends Scene {
 
   create() {
     this.itemsCase = new ItemsCase(this, this.scale.width, this.scale.height);
+
+    // Asegúrate de que this.itemsCase existe y tiene el método onItemPurchased
+    if (
+      this.itemsCase &&
+      typeof this.itemsCase.onItemPurchased === "function"
+    ) {
+      this.itemsCase.onItemPurchased((item) => {
+        this.purchasedItems.push(item);
+      });
+    } else {
+      console.error(
+        "itemsCase no está definido o onItemPurchased no es una función"
+      );
+    }
 
     this.input.keyboard.on("keydown-ESC", () => {
       const currentTime = this.time.now;

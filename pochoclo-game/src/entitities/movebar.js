@@ -64,6 +64,10 @@ export class MoveBar {
     }
   }
 
+  setSpeed(newSpeed) {
+    this.movingSpeed = newSpeed; // Actualiza la velocidad
+  }
+
   // Método para obtener la barra
   getBounds() {
     return this.bar.getBounds();

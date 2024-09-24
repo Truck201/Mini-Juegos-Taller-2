@@ -1,13 +1,13 @@
 export class Character {
-  constructor(scene, sprite, isPlayeyOne, condicion) {
+  constructor(scene, sprite, isPlayerOne, condicion) {
     this.scene = scene;
     this.sprite = sprite;
-    this.isPlayeyOne = isPlayeyOne;
+    this.isPlayerOne = isPlayerOne;
     this.condicion = condicion;
 
     this.y = this.scene.scale.height / 7.5;
 
-    if (this.isPlayeyOne) {
+    if (this.isPlayerOne) {
       this.x = this.scene.game.config.width / 15;
     } else {
       this.x = this.scene.game.config.width / 1.07;
@@ -33,7 +33,7 @@ export class Character {
     });
 
     if (this.condicion) {
-      if (isPlayeyOne) {
+      if (isPlayerOne) {
         this.statsBar = this.scene.add.rectangle(this.x + 180, this.y - 50, 200, 60, 0xbbbbbb); // left
       } else {
         this.statsBar = this.scene.add.rectangle(this.x - 180, this.y - 50, 200, 60, 0xbbbbbb); // right

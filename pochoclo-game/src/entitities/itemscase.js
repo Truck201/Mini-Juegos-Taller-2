@@ -3,6 +3,8 @@ export class ItemsCase {
     this.scene = scene;
     this.width = width;
     this.height = height;
+    this.items = [];
+    this.purchasedCallbacks = []; // Array para almacenar callbacks de compra
 
     this.mainItemCase = this.scene.add.rectangle(
       this.width / 2 - 35, // Posicion ancho
@@ -14,15 +16,15 @@ export class ItemsCase {
 
     // Definición de atributos de los ítems
     this.itemAttributes = {
-      candy: { speedBoost: 50 },
-      popcorn: { extraLife: 1 },
-      pizza: { evadeChance: 10 },
+      candy: { damageStrength: 1, speedBoost: 0, evadeChance: 0 },
+      popcorn: { damageStrength: 0, speedBoost: 0, evadeChance: 10 },
+      pizza: { damageStrength: 0, speedBoost: 1.5, evadeChance: 0 },
     };
 
     // Inicializar animaciones
     this.initAnimations();
 
-    this.items = [];
+    this.purchasedItems = []; // Array para almacenar items comprados
     this.selectedItemsPlayer1 = [];
     this.selectedItemsPlayer2 = [];
     this.player1Position = { row: 0, col: 0 };
@@ -37,8 +39,20 @@ export class ItemsCase {
     this.player2Indicator = this.scene.add.rectangle(0, 0, 75, 75);
     this.player2Indicator.setStrokeStyle(4, 0x0000ff); // Azul para jugador 2
 
-    // Teclas para cada jugador
-    // Teclas para cada jugador
+    this.setupPlayerKeys();
+
+    // Seleccionar los primeros cuadrados al inicio
+    this.paintPlayerPosition(this.player1Position, 0xff0000, 0.3); // Jugador 1  0xff0000
+    this.paintPlayerPosition(this.player2Position, 0x0000ff, 0.3); // Jugador 2 0x0000ff
+
+    // Posicionar los indicadores sobre los ítems iniciales
+    this.updateIndicatorPosition(this.player1Indicator, this.player1Position);
+    this.updateIndicatorPosition(this.player2Indicator, this.player2Position);
+
+    this.canSelect = true;
+  }
+
+  setupPlayerKeys() {
     this.player1Keys = this.scene.input.keyboard.addKeys({
       up: Phaser.Input.Keyboard.KeyCodes.W,
       down: Phaser.Input.Keyboard.KeyCodes.S,
@@ -54,22 +68,12 @@ export class ItemsCase {
       right: Phaser.Input.Keyboard.KeyCodes.RIGHT,
       select: Phaser.Input.Keyboard.KeyCodes.ENTER,
     });
-
-    // Seleccionar los primeros cuadrados al inicio
-    this.paintPlayerPosition(this.player1Position, 0xff0000, 0.3); // Jugador 1  0xff0000
-    this.paintPlayerPosition(this.player2Position, 0x0000ff, 0.3); // Jugador 2 0x0000ff
-
-    // Posicionar los indicadores sobre los ítems iniciales
-    this.updateIndicatorPosition(this.player1Indicator, this.player1Position);
-    this.updateIndicatorPosition(this.player2Indicator, this.player2Position);
-
-    this.canSelect = true;
   }
 
   initAnimations() {
     this.scene.anims.create({
-      key: "pororo_idle",
-      frames: this.scene.anims.generateFrameNumbers("pororo-tienda", {
+      key: "popcorn_idle",
+      frames: this.scene.anims.generateFrameNumbers("popcorn", {
         start: 0,
         end: 5,
       }),
@@ -78,8 +82,8 @@ export class ItemsCase {
     });
 
     this.scene.anims.create({
-      key: "caramelo_idle",
-      frames: this.scene.anims.generateFrameNumbers("caramelo", {
+      key: "candy-idle",
+      frames: this.scene.anims.generateFrameNumbers("candy", {
         start: 0,
         end: 5,
       }),
@@ -107,26 +111,26 @@ export class ItemsCase {
 
     // Solo 9 items
     const avalibleItems = [
-      "pororo-tienda",
-      "caramelo",
+      "popcorn",
+      "candy",
       "pizza",
-      "pororo-tienda",
-      "caramelo",
+      "popcorn",
+      "candy",
       "pizza",
-      "pororo-tienda",
-      "caramelo",
+      "popcorn",
+      "candy",
       "pizza",
       "pizza",
-      "pororo-tienda",
-      "caramelo",
+      "popcorn",
+      "candy",
       "pizza",
-      "pororo-tienda",
-      "caramelo",
+      "popcorn",
+      "candy",
       "pizza",
-      "pororo-tienda",
-      "caramelo",
+      "popcorn",
+      "candy",
       "pizza",
-      "caramelo",
+      "candy",
     ];
 
     const randomItems = Phaser.Utils.Array.Shuffle(avalibleItems).slice(0, 20);
@@ -153,10 +157,10 @@ export class ItemsCase {
         this.items.push(item);
 
         // Iniciar la animación dependiendo del tipo de ítem
-        if (ItemType === "pororo-tienda") {
-          item.play("pororo_idle");
-        } else if (ItemType === "caramelo") {
-          item.play("caramelo_idle");
+        if (ItemType === "popcorn") {
+          item.play("popcorn_idle");
+        } else if (ItemType === "candy") {
+          item.play("candy-idle");
         } else if (ItemType === "pizza") {
           item.play("pizza_idle");
         }
@@ -198,6 +202,11 @@ export class ItemsCase {
       this.player2Keys,
       0x0000ff
     ); // Jugador 2 azul
+  }
+
+  // Método para agregar un ítem
+  addItem(item) {
+    this.items.push(item);
   }
 
   // Mover el indicador a la posición correcta
@@ -261,26 +270,38 @@ export class ItemsCase {
             player === 1 ? this.scene.player1 : this.scene.player2,
             item.texture.key
           );
+          this.removeItemFromScene(item); // Eliminar el ítem de la escena
+          console.log("Remove item for player:" + player, item.texture.key);
         }
       } else if (!item.isSelected && selectedItems.length < 3) {
         if (player === 1 && this.scene.points1 >= 5) {
-          this.purchaseItem(player);
+          this.purchaseItem(player, item);
           item.setTint(0x272736); //  0xff0000  Rojo
           item.setAlpha(0.5);
           item.isSelected = true;
           item.selectedBy = player;
           selectedItems.push(item);
+          console.log("Selected item for player 1:", item.texture.key);
           this.applyItemAttributes(this.scene.player1, item.texture.key); // Asignar atributos al jugador 1
         } else if (player === 2 && this.scene.points2 >= 5) {
-          this.purchaseItem(player);
+          this.purchaseItem(player, item);
           item.setTint(0x272736); //  0x0000ff  Azul
           item.setAlpha(0.5);
           item.isSelected = true;
           item.selectedBy = player;
           selectedItems.push(item);
+          console.log("Selected item for player 2:", item.texture.key);
           this.applyItemAttributes(this.scene.player2, item.texture.key); // Asignar atributos al jugador 2
         }
       }
+    }
+  }
+  
+  removeItemFromScene(item) {
+    const index = this.items.indexOf(item);
+    if (index !== -1) {
+      this.items.splice(index, 1); // Eliminar el ítem del array
+      item.destroy(); // Destruir el sprite del ítem
     }
   }
 
@@ -296,21 +317,28 @@ export class ItemsCase {
   }
 
   // Función para reducir puntos al comprar ítems
-  purchaseItem(player) {
+  purchaseItem(player, item) {
     const hudScene = this.scene.scene.get("hudShop");
 
     if (player === 1 && this.scene.points1 >= 5) {
       this.scene.points1 -= 5;
       hudScene.update_points(1, this.scene.points1);
+      this.purchasedCallbacks.forEach((callback) => callback(item));
       return true;
     } else if (player === 2 && this.scene.points2 >= 5) {
       this.scene.points2 -= 5;
       hudScene.update_points(2, this.scene.points2);
+      this.purchasedCallbacks.forEach((callback) => callback(item));
       return true;
     } else {
       console.log("No tiene suficientes puntos para comprar");
       return false;
     }
+  }
+
+  // Método para registrar un callback que se ejecuta al comprar un ítem
+  onItemPurchased(callback) {
+    this.purchasedCallbacks.push(callback);
   }
 
   returnPoints(player) {
@@ -328,17 +356,31 @@ export class ItemsCase {
   applyItemAttributes(player, itemType) {
     const attributes = this.itemAttributes[itemType];
     if (attributes) {
-      // Asignar los atributos al jugador
-      player.applyAttributes(attributes);
+      console.log("Aplicando atributos:", attributes);
+      if (player === 1) {
+        this.scene.player1Atributes.applyAttributes(attributes);
+      } else if (player === 2) {
+        this.scene.player2Atributes.applyAttributes(attributes);
+      }
+    } else {
+      console.error(
+        `No se encontraron atributos para el tipo de ítem: ${itemType}`
+      );
     }
   }
-  
 
   removeItemAttributes(player, itemType) {
     const attributes = this.itemAttributes[itemType];
     if (attributes) {
-      // Remover los atributos del jugador
-      player.removeAttributes(attributes);
+      if (player === 1) {
+        this.scene.player1Atributes.removeAttributes(attributes);
+      } else if (player === 2) {
+        this.scene.player2Atributes.removeAttributes(attributes);
+      }
+    } else {
+      console.error(
+        `No se encontraron atributos para el tipo de ítem: ${itemType}`
+      );
     }
   }
 }

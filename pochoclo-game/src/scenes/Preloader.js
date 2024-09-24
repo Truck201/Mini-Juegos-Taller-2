@@ -67,7 +67,7 @@ export class Preloader extends Scene {
     //  Tienda
     this.load.image('background', '../public/assets/tienda/background.png')
     this.load.spritesheet(
-      'pororo-tienda',
+      'popcorn',
       '../public/assets/tienda/idle-pororo.png',
       {
         frameWidth: 65,
@@ -76,7 +76,7 @@ export class Preloader extends Scene {
     );
 
     this.load.spritesheet(
-      'caramelo',
+      'candy',
       '../public/assets/tienda/caramelo-azul.png',
       {
         frameWidth: 60,

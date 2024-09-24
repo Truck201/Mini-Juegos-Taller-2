@@ -3,9 +3,12 @@ import { Scene } from 'phaser';
 // The HUD scene is the scene that shows the points and the remaining time.
 export class Hud extends Scene {
   remaining_time = 0;
+  points1 = 0;
+  points2 = 0;
 
   remaining_time_text;
-  points_text;
+  points_text1;
+  points_text2;
 
   constructor() {
     super('Hud');

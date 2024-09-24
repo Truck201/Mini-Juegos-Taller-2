@@ -3,7 +3,7 @@ import { MoveBar } from "../entitities/movebar";
 import { Character } from "../entitities/character";
 import { Television } from "../entitities/television";
 import { Attack } from "../entitities/attack";
-import { AtributesPlayers } from "./atributes"; // Importa la clase
+import { AtributesPlayers } from "../entitities/atributes"; // Importa la clase
 
 export class BattleScene extends Scene {
   constructor() {
@@ -12,11 +12,13 @@ export class BattleScene extends Scene {
 
   game_over_timeout;
   timer_event;
+  icons = []; // Agregar un array para almacenar íconos de ítems
 
   init(data) {
     this.points1 = data.points1 || 0; // Puntaje inicial jugador 1
     this.points2 = data.points2 || 0; // Puntaje inicial jugador 2
     this.game_over_timeout = 60; // Tiempo límite de 30 segundos
+    this.purchasedItems = data.purchasedItems || []; // Obtener los ítems comprados
 
     // Crear los objetos de atributos para cada jugador
     this.player1Atributes = new AtributesPlayers(this, 1);
@@ -41,6 +43,7 @@ export class BattleScene extends Scene {
     this.character = new Character(this, "mimbo", true, true);
     this.character2 = new Character(this, "luho", false, true);
 
+    console.log(this.purchasedItems)
     let barraX = width / 2; // Posición Barra en X
     let barraY = (height * 4.3) / 5; // Posición de alto en las barras Y
     this.mainBar = this.add.rectangle(barraX, barraY, 1000, 95, 0x272736);
@@ -55,7 +58,7 @@ export class BattleScene extends Scene {
       barraY,
       20,
       105,
-      15,
+      1,
       "anilla-roja",
       {
         left: null,
@@ -71,7 +74,7 @@ export class BattleScene extends Scene {
       barraY,
       20,
       105,
-      15,
+      1,
       "anilla-azul",
       {
         left: null,
@@ -91,6 +94,7 @@ export class BattleScene extends Scene {
 
     // Lógica para asignar atributos
     this.applyPlayerAttributes();
+    this.showPurchasedItemIcons();
   }
 
   update() {
@@ -120,23 +124,73 @@ export class BattleScene extends Scene {
     this.television.updateText(this.game_over_timeout);
   }
 
+  showPurchasedItemIcons() {
+    const offsetX = 50; // Distancia horizontal de los íconos
+    const iconY = 50; // Altura donde se mostrarán los íconos
+
+    this.purchasedItems.forEach((item, index) => {
+      const icon = this.add.sprite(
+        100 + index * offsetX,
+        iconY,
+        item.spriteKey
+      ); // Reemplaza item.spriteKey con la clave correcta de tu sprite
+      icon.setScale(0.5); // Escalar el ícono si es necesario
+      this.icons.push(icon);
+    });
+  }
+
   applyPlayerAttributes() {
-    // Asignar atributos desde ItemsCase
     const player1Attributes = this.player1Atributes.getAttributes();
     const player2Attributes = this.player2Atributes.getAttributes();
 
-    // Ajustar la velocidad, vida y chance de esquivar
-    this.moveBar1.setSpeed(
-      this.moveBar1.speed + (player1Attributes.speedBoost || 0)
-    );
-    this.moveBar1.hitPoints += player1Attributes.extraLife || 0;
-    this.moveBar1.evadeChance += player1Attributes.evadeChance || 0;  
+    // Asignar atributos para jugador 1
+    if (player1Attributes.speedBoost) {
+      console.log('hola' + player1Attributes.speedBoost)
+      this.movingBar1.setSpeed(
+        this.movingBar1.movingSpeed + player1Attributes.speedBoost
+      );
+    }
+    if (player1Attributes.extraLife) {
+      console.log('hola' + player1Attributes.extraLife)
+      this.player1Atributes.setHitPoints(
+        this.player1Atributes.getHitPoints() + player1Attributes.extraLife
+      );
+    }
+    if (player1Attributes.evadeChance) {
+      console.log('hola' + player1Attributes.evadeChance)
+      this.movingBar1.evadeChance += player1Attributes.evadeChance;
+    }
 
-    this.moveBar2.setSpeed(
-      this.moveBar2.speed + (player2Attributes.speedBoost || 0)
-    );
-    this.moveBar2.hitPoints += player2Attributes.extraLife || 0;
-    this.moveBar2.evadeChance += player2Attributes.evadeChance || 0;
+    // Asignar atributos para jugador 2
+    if (player2Attributes.speedBoost) {
+      console.log('hola' + player2Attributes.speedBoost)
+      this.movingBar2.setSpeed(
+        this.movingBar2.movingSpeed + player2Attributes.speedBoost
+      );
+    }
+    if (player2Attributes.extraLife) {
+      console.log('hola' + player2Attributes.extraLife)
+      this.player2Atributes.setHitPoints(
+        this.player2Atributes.getHitPoints() + player2Attributes.extraLife
+      );
+    }
+    if (player2Attributes.evadeChance) {
+      console.log('hola' + player2Attributes.evadeChance)
+      this.movingBar2.evadeChance += player2Attributes.evadeChance;
+    }
+  }
+
+  showPurchasedItemIcons() {
+    // Mostrar íconos de ítems comprados
+    this.purchasedItems.forEach((item, index) => {
+      let icon = this.add.sprite(
+        50 + index * 50,
+        this.game.scale.height - 50,
+        item
+      );
+      icon.setScale(0.5);
+      this.icons.push(icon);
+    });
   }
 
   // Método para verificar la colisión entre dos objetos
@@ -164,13 +218,17 @@ export class BattleScene extends Scene {
 
   // Método para manejar ataques
   handleAttack(attacker, target) {
-    if (Math.random() < target.evadeChance / 100) {
-      console.log(`${target} esquivó el ataque!`);
-      return;
+    // Verificar si el ataque es esquivado
+    if (Math.random() < target.getHitPoints() * (target.evadeChance / 100)) {
+      console.log(`Jugador ${target.playerId} esquivó el ataque!`);
+      return; // Termina el método si el ataque es esquivado
     }
-    target.hitPoints -= 1; // Reducir vida
-    if (target.hitPoints <= 0) {
-      this.gameOver(target); // Lógica de fin de juego si el jugador no tiene vida
+
+    // Reducir puntos de vida si el ataque impacta
+    target.setHitPoints(target.getHitPoints() - 1);
+
+    if (target.getHitPoints() <= 0) {
+      this.gameOver(target.playerId); // Lógica de fin de juego si el jugador no tiene vida
     }
   }
 
