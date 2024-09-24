@@ -53,6 +53,7 @@ export class PauseMenu extends Scene {
           this.lastKeyPressTime = currentTime;
           this.mainScene.scene.resume();
           this.scene.resume('recolectScene')
+          this.scene.resume('battleScene')
           this.scene.stop('PauseMenu');
           console.log('Reanude Game');
         }

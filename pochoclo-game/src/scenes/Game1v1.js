@@ -25,13 +25,14 @@ export class Game1v1 extends Scene {
         this.lastKeyPressTime = currentTime;
         this.scene.pause("recolectScene");
         this.scene.pause("Game1vs1");
+        this.scene.pause("battleScene");
         console.log("Pause Game");
         this.scene.launch("PauseMenu", { mainScene: this });
       }
     });
 
     this.input.keyboard.on("keydown-Q", () => {
-      console.log("Start Battle");
+      console.log("Start Recolect");
       // Atacar
       if (barra) {
         this.scene.launch("recolectScene", {});
@@ -47,11 +48,11 @@ export class Game1v1 extends Scene {
       console.log("Start Battle");
       // Atacar
       if (barra) {
-        this.scene.launch("recolectScene", {});
+        this.scene.launch("battleScene", {});
         barra = false;
       } else {
-        this.scene.stop("recolectScene", {});
-        this.scene.stop("Hud", {});
+        this.scene.stop("battleScene", {});
+        // this.scene.stop("HudBattle", {});
         barra = true;
       }
     });

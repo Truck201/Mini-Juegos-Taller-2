@@ -8,12 +8,14 @@ export class Character {
     this.y = this.scene.scale.height / 7.5;
 
     if (this.isPlayeyOne) {
-      this.x = this.scene.game.config.width / 17;
+      this.x = this.scene.game.config.width / 15;
     } else {
-      this.x = this.scene.game.config.width / 1.067;
+      this.x = this.scene.game.config.width / 1.07;
     }
 
-    if (!this.condicion) {
+    if (this.condicion) {
+      
+    } else if (!this.condicion){
       // Animations Sprites
       this.scene.anims.create({
         key: "idle",
@@ -42,8 +44,9 @@ export class Character {
         backgroundColor: "#ffffff",
         border: "60px solid #000000",
       });
+
     }
-    
+
     this.comboText1 = this.scene.add.text(this.scene.scale.width *0.13, this.y +160, '', {
       fontSize: "70px",
       color: "#fff1e8",
@@ -55,7 +58,7 @@ export class Character {
     }).setDepth(3).setVisible(false);
 
     this.scene.comboDuration = 3000
-
+    
     this.resetCombo();
   }
 
