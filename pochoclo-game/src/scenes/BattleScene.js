@@ -3,7 +3,7 @@ import { MoveBar } from "../entitities/movebar";
 import { Character } from "../entitities/character";
 import { Television } from "../entitities/television";
 import { Attack } from "../entitities/attack";
-import { AtributesPlayers } from "../entitities/atributes"; // Importa la clase
+import { AtributesPlayers } from "../entitities/newatributes"; // Importa la clase
 
 export class BattleScene extends Scene {
   constructor() {
@@ -145,37 +145,37 @@ export class BattleScene extends Scene {
 
     // Asignar atributos para jugador 1
     if (player1Attributes.speedBoost) {
-      console.log('hola' + player1Attributes.speedBoost)
+      console.log('Apply Attributes --> ' + player1Attributes.speedBoost)
       this.movingBar1.setSpeed(
         this.movingBar1.movingSpeed + player1Attributes.speedBoost
       );
     }
     if (player1Attributes.extraLife) {
-      console.log('hola' + player1Attributes.extraLife)
+      console.log('Apply Attributes --> ' + player1Attributes.extraLife)
       this.player1Atributes.setHitPoints(
         this.player1Atributes.getHitPoints() + player1Attributes.extraLife
       );
     }
     if (player1Attributes.evadeChance) {
-      console.log('hola' + player1Attributes.evadeChance)
+      console.log('Apply Attributes --> ' + player1Attributes.evadeChance)
       this.movingBar1.evadeChance += player1Attributes.evadeChance;
     }
 
     // Asignar atributos para jugador 2
     if (player2Attributes.speedBoost) {
-      console.log('hola' + player2Attributes.speedBoost)
+      console.log('Apply Attributes --> ' + player2Attributes.speedBoost)
       this.movingBar2.setSpeed(
         this.movingBar2.movingSpeed + player2Attributes.speedBoost
       );
     }
     if (player2Attributes.extraLife) {
-      console.log('hola' + player2Attributes.extraLife)
+      console.log('Apply Attributes --> ' + player2Attributes.extraLife)
       this.player2Atributes.setHitPoints(
         this.player2Atributes.getHitPoints() + player2Attributes.extraLife
       );
     }
     if (player2Attributes.evadeChance) {
-      console.log('hola' + player2Attributes.evadeChance)
+      console.log('Apply Attributes --> ' + player2Attributes.evadeChance)
       this.movingBar2.evadeChance += player2Attributes.evadeChance;
     }
   }
