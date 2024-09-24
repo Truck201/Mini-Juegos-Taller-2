@@ -3,6 +3,7 @@ import { MoveBar } from "../entitities/movebar";
 import { Character } from "../entitities/character";
 import { Television } from "../entitities/television";
 import { Attack } from "../entitities/attack";
+import { AtributesPlayers } from "./atributes"; // Importa la clase
 
 export class BattleScene extends Scene {
   constructor() {
@@ -16,6 +17,10 @@ export class BattleScene extends Scene {
     this.points1 = data.points1 || 0; // Puntaje inicial jugador 1
     this.points2 = data.points2 || 0; // Puntaje inicial jugador 2
     this.game_over_timeout = 60; // Tiempo límite de 30 segundos
+
+    // Crear los objetos de atributos para cada jugador
+    this.player1Atributes = new AtributesPlayers(this, 1);
+    this.player2Atributes = new AtributesPlayers(this, 2);
 
     // Temporizador
     this.timer_event = this.time.addEvent({
@@ -83,6 +88,9 @@ export class BattleScene extends Scene {
     this.enterKey = this.enterKey = this.input.keyboard.addKey(
       Phaser.Input.Keyboard.KeyCodes.ENTER
     ); // Jugador 2
+
+    // Lógica para asignar atributos
+    this.applyPlayerAttributes();
   }
 
   update() {
@@ -112,6 +120,25 @@ export class BattleScene extends Scene {
     this.television.updateText(this.game_over_timeout);
   }
 
+  applyPlayerAttributes() {
+    // Asignar atributos desde ItemsCase
+    const player1Attributes = this.player1Atributes.getAttributes();
+    const player2Attributes = this.player2Atributes.getAttributes();
+
+    // Ajustar la velocidad, vida y chance de esquivar
+    this.moveBar1.setSpeed(
+      this.moveBar1.speed + (player1Attributes.speedBoost || 0)
+    );
+    this.moveBar1.hitPoints += player1Attributes.extraLife || 0;
+    this.moveBar1.evadeChance += player1Attributes.evadeChance || 0;  
+
+    this.moveBar2.setSpeed(
+      this.moveBar2.speed + (player2Attributes.speedBoost || 0)
+    );
+    this.moveBar2.hitPoints += player2Attributes.extraLife || 0;
+    this.moveBar2.evadeChance += player2Attributes.evadeChance || 0;
+  }
+
   // Método para verificar la colisión entre dos objetos
   checkCollision(bar, attackBar) {
     const barBounds = bar.getBounds(); // Asegúrate de que bar sea un sprite
@@ -133,5 +160,23 @@ export class BattleScene extends Scene {
     this.time.delayedCall(3000, () => {
       this.attackBar.respawn();
     });
+  }
+
+  // Método para manejar ataques
+  handleAttack(attacker, target) {
+    if (Math.random() < target.evadeChance / 100) {
+      console.log(`${target} esquivó el ataque!`);
+      return;
+    }
+    target.hitPoints -= 1; // Reducir vida
+    if (target.hitPoints <= 0) {
+      this.gameOver(target); // Lógica de fin de juego si el jugador no tiene vida
+    }
+  }
+
+  gameOver(loser) {
+    // Lógica para manejar el fin del juego
+    console.log(`Jugador ${loser} ha perdido!`);
+    this.scene.restart();
   }
 }

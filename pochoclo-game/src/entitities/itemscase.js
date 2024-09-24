@@ -328,30 +328,17 @@ export class ItemsCase {
   applyItemAttributes(player, itemType) {
     const attributes = this.itemAttributes[itemType];
     if (attributes) {
-      if (attributes.speedBoost) {
-        player.speed += attributes.speedBoost;
-      }
-      if (attributes.extraLife) {
-        player.life += attributes.extraLife;
-      }
-      if (attributes.evadeChance) {
-        player.evadeChance += attributes.evadeChance;
-      }
+      // Asignar los atributos al jugador
+      player.applyAttributes(attributes);
     }
   }
+  
 
   removeItemAttributes(player, itemType) {
     const attributes = this.itemAttributes[itemType];
     if (attributes) {
-      if (attributes.speedBoost) {
-        player.speed -= attributes.speedBoost;
-      }
-      if (attributes.extraLife) {
-        player.life -= attributes.extraLife;
-      }
-      if (attributes.evadeChance) {
-        player.evadeChance -= attributes.evadeChance;
-      }
+      // Remover los atributos del jugador
+      player.removeAttributes(attributes);
     }
   }
 }
