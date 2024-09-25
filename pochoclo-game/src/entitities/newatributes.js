@@ -1,9 +1,18 @@
 export class AtributesPlayers {
-  constructor(scene, playerId, initialAttributes) {
+  constructor(scene, playerId) {
     this.scene = scene;
     this.playerId = playerId;
 
-    this.atributesData(initialAttributes || {});
+    const initialAttributes1 = [{ hitPoints: 20, speed: 5, evadeChance: 10 }];
+    const initialAttributes2 = [{ hitPoints: 20, speed: 5, evadeChance: 10 }];
+
+    if (playerId === 1) {
+      this.atributesData(initialAttributes1);
+    }
+    if (playerId === 2) {
+      this.atributesData(initialAttributes2);
+    }
+    
 
     this.createHealBar()
   }
@@ -54,7 +63,7 @@ export class AtributesPlayers {
   }
 
   createHealBar() {
-    if (playerId === 1) {
+    if (this.playerId === 1) {
       this.statsBar = this.scene.add.rectangle(
         this.x + 180,
         this.y - 50,
@@ -71,7 +80,7 @@ export class AtributesPlayers {
       );
     }
 
-    if (playerId === 2) {
+    if (this.playerId === 2) {
       this.statsBar = this.scene.add.rectangle(
         this.x + 180,
         this.y - 50,

@@ -7,10 +7,6 @@ export class Character {
     this.isActive = isActive;
     this.y = this.scene.scale.height / 7.5;
 
-    const attributes = this.scene.get("AtributesPlayers");
-
-    const initialAttributes1 = [{ hitPoints: 20, speed: 5, evadeChance: 10 }];
-    const initialAttributes2 = [{ hitPoints: 20, speed: 5, evadeChance: 10 }];
 
     if (this.isPlayerOne) {
       this.x = this.scene.game.config.width / 15;
@@ -34,7 +30,8 @@ export class Character {
     });
 
     if (this.isActive) {
-      
+      this.attributes = new AtributesPlayers(this, 1)
+      this.attributes = new AtributesPlayers(this, 2)
     } else if (!this.isActive) {
       this.comboText1 = this.scene.add
         .text(this.scene.scale.width * 0.13, this.y + 160, "", {

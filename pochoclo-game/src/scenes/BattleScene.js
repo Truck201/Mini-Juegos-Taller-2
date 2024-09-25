@@ -47,6 +47,8 @@ export class BattleScene extends Scene {
     this.character = new Character(this, "mimbo", true, true);
     this.character2 = new Character(this, "luho", false, true);
 
+    this.getAttributesP1 = new AtributesPlayers(this, 1, )
+
     const itemsCase = this.scene.get("ItemsCase");
     
     // Escucha cuando se compra un ítem
