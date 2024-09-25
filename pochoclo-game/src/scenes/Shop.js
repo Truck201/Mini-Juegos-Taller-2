@@ -39,11 +39,7 @@ export class Shop extends Scene {
           this.scene.get("hudShop").update_cameras();
 
           this.time.delayedCall(980, () => {
-            this.scene.start("battleScene", {
-              points1: this.points1,
-              points2: this.points2,
-              purchasedItems: this.purchasedItems, // Pasar los ítems adquiridos
-            });
+            this.startBattleScene();
             this.scene.stop("hudShop");
             this.scene.stop("Shop");
           });
@@ -54,20 +50,6 @@ export class Shop extends Scene {
 
   create() {
     this.itemsCase = new ItemsCase(this, this.scale.width, this.scale.height);
-
-    // Asegúrate de que this.itemsCase existe y tiene el método onItemPurchased
-    if (
-      this.itemsCase &&
-      typeof this.itemsCase.onItemPurchased === "function"
-    ) {
-      this.itemsCase.onItemPurchased((item) => {
-        this.purchasedItems.push(item);
-      });
-    } else {
-      console.error(
-        "itemsCase no está definido o onItemPurchased no es una función"
-      );
-    }
 
     this.input.keyboard.on("keydown-ESC", () => {
       const currentTime = this.time.now;
@@ -88,4 +70,15 @@ export class Shop extends Scene {
       this.itemsCase.update();
     }
   }
+
+  // Método para pasar ítems seleccionados a BattleScene
+  startBattleScene = () => {
+    const selectedItems = this.itemsCase.selectedItems; // Obtén los ítems seleccionados
+    const selected1Player = this.itemsCase.selectedItemsPlayer1;
+    const selected2Player = this.itemsCase.selectedItemsPlayer2;
+    this.scene.start("battleScene", { 
+      purchasedItems: selectedItems,
+      selectedItemsPlayer1: selected1Player,
+      selectedItemsPlayer2: selected2Player }); // Inicia la escena de batalla
+  };
 }

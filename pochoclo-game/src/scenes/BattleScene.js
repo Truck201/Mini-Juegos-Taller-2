@@ -8,6 +8,13 @@ import { AtributesPlayers } from "../entitities/newatributes"; // Importa la cla
 export class BattleScene extends Scene {
   constructor() {
     super("battleScene");
+    this.movingBar1 = null;
+    this.movingBar2 = null;
+    this.character = null;
+    this.character2 = null;
+    // Crear los objetos de atributos para cada jugador
+    this.player1Atributes = new AtributesPlayers(this, 1);
+    this.player2Atributes = new AtributesPlayers(this, 2);
   }
 
   game_over_timeout;
@@ -15,14 +22,11 @@ export class BattleScene extends Scene {
   icons = []; // Agregar un array para almacenar íconos de ítems
 
   init(data) {
-    this.points1 = data.points1 || 0; // Puntaje inicial jugador 1
-    this.points2 = data.points2 || 0; // Puntaje inicial jugador 2
+    
     this.game_over_timeout = 60; // Tiempo límite de 30 segundos
-    this.purchasedItems = data.purchasedItems || []; // Obtener los ítems comprados
-
-    // Crear los objetos de atributos para cada jugador
-    this.player1Atributes = new AtributesPlayers(this, 1);
-    this.player2Atributes = new AtributesPlayers(this, 2);
+    this.purchasedItems = data.selectedItems || []; // Obtener los ítems comprados
+    this.selectedItemsPlayer1 = data.selected1Player || [];
+    this.selectedItemsPlayer2 = data.selected2Player || [];
 
     // Temporizador
     this.timer_event = this.time.addEvent({
@@ -43,7 +47,15 @@ export class BattleScene extends Scene {
     this.character = new Character(this, "mimbo", true, true);
     this.character2 = new Character(this, "luho", false, true);
 
-    console.log(this.purchasedItems)
+    const itemsCase = this.scene.get("ItemsCase");
+    
+    // Escucha cuando se compra un ítem
+    itemsCase.onItemPurchased((item, player) => {
+      this.applyPurchasedItem(item, player);
+    });
+
+    console.log(this.purchasedItems);
+
     let barraX = width / 2; // Posición Barra en X
     let barraY = (height * 4.3) / 5; // Posición de alto en las barras Y
     this.mainBar = this.add.rectangle(barraX, barraY, 1000, 95, 0x272736);
@@ -109,7 +121,8 @@ export class BattleScene extends Scene {
       this.checkCollision(movingBar1Sprite, this.attackBar.sprite) &&
       Phaser.Input.Keyboard.JustDown(this.spaceKey) // Acción de jugador 1
     ) {
-      this.destroyAndRespawn(); // Destruye y reaparece en rojo
+      this.character.takeDamage(this.character.atributes.damageStrength); // Aplica daño al jugador 1
+      this.destroyAndRespawn(); // Destruye y reaparece
     }
 
     // Si se presiona enter, jugador 2 destruye un recolectable
@@ -117,11 +130,25 @@ export class BattleScene extends Scene {
       this.checkCollision(movingBar2Sprite, this.attackBar.sprite) &&
       Phaser.Input.Keyboard.JustDown(this.enterKey) // Acción de jugador 2
     ) {
+      this.character2.takeDamage(this.character2.atributes.damageStrength); // Aplica daño al jugador 2
       this.destroyAndRespawn(); // Destruye y reaparece en rojo
     }
 
     // Actualizar el texto de la televisión según el tiempo restante
     this.television.updateText(this.game_over_timeout);
+  }
+
+  // Aplica los ítems adquiridos a los jugadores
+  applyPurchasedItem(item, player) {
+    const itemType = item.texture.key;
+
+    if (player === 1) {
+      this.player1Atributes.applyAttributes(itemType);
+    } else if (player === 2) {
+      this.player2Atributes.applyAttributes(itemType);
+    }
+
+    console.log(`Item ${itemType} aplicado al jugador ${player}`);
   }
 
   showPurchasedItemIcons() {
@@ -139,45 +166,20 @@ export class BattleScene extends Scene {
     });
   }
 
-  applyPlayerAttributes() {
-    const player1Attributes = this.player1Atributes.getAttributes();
-    const player2Attributes = this.player2Atributes.getAttributes();
-
-    // Asignar atributos para jugador 1
-    if (player1Attributes.speedBoost) {
-      console.log('Apply Attributes --> ' + player1Attributes.speedBoost)
-      this.movingBar1.setSpeed(
-        this.movingBar1.movingSpeed + player1Attributes.speedBoost
-      );
+  applyPurchasedItem(item, player) {
+    const itemType = item.texture.key;
+  
+    if (player === 1) {
+      this.player1Atributes.applyAttributes(itemType);
+      const itemAttributes = this.player1Atributes.getAttributes(); // Obtener atributos
+      this.character.updateAttributes(itemAttributes); // Actualizar atributos de Character
+    } else if (player === 2) {
+      this.player2Atributes.applyAttributes(itemType);
+      const itemAttributes = this.player2Atributes.getAttributes(); // Obtener atributos
+      this.character2.updateAttributes(itemAttributes); // Actualizar atributos de Character
     }
-    if (player1Attributes.extraLife) {
-      console.log('Apply Attributes --> ' + player1Attributes.extraLife)
-      this.player1Atributes.setHitPoints(
-        this.player1Atributes.getHitPoints() + player1Attributes.extraLife
-      );
-    }
-    if (player1Attributes.evadeChance) {
-      console.log('Apply Attributes --> ' + player1Attributes.evadeChance)
-      this.movingBar1.evadeChance += player1Attributes.evadeChance;
-    }
-
-    // Asignar atributos para jugador 2
-    if (player2Attributes.speedBoost) {
-      console.log('Apply Attributes --> ' + player2Attributes.speedBoost)
-      this.movingBar2.setSpeed(
-        this.movingBar2.movingSpeed + player2Attributes.speedBoost
-      );
-    }
-    if (player2Attributes.extraLife) {
-      console.log('Apply Attributes --> ' + player2Attributes.extraLife)
-      this.player2Atributes.setHitPoints(
-        this.player2Atributes.getHitPoints() + player2Attributes.extraLife
-      );
-    }
-    if (player2Attributes.evadeChance) {
-      console.log('Apply Attributes --> ' + player2Attributes.evadeChance)
-      this.movingBar2.evadeChance += player2Attributes.evadeChance;
-    }
+  
+    console.log(`Item ${itemType} aplicado al jugador ${player}`);
   }
 
   showPurchasedItemIcons() {

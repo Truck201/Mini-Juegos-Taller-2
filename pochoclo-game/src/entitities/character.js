@@ -1,11 +1,16 @@
+import { AtributesPlayers } from "./newatributes";
 export class Character {
-  constructor(scene, sprite, isPlayerOne, condicion) {
+  constructor(scene, sprite, isPlayerOne, isActive) {
     this.scene = scene;
     this.sprite = sprite;
     this.isPlayerOne = isPlayerOne;
-    this.condicion = condicion;
-
+    this.isActive = isActive;
     this.y = this.scene.scale.height / 7.5;
+
+    const attributes = this.scene.get("AtributesPlayers");
+
+    const initialAttributes1 = [{ hitPoints: 20, speed: 5, evadeChance: 10 }];
+    const initialAttributes2 = [{ hitPoints: 20, speed: 5, evadeChance: 10 }];
 
     if (this.isPlayerOne) {
       this.x = this.scene.game.config.width / 15;
@@ -13,11 +18,7 @@ export class Character {
       this.x = this.scene.game.config.width / 1.07;
     }
 
-    let character = this.scene.physics.add.sprite(
-      this.x,
-      this.y,
-      this.sprite
-    );
+    let character = this.scene.physics.add.sprite(this.x, this.y, this.sprite);
 
     character.setImmovable;
     character.body.allowGravity = false;
@@ -32,24 +33,26 @@ export class Character {
       border: "60px solid #000000",
     });
 
-    if (this.condicion) {
-      if (isPlayerOne) {
-        this.statsBar = this.scene.add.rectangle(this.x + 180, this.y - 50, 200, 60, 0xbbbbbb); // left
-      } else {
-        this.statsBar = this.scene.add.rectangle(this.x - 180, this.y - 50, 200, 60, 0xbbbbbb); // right
-      }
-    } else if (!this.condicion){
-      this.comboText1 = this.scene.add.text(this.scene.scale.width *0.13, this.y +160, '', {
-        fontSize: "70px",
-        color: "#fff1e8",
-      }).setDepth(3).setVisible(false);
+    if (this.isActive) {
+      
+    } else if (!this.isActive) {
+      this.comboText1 = this.scene.add
+        .text(this.scene.scale.width * 0.13, this.y + 160, "", {
+          fontSize: "70px",
+          color: "#fff1e8",
+        })
+        .setDepth(3)
+        .setVisible(false);
 
-      this.comboText2 = this.scene.add.text(this.scene.scale.width *0.8, this.y +160, '', {
-        fontSize: "70px",
-        color: "#fff1e8",
-      }).setDepth(3).setVisible(false);
+      this.comboText2 = this.scene.add
+        .text(this.scene.scale.width * 0.8, this.y + 160, "", {
+          fontSize: "70px",
+          color: "#fff1e8",
+        })
+        .setDepth(3)
+        .setVisible(false);
 
-      this.scene.comboDuration = 3000
+      this.scene.comboDuration = 3000;
       this.resetCombo();
     }
   }
@@ -84,7 +87,7 @@ export class Character {
       this.scene.comboCount1++;
 
       // Verificar si ha llegado a 10 recolectados dentro del combo
-      if (this.scene.comboCount1 >= 5 ) {
+      if (this.scene.comboCount1 >= 5) {
         this.scene.points1 += 2; // Añadir puntos extra por el combo
         this.scene.scene.get("Hud").update_points(1, this.scene.points1);
         this.comboText1.setText(`${this.scene.comboCount1}x`).setVisible(true);
@@ -93,12 +96,9 @@ export class Character {
         this.scene.points1 += 5; // Añadir puntos extra por el combo
         this.scene.scene.get("Hud").update_points(1, this.scene.points1);
         this.scene.comboCount1 = 0; // Reiniciar el contador de combo
-        this.scene.time.delayedCall(
-          1200,
-          () => {
-            this.comboText1.setVisible(false); // Ocultar el marcador
-          }
-        );
+        this.scene.time.delayedCall(1200, () => {
+          this.comboText1.setVisible(false); // Ocultar el marcador
+        });
       }
 
       // Iniciar o reiniciar el temporizador para resetear el combo si pasan más de 3 segundos sin recolectar
@@ -109,7 +109,6 @@ export class Character {
           this.comboText1.setVisible(false); // Ocultar el marcador
         }
       );
-
     } else if (player === 2) {
       // Mismo proceso para el jugador 2
       if (this.scene.comboTimer2) {
@@ -118,7 +117,7 @@ export class Character {
 
       this.scene.comboCount2++;
 
-      if (this.scene.comboCount2 >= 5 ) {
+      if (this.scene.comboCount2 >= 5) {
         this.scene.points2 += 2; // Añadir puntos extra por el combo
         this.scene.scene.get("Hud").update_points(2, this.scene.points2);
         this.comboText2.setText(`${this.scene.comboCount2}x`).setVisible(true);
@@ -127,12 +126,9 @@ export class Character {
         this.scene.points2 += 5; // Añadir puntos extra por el combo
         this.scene.scene.get("Hud").update_points(2, this.scene.points2);
         this.scene.comboCount2 = 0; // Reiniciar el contador de combo
-        this.scene.time.delayedCall(
-          1200,
-          () => {
-            this.comboText2.setVisible(false); // Ocultar el marcador
-          }
-        );
+        this.scene.time.delayedCall(1200, () => {
+          this.comboText2.setVisible(false); // Ocultar el marcador
+        });
       }
 
       this.scene.comboTimer2 = this.scene.time.delayedCall(

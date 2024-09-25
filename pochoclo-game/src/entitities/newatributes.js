@@ -1,65 +1,94 @@
 export class AtributesPlayers {
-  constructor(scene, playerId) {
+  constructor(scene, playerId, initialAttributes) {
     this.scene = scene;
     this.playerId = playerId;
 
-    // Asignar atributos
-    this.attributes = {
-      speedBoost: 0,
-      extraHitPoints: 0, // Nueva propiedad para vida extra
-      evadeChance: 0,
-      speed: 0, // Nueva propiedad para chance de esquivar
+    this.atributesData(initialAttributes || {});
+
+    this.createHealBar()
+  }
+
+  atributesData(initialAttributes) {
+    // Asignar atributos con valores predeterminados si son indefinidos
+    this.atributes = {
+      hitPoints: initialAttributes.hitPoints !== undefined ? initialAttributes.hitPoints : 10, // Inicia en 10 HP
+      speed: initialAttributes.speed !== undefined ? initialAttributes.speed : 5,
+      evadeChance: initialAttributes.evadeChance !== undefined ? initialAttributes.evadeChance : 0,
     };
-
-    // Establecer vida inicial
-    this.hitPoints = 3; // Por ejemplo, cada jugador comienza con 3 puntos de vida
   }
 
-  applyAttributes(attributes) {
-    if (attributes.speedBoost) {
-      this.speed += attributes.speedBoost;
+  // Método para aplicar daño
+  takeDamage(damage) {
+    // Implementa la lógica de evadeChance
+    const evadeRoll = Phaser.Math.Between(0, 100);
+    if (evadeRoll < this.atributes.evadeChance) {
+      console.log("Attack evaded!");
+      return; // El ataque no afecta
     }
-    if (attributes.extraLife) {
-      this.hitPoints += attributes.extraHitPoints;
-    }
-    if (attributes.evadeChance) {
-      this.evadeChance += attributes.evadeChance;
-    }
-    if (attributes.moreSeconds) {
-      this.moreSeconds += attributes.moreSeconds;
-    }
-    if (attributes.damageStrength) {
-      this.damageStrength += attributes.damageStrength;
+
+    this.atributes.hitPoints -= damage;
+    this.healthText.setText(`HP: ${this.atributes.hitPoints}`);
+
+    if (this.atributes.hitPoints <= 0) {
+      this.gameOver();
     }
   }
+  // Lógica de Game Over
+  gameOver() {
+    console.log(`Game Over for Player ${this.isPlayerOne ? 1 : 2}`);
+    // Aquí puedes detener el juego o cambiar a una pantalla de Game Over
+    this.scene.scene.pause(); // Por ejemplo, pausa la escena actual
+  }
 
-  removeAttributes(attributes) {
-    if (attributes.speedBoost) {
-      this.speed -= attributes.speedBoost;
+  updateAttributes(newAttributes) {
+    if (newAttributes.speed) {
+      this.atributes.speed += newAttributes.speed;
     }
-    if (attributes.extraLife) {
-      this.life -= attributes.extraLife;
+    if (newAttributes.evadeChance) {
+      this.atributes.evadeChance += newAttributes.evadeChance;
     }
-    if (attributes.evadeChance) {
-      this.evadeChance -= attributes.evadeChance;
-    }
-    if (attributes.moreSeconds) {
-      this.moreSeconds -= attributes.moreSeconds;
-    }
-    if (attributes.damageStrength) {
-      this.damageStrength -= attributes.damageStrength;
+    if (newAttributes.hitPoints) {
+      this.atributes.hitPoints += newAttributes.hitPoints;
+      this.healthText.setText(`HP: ${this.atributes.hitPoints}`); // Actualiza el texto de HP
     }
   }
 
+  createHealBar() {
+    if (playerId === 1) {
+      this.statsBar = this.scene.add.rectangle(
+        this.x + 180,
+        this.y - 50,
+        200,
+        60,
+        0xbbbbbb
+      ); // left
+
+      this.healthText = this.scene.add.text(
+        this.x + 100,
+        this.y - 50,
+        `HP: ${this.atributes.hitPoints}`,
+        { fontSize: "16px", fill: "#00ff00" }
+      );
+    }
+
+    if (playerId === 2) {
+      this.statsBar = this.scene.add.rectangle(
+        this.x + 180,
+        this.y - 50,
+        200,
+        60,
+        0xbbbbbb
+      ); // left
+
+      this.healthText = this.scene.add.text(
+        this.x + 100,
+        this.y - 50,
+        `HP: ${this.atributes.hitPoints}`,
+        { fontSize: "16px", fill: "#00ff00" }
+      );
+    }
+  }
   getAttributes() {
-    return this.attributes
-  }
-
-  getHitPoints() {
-    return this.hitPoints;
-  }
-
-  setHitPoints(value) {
-    this.hitPoints = value;
+    return this.attributes;
   }
 }

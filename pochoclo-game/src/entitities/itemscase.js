@@ -1,10 +1,11 @@
+import { AtributesPlayers } from "./newatributes";
 export class ItemsCase {
   constructor(scene, width, height) {
     this.scene = scene;
     this.width = width;
     this.height = height;
     this.items = [];
-    this.purchasedCallbacks = []; // Array para almacenar callbacks de compra
+    this.selectedItems = [];
 
     this.mainItemCase = this.scene.add.rectangle(
       this.width / 2 - 35, // Posicion ancho
@@ -24,7 +25,6 @@ export class ItemsCase {
     // Inicializar animaciones
     this.initAnimations();
 
-    this.purchasedItems = []; // Array para almacenar items comprados
     this.selectedItemsPlayer1 = [];
     this.selectedItemsPlayer2 = [];
     this.player1Position = { row: 0, col: 0 };
@@ -38,6 +38,9 @@ export class ItemsCase {
 
     this.player2Indicator = this.scene.add.rectangle(0, 0, 75, 75);
     this.player2Indicator.setStrokeStyle(4, 0x0000ff); // Azul para jugador 2
+
+    this.player1Atributes = new AtributesPlayers(this, 1);
+    this.player2Atributes = new AtributesPlayers(this, 2);
 
     this.setupPlayerKeys();
 
@@ -171,37 +174,16 @@ export class ItemsCase {
   }
 
   update() {
-    // Lógica de movimiento de jugadores
-    this.handlePlayerMovement(
-      1,
-      this.player1Position,
-      this.player1Keys,
-      0xff0000
-    ); // Rojo para jugador 1
-    this.handlePlayerMovement(
-      2,
-      this.player2Position,
-      this.player2Keys,
-      0x0000ff
-    ); // Azul para jugador 2
+    this.handlePlayerMovement(this.player1Keys, this.player1Position, 0xff0000);
+    this.handlePlayerMovement(this.player2Keys, this.player2Position, 0x0000ff);
 
     // Actualizar la posición del indicador de cada jugador
     this.updateIndicatorPosition(this.player1Indicator, this.player1Position);
     this.updateIndicatorPosition(this.player2Indicator, this.player2Position);
 
     // Lógica de selección de jugadores
-    this.handleSelection(
-      1,
-      this.selectedItemsPlayer1,
-      this.player1Keys,
-      0xff0000
-    ); // Jugador 1 rojo
-    this.handleSelection(
-      2,
-      this.selectedItemsPlayer2,
-      this.player2Keys,
-      0x0000ff
-    ); // Jugador 2 azul
+    this.handleSelection(1, this.selectedItemsPlayer1, this.player1Keys); // Jugador 1 rojo
+    this.handleSelection(2, this.selectedItemsPlayer2, this.player2Keys); // Jugador 2 azul
   }
 
   // Método para agregar un ítem
@@ -221,41 +203,43 @@ export class ItemsCase {
     }
   }
 
-  handlePlayerMovement(player, playerPosition, keys, color) {
-    // Guardar la posición anterior para pintar
+  handlePlayerMovement(playerKeys, playerPosition, color) {
     const prevPosition = { ...playerPosition };
 
-    // Movimiento del jugador
-    if (Phaser.Input.Keyboard.JustDown(keys.up)) {
+    if (Phaser.Input.Keyboard.JustDown(playerKeys.up)) {
       playerPosition.row = Phaser.Math.Clamp(playerPosition.row - 1, 0, 3);
-    } else if (Phaser.Input.Keyboard.JustDown(keys.down)) {
+    } else if (Phaser.Input.Keyboard.JustDown(playerKeys.down)) {
       playerPosition.row = Phaser.Math.Clamp(playerPosition.row + 1, 0, 3);
     }
 
-    if (Phaser.Input.Keyboard.JustDown(keys.left)) {
+    if (Phaser.Input.Keyboard.JustDown(playerKeys.left)) {
       playerPosition.col = Phaser.Math.Clamp(playerPosition.col - 1, 0, 4);
-    } else if (Phaser.Input.Keyboard.JustDown(keys.right)) {
+    } else if (Phaser.Input.Keyboard.JustDown(playerKeys.right)) {
       playerPosition.col = Phaser.Math.Clamp(playerPosition.col + 1, 0, 4);
     }
 
-    // Pintar la nueva posición del jugador
-    this.paintPlayerPosition(prevPosition, 0xffffff); // Limpia la posición anterior
-    this.paintPlayerPosition(playerPosition, color, 0.2); // Actualiza la nueva posición
+    this.paintPlayerPosition(prevPosition, 0xffffff);
+    this.paintPlayerPosition(playerPosition, color, 0.2);
   }
 
-  handleSelection(player, selectedItems, keys, color) {
-    const playerPosition =
-      player === 1 ? this.player1Position : this.player2Position;
-    const item = this.items.find(
-      (item) =>
-        item.row === playerPosition.row && item.col === playerPosition.col
-    );
+  handleSelection(player, selectedItems, keys) {
+    const playerPosition = player === 1 ? this.player1Position : this.player2Position;
+    const item = this.items.find((item) => item.row === playerPosition.row && item.col === playerPosition.col);
+
+    // Verifica si el ítem existe
+    if (!item) {
+      console.error(
+        `No se encontró ningún ítem en la posición (${playerPosition.row}, ${playerPosition.col})`
+      );
+      return;
+    }
 
     if (Phaser.Input.Keyboard.JustUp(keys.select) && this.canSelect) {
+      this.canSelect = false;
       setInterval(() => {
         this.canSelect = true;
       }, 300);
-      this.canSelect = false; // Bloqueamos la selección temporalmente
+      
       if (item.isSelected && item.selectedBy === player) {
         // Deseleccionar y devolver puntos
         item.clearTint();
@@ -264,14 +248,11 @@ export class ItemsCase {
         item.selectedBy = null;
         const index = selectedItems.indexOf(item);
         if (index !== -1) {
-          selectedItems.splice(index, 1);
           this.returnPoints(player);
-          this.removeItemAttributes(
-            player === 1 ? this.scene.player1 : this.scene.player2,
-            item.texture.key
-          );
-          this.removeItemFromScene(item); // Eliminar el ítem de la escena
-          console.log("Remove item for player:" + player, item.texture.key);
+          this.removeItemAttributes(player, item.texture.key);
+          selectedItems.splice(index, 1);
+          this.selectedItems.splice(index, 1)
+          console.log(`Remove item for ${player}:`, item.texture.key);
         }
       } else if (!item.isSelected && selectedItems.length < 3) {
         if (player === 1 && this.scene.points1 >= 5) {
@@ -281,8 +262,8 @@ export class ItemsCase {
           item.isSelected = true;
           item.selectedBy = player;
           selectedItems.push(item);
-          console.log("Selected item for player 1:", item.texture.key);
-          this.applyItemAttributes(this.scene.player1, item.texture.key); // Asignar atributos al jugador 1
+          console.log(`Selected item for jugador 2:`, item.texture.key);
+          this.applyItemAttributes(player, item.texture.key); // Asignar atributos al jugador 1
         } else if (player === 2 && this.scene.points2 >= 5) {
           this.purchaseItem(player, item);
           item.setTint(0x272736); //  0x0000ff  Azul
@@ -290,18 +271,10 @@ export class ItemsCase {
           item.isSelected = true;
           item.selectedBy = player;
           selectedItems.push(item);
-          console.log("Selected item for player 2:", item.texture.key);
-          this.applyItemAttributes(this.scene.player2, item.texture.key); // Asignar atributos al jugador 2
+          console.log(`Selected item for jugador 2:`, item.texture.key);
+          this.applyItemAttributes(player, item.texture.key); // Asignar atributos al jugador 2
         }
       }
-    }
-  }
-  
-  removeItemFromScene(item) {
-    const index = this.items.indexOf(item);
-    if (index !== -1) {
-      this.items.splice(index, 1); // Eliminar el ítem del array
-      item.destroy(); // Destruir el sprite del ítem
     }
   }
 
@@ -323,22 +296,17 @@ export class ItemsCase {
     if (player === 1 && this.scene.points1 >= 5) {
       this.scene.points1 -= 5;
       hudScene.update_points(1, this.scene.points1);
-      this.purchasedCallbacks.forEach((callback) => callback(item));
+      this.selectedItems.push(item); // Agregar ítem al array de seleccionados
       return true;
     } else if (player === 2 && this.scene.points2 >= 5) {
       this.scene.points2 -= 5;
       hudScene.update_points(2, this.scene.points2);
-      this.purchasedCallbacks.forEach((callback) => callback(item));
+      this.selectedItems.push(item); // Agregar ítem al array de seleccionados
       return true;
     } else {
       console.log("No tiene suficientes puntos para comprar");
       return false;
     }
-  }
-
-  // Método para registrar un callback que se ejecuta al comprar un ítem
-  onItemPurchased(callback) {
-    this.purchasedCallbacks.push(callback);
   }
 
   returnPoints(player) {
@@ -356,11 +324,13 @@ export class ItemsCase {
   applyItemAttributes(player, itemType) {
     const attributes = this.itemAttributes[itemType];
     if (attributes) {
-      console.log("Aplicando atributos:", attributes);
+      console.log("Aplicando atributos:" + attributes);
       if (player === 1) {
-        this.scene.player1Atributes.applyAttributes(attributes);
+        console.log("player 1");
+        this.player1Atributes.applyAttributes(attributes);
       } else if (player === 2) {
-        this.scene.player2Atributes.applyAttributes(attributes);
+        console.log("player 2");
+        this.player2Atributes.applyAttributes(attributes);
       }
     } else {
       console.error(
@@ -372,10 +342,11 @@ export class ItemsCase {
   removeItemAttributes(player, itemType) {
     const attributes = this.itemAttributes[itemType];
     if (attributes) {
+      console.log("Remove atributos:" + player + "," + attributes);
       if (player === 1) {
-        this.scene.player1Atributes.removeAttributes(attributes);
+        this.player1Atributes.removeAttributes(attributes);
       } else if (player === 2) {
-        this.scene.player2Atributes.removeAttributes(attributes);
+        this.player2Atributes.removeAttributes(attributes);
       }
     } else {
       console.error(
