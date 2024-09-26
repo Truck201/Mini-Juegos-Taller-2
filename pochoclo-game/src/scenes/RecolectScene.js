@@ -4,6 +4,7 @@ import { MoveBar } from "../entitities/movebar";
 import { Character } from "../entitities/character";
 import { PopCorn } from "../entitities/popcorn";
 import { Television } from "../entitities/television";
+import { ComboPersonajes } from "../entitities/combo";
 
 export class RecolectScene extends Scene {
   constructor() {
@@ -95,12 +96,7 @@ export class RecolectScene extends Scene {
 
       if (n > 9) {
         // Crear el rectángulo pequeño en medio de la barra principal
-        let collectibleSprite = new PopCorn(
-          this,
-          keysX,
-          barraY,
-          "pochoclo"
-        );
+        let collectibleSprite = new PopCorn(this, keysX, barraY, "pochoclo");
 
         // Añadir el recolectable al array
         this.collectibles.push(collectibleSprite);
@@ -108,9 +104,15 @@ export class RecolectScene extends Scene {
     }
 
     // Crear instancias de Character
-    this.player1 = new Character(this, "mimbo", true, false); // Jugador 1
-    this.player2 = new Character(this, "luho", false, false); // Jugador 2
+    this.player1 = new Character(this, "mimbo", true); // Jugador 1
+    this.player2 = new Character(this, "luho", false); // Jugador 2
 
+    this.combo1 = new ComboPersonajes(this, 1);
+    this.combo1.create();
+
+    this.combo2 = new ComboPersonajes(this, 2);
+    this.combo2.create();
+    
     // Crear barras móviles usando la clase MoveBar
     this.movingBar1 = new MoveBar(
       this,
@@ -170,8 +172,8 @@ export class RecolectScene extends Scene {
     ); // Jugador 2
 
     // Resetear combos al iniciar la escena
-    this.player1.resetCombo();
-    this.player2.resetCombo();
+    this.combo1.resetCombo();
+    this.combo2.resetCombo();
 
     // Inicializar el temporizador para generar pochoclos
     this.startPopcornTimer();
@@ -289,7 +291,7 @@ export class RecolectScene extends Scene {
           this.points1++; // Incrementar el puntaje del jugador 1
           this.scene.get("Hud").update_points(1, this.points1); // Actualizar el HUD
 
-          this.player1.handleCombo(1);
+          this.combo1.handleCombo(1);
 
           // Crear partículas que se mueven hacia el punto (10, 10)
           new Particles(
@@ -305,7 +307,7 @@ export class RecolectScene extends Scene {
           this.points2++; // Incrementar el puntaje del jugador 2
           this.scene.get("Hud").update_points(2, this.points2); // Actualizar el HUD
 
-          this.player1.handleCombo(2);
+          this.combo2.handleCombo(2);
 
           // Crear partículas que se mueven hacia el punto (10, 10)
           new Particles(
