@@ -19,7 +19,7 @@ const config = {
     width: window.innerWidth, // Ajusta el ancho al 90% del ancho de la ventana
     height: window.innerHeight, // Ajusta la altura al 90% de la altura de la ventana
     parent: 'game-container',
-    backgroundColor: '#5c5b5b',
+ 
     scale: {
         mode: Phaser.Scale.FIT,
         autoCenter: Phaser.Scale.CENTER_BOTH,

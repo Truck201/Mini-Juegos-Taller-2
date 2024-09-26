@@ -13,6 +13,12 @@ export class Game1v1 extends Scene {
     let width = this.scale.width;
     let height = this.scale.height;
 
+    // Crear Televisor Instancar
+    let television = new Television(this);
+    
+    let background = this.add.sprite(width / 2, height / 2, "escenario");
+    background.setDepth(1)
+
     //Agregar los cursores
     this.cursor = this.input.keyboard.createCursorKeys();
 
@@ -65,45 +71,7 @@ export class Game1v1 extends Scene {
 
     // Posición
     let teleY = height / 2 - 60;
-
-    // Crear Televisor Instancar
-    let television = new Television(this);
-
-    // Añadimos sillones, butacas !! En los Laterales
-    // Dimensiones
-    let armchairWidth = width / 11;
-    let armchairHeight = height / 7.5;
-    // Posición X
-    let armX = width / 5.5;
-    // Crear sillones
-    let n = 0;
-    for (let i = 0; i < 14; i++) {
-      if (i < 7) {
-        let armchair = this.add
-          .rectangle(
-            armX + i * (armchairWidth + 20), // Ajustar por cada rectangulo
-            teleY * 1.77,
-            armchairWidth,
-            armchairHeight,
-            0xbbbbbb // Blanco - Plateado
-          )
-          .setDepth(0);
-      } else {
-        let armchair = this.add
-          .rectangle(
-            armX + n * (armchairWidth + 20), // Ajustar por cada rectangulo
-            teleY * 2.18,
-            armchairWidth,
-            armchairHeight,
-            0xbbbbbb // Blanco - Plateado
-          )
-          .setDepth(0);
-        n = n + 1;
-      }
-    }
   }
 
   update() {}
-
-  
 }

@@ -1,6 +1,5 @@
 import { Scene } from "phaser";
 import { MoveBar } from "../entitities/movebar";
-import { Character } from "../entitities/character";
 import { Television } from "../entitities/television";
 import { Attack } from "../entitities/attack";
 import { AtributesPlayers } from "../entitities/newatributes"; // Importa la clase
@@ -10,8 +9,7 @@ export class BattleScene extends Scene {
     super("battleScene");
     this.movingBar1 = null;
     this.movingBar2 = null;
-    this.character = null;
-    this.character2 = null;
+
     // Crear los objetos de atributos para cada jugador
     this.player1Atributes = new AtributesPlayers(this, 1);
     this.player2Atributes = new AtributesPlayers(this, 2);
@@ -42,22 +40,12 @@ export class BattleScene extends Scene {
     let width = this.game.scale.width;
     let height = this.game.scale.height;
 
+    this.add.sprite(width/2, height/2, 'escenario')
+
     this.television = new Television(this);
-
-    this.character = new Character(this, "mimbo", true, true);
-    this.character2 = new Character(this, "luho", false, true);
-
-    this.getAttributesP1 = new AtributesPlayers(this, 1, )
 
     const itemsCase = this.scene.get("ItemsCase");
     
-    // Escucha cuando se compra un ítem
-    itemsCase.onItemPurchased((item, player) => {
-      this.applyPurchasedItem(item, player);
-    });
-
-    console.log(this.purchasedItems);
-
     let barraX = width / 2; // Posición Barra en X
     let barraY = (height * 4.3) / 5; // Posición de alto en las barras Y
     this.mainBar = this.add.rectangle(barraX, barraY, 1000, 95, 0x272736);
@@ -107,8 +95,12 @@ export class BattleScene extends Scene {
     ); // Jugador 2
 
     // Lógica para asignar atributos
-    this.applyPlayerAttributes();
     this.showPurchasedItemIcons();
+
+    this.healthText = this.add.text(100, 240, '', {
+      fontSize: '33px',
+      fill: '#fff',
+    });
   }
 
   update() {
@@ -123,7 +115,8 @@ export class BattleScene extends Scene {
       this.checkCollision(movingBar1Sprite, this.attackBar.sprite) &&
       Phaser.Input.Keyboard.JustDown(this.spaceKey) // Acción de jugador 1
     ) {
-      this.character.takeDamage(this.character.atributes.damageStrength); // Aplica daño al jugador 1
+      this.getDamageStrength = this.player1Atributes.takeDamage()
+      this.player1Atributes.takeDamage(this.player1Atributes.atributes.damageStrength); // Aplica daño al jugador 1
       this.destroyAndRespawn(); // Destruye y reaparece
     }
 
@@ -132,7 +125,7 @@ export class BattleScene extends Scene {
       this.checkCollision(movingBar2Sprite, this.attackBar.sprite) &&
       Phaser.Input.Keyboard.JustDown(this.enterKey) // Acción de jugador 2
     ) {
-      this.character2.takeDamage(this.character2.atributes.damageStrength); // Aplica daño al jugador 2
+      this.player2Atributes.takeDamage(this.player2Atributes.atributes.damageStrength); // Aplica daño al jugador 2
       this.destroyAndRespawn(); // Destruye y reaparece en rojo
     }
 
@@ -161,38 +154,9 @@ export class BattleScene extends Scene {
       const icon = this.add.sprite(
         100 + index * offsetX,
         iconY,
-        item.spriteKey
+        'item'
       ); // Reemplaza item.spriteKey con la clave correcta de tu sprite
       icon.setScale(0.5); // Escalar el ícono si es necesario
-      this.icons.push(icon);
-    });
-  }
-
-  applyPurchasedItem(item, player) {
-    const itemType = item.texture.key;
-  
-    if (player === 1) {
-      this.player1Atributes.applyAttributes(itemType);
-      const itemAttributes = this.player1Atributes.getAttributes(); // Obtener atributos
-      this.character.updateAttributes(itemAttributes); // Actualizar atributos de Character
-    } else if (player === 2) {
-      this.player2Atributes.applyAttributes(itemType);
-      const itemAttributes = this.player2Atributes.getAttributes(); // Obtener atributos
-      this.character2.updateAttributes(itemAttributes); // Actualizar atributos de Character
-    }
-  
-    console.log(`Item ${itemType} aplicado al jugador ${player}`);
-  }
-
-  showPurchasedItemIcons() {
-    // Mostrar íconos de ítems comprados
-    this.purchasedItems.forEach((item, index) => {
-      let icon = this.add.sprite(
-        50 + index * 50,
-        this.game.scale.height - 50,
-        item
-      );
-      icon.setScale(0.5);
       this.icons.push(icon);
     });
   }

@@ -18,6 +18,7 @@ export class Character {
 
     character.setImmovable;
     character.body.allowGravity = false;
+    character.setDepth(2)
 
     this.scene.add.text(this.x - 35, this.y + 70, this.sprite.toUpperCase(), {
       fontSize: "16px",

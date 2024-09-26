@@ -25,15 +25,16 @@ export class Preloader extends Scene {
     this.load.image('logo', '../public/assets/menu/logo.png');
 
     //  Game
+    this.load.image('escenario', '../public/assets/escenario/principal.png');
     //  Personajes
     this.load.image('mimbo', '../public/assets/mimbo/mimbo.png'); // Neutral
     this.load.image('luho', '../public/assets/luho/luho.png');  // Neutral
 
     // Kid Korn
-    this.load.image('kid-korn1', '../public/assets/barra/korn-defrente.png');
-    this.load.image('kid-korn2', '../public/assets/barra/korn-frente.png');
-    this.load.image('kid-kornFrente', '../public/assets/barra/korn-izq.png');
-    this.load.image('kid-kornFrente2', '../public/assets/barra/kron-derecha.png');
+    this.load.image('kid-korn1', '../public/assets/kid-korn/korn-defrente.png');
+    this.load.image('kid-korn2', '../public/assets/kid-korn/korn-frente.png');
+    this.load.image('kid-kornFrente', '../public/assets/kid-korn/korn-izq.png');
+    this.load.image('kid-kornFrente2', '../public/assets/kid-korn/kron-derecha.png');
 
     //   Emociones
     this.load.image('logo', '../public/assets/menu/logo.png'); // Victoria

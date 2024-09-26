@@ -20,7 +20,7 @@ export class PopCorn {
     });
 
     // Crear el sprite de popcorn como un objeto de Phaser
-    this.sprite = this.scene.physics.add.sprite(x, y, namesprite).setScale(0.68);
+    this.sprite = this.scene.physics.add.sprite(x, y, namesprite).setScale(0.68).setDepth(3);;
 
     // Configuración inicial del sprite
     this.sprite.anims.play("appear", true);

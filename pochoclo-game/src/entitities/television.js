@@ -2,23 +2,24 @@ export class Television {
   constructor(scene) {
     this.scene = scene;
 
-    this.y = this.scene.scale.height / 2 - 50;
+    this.y = this.scene.scale.height / 2 - 60;
     this.x = this.scene.scale.width / 2;
 
     // Sprite Television
     this.television = this.scene.physics.add
       .sprite(this.x, this.y, "l-opacidad")
       .setScale(0.18)
-      .setAlpha(0.3)
-      .setDepth(1);
+      .setAlpha(0.4)
+      .setDepth(0);
 
     this.television.setImmovable;
     this.television.body.allowGravity = false;
+    this.television.setDepth(1)
 
-    this.text = this.scene.add.text(this.x - 15, this.y -30, '', {
+    this.text = this.scene.add.text(this.x - 15, this.y -50, '', {
       fontSize: "70px",
       color: "#fff1e8",
-    }).setDepth(3);
+    }).setDepth(1);
   }
 
   updateText(remainingTime) {

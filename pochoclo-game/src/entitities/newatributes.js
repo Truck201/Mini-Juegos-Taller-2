@@ -12,17 +12,25 @@ export class AtributesPlayers {
     if (playerId === 2) {
       this.atributesData(initialAttributes2);
     }
-    
+  }
 
-    this.createHealBar()
+  create() {
+    this.createHealBar();
   }
 
   atributesData(initialAttributes) {
     // Asignar atributos con valores predeterminados si son indefinidos
     this.atributes = {
-      hitPoints: initialAttributes.hitPoints !== undefined ? initialAttributes.hitPoints : 10, // Inicia en 10 HP
-      speed: initialAttributes.speed !== undefined ? initialAttributes.speed : 5,
-      evadeChance: initialAttributes.evadeChance !== undefined ? initialAttributes.evadeChance : 0,
+      hitPoints:
+        initialAttributes.hitPoints !== undefined
+          ? initialAttributes.hitPoints
+          : 2, // Inicia en 10 HP
+      speed:
+        initialAttributes.speed !== undefined ? initialAttributes.speed : 5,
+      evadeChance:
+        initialAttributes.evadeChance !== undefined
+          ? initialAttributes.evadeChance
+          : 0,
     };
   }
 
@@ -34,14 +42,16 @@ export class AtributesPlayers {
       console.log("Attack evaded!");
       return; // El ataque no afecta
     }
-
     this.atributes.hitPoints -= damage;
-    this.healthText.setText(`HP: ${this.atributes.hitPoints}`);
 
+    if (this.healthText) {
+      this.healthText.setText(`HP: ${this.atributes.hitPoints}`);
+    }
     if (this.atributes.hitPoints <= 0) {
       this.gameOver();
     }
   }
+
   // Lógica de Game Over
   gameOver() {
     console.log(`Game Over for Player ${this.isPlayerOne ? 1 : 2}`);
@@ -52,25 +62,48 @@ export class AtributesPlayers {
   updateAttributes(newAttributes) {
     if (newAttributes.speed) {
       this.atributes.speed += newAttributes.speed;
+      console.log("New Velocity" + newAttributes.speed);
     }
     if (newAttributes.evadeChance) {
       this.atributes.evadeChance += newAttributes.evadeChance;
+      console.log("New EvadeChance" + newAttributes.evadeChance);
     }
     if (newAttributes.hitPoints) {
       this.atributes.hitPoints += newAttributes.hitPoints;
-      this.healthText.setText(`HP: ${this.atributes.hitPoints}`); // Actualiza el texto de HP
+      console.log("New hitPoints" + newAttributes.hitPoints);
+      if (this.healthText) {
+        this.healthText.setText(`HP: ${this.atributes.hitPoints}`); // Actualiza el texto de HP
+      }
+    }
+  }
+
+  removeAttributes(newAttributes) {
+    if (newAttributes.speed) {
+      this.atributes.speed -= newAttributes.speed;
+    }
+    if (newAttributes.evadeChance) {
+      this.atributes.evadeChance -= newAttributes.evadeChance;
+    }
+    if (newAttributes.hitPoints) {
+      this.atributes.hitPoints -= newAttributes.hitPoints;
+      if (this.healthText) {
+        this.healthText.setText(`HP: ${this.atributes.hitPoints}`); // Actualiza el texto de HP
+      } 
     }
   }
 
   createHealBar() {
     if (this.playerId === 1) {
+      const positionY = this.scene.game.scale.height / 7.5; // Define la posición Y según la escena
       this.statsBar = this.scene.add.rectangle(
-        this.x + 180,
-        this.y - 50,
+        this.playerId === 1
+          ? this.scene.game.config.width / 15 + 180
+          : this.scene.game.config.width / 1.07 + 180,
+        positionY - 50,
         200,
         60,
         0xbbbbbb
-      ); // left
+      );
 
       this.healthText = this.scene.add.text(
         this.x + 100,

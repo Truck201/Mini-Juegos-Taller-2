@@ -21,11 +21,13 @@ export class RecolectScene extends Scene {
   comboTimer2; // Temporizador de combo para el jugador 2
   comboDuration = 3000; // Duración del combo (3 segundos)
 
+  popcornTimer; // Temporizador para la aparición de pochoclos
+
   init(data) {
     // Reset points
     this.points1 = data.points1 || 0; // Puntaje inicial jugador 1
     this.points2 = data.points2 || 0; // Puntaje inicial jugador 2
-    this.game_over_timeout = 5; // Tiempo límite de 30 segundos
+    this.game_over_timeout = 30; // Tiempo límite de 30 segundos
 
     // Lanzar la escena del HUD, pasando el tiempo y los puntajes iniciales
     this.scene.launch("Hud", {
@@ -52,7 +54,10 @@ export class RecolectScene extends Scene {
             this.scene.stop("Hud");
             this.scene.stop("Game1vs1");
             this.scene.stop("recolectScene");
-            this.scene.start("Shop", { points1: this.points1, points2: this.points2 }); // Cambia a la escena Shop
+            this.scene.start("Shop", {
+              points1: this.points1,
+              points2: this.points2,
+            }); // Cambia a la escena Shop
           }, 500);
         }
       },
@@ -65,15 +70,18 @@ export class RecolectScene extends Scene {
 
     this.television = new Television(this);
 
-    // Crear instancias de Character
-    this.player1 = new Character(this, "mimbo", true, false); // Jugador 1
-    this.player2 = new Character(this, "luho", false, false); // Jugador 2
+    let background = this.add.sprite(width / 2, height / 2, "escenario");
+    background.setDepth(1);
 
     // Crear la barra principal
     let barraX = width / 2; // Posición Barra en X
     let barraY = (height * 4.3) / 5; // Posición de alto en las barras Y
-    this.mainBar = this.add.rectangle(barraX, barraY, 1000, 95, 0x272736);
-    this.imagenBar = this.add.sprite(barraX, barraY, "imagen-barra");
+    this.mainBar = this.add
+      .rectangle(barraX, barraY, 1000, 95, 0x272736)
+      .setDepth(2);
+    this.imagenBar = this.add
+      .sprite(barraX, barraY, "imagen-barra")
+      .setDepth(2);
 
     let border = 35;
 
@@ -83,13 +91,25 @@ export class RecolectScene extends Scene {
     for (let i = 0; i < 28; i++) {
       let keysX = width / 5.83 + i * border;
       let barraY = (height * 4.3) / 5;
+      let n = Phaser.Math.Between(0, 12);
 
-      // Crear el rectángulo pequeño en medio de la barra principal
-      let collectibleSprite = new PopCorn(this, keysX, barraY - 30, "pochoclo");
+      if (n > 9) {
+        // Crear el rectángulo pequeño en medio de la barra principal
+        let collectibleSprite = new PopCorn(
+          this,
+          keysX,
+          barraY,
+          "pochoclo"
+        );
 
-      // Añadir el recolectable al array
-      this.collectibles.push(collectibleSprite);
+        // Añadir el recolectable al array
+        this.collectibles.push(collectibleSprite);
+      }
     }
+
+    // Crear instancias de Character
+    this.player1 = new Character(this, "mimbo", true, false); // Jugador 1
+    this.player2 = new Character(this, "luho", false, false); // Jugador 2
 
     // Crear barras móviles usando la clase MoveBar
     this.movingBar1 = new MoveBar(
@@ -98,8 +118,8 @@ export class RecolectScene extends Scene {
       barraY,
       20,
       105,
-      3.4,
-      'anilla-roja',
+      9.6,
+      "anilla-roja",
       {
         left: Phaser.Input.Keyboard.KeyCodes.A,
         right: Phaser.Input.Keyboard.KeyCodes.D,
@@ -108,15 +128,14 @@ export class RecolectScene extends Scene {
       this.mainBar
     );
 
-   
     this.movingBar2 = new MoveBar(
       this,
       barraX + 500,
       barraY,
       20,
       105,
-      3.4,
-      'anilla-azul',
+      9.6,
+      "anilla-azul",
       {
         left: Phaser.Input.Keyboard.KeyCodes.LEFT,
         right: Phaser.Input.Keyboard.KeyCodes.RIGHT,
@@ -124,7 +143,7 @@ export class RecolectScene extends Scene {
       false,
       this.mainBar
     );
-    
+
     // Añadir detección de colisión para recolectables
     this.physics.add.overlap(
       this.movingBar1.bar,
@@ -153,6 +172,9 @@ export class RecolectScene extends Scene {
     // Resetear combos al iniciar la escena
     this.player1.resetCombo();
     this.player2.resetCombo();
+
+    // Inicializar el temporizador para generar pochoclos
+    this.startPopcornTimer();
   }
 
   update() {
@@ -176,6 +198,69 @@ export class RecolectScene extends Scene {
   update_points(points) {
     this.points += points;
     this.scene.get("Hud").update_points(this.points);
+  }
+
+  startPopcornTimer() {
+    this.popcornTimer = this.time.addEvent({
+      delay: Phaser.Math.Between(1300, 4000), // Tiempo aleatorio entre 4 y 7 segundos
+      loop: true,
+      callback: () => {
+        if (this.game_over_timeout > 0) {
+          this.generateMultiplePopcorn(); // Generar pochoclos
+        }
+      },
+    });
+  }
+
+  generateMultiplePopcorn() {
+    let numberOfPopcorn = Phaser.Math.Between(3, 6); // Generar
+    let minDistance = 50; // Distancia mínima entre pochoclos
+    let generatedPositions = []; // Array para almacenar las posiciones generadas
+
+    for (let i = 0; i < numberOfPopcorn; i++) {
+      let randomX;
+      let isFarEnough;
+
+      // Generar una posición aleatoria y verificar que no colisione con otras
+      for (let attempt = 0; attempt < 10; attempt++) {
+        // Hasta 10 intentos para encontrar una posición válida
+        randomX = Phaser.Math.Between(
+          this.mainBar.x - this.mainBar.width / 2,
+          this.mainBar.x + this.mainBar.width / 2
+        );
+        isFarEnough = true;
+
+        // Verificar si la posición está lejos de las posiciones ya generadas
+        for (let j = 0; j < generatedPositions.length; j++) {
+          if (Math.abs(randomX - generatedPositions[j]) < minDistance) {
+            isFarEnough = false;
+            break;
+          }
+        }
+
+        if (isFarEnough) {
+          break; // Si se encontró una posición válida, salir del bucle
+        }
+      }
+
+      // Guardar la posición si es válida
+      if (isFarEnough) {
+        generatedPositions.push(randomX);
+
+        let barraY = this.mainBar.y;
+
+        // Crear temporizador para generar cada pochoclo en un tiempo aleatorio
+        this.time.delayedCall(
+          Phaser.Math.Between(400, 1200),
+          () => {
+            let newPopcorn = new PopCorn(this, randomX, barraY, "pochoclo");
+            this.collectibles.push(newPopcorn); // Añadir al array de recolectables
+          },
+          null,
+          this
+        );
+      }
+    }
   }
 
   collectItem(movingBar) {

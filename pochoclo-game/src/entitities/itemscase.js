@@ -17,9 +17,9 @@ export class ItemsCase {
 
     // Definición de atributos de los ítems
     this.itemAttributes = {
-      candy: { damageStrength: 1, speedBoost: 0, evadeChance: 0 },
-      popcorn: { damageStrength: 0, speedBoost: 0, evadeChance: 10 },
-      pizza: { damageStrength: 0, speedBoost: 1.5, evadeChance: 0 },
+      candy: { hitPoints: 1, speed: 0, evadeChance: 0 },
+      popcorn: { hitPoints: 0, speed: 0, evadeChance: 10 },
+      pizza: { hitPoints: 0, speed: 1.5, evadeChance: 0 },
     };
 
     // Inicializar animaciones
@@ -45,8 +45,8 @@ export class ItemsCase {
     this.setupPlayerKeys();
 
     // Seleccionar los primeros cuadrados al inicio
-    this.paintPlayerPosition(this.player1Position, 0xff0000, 0.3); // Jugador 1  0xff0000
-    this.paintPlayerPosition(this.player2Position, 0x0000ff, 0.3); // Jugador 2 0x0000ff
+    this.paintPlayerPosition(this.player1Position, 0.3); // Jugador 1  0xff0000
+    this.paintPlayerPosition(this.player2Position, 0.3); // Jugador 2 0x0000ff
 
     // Posicionar los indicadores sobre los ítems iniciales
     this.updateIndicatorPosition(this.player1Indicator, this.player1Position);
@@ -145,8 +145,8 @@ export class ItemsCase {
         const x = offsetX + col * itemSize;
         const y = offsetY + row * itemSize;
 
-        const ItemType = randomItems[index];
-        const item = this.scene.add.sprite(x, y, ItemType);
+        const itemType = randomItems[index];
+        const item = this.scene.add.sprite(x, y, itemType);
         this.scene.physics.add.existing(item);
         item.setImmovable;
         item.body.allowGravity = false;
@@ -160,11 +160,11 @@ export class ItemsCase {
         this.items.push(item);
 
         // Iniciar la animación dependiendo del tipo de ítem
-        if (ItemType === "popcorn") {
+        if (itemType === "popcorn") {
           item.play("popcorn_idle");
-        } else if (ItemType === "candy") {
+        } else if (itemType === "candy") {
           item.play("candy-idle");
-        } else if (ItemType === "pizza") {
+        } else if (itemType === "pizza") {
           item.play("pizza_idle");
         }
 
@@ -218,8 +218,8 @@ export class ItemsCase {
       playerPosition.col = Phaser.Math.Clamp(playerPosition.col + 1, 0, 4);
     }
 
-    this.paintPlayerPosition(prevPosition, 0xffffff);
-    this.paintPlayerPosition(playerPosition, color, 0.2);
+    this.paintPlayerPosition(prevPosition, 1);
+    this.paintPlayerPosition(playerPosition, 0.2);
   }
 
   handleSelection(player, selectedItems, keys) {
@@ -278,7 +278,7 @@ export class ItemsCase {
     }
   }
 
-  paintPlayerPosition(playerPosition, color, alpha) {
+  paintPlayerPosition(playerPosition, alpha) {
     const item = this.items.find(
       (item) =>
         item.row === playerPosition.row && item.col === playerPosition.col
@@ -327,10 +327,10 @@ export class ItemsCase {
       console.log("Aplicando atributos:" + attributes);
       if (player === 1) {
         console.log("player 1");
-        this.player1Atributes.applyAttributes(attributes);
+        this.player1Atributes.updateAttributes(attributes);
       } else if (player === 2) {
         console.log("player 2");
-        this.player2Atributes.applyAttributes(attributes);
+        this.player2Atributes.updateAttributes(attributes);
       }
     } else {
       console.error(
