@@ -23,6 +23,7 @@ export class Preloader extends Scene {
     //  Main Menu
     // LOGO
     this.load.image('logo', '../public/assets/menu/logo.png');
+    this.load.image('menu-background', '../public/assets/escenario/image.png');
 
     //  Game
     this.load.image('escenario', '../public/assets/escenario/principal.png');

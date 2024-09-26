@@ -2,7 +2,7 @@ export class Television {
   constructor(scene) {
     this.scene = scene;
 
-    this.y = this.scene.scale.height / 2 - 60;
+    this.y = this.scene.scale.height / 2 ;
     this.x = this.scene.scale.width / 2;
 
     // Sprite Television

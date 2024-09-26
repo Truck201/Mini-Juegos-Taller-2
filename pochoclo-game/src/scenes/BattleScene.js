@@ -40,9 +40,10 @@ export class BattleScene extends Scene {
     let width = this.game.scale.width;
     let height = this.game.scale.height;
 
-    this.add.sprite(width/2, height/2, 'escenario')
-
     this.television = new Television(this);
+    
+    let background = this.add.sprite(width/2, height / 2 + 65, 'escenario')
+    background.setDepth(1)
 
     const itemsCase = this.scene.get("ItemsCase");
     
@@ -50,6 +51,7 @@ export class BattleScene extends Scene {
     let barraY = (height * 4.3) / 5; // Posición de alto en las barras Y
     this.mainBar = this.add.rectangle(barraX, barraY, 1000, 95, 0x272736);
     this.imagenBar = this.add.sprite(barraX, barraY, "imagen-barra");
+    this.imagenBar.setDepth(2)
 
     this.attackBar = new Attack(this);
 
@@ -60,7 +62,7 @@ export class BattleScene extends Scene {
       barraY,
       20,
       105,
-      1,
+      7,
       "anilla-roja",
       {
         left: null,
@@ -76,7 +78,7 @@ export class BattleScene extends Scene {
       barraY,
       20,
       105,
-      1,
+      7,
       "anilla-azul",
       {
         left: null,

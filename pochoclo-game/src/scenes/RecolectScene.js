@@ -27,7 +27,7 @@ export class RecolectScene extends Scene {
     // Reset points
     this.points1 = data.points1 || 0; // Puntaje inicial jugador 1
     this.points2 = data.points2 || 0; // Puntaje inicial jugador 2
-    this.game_over_timeout = 30; // Tiempo límite de 30 segundos
+    this.game_over_timeout = 10; // Tiempo límite de 30 segundos
 
     // Lanzar la escena del HUD, pasando el tiempo y los puntajes iniciales
     this.scene.launch("Hud", {
@@ -70,7 +70,7 @@ export class RecolectScene extends Scene {
 
     this.television = new Television(this);
 
-    let background = this.add.sprite(width / 2, height / 2, "escenario");
+    let background = this.add.sprite(width / 2, height / 2 + 65, "escenario");
     background.setDepth(1);
 
     // Crear la barra principal

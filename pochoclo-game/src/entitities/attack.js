@@ -19,6 +19,7 @@ export class Attack {
       mainBarBounds.right - 25
     );
     this.sprite = this.scene.add.rectangle(randomX, this.y, 30, 85, 0xff0000);
+    this.sprite.setDepth(2);
   }
 
   // Método para actualizar o recrear el rectángulo en una nueva posición
