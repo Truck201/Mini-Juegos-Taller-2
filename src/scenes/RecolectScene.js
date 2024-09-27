@@ -28,7 +28,7 @@ export class RecolectScene extends Scene {
     // Reset points
     this.points1 = data.points1 || 0; // Puntaje inicial jugador 1
     this.points2 = data.points2 || 0; // Puntaje inicial jugador 2
-    this.game_over_timeout = 3; // Tiempo límite de 30 segundos
+    this.game_over_timeout = 10; // Tiempo límite de 30 segundos
 
     // Lanzar la escena del HUD, pasando el tiempo y los puntajes iniciales
     this.scene.launch("Hud", {
@@ -92,7 +92,7 @@ export class RecolectScene extends Scene {
     for (let i = 0; i < 28; i++) {
       let keysX = width / 5.83 + i * border;
       let barraY = (height * 4.3) / 5;
-      let n = Phaser.Math.Between(0, 12);
+      let n = Phaser.Math.Between(0, 11);
 
       if (n > 9) {
         // Crear el rectángulo pequeño en medio de la barra principal
@@ -204,7 +204,7 @@ export class RecolectScene extends Scene {
 
   startPopcornTimer() {
     this.popcornTimer = this.time.addEvent({
-      delay: Phaser.Math.Between(1300, 4000), // Tiempo aleatorio entre 4 y 7 segundos
+      delay: Phaser.Math.Between(1300, 4000),
       loop: true,
       callback: () => {
         if (this.game_over_timeout > 0) {
@@ -215,7 +215,7 @@ export class RecolectScene extends Scene {
   }
 
   generateMultiplePopcorn() {
-    let numberOfPopcorn = Phaser.Math.Between(3, 6); // Generar
+    let numberOfPopcorn = Phaser.Math.Between(3, 7); // Generar
     let minDistance = 50; // Distancia mínima entre pochoclos
     let generatedPositions = []; // Array para almacenar las posiciones generadas
 
@@ -253,7 +253,7 @@ export class RecolectScene extends Scene {
 
         // Crear temporizador para generar cada pochoclo en un tiempo aleatorio
         this.time.delayedCall(
-          Phaser.Math.Between(400, 1200),
+          Phaser.Math.Between(400, 1100),
           () => {
             let newPopcorn = new PopCorn(this, randomX, barraY, "pochoclo");
             this.collectibles.push(newPopcorn); // Añadir al array de recolectables

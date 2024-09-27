@@ -20,20 +20,23 @@ export class HudShop extends BaseScene {
   }
 
   create() {
+    let width = this.game.scale.width;
+    let height = this.game.scale.height;
+    
     this.points_text1 = this.createText(
-      (this.scale.width * 0.3) / 8,
-      200,
+      (width * 0.5) / 8,
+      height * 0.85,
       `P1 Points: ${this.points1}`,
     );
 
     this.points_text2 = this.createText(
-      (this.scale.width * 6.3) / 8,
-      200,
-      `P2 Points:: ${this.points2}`,
+      (width * 6.6) / 8,
+      height * 0.85,
+      `P2 Points: ${this.points2}`,
     );
 
     this.remaining_time_text = this.createText(
-      this.scale.width / 2 - 120,
+      width / 2 - 120,
       10,
       `REMAINING: ${this.remaining_time.toString().padStart(2, '0')}s`,
     );
@@ -57,7 +60,7 @@ export class HudShop extends BaseScene {
           `REMAINING: ${timeout.toString().padStart(2, '0')}s`
         );
         // Volver el texto a su posición y estilo original
-        this.remaining_time_text.setPosition(this.scale.width / 2 - 120, 10);
+        this.remaining_time_text.setPosition(this.game.scale.width / 2 - 120, 10);
         this.remaining_time_text.setStyle({
           fontSize: '24px',
           color: '#ffffff',

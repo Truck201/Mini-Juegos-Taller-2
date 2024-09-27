@@ -7,6 +7,24 @@ export class ItemsCase {
     this.items = [];
     this.selectedItems = [];
 
+    this.maxItems = 3;
+
+    this.selectedItemsPlayer1 = [];
+    this.selectedItemsPlayer2 = [];
+
+    this.player1Position = { row: 0, col: 0 };
+    this.player2Position = { row: 0, col: 3 };
+
+    // Slots para cada jugador
+    this.player1Slots = this.createItemSlots(
+      this.width * 0.286,
+      this.height * 0.67
+    );
+    this.player2Slots = this.createItemSlots(
+      this.width * 0.715,
+      this.height * 0.67
+    );
+
     this.mainItemCase = this.scene.add
       .rectangle(
         this.width / 2, // Posicion ancho
@@ -38,8 +56,8 @@ export class ItemsCase {
       }
     );
 
-    this.spritePochoclo1 = this.scene.add
-      .sprite(this.width * 0.06, this.height * 0.9, "pochoclo2")
+    this.scene.add
+      .sprite(this.width * 0.193, this.height * 0.72, "pochoclo2")
       .setDepth(2);
 
     this.descriptionItemPlayer2 = this.scene.add.text(
@@ -62,8 +80,8 @@ export class ItemsCase {
       }
     );
 
-    this.spritePochoclo2 = this.scene.add
-      .sprite(this.width * 0.9, this.height * 0.9, "pochoclo2")
+    this.scene.add
+      .sprite(this.width * 0.95, this.height * 0.72, "pochoclo2")
       .setDepth(2);
 
     this.itemDescriptions = {
@@ -84,11 +102,6 @@ export class ItemsCase {
 
     // Inicializar animaciones
     this.initAnimations();
-
-    this.selectedItemsPlayer1 = [];
-    this.selectedItemsPlayer2 = [];
-    this.player1Position = { row: 0, col: 0 };
-    this.player2Position = { row: 0, col: 3 };
 
     this.createItems();
 
@@ -126,11 +139,99 @@ export class ItemsCase {
     this.canSelect = true;
   }
 
+  // Método para crear los slots visuales de ítems para un jugador
+  createItemSlots(x, y) {
+    let slots = [];
+    const slotSize = 70; // Tamaño del slot
+
+    for (let i = 0; i < this.maxItems; i++) {
+      let slot = this.scene.add
+        .rectangle(x, y + i * (slotSize + 15), slotSize, slotSize, 0x444444)
+        .setStrokeStyle(2, 0xffffff)
+        .setDepth(2);
+      slot.itemSprite = null; // Aquí almacenaremos el sprite del ítem
+      slots.push(slot);
+    }
+
+    return slots;
+  }
+
+  addItemToSlot(player, item) {
+    const slots = player === 1 ? this.player1Slots : this.player2Slots;
+    const selectedItems =
+      player === 1 ? this.selectedItemsPlayer1 : this.selectedItemsPlayer2;
+
+    if (selectedItems.length >= this.maxItems) {
+      console.log(`Jugador ${player} ya tiene 3 ítems!`);
+      return;
+    }
+
+    // Encontrar el primer slot vacío
+    const emptySlot = slots.find((slot) => slot.itemSprite === null);
+
+    if (emptySlot) {
+      const sprite = this.scene.add
+        .sprite(emptySlot.x, emptySlot.y, item.texture.key)
+        .setScale(0.8)
+        .setDepth(3);
+      emptySlot.itemSprite = sprite; // Almacenar el sprite en el slot
+      selectedItems.push(item); // Añadir el ítem a la lista de ítems seleccionados
+    }
+  }
+
+  // Método para vender un ítem y liberar el slot
+  removeItemFromSlot(player, item) {
+    const slots = player === 1 ? this.player1Slots : this.player2Slots;
+    const selectedItems =
+      player === 1 ? this.selectedItemsPlayer1 : this.selectedItemsPlayer2;
+
+    const index = selectedItems.indexOf(item);
+    if (index > -1) {
+      selectedItems.splice(index, 1); // Remover el ítem de la lista de seleccionados
+
+      // Encontrar el slot correspondiente y eliminar el sprite
+      const slot = slots[index];
+      if (slot.itemSprite) {
+        slot.itemSprite.destroy(); // Eliminar el sprite del ítem
+        slot.itemSprite = null; // Liberar el slot
+      }
+      // Reajustar los ítems restantes en los slots
+      this.updatePlayerSlots(player);
+    }
+  }
+
+  // Método para reajustar los ítems en los slots después de vender
+  updatePlayerSlots(player) {
+    const slots = player === 1 ? this.player1Slots : this.player2Slots;
+    const selectedItems =
+      player === 1 ? this.selectedItemsPlayer1 : this.selectedItemsPlayer2;
+
+    // Limpiar todos los slots
+    slots.forEach((slot) => {
+      if (slot.itemSprite) {
+        slot.itemSprite.destroy();
+        slot.itemSprite = null;
+      }
+    });
+
+    // Recolocar los ítems seleccionados en los slots
+    selectedItems.forEach((item, index) => {
+      const slot = slots[index];
+      const sprite = this.scene.add
+        .sprite(slot.x, slot.y, item.texture.key)
+        .setScale(0.8)
+        .setDepth(3);
+      slot.itemSprite = sprite;
+    });
+  }
+
   showItemDescription(itemType) {
     const description = this.itemDescriptions[itemType];
     if (description) {
       this.descriptionItemPlayer1
-        .setText(`${description.description} \n\n\t  ${description.value} Points`)
+        .setText(
+          `${description.description} \n\n\t  ${description.value} Points`
+        )
         .setDepth(2)
         .setOrigin(0.5, 0.5);
       this.descriptionItemPlayer2.setText("");
@@ -262,8 +363,8 @@ export class ItemsCase {
   }
 
   update() {
-    this.handlePlayerMovement(this.player1Keys, this.player1Position, 0xff0000);
-    this.handlePlayerMovement(this.player2Keys, this.player2Position, 0x0000ff);
+    this.handlePlayerMovement(this.player1Keys, this.player1Position);
+    this.handlePlayerMovement(this.player2Keys, this.player2Position);
 
     // Actualizar la posición del indicador de cada jugador
     this.updateIndicatorPosition(this.player1Indicator, this.player1Position);
@@ -299,7 +400,9 @@ export class ItemsCase {
       const description = this.itemDescriptions[item.texture.key];
       if (description) {
         descriptionText
-          .setText(`${description.description} \n\n\t  ${description.value} Points`)
+          .setText(
+            `${description.description} \n\n\t  ${description.value} Points`
+          )
           .setDepth(2)
           .setOrigin(0.5, 0.5);
       }
@@ -320,7 +423,7 @@ export class ItemsCase {
     }
   }
 
-  handlePlayerMovement(playerKeys, playerPosition, color) {
+  handlePlayerMovement(playerKeys, playerPosition) {
     const prevPosition = { ...playerPosition };
 
     if (Phaser.Input.Keyboard.JustDown(playerKeys.up)) {
@@ -339,7 +442,7 @@ export class ItemsCase {
     this.paintPlayerPosition(playerPosition, 0.2);
   }
 
-  handleSelection(player, selectedItems, keys) {
+  handleSelection(player, selectedItems, playerKeys) {
     const playerPosition =
       player === 1 ? this.player1Position : this.player2Position;
     const item = this.items.find(
@@ -347,7 +450,6 @@ export class ItemsCase {
         item.row === playerPosition.row && item.col === playerPosition.col
     );
 
-    // Verifica si el ítem existe
     if (!item) {
       console.error(
         `No se encontró ningún ítem en la posición (${playerPosition.row}, ${playerPosition.col})`
@@ -355,43 +457,47 @@ export class ItemsCase {
       return;
     }
 
-    if (Phaser.Input.Keyboard.JustUp(keys.select) && this.canSelect) {
+    if (Phaser.Input.Keyboard.JustUp(playerKeys.select) && this.canSelect) {
       this.canSelect = false;
       setInterval(() => {
         this.canSelect = true;
       }, 300);
 
       if (item.isSelected && item.selectedBy === player) {
-        // Deseleccionar y devolver puntos
         item.clearTint();
         item.setAlpha(1);
         item.isSelected = false;
         item.selectedBy = null;
         const index = selectedItems.indexOf(item);
+
         if (index !== -1) {
-          this.returnPoints(player);
-          this.removeItemAttributes(player, item.texture.key);
-          selectedItems.splice(index, 1);
+          console.log(`Antes de eliminar el ítem, selectedItems: `,selectedItems);
+        
           this.selectedItems.splice(index, 1);
+          console.log(`Después de eliminar el ítem, selectedItems: `,selectedItems);
+          this.removeItemFromSlot(player, item);
+          this.returnPoints(player);
+          console.log(`Puntos devueltos para el jugador ${player}`);
+          this.removeItemAttributes(player, item.texture.key);
           console.log(`Remove item for ${player}:`, item.texture.key);
         }
-      } else if (!item.isSelected && selectedItems.length < 3) {
+      } else if (!item.isSelected && selectedItems.length < this.maxItems) {
         if (player === 1 && this.scene.points1 >= 5) {
           this.purchaseItem(player, item);
           item.setTint(0x272736); //  0xff0000  Rojo
           item.setAlpha(0.5);
+          this.addItemToSlot(player, item);
           item.isSelected = true;
           item.selectedBy = player;
-          selectedItems.push(item);
           console.log(`Selected item for jugador 2:`, item.texture.key);
           this.applyItemAttributes(player, item.texture.key); // Asignar atributos al jugador 1
         } else if (player === 2 && this.scene.points2 >= 5) {
           this.purchaseItem(player, item);
           item.setTint(0x272736); //  0x0000ff  Azul
           item.setAlpha(0.5);
+          this.addItemToSlot(player, item);
           item.isSelected = true;
           item.selectedBy = player;
-          selectedItems.push(item);
           console.log(`Selected item for jugador 2:`, item.texture.key);
           this.applyItemAttributes(player, item.texture.key); // Asignar atributos al jugador 2
         }
@@ -435,10 +541,11 @@ export class ItemsCase {
     if (player === 1) {
       this.scene.points1 += 5;
       hudScene.update_points(1, this.scene.points1);
-      console.log("Vuelto");
+      console.log("Puntos devueltos al jugador 1: ", this.scene.points1);
     } else if (player === 2) {
       this.scene.points2 += 5;
       hudScene.update_points(2, this.scene.points2);
+      console.log("Puntos devueltos al jugador 2: ", this.scene.points2);
     }
   }
 
@@ -457,6 +564,15 @@ export class ItemsCase {
       console.error(
         `No se encontraron atributos para el tipo de ítem: ${itemType}`
       );
+    }
+  }
+
+  removeItemFromSelected(player, itemType) {
+    const selectedItems =
+      player === 1 ? this.selectedItemsPlayer1 : this.selectedItemsPlayer2;
+    const index = selectedItems.indexOf(itemType);
+    if (index !== -1) {
+      selectedItems.splice(index, 1);
     }
   }
 
