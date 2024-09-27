@@ -71,7 +71,7 @@ export class MainMenu extends BaseScene {
     let options; // Botón de opciones
 
     //Button
-    options = this.createText(width / 2 - 65, 310, "Options")
+    options = this.createText(width / 2 - 75, 310, "Options")
     .setDepth(3);
     //this.add.image(width / 2, height / 2, '').setScale(0.15);
     options.setInteractive();

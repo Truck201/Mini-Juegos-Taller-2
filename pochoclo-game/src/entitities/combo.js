@@ -15,7 +15,7 @@ export class ComboPersonajes {
   create() {
     this.comboText1 = this.scene.add
       .text(this.scene.scale.width * 0.13, this.scene.scale.height * 0.5, "1", {
-        fontSize: "90px",
+        fontSize: "80px",
         fontFamily: "'Press Start 2P', sans-serif",
         color: "#fff",
         stroke: "gold",

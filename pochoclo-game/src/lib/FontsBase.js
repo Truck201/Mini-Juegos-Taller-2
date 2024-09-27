@@ -1,5 +1,3 @@
-import Phaser from "phaser";
-
 export class BaseScene extends Phaser.Scene {
   constructor(key) {
     super({ key });
@@ -8,9 +6,9 @@ export class BaseScene extends Phaser.Scene {
   getGlobalTextStyle(fontSize) {
     return {
       fontSize: fontSize,
-      fontFamily: "'Press Start 2P', sans-serif",
+      fontFamily: "'Pixellari', 'Press Start 2P'",
       color: "#fff",
-      stroke: "gold",
+      stroke: "black",
       strokeThickness: 4,
       maxLines: 4,
       shadow: {
@@ -28,9 +26,9 @@ export class BaseScene extends Phaser.Scene {
     if (text.length <= 4) {
       fontSize = "40px"; // Para palabras cortas
     } else if (text.length <= 8) {
-      fontSize = "30px"; // Para palabras medianas
+      fontSize = "38px"; // Para palabras medianas
     } else {
-      fontSize = "20px"; // Para palabras largas
+      fontSize = "32px"; // Para palabras largas
     }
     return this.add.text(x, y, text, this.getGlobalTextStyle(fontSize));
   }

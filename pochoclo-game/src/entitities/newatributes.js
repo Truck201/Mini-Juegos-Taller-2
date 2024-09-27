@@ -24,13 +24,13 @@ export class AtributesPlayers {
       hitPoints:
         initialAttributes.hitPoints !== undefined
           ? initialAttributes.hitPoints
-          : 2, // Inicia en 10 HP
+          : 10, // Inicia en 10 HP
       speed:
-        initialAttributes.speed !== undefined ? initialAttributes.speed : 5,
+        initialAttributes.speed !== undefined ? initialAttributes.speed : 10,
       evadeChance:
         initialAttributes.evadeChance !== undefined
           ? initialAttributes.evadeChance
-          : 0,
+          : 10,
     };
   }
 
