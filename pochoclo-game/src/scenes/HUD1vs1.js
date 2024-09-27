@@ -1,7 +1,7 @@
-import { Scene } from 'phaser';
+import { BaseScene } from "../lib/FontsBase";
 
 // The HUD scene is the scene that shows the points and the remaining time.
-export class Hud extends Scene {
+export class Hud extends BaseScene {
   remaining_time = 0;
   points1 = 0;
   points2 = 0;
@@ -11,7 +11,7 @@ export class Hud extends Scene {
   points_text2;
 
   constructor() {
-    super('Hud');
+    super("Hud");
   }
 
   init(data) {
@@ -22,34 +22,22 @@ export class Hud extends Scene {
   }
 
   create() {
-    this.points_text1 = this.add.text(
+    this.points_text1 = this.createText(
       (this.scale.width * 0.3) / 8,
       200,
-      `P1 SCORE: ${this.points1}`,
-      {
-        fontSize: '24px',
-        color: '#ffffff',
-      }
+      `P1 SCORE: ${this.points1}`
     );
 
-    this.points_text2 = this.add.text(
+    this.points_text2 = this.createText(
       (this.scale.width * 7) / 8,
       200,
-      `P2 SCORE: ${this.points2}`,
-      {
-        fontSize: '24px',
-        color: '#ffffff',
-      }
+      `P2 SCORE: ${this.points2}`
     );
 
-    this.remaining_time_text = this.add.text(
+    this.remaining_time_text = this.createText(
       this.scale.width / 2 - 120,
       10,
-      `REMAINING: ${this.remaining_time.toString().padStart(2, '0')}s`,
-      {
-        fontSize: '24px',
-        color: '#ffffff',
-      }
+      `REMAINING: ${this.remaining_time.toString().padStart(2, "0")}s`
     );
   }
 
@@ -68,21 +56,22 @@ export class Hud extends Scene {
       }
       if (timeout >= 0) {
         this.remaining_time_text.setText(
-          `REMAINING: ${timeout.toString().padStart(2, '0')}s`
+          `REMAINING: ${timeout.toString().padStart(2, "0")}s`
         );
         // Volver el texto a su posición y estilo original
         this.remaining_time_text.setPosition(this.scale.width / 2 - 120, 10);
         this.remaining_time_text.setStyle({
-          fontSize: '24px',
-          color: '#ffffff',
+          fontSize: "24px",
+          color: "#ffffff",
         });
       }
     } else {
-      console.warn('remaining_time_text is not defined yet.');
+      console.warn("remaining_time_text is not defined yet.");
     }
   }
 
   update_cameras() {
     this.cameras.main.fadeOut(980, 0, 0, 0);
   }
+
 }

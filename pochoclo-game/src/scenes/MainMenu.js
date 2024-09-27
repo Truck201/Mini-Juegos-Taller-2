@@ -1,6 +1,7 @@
 import { Scene } from "phaser";
-import { Television } from "../entitities/television";
-export class MainMenu extends Scene {
+import { BaseScene } from '../lib/FontsBase';
+
+export class MainMenu extends BaseScene {
   constructor() {
     super("MainMenu");
     this.movingIcon = null;
@@ -22,12 +23,8 @@ export class MainMenu extends Scene {
       .setDepth(2);
 
     //Button
-    miImagen = this.add.text(width / 2 - 50, 240, "Play", {
-      fontFamily: 'Arial bold',
-      fontSize: "34px",
-      fill: "#fff",
-      fontWeight: 'bold',
-    })
+    miImagen = this.createText(width / 2 - 50, 240, "Play")
+    .setInteractive()
     .setDepth(3);;
     //this.add.image(width / 2, height / 2, '').setScale(0.15);
     miImagen.setInteractive();
@@ -74,12 +71,7 @@ export class MainMenu extends Scene {
     let options; // Botón de opciones
 
     //Button
-    options = this.add.text(width / 2 - 65, 310, "Options", {
-      fontFamily: 'Helvetica',
-      fontSize: "28px",
-      fill: "#fff",
-      fontWeight: 'bold',
-    })
+    options = this.createText(width / 2 - 65, 310, "Options")
     .setDepth(3);
     //this.add.image(width / 2, height / 2, '').setScale(0.15);
     options.setInteractive();

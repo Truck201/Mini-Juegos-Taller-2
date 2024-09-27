@@ -15,6 +15,58 @@ export class ItemsCase {
       0x272736
     );
 
+    // Descripción del ítem para jugador 1 y jugador 2
+    this.descriptionItemPlayer1 = this.scene.add.text(
+      this.width * 0.06,
+      this.height * 0.80,
+      "",
+      {
+        fontSize: "18px",
+        fontFamily: "'Press Start 2P', sans-serif",
+        color: "#fff",
+        stroke: "gold",
+        strokeThickness: 4,
+        maxLines: 4,
+        shadow: {
+          color: "#000000",
+          fill: true,
+          offsetX: 3,
+          offsetY: 3,
+          blur: 3,
+        },
+      }
+    );
+
+    this.descriptionItemPlayer2 = this.scene.add.text(
+      this.width * 0.73,
+      this.height * 0.80,
+      "",
+      {
+        fontSize: "18px",
+        fontFamily: "'Press Start 2P', sans-serif",
+        color: "#fff",
+        stroke: "gold",
+        strokeThickness: 4,
+        maxLines: 4,
+        shadow: {
+          color: "#000000",
+          fill: true,
+          offsetX: 3,
+          offsetY: 3,
+          blur: 3,
+        },
+      }
+    );
+
+    this.itemDescriptions = {
+      candy: { description: "A sweet treat!\n +1 Hit Point", value: 5 },
+      popcorn: {
+        description: "Perfect for movies!\n +10% Evade Chance",
+        value: 5,
+      },
+      pizza: { description: "Delicious slice!\n +1.5 Speed", value: 5 },
+    };
+
     // Definición de atributos de los ítems
     this.itemAttributes = {
       candy: { hitPoints: 1, speed: 0, evadeChance: 0 },
@@ -31,6 +83,17 @@ export class ItemsCase {
     this.player2Position = { row: 0, col: 4 };
 
     this.createItems();
+
+    // Agregar esto en el constructor después de crear los ítems
+    this.items.forEach((item) => {
+      item.on("pointerover", () => {
+        this.showItemDescription(item.texture.key);
+      });
+
+      item.on("pointerout", () => {
+        this.clearItemDescriptions();
+      });
+    });
 
     // Crear los cuadros que indican la posición de cada jugador
     this.player1Indicator = this.scene.add.rectangle(0, 0, 75, 75);
@@ -53,6 +116,21 @@ export class ItemsCase {
     this.updateIndicatorPosition(this.player2Indicator, this.player2Position);
 
     this.canSelect = true;
+  }
+
+  showItemDescription(itemType) {
+    const description = this.itemDescriptions[itemType];
+    if (description) {
+      this.descriptionItemPlayer1.setText(
+        `${description.description}\n  Value: ${description.value} Points`
+      );
+      this.descriptionItemPlayer2.setText("");
+    }
+  }
+
+  clearItemDescriptions() {
+    this.descriptionItemPlayer1.setText("");
+    this.descriptionItemPlayer2.setText("");
   }
 
   setupPlayerKeys() {
@@ -181,6 +259,16 @@ export class ItemsCase {
     this.updateIndicatorPosition(this.player1Indicator, this.player1Position);
     this.updateIndicatorPosition(this.player2Indicator, this.player2Position);
 
+    // Verificar si las posiciones de los jugadores coinciden con los ítems
+    this.checkPlayerItemCollision(
+      this.player1Position,
+      this.descriptionItemPlayer1
+    );
+    this.checkPlayerItemCollision(
+      this.player2Position,
+      this.descriptionItemPlayer2
+    );
+
     // Lógica de selección de jugadores
     this.handleSelection(1, this.selectedItemsPlayer1, this.player1Keys); // Jugador 1 rojo
     this.handleSelection(2, this.selectedItemsPlayer2, this.player2Keys); // Jugador 2 azul
@@ -189,6 +277,24 @@ export class ItemsCase {
   // Método para agregar un ítem
   addItem(item) {
     this.items.push(item);
+  }
+
+  checkPlayerItemCollision(playerPosition, descriptionText) {
+    const item = this.items.find(
+      (item) =>
+        item.row === playerPosition.row && item.col === playerPosition.col
+    );
+
+    if (item) {
+      const description = this.itemDescriptions[item.texture.key];
+      if (description) {
+        descriptionText.setText(
+          `${description.description}\nValue: ${description.value} Points`
+        );
+      }
+    } else {
+      descriptionText.setText(""); // Limpiar la descripción si no hay coincidencia
+    }
   }
 
   // Mover el indicador a la posición correcta
@@ -223,8 +329,12 @@ export class ItemsCase {
   }
 
   handleSelection(player, selectedItems, keys) {
-    const playerPosition = player === 1 ? this.player1Position : this.player2Position;
-    const item = this.items.find((item) => item.row === playerPosition.row && item.col === playerPosition.col);
+    const playerPosition =
+      player === 1 ? this.player1Position : this.player2Position;
+    const item = this.items.find(
+      (item) =>
+        item.row === playerPosition.row && item.col === playerPosition.col
+    );
 
     // Verifica si el ítem existe
     if (!item) {
@@ -239,7 +349,7 @@ export class ItemsCase {
       setInterval(() => {
         this.canSelect = true;
       }, 300);
-      
+
       if (item.isSelected && item.selectedBy === player) {
         // Deseleccionar y devolver puntos
         item.clearTint();
@@ -251,7 +361,7 @@ export class ItemsCase {
           this.returnPoints(player);
           this.removeItemAttributes(player, item.texture.key);
           selectedItems.splice(index, 1);
-          this.selectedItems.splice(index, 1)
+          this.selectedItems.splice(index, 1);
           console.log(`Remove item for ${player}:`, item.texture.key);
         }
       } else if (!item.isSelected && selectedItems.length < 3) {
