@@ -7,21 +7,23 @@ export class ItemsCase {
     this.items = [];
     this.selectedItems = [];
 
-    this.mainItemCase = this.scene.add.rectangle(
-      this.width / 2 - 35, // Posicion ancho
-      this.height / 1.21,
-      360, // Dimension Ancho
-      380,
-      0x272736
-    );
+    this.mainItemCase = this.scene.add
+      .rectangle(
+        this.width / 2, // Posicion ancho
+        this.height * 0.816,
+        280, // Dimension Ancho
+        220,
+        0x272736
+      )
+      .setDepth(0);
 
     // Descripción del ítem para jugador 1 y jugador 2
     this.descriptionItemPlayer1 = this.scene.add.text(
-      this.width * 0.06,
-      this.height * 0.80,
+      this.width * 0.125,
+      this.height * 0.68,
       "",
       {
-        fontSize: "18px",
+        fontSize: "16px",
         fontFamily: "'Press Start 2P', sans-serif",
         color: "#fff",
         stroke: "gold",
@@ -32,17 +34,20 @@ export class ItemsCase {
           fill: true,
           offsetX: 3,
           offsetY: 3,
-          blur: 3,
         },
       }
     );
+
+    this.spritePochoclo1 = this.scene.add
+      .sprite(this.width * 0.06, this.height * 0.9, "pochoclo2")
+      .setDepth(2);
 
     this.descriptionItemPlayer2 = this.scene.add.text(
-      this.width * 0.73,
-      this.height * 0.80,
+      this.width * 0.88,
+      this.height * 0.68,
       "",
       {
-        fontSize: "18px",
+        fontSize: "16px",
         fontFamily: "'Press Start 2P', sans-serif",
         color: "#fff",
         stroke: "gold",
@@ -53,18 +58,21 @@ export class ItemsCase {
           fill: true,
           offsetX: 3,
           offsetY: 3,
-          blur: 3,
         },
       }
     );
 
+    this.spritePochoclo2 = this.scene.add
+      .sprite(this.width * 0.9, this.height * 0.9, "pochoclo2")
+      .setDepth(2);
+
     this.itemDescriptions = {
-      candy: { description: "A sweet treat!\n +1 Hit Point", value: 5 },
+      candy: { description: "A sweet treat!\n\t+1 Hit Point", value: 5 },
       popcorn: {
-        description: "Perfect for movies!\n +10% Evade Chance",
-        value: 5,
+        description: "Perfect for movies!\n\t+10% Evade Chance",
+        value: 15,
       },
-      pizza: { description: "Delicious slice!\n +1.5 Speed", value: 5 },
+      pizza: { description: "Delicious slice!\n\t+1.5 Speed", value: 20 },
     };
 
     // Definición de atributos de los ítems
@@ -80,7 +88,7 @@ export class ItemsCase {
     this.selectedItemsPlayer1 = [];
     this.selectedItemsPlayer2 = [];
     this.player1Position = { row: 0, col: 0 };
-    this.player2Position = { row: 0, col: 4 };
+    this.player2Position = { row: 0, col: 3 };
 
     this.createItems();
 
@@ -96,10 +104,10 @@ export class ItemsCase {
     });
 
     // Crear los cuadros que indican la posición de cada jugador
-    this.player1Indicator = this.scene.add.rectangle(0, 0, 75, 75);
+    this.player1Indicator = this.scene.add.rectangle(0, 0, 75, 75).setDepth(2);
     this.player1Indicator.setStrokeStyle(4, 0xff0000); // Rojo para jugador 1
 
-    this.player2Indicator = this.scene.add.rectangle(0, 0, 75, 75);
+    this.player2Indicator = this.scene.add.rectangle(0, 0, 75, 75).setDepth(2);
     this.player2Indicator.setStrokeStyle(4, 0x0000ff); // Azul para jugador 2
 
     this.player1Atributes = new AtributesPlayers(this, 1);
@@ -121,9 +129,10 @@ export class ItemsCase {
   showItemDescription(itemType) {
     const description = this.itemDescriptions[itemType];
     if (description) {
-      this.descriptionItemPlayer1.setText(
-        `${description.description}\n  Value: ${description.value} Points`
-      );
+      this.descriptionItemPlayer1
+        .setText(`${description.description} \n\n\t  ${description.value} Points`)
+        .setDepth(2)
+        .setOrigin(0.5, 0.5);
       this.descriptionItemPlayer2.setText("");
     }
   }
@@ -184,11 +193,11 @@ export class ItemsCase {
   }
 
   createItems() {
-    const rows = 4;
-    const cols = 5;
+    const rows = 3;
+    const cols = 4;
     const itemSize = 70;
-    const offsetX = this.width / 2 - (cols * itemSize) / 2;
-    const offsetY = this.height / 1.23 - (rows * itemSize) / 2;
+    const offsetX = this.width / 2 - (cols * itemSize) / 2 + 35;
+    const offsetY = this.height / 1.2 - (rows * itemSize) / 2;
 
     // Solo 9 items
     const avalibleItems = [
@@ -230,6 +239,7 @@ export class ItemsCase {
         item.body.allowGravity = false;
         item.setInteractive();
         item.setScale(0.9);
+        item.setDepth(3);
 
         item.isSelected = false; // Estado de selección
         item.selectedBy = null; // Jugador que lo seleccionó
@@ -288,9 +298,10 @@ export class ItemsCase {
     if (item) {
       const description = this.itemDescriptions[item.texture.key];
       if (description) {
-        descriptionText.setText(
-          `${description.description}\nValue: ${description.value} Points`
-        );
+        descriptionText
+          .setText(`${description.description} \n\n\t  ${description.value} Points`)
+          .setDepth(2)
+          .setOrigin(0.5, 0.5);
       }
     } else {
       descriptionText.setText(""); // Limpiar la descripción si no hay coincidencia
@@ -313,15 +324,15 @@ export class ItemsCase {
     const prevPosition = { ...playerPosition };
 
     if (Phaser.Input.Keyboard.JustDown(playerKeys.up)) {
-      playerPosition.row = Phaser.Math.Clamp(playerPosition.row - 1, 0, 3);
+      playerPosition.row = Phaser.Math.Clamp(playerPosition.row - 1, 0, 2);
     } else if (Phaser.Input.Keyboard.JustDown(playerKeys.down)) {
-      playerPosition.row = Phaser.Math.Clamp(playerPosition.row + 1, 0, 3);
+      playerPosition.row = Phaser.Math.Clamp(playerPosition.row + 1, 0, 2);
     }
 
     if (Phaser.Input.Keyboard.JustDown(playerKeys.left)) {
-      playerPosition.col = Phaser.Math.Clamp(playerPosition.col - 1, 0, 4);
+      playerPosition.col = Phaser.Math.Clamp(playerPosition.col - 1, 0, 3);
     } else if (Phaser.Input.Keyboard.JustDown(playerKeys.right)) {
-      playerPosition.col = Phaser.Math.Clamp(playerPosition.col + 1, 0, 4);
+      playerPosition.col = Phaser.Math.Clamp(playerPosition.col + 1, 0, 3);
     }
 
     this.paintPlayerPosition(prevPosition, 1);

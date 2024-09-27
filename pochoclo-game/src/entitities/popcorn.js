@@ -16,7 +16,7 @@ export class PopCorn {
         start: 0,
         end: 7,
       }),
-      frameRate: 10,
+      frameRate: 9.2,
     });
 
     // Crear el sprite de popcorn como un objeto de Phaser

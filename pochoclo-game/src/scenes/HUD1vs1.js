@@ -23,14 +23,14 @@ export class Hud extends BaseScene {
 
   create() {
     this.points_text1 = this.createText(
-      (this.scale.width * 0.3) / 8,
-      200,
+      (this.scale.width * 0.1) / 8,
+      180,
       `P1 SCORE: ${this.points1}`
     );
 
     this.points_text2 = this.createText(
-      (this.scale.width * 7) / 8,
-      200,
+      (this.scale.width * 6.9) / 8,
+      180,
       `P2 SCORE: ${this.points2}`
     );
 

@@ -3,6 +3,7 @@ import { MoveBar } from "../entitities/movebar";
 import { Television } from "../entitities/television";
 import { Attack } from "../entitities/attack";
 import { AtributesPlayers } from "../entitities/newatributes"; // Importa la clase
+import { Character } from "../entitities/character";
 
 export class BattleScene extends Scene {
   constructor() {
@@ -26,6 +27,9 @@ export class BattleScene extends Scene {
     this.selectedItemsPlayer1 = data.selected1Player || [];
     this.selectedItemsPlayer2 = data.selected2Player || [];
 
+    console.log(this.selectedItemsPlayer1)
+    console.log(this.selectedItemsPlayer2)
+
     // Temporizador
     this.timer_event = this.time.addEvent({
       delay: 1000, // Ejecutar cada segundo
@@ -47,6 +51,9 @@ export class BattleScene extends Scene {
 
     const itemsCase = this.scene.get("ItemsCase");
     
+    let character1 = new Character(this, 'mimbo', true)
+    let character2 = new Character(this, 'luho', false)
+
     let barraX = width / 2; // Posición Barra en X
     let barraY = (height * 4.3) / 5; // Posición de alto en las barras Y
     this.mainBar = this.add.rectangle(barraX, barraY, 1000, 95, 0x272736);

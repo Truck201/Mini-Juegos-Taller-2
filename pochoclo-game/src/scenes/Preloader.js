@@ -1,5 +1,5 @@
 import { Scene } from 'phaser';
-
+import WebFontFile from '../lib/WebFontFile';
 export class Preloader extends Scene {
   constructor() {
     super('Preloader');
@@ -25,6 +25,13 @@ export class Preloader extends Scene {
     this.load.image('logo', '../public/assets/menu/logo.png');
     this.load.image('menu-background', '../public/assets/escenario/image.png');
 
+    // Fonts
+    this.load.addFile(new WebFontFile(this.load, 'Pixellari'));
+
+    // Barra Audio Master
+    this.load.image('sliderHandle', '../public/assets/menu/anillo_volumen.png'); // Derrota
+    this.load.image('sliderBar', '../public/assets/menu/barra_volumen.png'); // Daño
+    
     //  Game
     this.load.image('escenario', '../public/assets/escenario/principal.png');
     //  Personajes
@@ -47,14 +54,16 @@ export class Preloader extends Scene {
     this.load.image('logo', '../public/assets/menu/logo.png'); // Daño
 
     //   Pochoclos
-    this.load.image('pochoclo', '../public/assets/barra/static-pororo.png');
+    this.load.image('pochoclo', '../public/assets/barra/static-pororo1.png');
+    this.load.image('pochoclo2', '../public/assets/barra/static-pororo.png');
+
     //   Anims
     this.load.spritesheet(
       'pochoclo-anims',
-      '../public/assets/anims/plop-pororo.png',
+      '../public/assets/anims/plop-pororo1.png',
       {
-        frameWidth: 90,
-        frameHeight: 114,
+        frameWidth: 92, // 90
+        frameHeight: 80,  // 114
       }
     );
 
@@ -67,7 +76,8 @@ export class Preloader extends Scene {
     this.load.image('l-opacidad', '../public/assets/opacidad.png');
 
     //  Tienda
-    this.load.image('background', '../public/assets/tienda/background.png')
+    this.load.image('backShop', '../public/assets/tienda/slots_shop.png')
+
     this.load.spritesheet(
       'popcorn',
       '../public/assets/tienda/idle-pororo.png',
@@ -92,9 +102,11 @@ export class Preloader extends Scene {
     });
 
     // Partículas
-    this.load.image('flare', '../public/assets/particles/particles.png');
+    this.load.image('flare', '../public/assets/particles/particles.png'); //  2
     this.load.image('flare2', '../public/assets/particles/particles2.png');
-    this.load.image('flare3', '../public/assets/particles/particles3.png');
+    this.load.image('flare3', '../public/assets/particles/particles3.png'); //  1
+
+
   }
 
   create() {

@@ -49,6 +49,13 @@ export class Shop extends Scene {
   }
 
   create() {
+    let width = this.game.scale.width;
+    let height = this.game.scale.height;
+
+    this.add.image(width/2, height * 0.79, 'backShop')
+    .setScale(1.35)
+    .setDepth(1)
+
     this.itemsCase = new ItemsCase(this, this.scale.width, this.scale.height);
 
     this.input.keyboard.on("keydown-ESC", () => {
