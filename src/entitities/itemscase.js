@@ -469,6 +469,7 @@ export class ItemsCase {
         item.isSelected = false;
         item.selectedBy = null;
         const index = selectedItems.indexOf(item);
+        
 
         if (index !== -1) {
           console.log(`Antes de eliminar el ítem, selectedItems: `,selectedItems);
@@ -476,14 +477,15 @@ export class ItemsCase {
           this.selectedItems.splice(index, 1);
           console.log(`Después de eliminar el ítem, selectedItems: `,selectedItems);
           this.removeItemFromSlot(player, item);
-          this.returnPoints(player);
+          this.returnPoints(player, item.texture.key);
           console.log(`Puntos devueltos para el jugador ${player}`);
           this.removeItemAttributes(player, item.texture.key);
           console.log(`Remove item for ${player}:`, item.texture.key);
         }
       } else if (!item.isSelected && selectedItems.length < this.maxItems) {
-        if (player === 1 && this.scene.points1 >= 5) {
-          this.purchaseItem(player, item);
+        const itemValue = this.itemDescriptions[item.texture.key].value;
+        if (player === 1 && this.scene.points1 >= itemValue) {
+          this.purchaseItem(player, item, item.texture.key);
           item.setTint(0x272736); //  0xff0000  Rojo
           item.setAlpha(0.5);
           this.addItemToSlot(player, item);
@@ -491,8 +493,8 @@ export class ItemsCase {
           item.selectedBy = player;
           console.log(`Selected item for jugador 2:`, item.texture.key);
           this.applyItemAttributes(player, item.texture.key); // Asignar atributos al jugador 1
-        } else if (player === 2 && this.scene.points2 >= 5) {
-          this.purchaseItem(player, item);
+        } else if (player === 2 && this.scene.points2 >= itemValue) {
+          this.purchaseItem(player, item, item.texture.key);
           item.setTint(0x272736); //  0x0000ff  Azul
           item.setAlpha(0.5);
           this.addItemToSlot(player, item);
@@ -517,16 +519,16 @@ export class ItemsCase {
   }
 
   // Función para reducir puntos al comprar ítems
-  purchaseItem(player, item) {
+  purchaseItem(player, item, itemType) {
     const hudScene = this.scene.scene.get("hudShop");
-
-    if (player === 1 && this.scene.points1 >= 5) {
-      this.scene.points1 -= 5;
+    const itemValue = this.itemDescriptions[itemType].value;
+    if (player === 1 && this.scene.points1 >= itemValue) {
+      this.scene.points1 -= itemValue;
       hudScene.update_points(1, this.scene.points1);
       this.selectedItems.push(item); // Agregar ítem al array de seleccionados
       return true;
-    } else if (player === 2 && this.scene.points2 >= 5) {
-      this.scene.points2 -= 5;
+    } else if (player === 2 && this.scene.points2 >= itemValue) {
+      this.scene.points2 -= itemValue;
       hudScene.update_points(2, this.scene.points2);
       this.selectedItems.push(item); // Agregar ítem al array de seleccionados
       return true;
@@ -536,14 +538,15 @@ export class ItemsCase {
     }
   }
 
-  returnPoints(player) {
+  returnPoints(player, itemType) {
     const hudScene = this.scene.scene.get("hudShop");
+    const itemValue = this.itemDescriptions[itemType].value;
     if (player === 1) {
-      this.scene.points1 += 5;
+      this.scene.points1 += itemValue;
       hudScene.update_points(1, this.scene.points1);
       console.log("Puntos devueltos al jugador 1: ", this.scene.points1);
     } else if (player === 2) {
-      this.scene.points2 += 5;
+      this.scene.points2 += itemValue;
       hudScene.update_points(2, this.scene.points2);
       console.log("Puntos devueltos al jugador 2: ", this.scene.points2);
     }

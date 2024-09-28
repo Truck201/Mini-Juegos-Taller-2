@@ -14,7 +14,7 @@ export class PopCorn {
       key: "appear",
       frames: this.scene.anims.generateFrameNumbers("pochoclo-anims", {
         start: 0,
-        end: 7,
+        end: 4,
       }),
       frameRate: 9.2,
     });

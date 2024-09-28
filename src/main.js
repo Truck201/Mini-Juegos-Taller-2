@@ -15,9 +15,8 @@ import { HudBattle } from "./scenes/HudBattle";
 import { GameOver } from "./scenes/GameOver";
 import { BaseScene } from "./lib/FontsBase";
 
-
 const config = {
-  type: Phaser.AUTO,
+  type: Phaser.WEBGL,
   width: window.innerWidth, // Ajusta el ancho al 90% del ancho de la ventana
   height: window.innerHeight, // Ajusta la altura al 90% de la altura de la ventana
   parent: "game-container",

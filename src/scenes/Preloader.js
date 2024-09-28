@@ -1,8 +1,8 @@
-import { Scene } from 'phaser';
-import WebFontFile from '../lib/WebFontFile';
+import { Scene } from "phaser";
+import WebFontFile from "../lib/WebFontFile";
 export class Preloader extends Scene {
   constructor() {
-    super('Preloader');
+    super("Preloader");
   }
 
   init() {
@@ -19,68 +19,81 @@ export class Preloader extends Scene {
 
   preload() {
     //this.load.image('logo', 'logo.png');
+    this.load.glsl("crtShader", "../src/crtShaders.flag");
+    console.log(this.game.renderer);
+
+    this.load.on("complete", () => {
+      if (this.cache.shader.has("crtShader")) {
+        console.log("Shader loaded successfully!");
+      } else {
+        console.error("Failed to load shader.");
+      }
+    });
 
     //  Main Menu
     // LOGO
-    this.load.image('logo', '../public/assets/menu/logo.png');
-    this.load.image('menu-background', '../public/assets/escenario/image.png');
+    this.load.image("logo", "../public/assets/menu/logo.png");
+    this.load.image("menu-background", "../public/assets/escenario/image.png");
 
     // Fonts
-    this.load.addFile(new WebFontFile(this.load, 'Pixellari'));
+    this.load.addFile(new WebFontFile(this.load, "Pixellari"));
 
     // Barra Audio Master
-    this.load.image('sliderHandle', '../public/assets/menu/anillo_volumen.png'); // Derrota
-    this.load.image('sliderBar', '../public/assets/menu/barra_volumen.png'); // Daño
-    
+    this.load.image("sliderHandle", "../public/assets/menu/anillo_volumen.png"); // Derrota
+    this.load.image("sliderBar", "../public/assets/menu/barra_volumen.png"); // Daño
+
     //  Game
-    this.load.image('escenario', '../public/assets/escenario/principal.png');
+    this.load.image("escenario", "../public/assets/escenario/principal.png");
     //  Personajes
-    this.load.image('mimbo', '../public/assets/mimbo/mimbo.png'); // Neutral
-    this.load.image('luho', '../public/assets/luho/luho.png');  // Neutral
+    this.load.image("mimbo", "../public/assets/mimbo/mimbo.png"); // Neutral
+    this.load.image("luho", "../public/assets/luho/luho.png"); // Neutral
 
     // Kid Korn
-    this.load.image('kid-korn1', '../public/assets/kid-korn/korn-defrente.png');
-    this.load.image('kid-korn2', '../public/assets/kid-korn/korn-frente.png');
-    this.load.image('kid-kornFrente', '../public/assets/kid-korn/korn-izq.png');
-    this.load.image('kid-kornFrente2', '../public/assets/kid-korn/kron-derecha.png');
+    this.load.image("kid-korn1", "../public/assets/kid-korn/korn-defrente.png");
+    this.load.image("kid-korn2", "../public/assets/kid-korn/korn-frente.png");
+    this.load.image("kid-kornFrente", "../public/assets/kid-korn/korn-izq.png");
+    this.load.image(
+      "kid-kornFrente2",
+      "../public/assets/kid-korn/kron-derecha.png"
+    );
 
     //   Emociones
-    this.load.image('logo', '../public/assets/menu/logo.png'); // Victoria
-    this.load.image('logo', '../public/assets/menu/logo.png'); // Derrota
-    this.load.image('logo', '../public/assets/menu/logo.png'); // Daño
-    
-    this.load.image('logo', '../public/assets/menu/logo.png'); // Victoria
-    this.load.image('logo', '../public/assets/menu/logo.png'); // Derrota
-    this.load.image('logo', '../public/assets/menu/logo.png'); // Daño
+    this.load.image("logo", "../public/assets/menu/logo.png"); // Victoria
+    this.load.image("logo", "../public/assets/menu/logo.png"); // Derrota
+    this.load.image("logo", "../public/assets/menu/logo.png"); // Daño
+
+    this.load.image("logo", "../public/assets/menu/logo.png"); // Victoria
+    this.load.image("logo", "../public/assets/menu/logo.png"); // Derrota
+    this.load.image("logo", "../public/assets/menu/logo.png"); // Daño
 
     //   Pochoclos
-    this.load.image('pochoclo', '../public/assets/barra/static-pororo1.png');
-    this.load.image('pochoclo2', '../public/assets/barra/static-pororo.png');
+    this.load.image("pochoclo", "../public/assets/barra/static-pororo1.png");
+    this.load.image("pochoclo2", "../public/assets/barra/static-pororo.png");
 
     //   Anims
     this.load.spritesheet(
-      'pochoclo-anims',
-      '../public/assets/anims/plop-pororo1.png',
+      "pochoclo-anims",
+      "../public/assets/anims/plop-pororo1.png",
       {
         frameWidth: 92, // 90
-        frameHeight: 80,  // 114
+        frameHeight: 80, // 114
       }
     );
 
     //   Main Barra Sprite
-    this.load.image('imagen-barra', '../public/assets/barra/barra-1v1.png');
-    this.load.image('anilla-azul', '../public/assets/barra/barra-azul.png');
-    this.load.image('anilla-roja', '../public/assets/barra/barra-roja.png');
+    this.load.image("imagen-barra", "../public/assets/barra/barra-1v1.png");
+    this.load.image("anilla-azul", "../public/assets/barra/barra-azul.png");
+    this.load.image("anilla-roja", "../public/assets/barra/barra-roja.png");
 
     //   Opacidad
-    this.load.image('l-opacidad', '../public/assets/opacidad.png');
+    this.load.image("l-opacidad", "../public/assets/opacidad.png");
 
     //  Tienda
-    this.load.image('backShop', '../public/assets/tienda/slots_shop.png')
+    this.load.image("backShop", "../public/assets/tienda/slots_shop.png");
 
     this.load.spritesheet(
-      'popcorn',
-      '../public/assets/tienda/idle-pororo.png',
+      "popcorn",
+      "../public/assets/tienda/idle-pororo.png",
       {
         frameWidth: 65,
         frameHeight: 64,
@@ -88,25 +101,23 @@ export class Preloader extends Scene {
     );
 
     this.load.spritesheet(
-      'candy',
-      '../public/assets/tienda/caramelo-azul.png',
+      "candy",
+      "../public/assets/tienda/caramelo-azul.png",
       {
         frameWidth: 60,
         frameHeight: 70,
       }
     );
 
-    this.load.spritesheet('pizza', '../public/assets/tienda/zapi.png', {
+    this.load.spritesheet("pizza", "../public/assets/tienda/zapi.png", {
       frameWidth: 60,
       frameHeight: 68,
     });
 
     // Partículas
-    this.load.image('flare', '../public/assets/particles/particles.png'); //  2
-    this.load.image('flare2', '../public/assets/particles/particles2.png');
-    this.load.image('flare3', '../public/assets/particles/particles3.png'); //  1
-
-
+    this.load.image("flare", "../public/assets/particles/particles.png"); //  2
+    this.load.image("flare2", "../public/assets/particles/particles2.png");
+    this.load.image("flare3", "../public/assets/particles/particles3.png"); //  1
   }
 
   create() {
@@ -114,6 +125,6 @@ export class Preloader extends Scene {
     //  For example, you can define global animations here, so we can use them in other scenes.
 
     //  Move to the MainMenu. You could also swap this for a Scene Transition, such as a camera fade.
-    this.scene.start('MainMenu');
+    this.scene.start("MainMenu");
   }
 }
