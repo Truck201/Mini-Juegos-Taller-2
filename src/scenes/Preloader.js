@@ -89,7 +89,18 @@ export class Preloader extends Scene {
     this.load.image("l-opacidad", "../public/assets/opacidad.png");
 
     //  Tienda
-    this.load.image("backShop", "../public/assets/tienda/slots_shop.png");
+    this.load.image("backgroundShop", "../public/assets/tienda/shop-background-sprite.png");
+
+    this.load.spritesheet(
+      "backgroundSheet",
+      "../public/assets/tienda/shop-background.png",
+      {
+        frameWidth: 1760,
+        frameHeight: 1272,
+      }
+    )
+
+    this.load.image("backShop", "../public/assets/tienda/slots_shop.png"); 
 
     this.load.spritesheet(
       "popcorn",
@@ -115,9 +126,9 @@ export class Preloader extends Scene {
     });
 
     // Partículas
-    this.load.image("flare", "../public/assets/particles/particles.png"); //  2
-    this.load.image("flare2", "../public/assets/particles/particles2.png");
-    this.load.image("flare3", "../public/assets/particles/particles3.png"); //  1
+    this.load.image("flare", "../public/assets/particles/blue-particle.png"); //  2         particles.png
+    this.load.image("flare2", "../public/assets/particles/particles2.png"); 
+    this.load.image("flare3", "../public/assets/particles/red-particle.png"); //  1      particles3.png
   }
 
   create() {

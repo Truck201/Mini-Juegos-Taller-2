@@ -16,6 +16,7 @@ export class Shop extends Scene {
     this.points2 = data.points2 || 0; // Puntaje inicial jugador 2
     this.game_over_timeout = 15;
     this.lastKeyPressTime = 0;
+    this.background;
 
     // Lanzar la escena del HUD, pasando el tiempo y los puntajes iniciales
     this.scene.launch("hudShop", {
@@ -52,9 +53,32 @@ export class Shop extends Scene {
     let width = this.game.scale.width;
     let height = this.game.scale.height;
 
-    this.add.image(width/2, height * 0.79, 'backShop')
-    .setScale(1.35)
-    .setDepth(1)
+
+
+    // Crea la animación a partir del spritesheet
+    this.anims.create({
+      key: "idle",
+      frames: this.anims.generateFrameNumbers("backgroundSheet", {
+        start: 0,
+        end: 9,
+      }), // Asegúrate de que hay al menos 10 frames
+      frameRate: 6,
+      repeat: -1, // Repite la animación indefinidamente
+    });
+
+    // Crea un nuevo sprite para la animación y colócalo detrás del fondo
+    const animatedBackground = this.add
+      .sprite(width / 2, height / 2, "backgroundShop")
+      .setScale(0.5)
+      .setDepth(0);
+      
+
+    animatedBackground.anims.play("idle", true);
+
+    this.add
+      .image(width / 2, height * 0.79, "backShop")
+      .setScale(1.35)
+      .setDepth(1);
 
     this.itemsCase = new ItemsCase(this, this.scale.width, this.scale.height);
 
@@ -83,9 +107,10 @@ export class Shop extends Scene {
     const selectedItems = this.itemsCase.selectedItems; // Obtén los ítems seleccionados
     const selected1Player = this.itemsCase.selectedItemsPlayer1;
     const selected2Player = this.itemsCase.selectedItemsPlayer2;
-    this.scene.start("battleScene", { 
+    this.scene.start("battleScene", {
       purchasedItems: selectedItems,
       selectedItemsPlayer1: selected1Player,
-      selectedItemsPlayer2: selected2Player }); // Inicia la escena de batalla
+      selectedItemsPlayer2: selected2Player,
+    }); // Inicia la escena de batalla
   };
 }

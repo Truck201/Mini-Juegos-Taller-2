@@ -33,11 +33,11 @@ export class Particles {
 
     const partis = scene.add.particles(x, y, type, {
       speed: { min: 10, max: 70 },
-      lifespan: 450,
+      lifespan: 450, // 450
       alpha: { start: 1, end: 0 }, // Las partículas se desvanecen
-      scale: { start: 0.003, end: 0.09 },
+      scale: { start: 0.76, end: 0.003 },  // 0.003, end: 0.09
       tint: 0xffffff,
-      quantity: 9,
+      quantity: 1,
       gravityY: 0, // Sin gravedad para un movimiento lineal
       blendMode: "ADD",
     });
