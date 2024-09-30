@@ -11,6 +11,12 @@ export class Attack {
 
   // Crear la attackBar en una posición aleatoria
   createAttackBar() {
+    const mainBar = this.scene.mainBar;
+    if (!mainBar) {
+      console.error("MainBar no existe en la escena");
+      return;
+    }
+
     const mainBarBounds = this.scene.mainBar.getBounds();
 
     // Posición aleatoria dentro de la barra principal (mainBar)
@@ -26,6 +32,7 @@ export class Attack {
   respawn() {
     if (this.sprite) {
       this.sprite.destroy(); // Destruye el rectángulo anterior
+      this.sprite = null;
     }
     this.createAttackBar(); // Crea un nuevo rectángulo en una posición aleatoria
     this.sprite.setFillStyle(0xff0000); // Cambia el color a rojo

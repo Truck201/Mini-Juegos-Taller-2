@@ -132,20 +132,20 @@ export class Preloader extends Scene {
 
     // Battle
     // Left
-    this.load.image('healthBarL1', '../public/assets/battle/pj1_vida5.png')
-    this.load.image('healthBarL2', '../public/assets/battle/pj1_vida4.png')
-    this.load.image('healthBarL3', '../public/assets/battle/pj1_vida3.png')
-    this.load.image('healthBarL4', '../public/assets/battle/pj1_vida2.png')
-    this.load.image('healthBarL5', '../public/assets/battle/pj1_vida1.png')
-    this.load.image('healthBarLNo', '../public/assets/battle/pj1_no-vida.png')
+    this.load.image('healthBarL1', '../public/assets/battle/vida/pj1_vida5.png')
+    this.load.image('healthBarL2', '../public/assets/battle/vida/pj1_vida4.png')
+    this.load.image('healthBarL3', '../public/assets/battle/vida/pj1_vida3.png')
+    this.load.image('healthBarL4', '../public/assets/battle/vida/pj1_vida2.png')
+    this.load.image('healthBarL5', '../public/assets/battle/vida/pj1_vida1.png')
+    this.load.image('healthBarLNo', '../public/assets/battle/vida/pj1_no-vida.png')
 
     // Right
-    this.load.image('healthBarR1', '../public/assets/battle/pj2_vida5.png')
-    this.load.image('healthBarR2', '../public/assets/battle/pj2_vida4.png')
-    this.load.image('healthBarR3', '../public/assets/battle/pj2_vida3.png')
-    this.load.image('healthBarR4', '../public/assets/battle/pj2_vida2.png')
-    this.load.image('healthBarR5', '../public/assets/battle/pj2_vida1.png')
-    this.load.image('healthBarRNo', '../public/assets/battle/pj2_no-vida.png')
+    this.load.image('healthBarR1', '../public/assets/battle/vida/pj2_vida5.png')
+    this.load.image('healthBarR2', '../public/assets/battle/vida/pj2_vida4.png')
+    this.load.image('healthBarR3', '../public/assets/battle/vida/pj2_vida3.png')
+    this.load.image('healthBarR4', '../public/assets/battle/vida/pj2_vida2.png')
+    this.load.image('healthBarR5', '../public/assets/battle/vida/pj2_vida1.png')
+    this.load.image('healthBarRNo', '../public/assets/battle/vida/pj2_no-vida.png')
 
   }
 

@@ -95,9 +95,9 @@ export class ItemsCase {
 
     // Definición de atributos de los ítems
     this.itemAttributes = {
-      candy: { hitPoints: 1, speed: 0, evadeChance: 0 },
-      popcorn: { hitPoints: 0, speed: 0, evadeChance: 10 },
-      pizza: { hitPoints: 0, speed: 1.5, evadeChance: 0 },
+      candy: { hitPoints: 2, speed: 0, evadeChance: 0 },
+      popcorn: { hitPoints: 0, speed: 0, evadeChance: 20 },
+      pizza: { hitPoints: 0, speed: 5, evadeChance: 0 },
     };
 
     // Inicializar animaciones
@@ -123,8 +123,8 @@ export class ItemsCase {
     this.player2Indicator = this.scene.add.rectangle(0, 0, 75, 75).setDepth(2);
     this.player2Indicator.setStrokeStyle(4, 0x0000ff); // Azul para jugador 2
 
-    this.player1Atributes = new AtributesPlayers(this, 1, false);
-    this.player2Atributes = new AtributesPlayers(this, 2, false);
+    this.player1Atributes = new AtributesPlayers(this, 1);
+    this.player2Atributes = new AtributesPlayers(this, 2);
 
     this.setupPlayerKeys();
 

@@ -14,7 +14,7 @@ export class Shop extends Scene {
   init(data) {
     this.points1 = data.points1 || 0; // Puntaje inicial jugador 1
     this.points2 = data.points2 || 0; // Puntaje inicial jugador 2
-    this.game_over_timeout = 15;
+    this.game_over_timeout = 5;
     this.lastKeyPressTime = 0;
     this.background;
 
@@ -109,6 +109,7 @@ export class Shop extends Scene {
     const selected2Player = this.itemsCase.player2Atributes;
     console.log(selected1Player , "player 1 items")
     console.log(selected2Player , "player 2 items")
+  
     this.scene.start("battleScene", {
       purchasedItems: selectedItems,
       selectedItemsPlayer1: selected1Player,

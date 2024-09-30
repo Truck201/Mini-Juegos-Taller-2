@@ -12,8 +12,8 @@ export class BattleScene extends Scene {
     this.movingBar2 = null;
 
     // Crear los objetos de atributos para cada jugador
-    this.player1Atributes = new AtributesPlayers(this, 1, true);
-    this.player2Atributes = new AtributesPlayers(this, 2, true);
+    this.player1Atributes = new AtributesPlayers(this, 1);
+    this.player2Atributes = new AtributesPlayers(this, 2);
   }
 
   game_over_timeout;
@@ -22,9 +22,9 @@ export class BattleScene extends Scene {
 
   init(data) {
     this.game_over_timeout = 60; // Tiempo límite de 30 segundos
-    this.purchasedItems = data.selectedItems || []; // Obtener los ítems comprados
-    this.selectedItemsPlayer1 = data.selected1Player || [];
-    this.selectedItemsPlayer2 = data.selected2Player || [];
+    this.purchasedItems = data.purchasedItems || []; // Obtener los ítems comprados
+    this.selectedItemsPlayer1 = data.selectedItemsPlayer1 || {}; // Asegúrate de que sea un objeto
+    this.selectedItemsPlayer2 = data.selectedItemsPlayer2 || {}; // Asegúrate de que sea un objeto
 
     console.log(this.selectedItemsPlayer1);
     console.log(this.selectedItemsPlayer2);
@@ -43,11 +43,11 @@ export class BattleScene extends Scene {
     let width = this.game.scale.width;
     let height = this.game.scale.height;
 
+    this.player1Atributes.create()
+    this.player2Atributes.create()
+
     const player1Speed = this.selectedItemsPlayer1.atributes?.speed || 5; // Valor por defecto si no existe
     const player2Speed = this.selectedItemsPlayer2.atributes?.speed || 5; // Valor por defecto si no existe
-
-    this.player1HP = this.player1Atributes.atributes.hitPoints || 5;
-    this.player2HP = this.player2Atributes.atributes.hitPoints || 5;
 
     this.player1EvadeChance =
       this.selectedItemsPlayer1.atributes?.evadeChance || 0;
@@ -56,6 +56,12 @@ export class BattleScene extends Scene {
 
     this.player1Damage = 1;
     this.player2Damage = 1;
+
+    this.player1HP = this.selectedItemsPlayer1.atributes?.hitPoints;
+    this.player2HP = this.selectedItemsPlayer2.atributes?.hitPoints;
+
+    console.log(this.player1HP)
+    console.log(this.player2HP)
 
     this.television = new Television(this);
 
@@ -123,6 +129,7 @@ export class BattleScene extends Scene {
       fontSize: "33px",
       fill: "#fff",
     });
+
   }
 
   update() {
@@ -140,9 +147,10 @@ export class BattleScene extends Scene {
       this.player1Atributes.takeDamage(
         1,
         this.player1EvadeChance,
-        this.player1Damage
+        this.player1Damage,
+        this.player1HP
       ); // Aplica daño según hitPoints
-      console.log("Vida del jugador 1: ", player1HP);
+      console.log("Vida del jugador 1: Actual  ", this.player1HP);
       this.destroyAndRespawn(); // Destruye y reaparece
     }
 
@@ -154,8 +162,10 @@ export class BattleScene extends Scene {
       this.player2Atributes.takeDamage(
         2,
         this.player2EvadeChance,
-        this.player2Damage
+        this.player2Damage,
+        this.player2HP
       ); // Aplica daño al jugador 2
+      console.log("Vida del jugador 2: Actual ", this.player2HP);
       this.destroyAndRespawn(); // Destruye y reaparece en rojo
     }
 
@@ -185,6 +195,10 @@ export class BattleScene extends Scene {
     );
   }
 
+  playerHitPointLess(){
+
+  }
+
   // Método para manejar la destrucción y reaparición de la attackBar
   destroyAndRespawn() {
     this.attackBar.destroy();
@@ -195,22 +209,6 @@ export class BattleScene extends Scene {
     this.time.delayedCall(3000, () => {
       this.attackBar.respawn();
     });
-  }
-
-  // Método para manejar ataques
-  handleAttack(attacker, target) {
-    // Verificar si el ataque es esquivado
-    if (Math.random() < target.getHitPoints() * (target.evadeChance / 100)) {
-      console.log(`Jugador ${target.playerId} esquivó el ataque!`);
-      return; // Termina el método si el ataque es esquivado
-    }
-
-    // Reducir puntos de vida si el ataque impacta
-    target.setHitPoints(target.getHitPoints() - 1);
-
-    if (target.getHitPoints() <= 0) {
-      this.gameOver(target.playerId); // Lógica de fin de juego si el jugador no tiene vida
-    }
   }
 
   gameOver(loser) {
