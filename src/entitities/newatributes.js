@@ -16,67 +16,71 @@ export class AtributesPlayers {
 
   create() {
     this.x = this.scene.scale.width;
-    this.initializeHealthBars();
+    this.initializeHealthBars(this.playerId);
   }
 
   initializeHealthBars() {
-    // Añadir barras de vida del jugador 1
-    this.player1HealthBars = [
-      this.scene.add
-        .sprite(this.x * 0.25, 50, "healthBarL1")
-        .setVisible(true)
-        .setDepth(2),
-      this.scene.add
-        .sprite(this.x * 0.25, 50, "healthBarL2")
-        .setVisible(false)
-        .setDepth(2),
-      this.scene.add
-        .sprite(this.x * 0.25, 50, "healthBarL3")
-        .setVisible(false)
-        .setDepth(2),
-      this.scene.add
-        .sprite(this.x * 0.25, 50, "healthBarL4")
-        .setVisible(false)
-        .setDepth(2),
-      this.scene.add
-        .sprite(this.x * 0.25, 50, "healthBarL5")
-        .setVisible(false)
-        .setDepth(2),
-      this.scene.add
-        .sprite(this.x * 0.25, 50, "healthBarLNo")
-        .setVisible(false)
-        .setDepth(2),
-    ];
+    if (this.playerId === 1) {
+      // Añadir barras de vida del jugador 1
+      this.player1HealthBars = [
+        this.scene.add
+          .sprite(this.x * 0.25, 50, "healthBarL1")
+          .setVisible(true)
+          .setDepth(2),
+        this.scene.add
+          .sprite(this.x * 0.25, 50, "healthBarL2")
+          .setVisible(false)
+          .setDepth(2),
+        this.scene.add
+          .sprite(this.x * 0.25, 50, "healthBarL3")
+          .setVisible(false)
+          .setDepth(2),
+        this.scene.add
+          .sprite(this.x * 0.25, 50, "healthBarL4")
+          .setVisible(false)
+          .setDepth(2),
+        this.scene.add
+          .sprite(this.x * 0.25, 50, "healthBarL5")
+          .setVisible(false)
+          .setDepth(2),
+        this.scene.add
+          .sprite(this.x * 0.25, 50, "healthBarLNo")
+          .setVisible(false)
+          .setDepth(2),
+      ];
+    }
 
-    // Añadir barras de vida del jugador 2
-    this.player2HealthBars = [
-      this.scene.add
-        .sprite(this.x * 0.85, 50, "healthBarR1")
-        .setVisible(true)
-        .setDepth(2),
-      this.scene.add
-        .sprite(this.x * 0.85, 50, "healthBarR2")
-        .setVisible(false)
-        .setDepth(2),
-      this.scene.add
-        .sprite(this.x * 0.85, 50, "healthBarR3")
-        .setVisible(false)
-        .setDepth(2),
-      this.scene.add
-        .sprite(this.x * 0.85, 50, "healthBarR4")
-        .setVisible(false)
-        .setDepth(2),
-      this.scene.add
-        .sprite(this.x * 0.85, 50, "healthBarR5")
-        .setVisible(false)
-        .setDepth(2),
-      this.scene.add
-        .sprite(this.x * 0.85, 50, "healthBarRNo")
-        .setVisible(false)
-        .setDepth(2),
-    ];
+    if (this.playerId === 2) {
+      // Añadir barras de vida del jugador 2
+      this.player2HealthBars = [
+        this.scene.add
+          .sprite(this.x * 0.75, 50, "healthBarR1")
+          .setVisible(true)
+          .setDepth(2),
+        this.scene.add
+          .sprite(this.x * 0.75, 50, "healthBarR2")
+          .setVisible(false)
+          .setDepth(2),
+        this.scene.add
+          .sprite(this.x * 0.75, 50, "healthBarR3")
+          .setVisible(false)
+          .setDepth(2),
+        this.scene.add
+          .sprite(this.x * 0.75, 50, "healthBarR4")
+          .setVisible(false)
+          .setDepth(2),
+        this.scene.add
+          .sprite(this.x * 0.75, 50, "healthBarR5")
+          .setVisible(false)
+          .setDepth(2),
+        this.scene.add
+          .sprite(this.x * 0.75, 50, "healthBarRNo")
+          .setVisible(false)
+          .setDepth(2),
+      ];
+    }
   }
-  
+
   atributesData(initialAttributes) {
     // Asignar atributos con valores predeterminados si son indefinidos
     this.atributes = {
@@ -91,11 +95,10 @@ export class AtributesPlayers {
           ? initialAttributes.evadeChance
           : 10,
     };
-    this.currentHP = this.atributes.hitPoints; // Guarda el HP actual
   }
 
   // Método para aplicar daño
-  takeDamage(playerId, evadeChance, damage, playerHp) {
+  takeDamage(playerId, evadeChance, playerHp) {
     // Implementa la lógica de evadeChance
     const evadeRoll = Phaser.Math.Between(0, 100);
     if (evadeRoll < evadeChance) {
@@ -104,15 +107,14 @@ export class AtributesPlayers {
     }
 
     if (playerId === 1) {
-      playerHp -= damage;
       this.updateHealthBar(1, playerHp); // Actualiza la barra de vida del jugador 1
-      console.log("vida 1 " + playerHp)
-      
+      this.removeAttributes({hitPoints: 1})
+      console.log("vida 1 " + playerHp);
     } else if (playerId === 2) {
-      playerHp -= damage;
       this.updateHealthBar(2, playerHp); // Actualiza la barra de vida del jugador 2
-      console.log("vida 2 " + playerHp)
-      return 
+      this.removeAttributes({hitPoints: 1})
+      console.log("vida 2 " + playerHp);
+      return;
     }
   }
 
@@ -178,6 +180,11 @@ export class AtributesPlayers {
   }
 
   getAttributes() {
-    return this.attributes;
+    return this.atributes;
+  }
+
+  // Método para obtener HP
+  getHitPoints() {
+    return this.atributes.hitPoints;
   }
 }
