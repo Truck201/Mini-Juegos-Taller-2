@@ -12,8 +12,8 @@ export class BattleScene extends Scene {
     this.movingBar2 = null;
 
     // Crear los objetos de atributos para cada jugador
-    this.player1Atributes = new AtributesPlayers(this, 1);
-    this.player2Atributes = new AtributesPlayers(this, 2);
+    this.player1Atributes = new AtributesPlayers(this, 1, true);
+    this.player2Atributes = new AtributesPlayers(this, 2, true);
   }
 
   game_over_timeout;
@@ -21,14 +21,13 @@ export class BattleScene extends Scene {
   icons = []; // Agregar un array para almacenar íconos de ítems
 
   init(data) {
-    
     this.game_over_timeout = 60; // Tiempo límite de 30 segundos
     this.purchasedItems = data.selectedItems || []; // Obtener los ítems comprados
     this.selectedItemsPlayer1 = data.selected1Player || [];
     this.selectedItemsPlayer2 = data.selected2Player || [];
 
-    console.log(this.selectedItemsPlayer1)
-    console.log(this.selectedItemsPlayer2)
+    console.log(this.selectedItemsPlayer1);
+    console.log(this.selectedItemsPlayer2);
 
     // Temporizador
     this.timer_event = this.time.addEvent({
@@ -44,21 +43,35 @@ export class BattleScene extends Scene {
     let width = this.game.scale.width;
     let height = this.game.scale.height;
 
+    const player1Speed = this.selectedItemsPlayer1.atributes?.speed || 5; // Valor por defecto si no existe
+    const player2Speed = this.selectedItemsPlayer2.atributes?.speed || 5; // Valor por defecto si no existe
+
+    this.player1HP = this.player1Atributes.atributes.hitPoints || 5;
+    this.player2HP = this.player2Atributes.atributes.hitPoints || 5;
+
+    this.player1EvadeChance =
+      this.selectedItemsPlayer1.atributes?.evadeChance || 0;
+    this.player2EvadeChance =
+      this.selectedItemsPlayer2.atributes?.evadeChance || 0;
+
+    this.player1Damage = 1;
+    this.player2Damage = 1;
+
     this.television = new Television(this);
-    
-    let background = this.add.sprite(width/2, height / 2 + 65, 'escenario')
-    background.setDepth(1)
+
+    let background = this.add.sprite(width / 2, height / 2 + 65, "escenario");
+    background.setDepth(1);
 
     const itemsCase = this.scene.get("ItemsCase");
-    
-    let character1 = new Character(this, 'mimbo', true)
-    let character2 = new Character(this, 'luho', false)
+
+    let character1 = new Character(this, "mimbo", true);
+    let character2 = new Character(this, "luho", false);
 
     let barraX = width / 2; // Posición Barra en X
     let barraY = (height * 4.3) / 5; // Posición de alto en las barras Y
     this.mainBar = this.add.rectangle(barraX, barraY, 1000, 95, 0x272736);
     this.imagenBar = this.add.sprite(barraX, barraY, "imagen-barra");
-    this.imagenBar.setDepth(2)
+    this.imagenBar.setDepth(2);
 
     this.attackBar = new Attack(this);
 
@@ -69,7 +82,7 @@ export class BattleScene extends Scene {
       barraY,
       20,
       105,
-      7,
+      player1Speed,
       "anilla-roja",
       {
         left: null,
@@ -85,7 +98,7 @@ export class BattleScene extends Scene {
       barraY,
       20,
       105,
-      7,
+      player2Speed,
       "anilla-azul",
       {
         left: null,
@@ -106,9 +119,9 @@ export class BattleScene extends Scene {
     // Lógica para asignar atributos
     this.showPurchasedItemIcons();
 
-    this.healthText = this.add.text(100, 240, '', {
-      fontSize: '33px',
-      fill: '#fff',
+    this.healthText = this.add.text(100, 240, "", {
+      fontSize: "33px",
+      fill: "#fff",
     });
   }
 
@@ -124,8 +137,12 @@ export class BattleScene extends Scene {
       this.checkCollision(movingBar1Sprite, this.attackBar.sprite) &&
       Phaser.Input.Keyboard.JustDown(this.spaceKey) // Acción de jugador 1
     ) {
-      this.getDamageStrength = this.player1Atributes.takeDamage()
-      this.player1Atributes.takeDamage(this.player1Atributes.atributes.damageStrength); // Aplica daño al jugador 1
+      this.player1Atributes.takeDamage(
+        1,
+        this.player1EvadeChance,
+        this.player1Damage
+      ); // Aplica daño según hitPoints
+      console.log("Vida del jugador 1: ", player1HP);
       this.destroyAndRespawn(); // Destruye y reaparece
     }
 
@@ -134,7 +151,11 @@ export class BattleScene extends Scene {
       this.checkCollision(movingBar2Sprite, this.attackBar.sprite) &&
       Phaser.Input.Keyboard.JustDown(this.enterKey) // Acción de jugador 2
     ) {
-      this.player2Atributes.takeDamage(this.player2Atributes.atributes.damageStrength); // Aplica daño al jugador 2
+      this.player2Atributes.takeDamage(
+        2,
+        this.player2EvadeChance,
+        this.player2Damage
+      ); // Aplica daño al jugador 2
       this.destroyAndRespawn(); // Destruye y reaparece en rojo
     }
 
@@ -142,29 +163,12 @@ export class BattleScene extends Scene {
     this.television.updateText(this.game_over_timeout);
   }
 
-  // Aplica los ítems adquiridos a los jugadores
-  applyPurchasedItem(item, player) {
-    const itemType = item.texture.key;
-
-    if (player === 1) {
-      this.player1Atributes.applyAttributes(itemType);
-    } else if (player === 2) {
-      this.player2Atributes.applyAttributes(itemType);
-    }
-
-    console.log(`Item ${itemType} aplicado al jugador ${player}`);
-  }
-
   showPurchasedItemIcons() {
     const offsetX = 50; // Distancia horizontal de los íconos
     const iconY = 50; // Altura donde se mostrarán los íconos
 
     this.purchasedItems.forEach((item, index) => {
-      const icon = this.add.sprite(
-        100 + index * offsetX,
-        iconY,
-        'item'
-      ); // Reemplaza item.spriteKey con la clave correcta de tu sprite
+      const icon = this.add.sprite(100 + index * offsetX, iconY, "item"); // Reemplaza item.spriteKey con la clave correcta de tu sprite
       icon.setScale(0.5); // Escalar el ícono si es necesario
       this.icons.push(icon);
     });

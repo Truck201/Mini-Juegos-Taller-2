@@ -1,10 +1,12 @@
 export class AtributesPlayers {
-  constructor(scene, playerId) {
+  constructor(scene, playerId, onHealBar) {
     this.scene = scene;
     this.playerId = playerId;
 
     const initialAttributes1 = [{ hitPoints: 20, speed: 5, evadeChance: 10 }];
     const initialAttributes2 = [{ hitPoints: 20, speed: 5, evadeChance: 10 }];
+
+    let oneBar = true
 
     if (playerId === 1) {
       this.atributesData(initialAttributes1);
@@ -15,7 +17,32 @@ export class AtributesPlayers {
   }
 
   create() {
-    this.createHealBar();
+    if (onHealBar && oneBar){
+      this.createHealBar()
+      oneBar = false
+    }
+  }
+
+  createHealBar(){
+        // Añadir barras de vida del jugador 1
+        this.player1HealthBars = [
+          this.scene.add.sprite(50, 50, "healthBarL1").setVisible(true),
+          this.scene.add.sprite(50, 50, "healthBarL2").setVisible(false),
+          this.scene.add.sprite(50, 50, "healthBarL3").setVisible(false),
+          this.scene.add.sprite(50, 50, "healthBarL4").setVisible(false),
+          this.scene.add.sprite(50, 50, "healthBarL5").setVisible(false),
+          this.scene.add.sprite(50, 50, "healthBarLNo").setVisible(false),
+        ];
+    
+        // Añadir barras de vida del jugador 2
+        this.player2HealthBars = [
+          this.scene.add.sprite(600, 50, "healthBarR1").setVisible(true),
+          this.scene.add.sprite(600, 50, "healthBarR2").setVisible(false),
+          this.scene.add.sprite(600, 50, "healthBarR3").setVisible(false),
+          this.scene.add.sprite(600, 50, "healthBarR4").setVisible(false),
+          this.scene.add.sprite(600, 50, "healthBarR5").setVisible(false),
+          this.scene.add.sprite(50, 50, "healthBarRNo").setVisible(false),
+        ];
   }
 
   atributesData(initialAttributes) {
@@ -35,28 +62,21 @@ export class AtributesPlayers {
   }
 
   // Método para aplicar daño
-  takeDamage(damage) {
+  takeDamage(playerId, evadeChance, damage) {
     // Implementa la lógica de evadeChance
     const evadeRoll = Phaser.Math.Between(0, 100);
-    if (evadeRoll < this.atributes.evadeChance) {
+    if (evadeRoll < evadeChance) {
       console.log("Attack evaded!");
       return; // El ataque no afecta
     }
-    this.atributes.hitPoints -= damage;
 
-    if (this.healthText) {
-      this.healthText.setText(`HP: ${this.atributes.hitPoints}`);
+    if (playerId === 1) {
+      this.player1HP -= damage;
+      this.updateHealthBar(1); // Actualiza la barra de vida del jugador 1
+    } else {
+      this.player2HP -= damage;
+      this.updateHealthBar(2); // Actualiza la barra de vida del jugador 2
     }
-    if (this.atributes.hitPoints <= 0) {
-      this.gameOver();
-    }
-  }
-
-  // Lógica de Game Over
-  gameOver() {
-    console.log(`Game Over for Player ${this.isPlayerOne ? 1 : 2}`);
-    // Aquí puedes detener el juego o cambiar a una pantalla de Game Over
-    this.scene.scene.pause(); // Por ejemplo, pausa la escena actual
   }
 
   updateAttributes(newAttributes) {
@@ -88,48 +108,37 @@ export class AtributesPlayers {
       this.atributes.hitPoints -= newAttributes.hitPoints;
       if (this.healthText) {
         this.healthText.setText(`HP: ${this.atributes.hitPoints}`); // Actualiza el texto de HP
-      } 
+      }
     }
   }
 
-  createHealBar() {
-    if (this.playerId === 1) {
-      const positionY = this.scene.game.scale.height / 7.5; // Define la posición Y según la escena
-      this.statsBar = this.scene.add.rectangle(
-        this.playerId === 1
-          ? this.scene.game.config.width / 15 + 180
-          : this.scene.game.config.width / 1.07 + 180,
-        positionY - 50,
-        200,
-        60,
-        0xbbbbbb
-      );
+  updateHealthBar(playerId) {
+    let healthBars, currentHP;
 
-      this.healthText = this.scene.add.text(
-        this.x + 100,
-        this.y - 50,
-        `HP: ${this.atributes.hitPoints}`,
-        { fontSize: "16px", fill: "#00ff00" }
-      );
+    if (playerId === 1) {
+      healthBars = this.player1HealthBars;
+      currentHP = this.player1HP;
+    } else {
+      healthBars = this.player2HealthBars;
+      currentHP = this.player2HP;
     }
 
-    if (this.playerId === 2) {
-      this.statsBar = this.scene.add.rectangle(
-        this.x + 180,
-        this.y - 50,
-        200,
-        60,
-        0xbbbbbb
-      ); // left
+    // Actualizar la visibilidad de las barras de vida
+    for (let i = 0; i < healthBars.length; i++) {
+      healthBars[i].setVisible(i === 6 - currentHP);
+    }
 
-      this.healthText = this.scene.add.text(
-        this.x + 100,
-        this.y - 50,
-        `HP: ${this.atributes.hitPoints}`,
-        { fontSize: "16px", fill: "#00ff00" }
-      );
+    // Verificar si el jugador ha perdido
+    if (currentHP <= 0) {
+      this.gameOver(playerId);
     }
   }
+
+  gameOver(loser) {
+    console.log(`Jugador ${loser} ha perdido!`);
+    this.scene.restart(); // Reinicia la escena
+  }
+
   getAttributes() {
     return this.attributes;
   }

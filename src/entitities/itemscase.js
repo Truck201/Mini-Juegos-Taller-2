@@ -123,8 +123,8 @@ export class ItemsCase {
     this.player2Indicator = this.scene.add.rectangle(0, 0, 75, 75).setDepth(2);
     this.player2Indicator.setStrokeStyle(4, 0x0000ff); // Azul para jugador 2
 
-    this.player1Atributes = new AtributesPlayers(this, 1);
-    this.player2Atributes = new AtributesPlayers(this, 2);
+    this.player1Atributes = new AtributesPlayers(this, 1, false);
+    this.player2Atributes = new AtributesPlayers(this, 2, false);
 
     this.setupPlayerKeys();
 

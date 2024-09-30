@@ -105,8 +105,10 @@ export class Shop extends Scene {
   // Método para pasar ítems seleccionados a BattleScene
   startBattleScene = () => {
     const selectedItems = this.itemsCase.selectedItems; // Obtén los ítems seleccionados
-    const selected1Player = this.itemsCase.selectedItemsPlayer1;
-    const selected2Player = this.itemsCase.selectedItemsPlayer2;
+    const selected1Player = this.itemsCase.player1Atributes;
+    const selected2Player = this.itemsCase.player2Atributes;
+    console.log(selected1Player , "player 1 items")
+    console.log(selected2Player , "player 2 items")
     this.scene.start("battleScene", {
       purchasedItems: selectedItems,
       selectedItemsPlayer1: selected1Player,

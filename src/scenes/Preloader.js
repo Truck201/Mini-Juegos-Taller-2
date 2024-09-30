@@ -126,9 +126,27 @@ export class Preloader extends Scene {
     });
 
     // Partículas
-    this.load.image("flare", "../public/assets/particles/blue-particle.png"); //  2         particles.png
+    this.load.image("flare", "../public/assets/particles/blue-particle.png"); //  2      particles.png
     this.load.image("flare2", "../public/assets/particles/particles2.png"); 
     this.load.image("flare3", "../public/assets/particles/red-particle.png"); //  1      particles3.png
+
+    // Battle
+    // Left
+    this.load.image('healthBarL1', '../public/assets/battle/pj1_vida5.png')
+    this.load.image('healthBarL2', '../public/assets/battle/pj1_vida4.png')
+    this.load.image('healthBarL3', '../public/assets/battle/pj1_vida3.png')
+    this.load.image('healthBarL4', '../public/assets/battle/pj1_vida2.png')
+    this.load.image('healthBarL5', '../public/assets/battle/pj1_vida1.png')
+    this.load.image('healthBarLNo', '../public/assets/battle/pj1_no-vida.png')
+
+    // Right
+    this.load.image('healthBarR1', '../public/assets/battle/pj2_vida5.png')
+    this.load.image('healthBarR2', '../public/assets/battle/pj2_vida4.png')
+    this.load.image('healthBarR3', '../public/assets/battle/pj2_vida3.png')
+    this.load.image('healthBarR4', '../public/assets/battle/pj2_vida2.png')
+    this.load.image('healthBarR5', '../public/assets/battle/pj2_vida1.png')
+    this.load.image('healthBarRNo', '../public/assets/battle/pj2_no-vida.png')
+
   }
 
   create() {
