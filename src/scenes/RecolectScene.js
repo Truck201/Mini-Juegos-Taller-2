@@ -42,15 +42,14 @@ export class RecolectScene extends Scene {
       delay: 1000, // Ejecutar cada segundo
       loop: true,
       callback: () => {
-        this.game_over_timeout--;
+        if (this.game_over_timeout >= 0) {
+          this.game_over_timeout--;
 
         // Actualizar el tiempo en la escena del HUD
         this.scene.get("Hud").update_timeout(this.game_over_timeout);
-
+        }
         // Comprobar si el tiempo ha terminado
-        if (this.game_over_timeout <= 0) {
-          this.scene.get("Hud").update_cameras();
-
+        if (this.game_over_timeout < 0) {
           setTimeout(() => {
             this.scene.stop("Hud");
             this.scene.stop("Game1vs1");
@@ -59,7 +58,7 @@ export class RecolectScene extends Scene {
               points1: this.points1,
               points2: this.points2,
             }); // Cambia a la escena Shop
-          }, 500);
+          }, 1300);
         }
       },
     });

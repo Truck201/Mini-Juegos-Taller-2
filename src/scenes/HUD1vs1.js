@@ -23,22 +23,22 @@ export class Hud extends BaseScene {
 
   create() {
     this.points_text1 = this.createText(
-      (this.scale.width * 0.1) / 8,
+      this.scale.width * 0.1,
       180,
       `P1 SCORE: ${this.points1}`
-    );
+    ).setOrigin(0.5, 0.5);;
 
     this.points_text2 = this.createText(
-      (this.scale.width * 6.9) / 8,
+      this.scale.width * 0.8,
       180,
       `P2 SCORE: ${this.points2}`
-    );
+    ).setOrigin(0.5, 0.5);;
 
     this.remaining_time_text = this.createText(
-      this.scale.width / 2 - 120,
-      10,
-      `REMAINING: ${this.remaining_time.toString().padStart(2, "0")}s`
-    );
+      this.scale.width / 2,
+      this.scale.height / 2 - 35,
+      `${this.remaining_time.toString().padStart(2, "0")}`
+    ).setOrigin(0.5, 0.5);
   }
 
   update_points(player, points) {
@@ -51,19 +51,13 @@ export class Hud extends BaseScene {
 
   update_timeout(timeout) {
     if (this.remaining_time_text) {
-      if (timeout < 0) {
+      if (timeout === 3) {
         this.remaining_time_text.destroy();
       }
-      if (timeout >= 0) {
+      if (timeout >= 4) {
         this.remaining_time_text.setText(
-          `REMAINING: ${timeout.toString().padStart(2, "0")}s`
-        );
-        // Volver el texto a su posición y estilo original
-        this.remaining_time_text.setPosition(this.scale.width / 2 - 120, 10);
-        this.remaining_time_text.setStyle({
-          fontSize: "24px",
-          color: "#ffffff",
-        });
+          `${timeout.toString().padStart(2, "0")}`
+        )
       }
     } else {
       console.warn("remaining_time_text is not defined yet.");

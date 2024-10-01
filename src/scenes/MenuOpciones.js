@@ -1,6 +1,4 @@
-import { Scene } from "phaser";
 import { BaseScene } from "../lib/FontsBase";
-
 export class MenuOpciones extends BaseScene {
   constructor() {
     super("opcionesScene");

@@ -1,4 +1,5 @@
-export class BaseScene extends Phaser.Scene {
+import { Scene } from "phaser";
+export class BaseScene extends Scene {
   constructor(key) {
     super({ key });
   }
@@ -6,7 +7,7 @@ export class BaseScene extends Phaser.Scene {
   getGlobalTextStyle(fontSize) {
     return {
       fontSize: fontSize,
-      fontFamily: "'Pixellari', 'Press Start 2P'",
+      fontFamily: "'Press Start 2P'",
       color: "#fff",
       stroke: "black",
       strokeThickness: 4,
@@ -16,7 +17,6 @@ export class BaseScene extends Phaser.Scene {
         fill: true,
         offsetX: 3,
         offsetY: 3,
-        blur: 3,
       },
     };
   }
@@ -24,11 +24,11 @@ export class BaseScene extends Phaser.Scene {
   createText(x, y, text) {
     let fontSize;
     if (text.length <= 4) {
-      fontSize = "40px"; // Para palabras cortas
+      fontSize = "50px"; // Para palabras cortas
     } else if (text.length <= 8) {
-      fontSize = "38px"; // Para palabras medianas
+      fontSize = "28px"; // Para palabras medianas
     } else {
-      fontSize = "32px"; // Para palabras largas
+      fontSize = "20px"; // Para palabras largas
     }
     return this.add.text(x, y, text, this.getGlobalTextStyle(fontSize));
   }

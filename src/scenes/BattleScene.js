@@ -40,21 +40,57 @@ export class BattleScene extends Scene {
     let height = this.game.scale.height;
 
     this.player1Atributes.create();
+    // Actualizar atributos del jugador 1 con los ítems seleccionados
+    if (this.selectedItemsPlayer1) {
+      this.player1Atributes.aboutWriteAtributes(
+        this.selectedItemsPlayer1.atributes1
+      );
+    }
+    console.log(this.selectedItemsPlayer1.atributes1)
+
     this.player2Atributes.create();
+    // Actualizar atributos del jugador 2 con los ítems seleccionados
+    if (this.selectedItemsPlayer2) {
+      this.player2Atributes.aboutWriteAtributes(
+        this.selectedItemsPlayer2.atributes2
+      );
+    }
 
-    const player1Speed = this.selectedItemsPlayer1.atributes?.speed || 5; // Valor por defecto si no existe
-    const player2Speed = this.selectedItemsPlayer2.atributes?.speed || 5; // Valor por defecto si no existe
+    console.log(this.selectedItemsPlayer2.atributes2)
 
+    const player1Speed =
+      this.player1Atributes.getSpeed(1) ||
+      this.selectedItemsPlayer1.atributes?.speed ||
+      5; // Valor por defecto si no existe
     this.player1EvadeChance =
-      this.selectedItemsPlayer1.atributes?.evadeChance || 0;
+      this.player1Atributes.getEvadeChance(1) ||
+      this.selectedItemsPlayer1.atributes?.evadeChance ||
+      0;
+    this.player1HP =
+      this.player1Atributes.getHitPoints(1) ||
+      this.selectedItemsPlayer1.atributes?.hitPoints ||
+      1; // int
+
+    console.log("Jugador 1 HP: ", this.player1HP);
+    console.log("Jugador 1 Speed: ", player1Speed);
+    console.log("Jugador 1 EvadeChance: ", this.player1EvadeChance);
+
+    const player2Speed =
+      this.player2Atributes.getSpeed(2) ||
+      this.selectedItemsPlayer2.atributes?.speed ||
+      5; // Valor por defecto si no existe
     this.player2EvadeChance =
-      this.selectedItemsPlayer2.atributes?.evadeChance || 0;
+      this.player2Atributes.getEvadeChance(2) ||
+      this.selectedItemsPlayer2.atributes?.evadeChance ||
+      0;
+    this.player2HP =
+      this.player2Atributes.getHitPoints(2) ||
+      this.selectedItemsPlayer2.atributes?.hitPoints ||
+      1; // int
 
-    this.player1HP = this.selectedItemsPlayer1.atributes?.hitPoints; // int
-    this.player2HP = this.selectedItemsPlayer2.atributes?.hitPoints; // int
-
-    console.log(this.player1HP);
-    console.log(this.player2HP);
+    console.log("Jugador 2 HP: ", this.player2HP);
+    console.log("Jugador 2 Speed: ", player2Speed);
+    console.log("Jugador 2 EvadeChance: ", this.player2EvadeChance);
 
     this.television = new Television(this);
 
@@ -142,7 +178,7 @@ export class BattleScene extends Scene {
         this.player2HP
       ); // Aplica daño al jugador
 
-      this.player2HP = this.player2Atributes.getHitPoints();
+      this.player2HP = this.player2Atributes.getHitPoints(2);
 
       console.log("Vida del jugador 2: Actual ", this.player2HP);
       this.destroyAndRespawn(); // Destruye y reaparece
@@ -159,7 +195,7 @@ export class BattleScene extends Scene {
         this.player1HP
       ); // Aplica daño según hitPoints
 
-      this.player1HP = this.player1Atributes.getHitPoints();
+      this.player1HP = this.player1Atributes.getHitPoints(1);
 
       console.log("Vida del jugador 1: Actual  ", this.player1HP);
       this.destroyAndRespawn(); // Destruye y reaparece en rojo
@@ -191,8 +227,6 @@ export class BattleScene extends Scene {
     );
   }
 
-  playerHitPointLess() {}
-
   // Método para manejar la destrucción y reaparición de la attackBar
   destroyAndRespawn() {
     this.attackBar.destroy();
@@ -203,11 +237,5 @@ export class BattleScene extends Scene {
     this.time.delayedCall(3000, () => {
       this.attackBar.respawn();
     });
-  }
-
-  gameOver(loser) {
-    // Lógica para manejar el fin del juego
-    console.log(`Jugador ${loser} ha perdido!`);
-    this.scene.restart();
   }
 }

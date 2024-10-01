@@ -50,6 +50,10 @@ export class Television {
   updateText(remainingTime) {
     if (remainingTime <= 3) {
       this.text.setText(`${remainingTime}`); // Actualizar el texto con el tiempo restante
+    } 
+    
+    if (remainingTime === 0){
+      this.text.setText("0");
     } else {
       this.text.setText(""); // Limpiar el texto si el tiempo es mayor a 3
     }

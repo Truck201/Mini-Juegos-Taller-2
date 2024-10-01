@@ -44,7 +44,7 @@ export class ItemsCase {
         fontSize: "16px",
         fontFamily: "'Press Start 2P', sans-serif",
         color: "#fff",
-        stroke: "gold",
+        stroke: "black",
         strokeThickness: 4,
         maxLines: 4,
         shadow: {
@@ -68,7 +68,7 @@ export class ItemsCase {
         fontSize: "16px",
         fontFamily: "'Press Start 2P', sans-serif",
         color: "#fff",
-        stroke: "gold",
+        stroke: "black",
         strokeThickness: 4,
         maxLines: 4,
         shadow: {
@@ -95,7 +95,7 @@ export class ItemsCase {
 
     // Definición de atributos de los ítems
     this.itemAttributes = {
-      candy: { hitPoints: 2, speed: 0, evadeChance: 0 },
+      candy: { hitPoints: 1, speed: 0, evadeChance: 0 },
       popcorn: { hitPoints: 0, speed: 0, evadeChance: 20 },
       pizza: { hitPoints: 0, speed: 5, evadeChance: 0 },
     };
@@ -230,7 +230,7 @@ export class ItemsCase {
     if (description) {
       this.descriptionItemPlayer1
         .setText(
-          `${description.description} \n\n\t  ${description.value} Points`
+          `${description.description} \n\n\t  ${description.value}`
         )
         .setDepth(2)
         .setOrigin(0.5, 0.5);
@@ -401,7 +401,7 @@ export class ItemsCase {
       if (description) {
         descriptionText
           .setText(
-            `${description.description} \n\n\t  ${description.value} Points`
+            `${description.description} \n\n\t  ${description.value}`
           )
           .setDepth(2)
           .setOrigin(0.5, 0.5);
@@ -558,10 +558,10 @@ export class ItemsCase {
       console.log("Aplicando atributos:" + attributes);
       if (player === 1) {
         console.log("player 1");
-        this.player1Atributes.updateAttributes(attributes);
+        this.player1Atributes.updateAttributes(1, attributes);
       } else if (player === 2) {
         console.log("player 2");
-        this.player2Atributes.updateAttributes(attributes);
+        this.player2Atributes.updateAttributes(2, attributes);
       }
     } else {
       console.error(
@@ -584,9 +584,9 @@ export class ItemsCase {
     if (attributes) {
       console.log("Remove atributos:" + player + "," + attributes);
       if (player === 1) {
-        this.player1Atributes.removeAttributes(attributes);
+        this.player1Atributes.removeAttributes(1, attributes);
       } else if (player === 2) {
-        this.player2Atributes.removeAttributes(attributes);
+        this.player2Atributes.removeAttributes(2, attributes);
       }
     } else {
       console.error(

@@ -1,12 +1,11 @@
-import { Scene } from "phaser";
 import { BaseScene } from '../lib/FontsBase';
-
 export class MainMenu extends BaseScene {
   constructor() {
     super("MainMenu");
     this.movingIcon = null;
     this.allicons = null;
   }
+
   init() {
     this.cameras.main.fadeIn(500, 0, 0, 0);
     this.allicons = [];
@@ -23,9 +22,10 @@ export class MainMenu extends BaseScene {
       .setDepth(2);
 
     //Button
-    miImagen = this.createText(width / 2 - 50, 240, "Play")
+    miImagen = this.createText(width / 2, 240, "Play")
     .setInteractive()
-    .setDepth(3);;
+    .setDepth(3)
+    .setOrigin(0.5, 0.5);
     //this.add.image(width / 2, height / 2, '').setScale(0.15);
     miImagen.setInteractive();
 
@@ -71,8 +71,9 @@ export class MainMenu extends BaseScene {
     let options; // Botón de opciones
 
     //Button
-    options = this.createText(width / 2 - 75, 310, "Options")
-    .setDepth(3);
+    options = this.createText(width / 2, 310, "Options")
+    .setDepth(3)
+    .setOrigin(0.5, 0.5);
     //this.add.image(width / 2, height / 2, '').setScale(0.15);
     options.setInteractive();
 

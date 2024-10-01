@@ -36,7 +36,7 @@ export class Preloader extends Scene {
     this.load.image("menu-background", "../public/assets/escenario/image.png");
 
     // Fonts
-    this.load.addFile(new WebFontFile(this.load, "Pixellari"));
+    this.load.addFile(new WebFontFile(this.load, "PressStart2P"));
 
     // Barra Audio Master
     this.load.image("sliderHandle", "../public/assets/menu/anillo_volumen.png"); // Derrota
@@ -89,7 +89,10 @@ export class Preloader extends Scene {
     this.load.image("l-opacidad", "../public/assets/opacidad.png");
 
     //  Tienda
-    this.load.image("backgroundShop", "../public/assets/tienda/shop-background-sprite.png");
+    this.load.image(
+      "backgroundShop",
+      "../public/assets/tienda/shop-background-sprite.png"
+    );
 
     this.load.spritesheet(
       "backgroundSheet",
@@ -98,9 +101,9 @@ export class Preloader extends Scene {
         frameWidth: 1760,
         frameHeight: 1272,
       }
-    )
+    );
 
-    this.load.image("backShop", "../public/assets/tienda/slots_shop.png"); 
+    this.load.image("backShop", "../public/assets/tienda/slots_shop.png");
 
     this.load.spritesheet(
       "popcorn",
@@ -127,33 +130,66 @@ export class Preloader extends Scene {
 
     // Partículas
     this.load.image("flare", "../public/assets/particles/blue-particle.png"); //  2      particles.png
-    this.load.image("flare2", "../public/assets/particles/particles2.png"); 
+    this.load.image("flare2", "../public/assets/particles/particles2.png");
     this.load.image("flare3", "../public/assets/particles/red-particle.png"); //  1      particles3.png
 
     // Battle
     // Left
-    this.load.image('healthBarL1', '../public/assets/battle/vida/pj1_vida5.png')
-    this.load.image('healthBarL2', '../public/assets/battle/vida/pj1_vida4.png')
-    this.load.image('healthBarL3', '../public/assets/battle/vida/pj1_vida3.png')
-    this.load.image('healthBarL4', '../public/assets/battle/vida/pj1_vida2.png')
-    this.load.image('healthBarL5', '../public/assets/battle/vida/pj1_vida1.png')
-    this.load.image('healthBarLNo', '../public/assets/battle/vida/pj1_no-vida.png')
+    this.load.image(
+      "healthBarL1",
+      "../public/assets/battle/vida/pj1_vida5.png"
+    );
+    this.load.image(
+      "healthBarL2",
+      "../public/assets/battle/vida/pj1_vida4.png"
+    );
+    this.load.image(
+      "healthBarL3",
+      "../public/assets/battle/vida/pj1_vida3.png"
+    );
+    this.load.image(
+      "healthBarL4",
+      "../public/assets/battle/vida/pj1_vida2.png"
+    );
+    this.load.image(
+      "healthBarL5",
+      "../public/assets/battle/vida/pj1_vida1.png"
+    );
+    this.load.image(
+      "healthBarLNo",
+      "../public/assets/battle/vida/pj1_no-vida.png"
+    );
 
     // Right
-    this.load.image('healthBarR1', '../public/assets/battle/vida/pj2_vida5.png')
-    this.load.image('healthBarR2', '../public/assets/battle/vida/pj2_vida4.png')
-    this.load.image('healthBarR3', '../public/assets/battle/vida/pj2_vida3.png')
-    this.load.image('healthBarR4', '../public/assets/battle/vida/pj2_vida2.png')
-    this.load.image('healthBarR5', '../public/assets/battle/vida/pj2_vida1.png')
-    this.load.image('healthBarRNo', '../public/assets/battle/vida/pj2_no-vida.png')
+    this.load.image(
+      "healthBarR1",
+      "../public/assets/battle/vida/pj2_vida5.png"
+    );
+    this.load.image(
+      "healthBarR2",
+      "../public/assets/battle/vida/pj2_vida4.png"
+    );
+    this.load.image(
+      "healthBarR3",
+      "../public/assets/battle/vida/pj2_vida3.png"
+    );
+    this.load.image(
+      "healthBarR4",
+      "../public/assets/battle/vida/pj2_vida2.png"
+    );
+    this.load.image(
+      "healthBarR5",
+      "../public/assets/battle/vida/pj2_vida1.png"
+    );
+    this.load.image(
+      "healthBarRNo",
+      "../public/assets/battle/vida/pj2_no-vida.png"
+    );
 
+    this.load.on("complete", () => {
+      //  Move to the MainMenu. You could also swap this for a Scene Transition, such as a camera fade.
+      this.scene.start("MainMenu");
+    });
   }
 
-  create() {
-    //  When all the assets have loaded, it's often worth creating global objects here that the rest of the game can use.
-    //  For example, you can define global animations here, so we can use them in other scenes.
-
-    //  Move to the MainMenu. You could also swap this for a Scene Transition, such as a camera fade.
-    this.scene.start("MainMenu");
-  }
 }
