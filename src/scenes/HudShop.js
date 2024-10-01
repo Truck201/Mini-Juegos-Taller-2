@@ -12,7 +12,7 @@ export class HudShop extends BaseScene {
   }
 
   init(data) {
-    this.cameras.main.fadeIn(1300, 0, 0, 0);
+
     this.remaining_time = data.remaining_time || 20;
     this.points1 = data.points1 || 0; // Puntaje inicial del jugador 1
     this.points2 = data.points2 || 0; // Puntaje inicial del jugador 2
@@ -23,20 +23,20 @@ export class HudShop extends BaseScene {
     let height = this.game.scale.height;
     
     this.points_text1 = this.createText(
-      (width * 0.5) / 8,
+      width * 0.2,
       height * 0.85,
       `P1 Points: ${this.points1}`,
     ).setOrigin(0.5, 0.5);;
 
     this.points_text2 = this.createText(
-      (width * 6.6) / 8,
+      width * 0.8,
       height * 0.85,
       `P2 Points: ${this.points2}`,
     ).setOrigin(0.5, 0.5);;
 
     this.remaining_time_text = this.createText(
-      width / 2 - 120,
-      10,
+      width / 2,
+      height * 0.15,
       `REMAINING: ${this.remaining_time.toString().padStart(2, '0')}s`,
     ).setOrigin(0.5, 0.5);;
   }
@@ -63,6 +63,7 @@ export class HudShop extends BaseScene {
   }
 
   update_cameras() {
-    this.cameras.main.fadeOut(980, 0, 0, 0);
+    console.log('CAMERAS DESDE SHOP')
+    this.cameras.main.fadeOut(1000, 0, 0, 0); // Se llama al terminar la escena
   }
 }

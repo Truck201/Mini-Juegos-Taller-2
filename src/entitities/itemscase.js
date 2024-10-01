@@ -266,7 +266,7 @@ export class ItemsCase {
       key: "popcorn_idle",
       frames: this.scene.anims.generateFrameNumbers("popcorn", {
         start: 0,
-        end: 5,
+        end: 3,
       }),
       frameRate: 4,
       repeat: -1, // La animación se repite indefinidamente
@@ -276,7 +276,7 @@ export class ItemsCase {
       key: "candy-idle",
       frames: this.scene.anims.generateFrameNumbers("candy", {
         start: 0,
-        end: 5,
+        end: 3,
       }),
       frameRate: 4,
       repeat: -1,
@@ -286,7 +286,7 @@ export class ItemsCase {
       key: "pizza_idle",
       frames: this.scene.anims.generateFrameNumbers("pizza", {
         start: 0,
-        end: 5,
+        end: 3,
       }),
       frameRate: 4,
       repeat: -1,

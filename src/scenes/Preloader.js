@@ -1,5 +1,6 @@
 import { Scene } from "phaser";
-import WebFontFile from "../lib/WebFontFile";
+import WebFont from "webfontloader";
+
 export class Preloader extends Scene {
   constructor() {
     super("Preloader");
@@ -34,9 +35,6 @@ export class Preloader extends Scene {
     // LOGO
     this.load.image("logo", "../public/assets/menu/logo.png");
     this.load.image("menu-background", "../public/assets/escenario/image.png");
-
-    // Fonts
-    this.load.addFile(new WebFontFile(this.load, "PressStart2P"));
 
     // Barra Audio Master
     this.load.image("sliderHandle", "../public/assets/menu/anillo_volumen.png"); // Derrota
@@ -186,10 +184,28 @@ export class Preloader extends Scene {
       "../public/assets/battle/vida/pj2_no-vida.png"
     );
 
-    this.load.on("complete", () => {
-      //  Move to the MainMenu. You could also swap this for a Scene Transition, such as a camera fade.
-      this.scene.start("MainMenu");
+    WebFont.load({
+      google: {
+        families: ["Press Start 2P"],
+      },
+      active: () => {
+        console.log("Fuentes cargadas.");
+        this.gotoMainScene();
+      },
     });
   }
 
+  create() {
+    // Aquí puedes mostrar una pantalla de carga si lo deseas.
+    this.add.text(100, 100, "Cargando...", {
+      font: "20px Arial",
+      fill: "#ffffff",
+    });
+  }
+
+  gotoMainScene() {
+    this.time.delayedCall(900, () => {
+      this.scene.start("MainMenu");
+    });
+  }
 }

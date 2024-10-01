@@ -1,4 +1,4 @@
-import { BaseScene } from '../lib/FontsBase';
+import { BaseScene } from "../lib/FontsBase";
 export class MainMenu extends BaseScene {
   constructor() {
     super("MainMenu");
@@ -13,7 +13,6 @@ export class MainMenu extends BaseScene {
   create() {
     let width = this.scale.width; //Definir la mitad del Ancho
     let height = this.scale.height; //Definir la mitad del Alto
-    let miImagen; //Definir una Variable en la escena
 
     //Title
     this.background = this.add
@@ -22,28 +21,28 @@ export class MainMenu extends BaseScene {
       .setDepth(2);
 
     //Button
-    miImagen = this.createText(width / 2, 240, "Play")
-    .setInteractive()
-    .setDepth(3)
-    .setOrigin(0.5, 0.5);
+    const playButton = this.createText(width / 2, 240, "Play")
+      .setInteractive()
+      .setDepth(3)
+      .setOrigin(0.5, 0.5);
     //this.add.image(width / 2, height / 2, '').setScale(0.15);
-    miImagen.setInteractive();
+    playButton.setInteractive();
 
     //Button Animations Hover, Down, Out
-    miImagen.on("pointerover", () => {
+    playButton.on("pointerover", () => {
       // Cambia el tamaño de la imagen al pasar el mouse
-      miImagen.setScale(1.1);
+      playButton.setScale(1.1);
       console.log("on");
     });
 
-    miImagen.on("pointerout", () => {
+    playButton.on("pointerout", () => {
       // Cambia el tamaño de la imagen al pasar el mouse
-      miImagen.setScale(1);
+      playButton.setScale(1);
       console.log("off");
     });
 
-    miImagen.on("pointerdown", () => {
-      miImagen.setScale(1.2); // Vuelve al tamaño original
+    playButton.on("pointerdown", () => {
+      playButton.setScale(1.2); // Vuelve al tamaño original
       console.log("active");
       // this.add.image(width / 2, height / 2, '').setScale(0.37); //Explosión
       this.time.addEvent({
@@ -68,28 +67,26 @@ export class MainMenu extends BaseScene {
       this.resetInactivityTimer();
     });
 
-    let options; // Botón de opciones
-
     //Button
-    options = this.createText(width / 2, 310, "Options")
-    .setDepth(3)
-    .setOrigin(0.5, 0.5);
+    const optionsButton = this.createText(width / 2, 310, "Options")
+      .setDepth(3)
+      .setOrigin(0.5, 0.5);
     //this.add.image(width / 2, height / 2, '').setScale(0.15);
-    options.setInteractive();
+    optionsButton.setInteractive();
 
     //Button Animations Hover, Down, Out
-    options.on("pointerover", () => {
+    optionsButton.on("pointerover", () => {
       // Cambia el tamaño de la imagen al pasar el mouse
-      options.setScale(1.1);
+      optionsButton.setScale(1.1);
     });
 
-    options.on("pointerout", () => {
+    optionsButton.on("pointerout", () => {
       // Cambia el tamaño de la imagen al pasar el mouse
-      options.setScale(1);
+      optionsButton.setScale(1);
     });
 
-    options.on("pointerdown", () => {
-      options.setScale(0.9); // Vuelve al tamaño original
+    optionsButton.on("pointerdown", () => {
+      optionsButton.setScale(0.9); // Vuelve al tamaño original
       console.log("active");
       // this.add.image(width / 2, height / 2, '').setScale(0.37); //Explosión
       this.time.addEvent({
@@ -102,7 +99,7 @@ export class MainMenu extends BaseScene {
     });
 
     this.television = this.physics.add
-      .sprite(width/2, height/2, "l-opacidad")
+      .sprite(width / 2, height / 2, "l-opacidad")
       .setScale(0.4)
       .setAlpha(0.4)
       .setDepth(0);

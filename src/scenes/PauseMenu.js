@@ -12,9 +12,9 @@ export class PauseMenu extends Scene {
     this.mainScene = data.mainScene;
 
     // Agregar texto al menú de pausa
-    this.add.text(width / 2 - 85, 250, "Paused Game", {
+    this.add.text(width / 2, 230, "Paused Game", {
       fontSize: "32px",
-      fontFamily: "'Pixellari', 'Press Start 2P'",
+      fontFamily: "'Press Start 2P'",
       color: "#fff",
       stroke: "black",
       strokeThickness: 4,
@@ -26,13 +26,15 @@ export class PauseMenu extends Scene {
         offsetY: 3,
         blur: 3,
       },
-    });
+    })
+    .setOrigin(0.5, 0.5)
+    .setDepth(10);
 
     // Agregar un botón para volver al menú principal
     const mainMenuButton = this.add
-      .text(width / 2 - 90, 300, "Back to Main Menu", {
+      .text(width / 2, 310, "Back to Main Menu", {
         fontSize: "24px",
-        fontFamily: "'Pixellari', 'Press Start 2P'",
+        fontFamily: "'Press Start 2P'",
         color: "#fff",
         stroke: "black",
         strokeThickness: 4,
@@ -45,6 +47,8 @@ export class PauseMenu extends Scene {
           blur: 3,
         },
       })
+      .setOrigin(0.5, 0.5)
+      .setDepth(10)
       .setInteractive()
       .on("pointerdown", () => {
         this.mainScene.scene.stop("recolectScene");
@@ -65,9 +69,9 @@ export class PauseMenu extends Scene {
       mainMenuButton.setScale(1);
     });
 
-    this.add.text(width / 2 - 120, 350, "Reanude Game press Esc", {
+    this.add.text(width / 2, 370, "Reanude Game press Esc", {
       fontSize: "24px",
-      fontFamily: "'Pixellari', 'Press Start 2P'",
+      fontFamily: "'Press Start 2P'",
       color: "#fff",
       stroke: "black",
       strokeThickness: 4,
@@ -79,7 +83,8 @@ export class PauseMenu extends Scene {
         offsetY: 3,
         blur: 3,
       },
-    });
+    }).setOrigin(0.5, 0.5)
+    .setDepth(10);
 
     this.input.keyboard.on("keydown-ESC", () => {
       const currentTime = this.time.now;

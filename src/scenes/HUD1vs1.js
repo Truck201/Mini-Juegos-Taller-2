@@ -15,7 +15,7 @@ export class Hud extends BaseScene {
   }
 
   init(data) {
-    this.cameras.main.fadeIn(1400, 0, 0, 0);
+    this.cameras.main.fadeIn(1200, 0, 0, 0); // Cuando se apreta la Q
     this.remaining_time = data.remaining_time || 12;
     this.points1 = data.points1 || 0; // Puntaje inicial del jugador 1
     this.points2 = data.points2 || 0; // Puntaje inicial del jugador 2
@@ -63,9 +63,4 @@ export class Hud extends BaseScene {
       console.warn("remaining_time_text is not defined yet.");
     }
   }
-
-  update_cameras() {
-    this.cameras.main.fadeOut(980, 0, 0, 0);
-  }
-
 }

@@ -26,7 +26,7 @@ export class BaseScene extends Scene {
     if (text.length <= 4) {
       fontSize = "50px"; // Para palabras cortas
     } else if (text.length <= 8) {
-      fontSize = "28px"; // Para palabras medianas
+      fontSize = "30px"; // Para palabras medianas
     } else {
       fontSize = "20px"; // Para palabras largas
     }
