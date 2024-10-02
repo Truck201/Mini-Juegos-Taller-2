@@ -18,6 +18,7 @@ export class AtributesPlayers {
 
   create() {
     this.x = this.scene.scale.width;
+    this.y = this.scene.game.scale.height;
     this.initializeHealthBars(this.playerId);
   }
 
@@ -26,27 +27,27 @@ export class AtributesPlayers {
       // Añadir barras de vida del jugador 1
       this.player1HealthBars = [
         this.scene.add
-          .sprite(this.x * 0.21, 50, "healthBarL1")
+          .sprite(this.x * 0.21, this.y * 0.08, "healthBarL1")
           .setVisible(true)
           .setDepth(2),
         this.scene.add
-          .sprite(this.x * 0.21, 50, "healthBarL2")
+          .sprite(this.x * 0.21, this.y * 0.08, "healthBarL2")
           .setVisible(false)
           .setDepth(2),
         this.scene.add
-          .sprite(this.x * 0.21, 50, "healthBarL3")
+          .sprite(this.x * 0.21, this.y * 0.08, "healthBarL3")
           .setVisible(false)
           .setDepth(2),
         this.scene.add
-          .sprite(this.x * 0.21, 50, "healthBarL4")
+          .sprite(this.x * 0.21, this.y * 0.08, "healthBarL4")
           .setVisible(false)
           .setDepth(2),
         this.scene.add
-          .sprite(this.x * 0.21, 50, "healthBarL5")
+          .sprite(this.x * 0.21, this.y * 0.08, "healthBarL5")
           .setVisible(false)
           .setDepth(2),
         this.scene.add
-          .sprite(this.x * 0.21, 50, "healthBarLNo")
+          .sprite(this.x * 0.21, this.y * 0.08, "healthBarLNo")
           .setVisible(false)
           .setDepth(2),
       ];
@@ -56,27 +57,27 @@ export class AtributesPlayers {
       // Añadir barras de vida del jugador 2
       this.player2HealthBars = [
         this.scene.add
-          .sprite(this.x * 0.792, 50, "healthBarR1")
+          .sprite(this.x * 0.792, this.y * 0.08, "healthBarR1")
           .setVisible(true)
           .setDepth(2),
         this.scene.add
-          .sprite(this.x * 0.792, 50, "healthBarR2")
+          .sprite(this.x * 0.792, this.y * 0.08, "healthBarR2")
           .setVisible(false)
           .setDepth(2),
         this.scene.add
-          .sprite(this.x * 0.792, 50, "healthBarR3")
+          .sprite(this.x * 0.792, this.y * 0.08, "healthBarR3")
           .setVisible(false)
           .setDepth(2),
         this.scene.add
-          .sprite(this.x * 0.792, 50, "healthBarR4")
+          .sprite(this.x * 0.792, this.y * 0.08, "healthBarR4")
           .setVisible(false)
           .setDepth(2),
         this.scene.add
-          .sprite(this.x * 0.792, 50, "healthBarR5")
+          .sprite(this.x * 0.792, this.y * 0.08, "healthBarR5")
           .setVisible(false)
           .setDepth(2),
         this.scene.add
-          .sprite(this.x * 0.792, 50, "healthBarRNo")
+          .sprite(this.x * 0.792, this.y * 0.08, "healthBarRNo")
           .setVisible(false)
           .setDepth(2),
       ];

@@ -18,6 +18,13 @@ export class Shop extends Scene {
     this.lastKeyPressTime = 0;
     this.background;
 
+    // Lanzar la escena del HUD, pasando el tiempo y los puntajes iniciales
+    this.scene.launch("hudShop", {
+      remaining_time: this.game_over_timeout,
+      points1: this.points1,
+      points2: this.points2,
+    });
+
     this.timer_event = this.time.addEvent({
       delay: 1000, // Ejecutar cada segundo
       loop: true,
@@ -44,19 +51,6 @@ export class Shop extends Scene {
     let width = this.game.scale.width;
     let height = this.game.scale.height;
 
-    // Crea un nuevo sprite para la animación y colócalo detrás del fondo
-    const animatedBackground = this.add
-      .sprite(width / 2, height / 2, "backgroundShop")
-      .setScale(0.5)
-      .setDepth(0);
-
-    this.add
-      .image(width / 2, height * 0.79, "backShop")
-      .setScale(1.35)
-      .setDepth(1);
-
-    this.itemsCase = new ItemsCase(this, this.scale.width, this.scale.height);
-
     this.input.keyboard.on("keydown-ESC", () => {
       const currentTime = this.time.now;
       console.log("pres scape");
@@ -67,8 +61,22 @@ export class Shop extends Scene {
         this.scene.pause("Shop");
         console.log("Pause Game");
         this.scene.launch("PauseMenu", { mainScene: this });
+        this.scene.bringToTop("PauseMenu");
       }
     });
+
+    // Crea un nuevo sprite para la animación y colócalo detrás del fondo
+    const animatedBackground = this.add
+      .sprite(width / 2, height / 2, "backgroundShop")
+      .setScale(0.2);
+    animatedBackground.setDepth(0);
+
+    this.add
+      .image(width / 2, height * 0.79, "backShop")
+      .setScale(1.35)
+      .setDepth(1);
+
+    this.itemsCase = new ItemsCase(this, this.scale.width, this.scale.height);
   }
 
   update() {

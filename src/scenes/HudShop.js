@@ -12,7 +12,7 @@ export class HudShop extends BaseScene {
   }
 
   init(data) {
-
+    this.cameras.main.fadeIn(1200, 0, 0, 0); // Cuando Inica la escena
     this.remaining_time = data.remaining_time || 20;
     this.points1 = data.points1 || 0; // Puntaje inicial del jugador 1
     this.points2 = data.points2 || 0; // Puntaje inicial del jugador 2
@@ -23,22 +23,22 @@ export class HudShop extends BaseScene {
     let height = this.game.scale.height;
     
     this.points_text1 = this.createText(
-      width * 0.2,
+      width * 0.132,
       height * 0.85,
       `P1 Points: ${this.points1}`,
-    ).setOrigin(0.5, 0.5);;
+    ).setOrigin(0.5, 0.5);
 
     this.points_text2 = this.createText(
-      width * 0.8,
+      width * 0.868,
       height * 0.85,
       `P2 Points: ${this.points2}`,
-    ).setOrigin(0.5, 0.5);;
+    ).setOrigin(0.5, 0.5);
 
     this.remaining_time_text = this.createText(
       width / 2,
       height * 0.15,
       `REMAINING: ${this.remaining_time.toString().padStart(2, '0')}s`,
-    ).setOrigin(0.5, 0.5);;
+    ).setOrigin(0.5, 0.5);
   }
 
   update_points(player, points) {

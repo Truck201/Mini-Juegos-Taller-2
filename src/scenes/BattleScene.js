@@ -1,19 +1,23 @@
-import { Scene } from "phaser";
 import { MoveBar } from "../entitities/movebar";
 import { Television } from "../entitities/television";
 import { Attack } from "../entitities/attack";
 import { AtributesPlayers } from "../entitities/newatributes"; // Importa la clase
 import { Character } from "../entitities/character";
+import { BaseScene } from "../lib/FontsBase";
 
-export class BattleScene extends Scene {
+export class BattleScene extends BaseScene {
   constructor() {
     super("battleScene");
     this.movingBar1 = null;
     this.movingBar2 = null;
 
-    // Crear los objetos de atributos para cada jugador
-    this.player1Atributes = new AtributesPlayers(this, 1);
+    this.player1Atributes = new AtributesPlayers(this, 1); // Crear Atributos de Cada Jugador
     this.player2Atributes = new AtributesPlayers(this, 2);
+
+    this.player1HPText = null; // Vida de Cada Jugador
+    this.player2HPText = null;
+
+    this.lastKeyPressTime = 0  // Pausa ?
   }
 
   game_over_timeout;
@@ -38,6 +42,17 @@ export class BattleScene extends Scene {
   create() {
     let width = this.game.scale.width;
     let height = this.game.scale.height;
+
+    this.input.keyboard.on("keydown-ESC", () => {
+      const currentTime = this.time.now;
+      if (currentTime - this.lastKeyPressTime > 250) {
+        this.lastKeyPressTime = currentTime;
+        this.scene.pause("battleScene");
+        console.log("Pause Game");
+        this.scene.launch("PauseMenu", { mainScene: this });
+        this.scene.bringToTop("PauseMenu");
+      }
+    });
 
     this.player1Atributes.create();
     // Actualizar atributos del jugador 1 con los ítems seleccionados
@@ -91,6 +106,16 @@ export class BattleScene extends Scene {
     console.log("Jugador 2 HP: ", this.player2HP);
     console.log("Jugador 2 Speed: ", player2Speed);
     console.log("Jugador 2 EvadeChance: ", this.player2EvadeChance);
+
+    // Textos De Atributos 1
+    this.player1HPText = this.createText(width * 0.35, height * 0.08, `${this.player1HP.toString().padStart(2, '0')}`).setOrigin(0.5).setDepth(3);
+    this.createText(width * 0.018, height * 0.25, `Speed: ${player1Speed.toString().padStart(2, '0')}`).setDepth(3);
+    this.createText(width * 0.018, height * 0.30, `Evade: ${this.player1EvadeChance.toString().padStart(2, '0')}`).setDepth(3);
+
+    // Textos De Atributos 2
+    this.player2HPText = this.createText(width * 0.66, height * 0.08, `${this.player2HP.toString().padStart(2, '0')}`).setOrigin(0.5).setDepth(3);
+    this.createText(width * 0.858, height * 0.25, `Speed: ${player2Speed.toString().padStart(2, '0')}`).setDepth(3);
+    this.createText(width * 0.858, height * 0.30, `Evade: ${this.player2EvadeChance.toString().padStart(2, '0')}`).setDepth(3);
 
     this.television = new Television(this);
 
@@ -179,8 +204,9 @@ export class BattleScene extends Scene {
       ); // Aplica daño al jugador
 
       this.player2HP = this.player2Atributes.getHitPoints(2);
-
       console.log("Vida del jugador 2: Actual ", this.player2HP);
+      this.player2HPText.setText(`${this.player2HP.toString().padStart(2, '0')}`);
+
       this.destroyAndRespawn(); // Destruye y reaparece
     }
 
@@ -196,8 +222,9 @@ export class BattleScene extends Scene {
       ); // Aplica daño según hitPoints
 
       this.player1HP = this.player1Atributes.getHitPoints(1);
-
       console.log("Vida del jugador 1: Actual  ", this.player1HP);
+      this.player1HPText.setText(`${this.player1HP.toString().padStart(2, '0')}`);
+
       this.destroyAndRespawn(); // Destruye y reaparece en rojo
     }
 

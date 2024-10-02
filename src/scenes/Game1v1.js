@@ -34,6 +34,7 @@ export class Game1v1 extends Scene {
         this.scene.pause("battleScene");
         console.log("Pause Game");
         this.scene.launch("PauseMenu", { mainScene: this });
+        this.scene.bringToTop("PauseMenu");
       }
     });
 

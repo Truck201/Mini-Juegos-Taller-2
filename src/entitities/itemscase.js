@@ -37,7 +37,7 @@ export class ItemsCase {
 
     // Descripción del ítem para jugador 1 y jugador 2
     this.descriptionItemPlayer1 = this.scene.add.text(
-      this.width * 0.125,
+      this.width * 0.135,
       this.height * 0.68,
       "",
       {
@@ -54,14 +54,14 @@ export class ItemsCase {
           offsetY: 3,
         },
       }
-    );
+    ).setOrigin(0.5, 0.5);
 
     this.scene.add
-      .sprite(this.width * 0.193, this.height * 0.72, "pochoclo2")
+      .sprite(this.width * 0.14, this.height * 0.78, "pochoclo2")
       .setDepth(2);
 
     this.descriptionItemPlayer2 = this.scene.add.text(
-      this.width * 0.88,
+      this.width * 0.868,
       this.height * 0.68,
       "",
       {
@@ -78,10 +78,10 @@ export class ItemsCase {
           offsetY: 3,
         },
       }
-    );
+    ).setOrigin(0.5, 0.5);
 
     this.scene.add
-      .sprite(this.width * 0.95, this.height * 0.72, "pochoclo2")
+      .sprite(this.width * 0.862, this.height * 0.78, "pochoclo2")
       .setDepth(2);
 
     this.itemDescriptions = {
@@ -104,17 +104,6 @@ export class ItemsCase {
     this.initAnimations();
 
     this.createItems();
-
-    // Agregar esto en el constructor después de crear los ítems
-    this.items.forEach((item) => {
-      item.on("pointerover", () => {
-        this.showItemDescription(item.texture.key);
-      });
-
-      item.on("pointerout", () => {
-        this.clearItemDescriptions();
-      });
-    });
 
     // Crear los cuadros que indican la posición de cada jugador
     this.player1Indicator = this.scene.add.rectangle(0, 0, 75, 75).setDepth(2);
@@ -223,19 +212,6 @@ export class ItemsCase {
         .setDepth(3);
       slot.itemSprite = sprite;
     });
-  }
-
-  showItemDescription(itemType) {
-    const description = this.itemDescriptions[itemType];
-    if (description) {
-      this.descriptionItemPlayer1
-        .setText(
-          `${description.description} \n\n\t  ${description.value}`
-        )
-        .setDepth(2)
-        .setOrigin(0.5, 0.5);
-      this.descriptionItemPlayer2.setText("");
-    }
   }
 
   clearItemDescriptions() {
@@ -401,7 +377,7 @@ export class ItemsCase {
       if (description) {
         descriptionText
           .setText(
-            `${description.description} \n\n\t  ${description.value}`
+            `${description.description}\n\n\t  costo  $${description.value}`
           )
           .setDepth(2)
           .setOrigin(0.5, 0.5);

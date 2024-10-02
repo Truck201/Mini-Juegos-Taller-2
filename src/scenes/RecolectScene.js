@@ -21,7 +21,7 @@ export class RecolectScene extends Scene {
   comboTimer1; // Temporizador de combo para el jugador 1
   comboTimer2; // Temporizador de combo para el jugador 2
   comboDuration = 3000; // Duración del combo (3 segundos)
-
+  
   popcornTimer; // Temporizador para la aparición de pochoclos
 
   init(data) {
@@ -58,7 +58,7 @@ export class RecolectScene extends Scene {
               points1: this.points1,
               points2: this.points2,
             }); // Cambia a la escena Shop
-          }, 1300);
+          }, 980);
         }
       },
     });
