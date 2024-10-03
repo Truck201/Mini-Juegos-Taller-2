@@ -23,29 +23,29 @@ export class Hud extends BaseScene {
 
   create() {
     this.points_text1 = this.createText(
-      this.scale.width * 0.1,
-      180,
-      `P1 SCORE: ${this.points1}`
-    ).setOrigin(0.5, 0.5);;
+      this.scale.width * 0.075,
+      this.scale.height * 0.255,
+      `SCORE: ${this.points1.toString().padStart(2, '0')}`
+    ).setOrigin(0.5);
 
     this.points_text2 = this.createText(
-      this.scale.width * 0.8,
-      180,
-      `P2 SCORE: ${this.points2}`
-    ).setOrigin(0.5, 0.5);;
+      this.scale.width * 0.935,
+      this.scale.height * 0.255,
+      `SCORE: ${this.points2.toString().padStart(2, '0')}`
+    ).setOrigin(0.5);
 
     this.remaining_time_text = this.createText(
       this.scale.width / 2,
       this.scale.height / 2 - 35,
       `${this.remaining_time.toString().padStart(2, "0")}`
-    ).setOrigin(0.5, 0.5);
+    ).setOrigin(0.5);
   }
 
   update_points(player, points) {
     if (player === 1) {
-      this.points_text1.setText(`P1 SCORE: ${points}`);
+      this.points_text1.setText(`SCORE: ${points.toString().padStart(2, '0')}`);
     } else if (player === 2) {
-      this.points_text2.setText(`P2 SCORE: ${points}`);
+      this.points_text2.setText(`SCORE: ${points.toString().padStart(2, '0')}`);
     }
   }
 

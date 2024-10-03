@@ -44,6 +44,8 @@ export class MainMenu extends BaseScene {
     playButton.on("pointerdown", () => {
       playButton.setScale(1.2); // Vuelve al tamaño original
       console.log("active");
+      optionsButton.setText('')
+      playButton.setText('')
       // this.add.image(width / 2, height / 2, '').setScale(0.37); //Explosión
       this.time.addEvent({
         delay: 900, // demora 1 segundo en iniciar
@@ -88,9 +90,13 @@ export class MainMenu extends BaseScene {
     optionsButton.on("pointerdown", () => {
       optionsButton.setScale(0.9); // Vuelve al tamaño original
       console.log("active");
+      this.cameras.main.zoomTo(1.8, 1200);
+      this.cameras.main.fadeOut(1200, 0, 0, 0);
+      optionsButton.setText('')
+      playButton.setText('')
       // this.add.image(width / 2, height / 2, '').setScale(0.37); //Explosión
       this.time.addEvent({
-        delay: 300, // demora 1 segundo en iniciar
+        delay: 1200, // demora 1 segundo en iniciar
         loop: true,
         callback: () => {
           this.toOptionsScene(); //Llama la escena Main

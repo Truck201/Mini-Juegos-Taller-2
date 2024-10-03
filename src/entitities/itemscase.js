@@ -17,11 +17,11 @@ export class ItemsCase {
 
     // Slots para cada jugador
     this.player1Slots = this.createItemSlots(
-      this.width * 0.286,
+      this.width * 0.2919,
       this.height * 0.67
     );
     this.player2Slots = this.createItemSlots(
-      this.width * 0.715,
+      this.width * 0.709,
       this.height * 0.67
     );
 

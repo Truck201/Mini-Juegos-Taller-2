@@ -24,7 +24,7 @@ export class Attack {
       mainBarBounds.left + 25,
       mainBarBounds.right - 25
     );
-    this.sprite = this.scene.add.rectangle(randomX, this.y, 30, 85, 0xff0000);
+    this.sprite = this.scene.add.rectangle(randomX, this.y, 20, 85, 0xff0000);
     this.sprite.setDepth(2);
   }
 

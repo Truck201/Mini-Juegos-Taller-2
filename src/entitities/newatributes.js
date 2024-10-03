@@ -8,11 +8,9 @@ export class AtributesPlayers {
 
     if (playerId === 1) {
       this.atributes1 = this.atributesData(initialAttributes1);
-      console.log(this.atributes1)
     }
     if (playerId === 2) {
       this.atributes2 = this.atributesData(initialAttributes2);
-      console.log(this.atributes2)
     }
   }
 
@@ -20,6 +18,29 @@ export class AtributesPlayers {
     this.x = this.scene.scale.width;
     this.y = this.scene.game.scale.height;
     this.initializeHealthBars(this.playerId);
+    this.animsHealthBar();
+  }
+
+  animsHealthBar() {
+    this.scene.anims.create({
+      key: "HealthLeft",
+      frames: this.scene.anims.generateFrameNumbers("healthBarLeftAnims", {
+        start: 0,
+        end: 6,
+      }),
+      frameRate: 6,
+      repeat: -1, // La animación se repite indefinidamente
+    });
+
+    this.scene.anims.create({
+      key: "HealthRight",
+      frames: this.scene.anims.generateFrameNumbers("healthBarRightAnims", {
+        start: 0,
+        end: 6,
+      }),
+      frameRate: 6,
+      repeat: -1, // La animación se repite indefinidamente
+    });
   }
 
   initializeHealthBars() {
@@ -27,27 +48,32 @@ export class AtributesPlayers {
       // Añadir barras de vida del jugador 1
       this.player1HealthBars = [
         this.scene.add
-          .sprite(this.x * 0.21, this.y * 0.08, "healthBarL1")
+          .sprite(this.x * 0.2179, this.y * 0.076, "healthBarL1F") // EXT 6 HP index 0
+          .setVisible(false)
+          .setScale(0.92)
+          .setDepth(5),
+        this.scene.add
+          .sprite(this.x * 0.21, this.y * 0.08, "healthBarL1") // 5 lifes
           .setVisible(true)
           .setDepth(2),
         this.scene.add
-          .sprite(this.x * 0.21, this.y * 0.08, "healthBarL2")
+          .sprite(this.x * 0.21, this.y * 0.08, "healthBarL2") // 4 lifes
           .setVisible(false)
           .setDepth(2),
         this.scene.add
-          .sprite(this.x * 0.21, this.y * 0.08, "healthBarL3")
+          .sprite(this.x * 0.21, this.y * 0.08, "healthBarL3") // 3 lifes
           .setVisible(false)
           .setDepth(2),
         this.scene.add
-          .sprite(this.x * 0.21, this.y * 0.08, "healthBarL4")
+          .sprite(this.x * 0.21, this.y * 0.08, "healthBarL4") // 2 lifes
           .setVisible(false)
           .setDepth(2),
         this.scene.add
-          .sprite(this.x * 0.21, this.y * 0.08, "healthBarL5")
+          .sprite(this.x * 0.21, this.y * 0.08, "healthBarL5") // 1 lifes
           .setVisible(false)
           .setDepth(2),
         this.scene.add
-          .sprite(this.x * 0.21, this.y * 0.08, "healthBarLNo")
+          .sprite(this.x * 0.21, this.y * 0.08, "healthBarLNo") // 0 lifes index 6 
           .setVisible(false)
           .setDepth(2),
       ];
@@ -57,27 +83,32 @@ export class AtributesPlayers {
       // Añadir barras de vida del jugador 2
       this.player2HealthBars = [
         this.scene.add
-          .sprite(this.x * 0.792, this.y * 0.08, "healthBarR1")
+          .sprite(this.x * 0.784, this.y * 0.076, "healthBarRF") // add 6 HP index 0
+          .setVisible(false)
+          .setScale(0.92)
+          .setDepth(5),
+        this.scene.add
+          .sprite(this.x * 0.792, this.y * 0.08, "healthBarR1") // 5 lifes
           .setVisible(true)
           .setDepth(2),
         this.scene.add
-          .sprite(this.x * 0.792, this.y * 0.08, "healthBarR2")
+          .sprite(this.x * 0.792, this.y * 0.08, "healthBarR2") // 4 lifes
           .setVisible(false)
           .setDepth(2),
         this.scene.add
-          .sprite(this.x * 0.792, this.y * 0.08, "healthBarR3")
+          .sprite(this.x * 0.792, this.y * 0.08, "healthBarR3") // 3 lifes
           .setVisible(false)
           .setDepth(2),
         this.scene.add
-          .sprite(this.x * 0.792, this.y * 0.08, "healthBarR4")
+          .sprite(this.x * 0.792, this.y * 0.08, "healthBarR4") // 2 lifes
           .setVisible(false)
           .setDepth(2),
         this.scene.add
-          .sprite(this.x * 0.792, this.y * 0.08, "healthBarR5")
+          .sprite(this.x * 0.792, this.y * 0.08, "healthBarR5") // 1 lifes
           .setVisible(false)
           .setDepth(2),
         this.scene.add
-          .sprite(this.x * 0.792, this.y * 0.08, "healthBarRNo")
+          .sprite(this.x * 0.792, this.y * 0.08, "healthBarRNo") // 0 lifes index 6
           .setVisible(false)
           .setDepth(2),
       ];
@@ -106,72 +137,65 @@ export class AtributesPlayers {
     const evadeRoll = Phaser.Math.Between(0, 100);
     if (evadeRoll < evadeChance) {
       console.log("Attack evaded!");
-      return; // El ataque no afecta
+      return false;
     }
-
+  
     if (playerId === 1) {
-      this.updateHealthBar(1, playerHp); // Actualiza la barra de vida del jugador 1
       this.removeAttributes(1, { hitPoints: 1 });
-      console.log("vida 1 " + playerHp);
+      playerHp = this.getHitPoints(1);  
+      this.updateHealthBar(1, playerHp); 
+      return true;
     } else if (playerId === 2) {
-      this.updateHealthBar(2, playerHp); // Actualiza la barra de vida del jugador 2
       this.removeAttributes(2, { hitPoints: 1 });
-      console.log("vida 2 " + playerHp);
+      playerHp = this.getHitPoints(2); 
+      this.updateHealthBar(2, playerHp);
+      return true;
     }
   }
 
   aboutWriteAtributes(newAttributes) {
     if (this.playerId === 1) {
-      this.atributes1.hitPoints = newAttributes.hitPoints || this.atributes1.hitPoints;
+      this.atributes1.hitPoints =
+        newAttributes.hitPoints || this.atributes1.hitPoints;
       this.atributes1.speed = newAttributes.speed || this.atributes1.speed;
-      this.atributes1.evadeChance = newAttributes.evadeChance || this.atributes1.evadeChance;
+      this.atributes1.evadeChance =
+        newAttributes.evadeChance || this.atributes1.evadeChance;
     } else if (this.playerId === 2) {
-      this.atributes2.hitPoints = newAttributes.hitPoints || this.atributes2.hitPoints;
+      this.atributes2.hitPoints =
+        newAttributes.hitPoints || this.atributes2.hitPoints;
       this.atributes2.speed = newAttributes.speed || this.atributes2.speed;
-      this.atributes2.evadeChance = newAttributes.evadeChance || this.atributes2.evadeChance;
+      this.atributes2.evadeChance =
+        newAttributes.evadeChance || this.atributes2.evadeChance;
     }
   }
-
 
   updateAttributes(player, newAttributes) {
     if (player === 1) {
       if (newAttributes.speed) {
         this.atributes1.speed += newAttributes.speed;
-        console.log("New Velocity" + newAttributes.speed);
-        console.log(this.atributes1.speed + " lo Viejo speed");
       }
       if (newAttributes.evadeChance) {
         this.atributes1.evadeChance += newAttributes.evadeChance;
-        console.log("New EvadeChance" + newAttributes.evadeChance);
-        console.log(this.atributes1.evadeChance + " lo Viejo evade");
       }
       if (newAttributes.hitPoints) {
         this.atributes1.hitPoints += newAttributes.hitPoints;
-        console.log("New hitPoints" + newAttributes.hitPoints);
-        console.log(this.atributes1.hitPoints + " lo Viejo HP");
       }
     }
     if (player === 2) {
       if (newAttributes.speed) {
         this.atributes2.speed += newAttributes.speed;
-        console.log("New Velocity" + newAttributes.speed);
-        console.log(this.atributes2.speed + " lo Viejo speed");
       }
       if (newAttributes.evadeChance) {
         this.atributes2.evadeChance += newAttributes.evadeChance;
-        console.log("New EvadeChance" + newAttributes.evadeChance);
-        console.log(this.atributes2.evadeChance + " lo Viejo evade");
       }
       if (newAttributes.hitPoints) {
         this.atributes2.hitPoints += newAttributes.hitPoints;
-        console.log("New hitPoints" + newAttributes.hitPoints);
-        console.log(this.atributes2.hitPoints + " lo Viejo HP");
       }
     }
   }
 
   removeAttributes(player, newAttributes) {
-    if (player === 1)  {
+    if (player === 1) {
       if (newAttributes.speed) {
         this.atributes1.speed -= newAttributes.speed;
       }
@@ -181,7 +205,7 @@ export class AtributesPlayers {
       if (newAttributes.hitPoints) {
         this.atributes1.hitPoints -= newAttributes.hitPoints;
       }
-    } 
+    }
     if (player === 2) {
       if (newAttributes.speed) {
         this.atributes2.speed -= newAttributes.speed;
@@ -197,34 +221,55 @@ export class AtributesPlayers {
 
   updateHealthBar(playerId, playerHp) {
     let healthBars, currentHP;
-
+  
     if (playerId === 1) {
       healthBars = this.player1HealthBars;
       currentHP = playerHp;
-      console.log("vida 1 " + currentHP);
     } else if (playerId === 2) {
       healthBars = this.player2HealthBars;
       currentHP = playerHp;
-      console.log("vida 2 " + currentHP);
     }
-
-    // Asegúrate de que currentHP esté dentro del rango de las barras de vida
-    if (currentHP >= 0 && currentHP < healthBars.length) {
-      console.log("vida 2 " + healthBars.length);
-      for (let i = 0; i < healthBars.length; i++) {
-        healthBars[i].setVisible(i === healthBars.length - currentHP );
+  
+    // Ocultar todas las barras inicialmente
+    healthBars.forEach((bar) => bar.setVisible(false));
+    // Mostrar la barra correspondiente a los HP restantes
+    if (currentHP > 5) {
+      healthBars[0].setVisible(true); // Mostrar el sprite que contiene la animación
+      if (playerId === 1) {
+        healthBars[0].play("HealthLeft");
+      } else if (playerId === 2) {
+        healthBars[0].play("HealthRight");
+      }
+    } else if (currentHP <= 5 && currentHP >= 0) {
+      // Mostrar la barra correspondiente a los HP restantes
+      const visibleBarIndex = healthBars.length - currentHP - 1;
+      healthBars[visibleBarIndex].setVisible(true);
+      console.log(visibleBarIndex)
+      // Detener cualquier animación que se esté reproduciendo
+      if (playerId === 1) {
+        healthBars[0].stop("HealthLeft");
+      } else if (playerId === 2) {
+        healthBars[0].stop("HealthRight");
       }
     }
-
+  
     // Verificar si el jugador ha perdido
-    if (currentHP <= 0) {
-      this.gameOver(playerId);
+    if (currentHP < 1) {
+      this.scene.time.addEvent({
+        delay: 200,
+        callback: () => {
+          this.gameOver(playerId);
+        },
+        loop: false,
+      });
     }
   }
 
   gameOver(loser) {
     console.log(`Jugador ${loser} ha perdido!`);
-    this.scene.scene.restart("Preloader"); // Reinicia la escena
+    this.scene.scene.launch("GameOver", { player: loser }); // Game Over Scene
+    this.scene.scene.pause("battleScene");
+    this.scene.scene.bringToTop("GameOver");
   }
 
   getSpeed(player) {
@@ -247,11 +292,9 @@ export class AtributesPlayers {
 
   getHitPoints(player) {
     if (player === 1) {
-      console.log(" Estos son mis atributos.HitPoint " + this.atributes1.hitPoints);
       return this.atributes1.hitPoints;
     }
     if (player === 2) {
-      console.log(" Estos son mis atributos.HitPoint " + this.atributes2.hitPoints);
       return this.atributes2.hitPoints;
     }
   }

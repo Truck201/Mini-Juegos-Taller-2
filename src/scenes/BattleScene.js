@@ -17,7 +17,10 @@ export class BattleScene extends BaseScene {
     this.player1HPText = null; // Vida de Cada Jugador
     this.player2HPText = null;
 
-    this.lastKeyPressTime = 0  // Pausa ?
+    this.lastKeyPressTime = 0; // Pausa ?
+
+    this.canAttackPlayer1 = true;
+    this.canAttackPlayer2 = true;
   }
 
   game_over_timeout;
@@ -61,7 +64,7 @@ export class BattleScene extends BaseScene {
         this.selectedItemsPlayer1.atributes1
       );
     }
-    console.log(this.selectedItemsPlayer1.atributes1)
+    console.log(this.selectedItemsPlayer1.atributes1);
 
     this.player2Atributes.create();
     // Actualizar atributos del jugador 2 con los ítems seleccionados
@@ -71,7 +74,7 @@ export class BattleScene extends BaseScene {
       );
     }
 
-    console.log(this.selectedItemsPlayer2.atributes2)
+    console.log(this.selectedItemsPlayer2.atributes2);
 
     const player1Speed =
       this.player1Atributes.getSpeed(1) ||
@@ -90,6 +93,8 @@ export class BattleScene extends BaseScene {
     console.log("Jugador 1 Speed: ", player1Speed);
     console.log("Jugador 1 EvadeChance: ", this.player1EvadeChance);
 
+    this.player1Atributes.updateHealthBar(1, this.player1HP);
+
     const player2Speed =
       this.player2Atributes.getSpeed(2) ||
       this.selectedItemsPlayer2.atributes?.speed ||
@@ -107,15 +112,45 @@ export class BattleScene extends BaseScene {
     console.log("Jugador 2 Speed: ", player2Speed);
     console.log("Jugador 2 EvadeChance: ", this.player2EvadeChance);
 
+    this.player2Atributes.updateHealthBar(2, this.player2HP);
+
     // Textos De Atributos 1
-    this.player1HPText = this.createText(width * 0.35, height * 0.08, `${this.player1HP.toString().padStart(2, '0')}`).setOrigin(0.5).setDepth(3);
-    this.createText(width * 0.018, height * 0.25, `Speed: ${player1Speed.toString().padStart(2, '0')}`).setDepth(3);
-    this.createText(width * 0.018, height * 0.30, `Evade: ${this.player1EvadeChance.toString().padStart(2, '0')}`).setDepth(3);
+    this.player1HPText = this.createText(
+      width * 0.35,
+      height * 0.08,
+      `${this.player1HP.toString().padStart(2, "0")}`
+    )
+      .setOrigin(0.5)
+      .setDepth(3);
+    this.createText(
+      width * 0.018,
+      height * 0.25,
+      `Speed: ${player1Speed.toString().padStart(2, "0")}`
+    ).setDepth(3);
+    this.createText(
+      width * 0.018,
+      height * 0.3,
+      `Evade: ${this.player1EvadeChance.toString().padStart(2, "0")}`
+    ).setDepth(3);
 
     // Textos De Atributos 2
-    this.player2HPText = this.createText(width * 0.66, height * 0.08, `${this.player2HP.toString().padStart(2, '0')}`).setOrigin(0.5).setDepth(3);
-    this.createText(width * 0.858, height * 0.25, `Speed: ${player2Speed.toString().padStart(2, '0')}`).setDepth(3);
-    this.createText(width * 0.858, height * 0.30, `Evade: ${this.player2EvadeChance.toString().padStart(2, '0')}`).setDepth(3);
+    this.player2HPText = this.createText(
+      width * 0.66,
+      height * 0.08,
+      `${this.player2HP.toString().padStart(2, "0")}`
+    )
+      .setOrigin(0.5)
+      .setDepth(3);
+    this.createText(
+      width * 0.858,
+      height * 0.25,
+      `Speed: ${player2Speed.toString().padStart(2, "0")}`
+    ).setDepth(3);
+    this.createText(
+      width * 0.858,
+      height * 0.3,
+      `Evade: ${this.player2EvadeChance.toString().padStart(2, "0")}`
+    ).setDepth(3);
 
     this.television = new Television(this);
 
@@ -133,9 +168,8 @@ export class BattleScene extends BaseScene {
     this.imagenBar = this.add.sprite(barraX, barraY, "imagen-barra");
     this.imagenBar.setDepth(2);
 
-    this.attackBar = new Attack(this);
+    this.attackBar = new Attack(this); 
 
-    // Crear barras móviles usando la clase MoveBar
     this.movingBar1 = new MoveBar(
       this,
       barraX - 500,
@@ -195,39 +229,67 @@ export class BattleScene extends BaseScene {
     // Si se presiona espacio, jugador 1 destruye un recolectable
     if (
       this.checkCollision(movingBar1Sprite, this.attackBar.sprite) &&
-      Phaser.Input.Keyboard.JustDown(this.spaceKey) // Acción de jugador 1
+      Phaser.Input.Keyboard.JustDown(this.spaceKey) &&
+      this.canAttackPlayer1 // Acción de jugador 1
     ) {
-      this.player2Atributes.takeDamage(
+      this.destroyAndRespawn(); // Destruye y reaparece
+
+      if (this.player2Atributes.takeDamage(
         2,
         this.player2EvadeChance,
         this.player2HP
-      ); // Aplica daño al jugador
+      )) {
+        this.cameras.main.shake(200, 0.035);
+      } else {
+        this.showMissMessage();
+      }
 
       this.player2HP = this.player2Atributes.getHitPoints(2);
-      console.log("Vida del jugador 2: Actual ", this.player2HP);
-      this.player2HPText.setText(`${this.player2HP.toString().padStart(2, '0')}`);
+        console.log("Vida del jugador 2: Actual ", this.player2HP);
+        this.player2HPText.setText(
+          `${this.player2HP.toString().padStart(2, "0")}`
+        );
 
-      this.destroyAndRespawn(); // Destruye y reaparece
+        this.canAttackPlayer1 = false;
+        this.canAttackPlayer2 = false;
+        this.time.delayedCall(3000, () => {
+          this.canAttackPlayer1 = true;
+          this.canAttackPlayer2 = true;
+        });
     }
 
     // Si se presiona enter, jugador 2 destruye un recolectable
     if (
       this.checkCollision(movingBar2Sprite, this.attackBar.sprite) &&
-      Phaser.Input.Keyboard.JustDown(this.enterKey) // Acción de jugador 2
+      Phaser.Input.Keyboard.JustDown(this.enterKey) &&
+      this.canAttackPlayer2 // Acción de jugador 2
     ) {
-      this.player1Atributes.takeDamage(
+      this.destroyAndRespawn(); // Destruye y reaparece en rojo
+
+      if (this.player1Atributes.takeDamage(
         1,
         this.player1EvadeChance,
         this.player1HP
-      ); // Aplica daño según hitPoints
+      )) {
+        this.cameras.main.shake(200, 0.035)
+      } else {
+        this.showMissMessage();
+      }
 
       this.player1HP = this.player1Atributes.getHitPoints(1);
       console.log("Vida del jugador 1: Actual  ", this.player1HP);
-      this.player1HPText.setText(`${this.player1HP.toString().padStart(2, '0')}`);
+      this.player1HPText.setText(
+        `${this.player1HP.toString().padStart(2, "0")}`
+      );
 
-      this.destroyAndRespawn(); // Destruye y reaparece en rojo
+      this.canAttackPlayer1 = false;
+      this.canAttackPlayer2 = false;
+      this.time.delayedCall(3000, () => {
+        this.canAttackPlayer1 = true;
+        this.canAttackPlayer2 = true;
+      });
     }
-
+    
     // Actualizar el texto de la televisión según el tiempo restante
     this.television.updateText(this.game_over_timeout);
   }
@@ -258,11 +320,36 @@ export class BattleScene extends BaseScene {
   destroyAndRespawn() {
     this.attackBar.destroy();
 
-    // Shake de la pantalla
-    this.cameras.main.shake(200, 0.02); // Duración y fuerza del shake
-
-    this.time.delayedCall(3000, () => {
+    this.time.delayedCall(Phaser.Math.Between(3000, 4500), () => {
       this.attackBar.respawn();
+    });
+  }
+
+  showMissMessage() {
+    const missText = this.add.text(this.attackBar.sprite.x, this.attackBar.sprite.y - 5, "MISS", {
+      fontSize: "190px",
+      color: "#fff",
+      fontFamily: "Press Start 2P",
+      fontWeight: "bold",
+      shadow: {
+        color: "#000000",
+        fill: true,
+        offsetX: 3,
+        offsetY: 3,
+      },
+    })
+    .setOrigin(0.5)
+    .setDepth(5);
+  
+    this.tweens.add({
+      targets: missText,
+      scale: { from: 2.1, to: 4.2 }, // Agrandar el texto
+      alpha: { from: 1, to: 0 },   // Desaparecer el texto
+      duration: 1500,              // Duración de la animación (1 segundo)
+      ease: 'Power2',
+      onComplete: () => {
+        missText.destroy(); // Eliminar el texto después de la animación
+      }
     });
   }
 }

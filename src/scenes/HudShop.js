@@ -26,19 +26,19 @@ export class HudShop extends BaseScene {
       width * 0.132,
       height * 0.85,
       `P1 Points: ${this.points1}`,
-    ).setOrigin(0.5, 0.5);
+    ).setOrigin(0.5);
 
     this.points_text2 = this.createText(
       width * 0.868,
       height * 0.85,
       `P2 Points: ${this.points2}`,
-    ).setOrigin(0.5, 0.5);
+    ).setOrigin(0.5);
 
     this.remaining_time_text = this.createText(
       width / 2,
-      height * 0.15,
+      height * 0.55,
       `REMAINING: ${this.remaining_time.toString().padStart(2, '0')}s`,
-    ).setOrigin(0.5, 0.5);
+    ).setOrigin(0.5);
   }
 
   update_points(player, points) {

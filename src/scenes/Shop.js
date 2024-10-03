@@ -14,7 +14,7 @@ export class Shop extends Scene {
   init(data) {
     this.points1 = data.points1 || 0; // Puntaje inicial jugador 1
     this.points2 = data.points2 || 0; // Puntaje inicial jugador 2
-    this.game_over_timeout = 6;
+    this.game_over_timeout = 5;
     this.lastKeyPressTime = 0;
     this.background;
 
@@ -67,8 +67,8 @@ export class Shop extends Scene {
 
     // Crea un nuevo sprite para la animación y colócalo detrás del fondo
     const animatedBackground = this.add
-      .sprite(width / 2, height / 2, "backgroundShop")
-      .setScale(0.2);
+      .sprite(width / 2, height * 0.4, "backgroundShop")
+      .setScale(0.46);
     animatedBackground.setDepth(0);
 
     this.add

@@ -127,12 +127,20 @@ export class Preloader extends Scene {
     });
 
     // Partículas
-    this.load.image("flare", "../public/assets/particles/blue-particle.png"); //  2      particles.png
+    this.load.image("flare", "../public/assets/particles/particles.png"); //  2      particles.png    blue-particle.png
     this.load.image("flare2", "../public/assets/particles/particles2.png");
-    this.load.image("flare3", "../public/assets/particles/red-particle.png"); //  1      particles3.png
+    this.load.image("flare3", "../public/assets/particles/particles3.png"); //  1      particles3.png  red-particle.png
 
     // Battle
     // Left
+    this.load.spritesheet(
+      "healthBarLeftAnims",
+      "../public/assets/battle/vida/pj1-xtra.png",
+      {
+        frameWidth: 324,
+        frameHeight: 84,
+      }
+    );
     this.load.image(
       "healthBarL1",
       "../public/assets/battle/vida/pj1_vida5.png"
@@ -159,6 +167,14 @@ export class Preloader extends Scene {
     );
 
     // Right
+    this.load.spritesheet(
+      "healthBarRightAnims",
+      "../public/assets/battle/vida/pj2-xtra.png",
+      {
+        frameWidth: 316,
+        frameHeight: 84,
+      }
+    );
     this.load.image(
       "healthBarR1",
       "../public/assets/battle/vida/pj2_vida5.png"
@@ -196,10 +212,26 @@ export class Preloader extends Scene {
   }
 
   create() {
-    // Aquí puedes mostrar una pantalla de carga si lo deseas.
-    this.add.text(100, 100, "Cargando...", {
-      font: "20px Arial",
-      fill: "#ffffff",
+    let width = this.game.scale.width;
+    let height = this.game.scale.height;
+
+    const defaultText = this.add
+      .text(width * 0.5, height * 0.4, "Cargando", {
+        font: "32px Arial black",
+        fill: "#ffffff",
+      })
+      .setOrigin(0.5);
+
+    let loadingText = "Cargando";
+    let dotCount = 0;
+
+    this.time.addEvent({
+      delay: 200, // 1 segundo
+      callback: () => {
+        dotCount = (dotCount + 1) % 4; // Ciclo entre 0 y 3
+        defaultText.setText(loadingText + ".".repeat(dotCount));
+      },
+      loop: true,
     });
   }
 

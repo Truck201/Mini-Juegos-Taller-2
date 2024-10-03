@@ -35,9 +35,9 @@ export class Particles {
       speed: { min: 10, max: 70 },
       lifespan: 450, // 450
       alpha: { start: 1, end: 0 }, // Las partículas se desvanecen
-      scale: { start: 0.76, end: 0.003 },  // 0.003, end: 0.09
+      scale: { start: 0.003, end: 0.09 },  // 0.003, end: 0.09  start: 0.76, end: 0.003
       tint: 0xffffff,
-      quantity: 1,
+      quantity: 9,
       gravityY: 0, // Sin gravedad para un movimiento lineal
       blendMode: "ADD",
     });
