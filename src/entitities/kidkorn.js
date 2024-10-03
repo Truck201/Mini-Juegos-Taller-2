@@ -5,11 +5,11 @@ export class KidKorn {
     this.y = this.scene.scale.height;
     this.x = this.scene.scale.width;
 
-    this.kidKornBig = this.scene.add.sprite(this.x / 2, this.y * 1.9, "kid-kornB").setDepth(6).setScale(0.63);
+    this.kidKornBig = this.scene.add.sprite(this.x / 2, this.y * 1.9, "kid-kornB").setDepth(2).setScale(0.64);
     this.kidKornBig.setVisible(false); // Ocultar al inicio
 
-    this.kidKornLeft = this.scene.add.sprite(-200, this.y * 0.7, "kid-kornL").setDepth(3).setScale(0.4);
-    this.kidKornRight = this.scene.add.sprite(this.x + 200, this.y * 0.7, "kid-kornR").setDepth(3).setScale(0.4);
+    this.kidKornLeft = this.scene.add.sprite(-200, this.y * 0.8, "kid-kornL").setDepth(4).setScale(0.6);
+    this.kidKornRight = this.scene.add.sprite(this.x + 200, this.y * 0.8, "kid-kornR").setDepth(4).setScale(0.6);
 
     this.kidKornLeft.setVisible(false); // Ocultar al inicio
     this.kidKornRight.setVisible(false); // Ocultar al inicio
@@ -30,7 +30,7 @@ export class KidKorn {
     this.scene.tweens.add({
       targets: this.kidKornBig,
       y: height * 0.57, // Subir hasta la mitad de la pantalla
-      duration: 1300, // Duración de la animación (2 segundos)
+      duration: 2500, // Duración de la animación (2 segundos)
       ease: "Power2", // Tipo de easing
       onComplete: () => {
         // Una vez que llega a la mitad, comenzar a generar pochoclos
@@ -76,8 +76,8 @@ export class KidKorn {
     const fromLeft = Phaser.Math.Between(0, 1) === 0;
 
     let sprite = fromLeft ? this.kidKornLeft : this.kidKornRight;
-    let startX = fromLeft ? -160 : this.scene.scale.width + 160;
-    let endX = fromLeft ? this.x * 0.13 : this.x * 0.87;
+    let startX = fromLeft ? -175 : this.scene.scale.width + 175;
+    let endX = fromLeft ? this.x * 0.02 : this.x * 0.98;
 
     sprite.setVisible(true);
     sprite.x = startX;
@@ -92,7 +92,7 @@ export class KidKorn {
         // Generar pochoclos cuando llega al centro
         this.scene.startGeneratingPopcorn(false);
         // Desaparecer después de un tiempo aleatorio entre 1 y 2 segundos
-        this.scene.time.delayedCall(Phaser.Math.Between(1000, 2000), () => {
+        this.scene.time.delayedCall(Phaser.Math.Between(1200, 2000), () => {
           this.hideKidKornChild(sprite, fromLeft);
         });
       },

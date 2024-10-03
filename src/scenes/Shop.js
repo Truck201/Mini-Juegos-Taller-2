@@ -73,7 +73,7 @@ export class Shop extends Scene {
 
     this.add
       .image(width / 2, height * 0.79, "backShop")
-      .setScale(1.35)
+      .setScale(0.913)
       .setDepth(1);
 
     this.itemsCase = new ItemsCase(this, this.scale.width, this.scale.height);

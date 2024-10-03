@@ -230,7 +230,7 @@ export class BattleScene extends BaseScene {
           this.player2HP
         )
       ) {
-        this.cameras.main.shake(200, 0.035);
+        this.cameras.main.shake(200, 0.025);
       } else {
         this.showMissMessage();
       }
@@ -263,7 +263,7 @@ export class BattleScene extends BaseScene {
           this.player1HP
         )
       ) {
-        this.cameras.main.shake(200, 0.035);
+        this.cameras.main.shake(200, 0.025);
       } else {
         this.showMissMessage();
       }

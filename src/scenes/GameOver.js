@@ -10,9 +10,11 @@ export class GameOver extends Scene {
 
     if (this.loser === 1){
         this.loser = 'Mimbo'
+        this.winner = 2
     } 
     if (this.loser === 2){
         this.loser = 'Luho'
+        this.winner = 1
     }
   }
 
@@ -26,7 +28,7 @@ export class GameOver extends Scene {
       .setDepth(41);
 
     this.add
-      .text(width * 0.5, height * 0.5, `Jugador ${this.loser.toString()} ha perdido!`, {
+      .text(width * 0.5, height * 0.5, `¡Jugador ${this.winner.toString()} ha ganado!`, {
         fontFamily: "Arial Black",
         fontSize: 64,
         color: "#ffffff",

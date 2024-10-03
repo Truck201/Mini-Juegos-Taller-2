@@ -12,16 +12,16 @@ export class ItemsCase {
     this.selectedItemsPlayer1 = [];
     this.selectedItemsPlayer2 = [];
 
-    this.player1Position = { row: 0, col: 0 };
-    this.player2Position = { row: 0, col: 3 };
+    this.player1Position = { row: 0, col: 0 }; // POSICIONES INICIALES
+    this.player2Position = { row: 0, col: 2 }; // POSICIONES INICIALES
 
     // Slots para cada jugador
     this.player1Slots = this.createItemSlots(
-      this.width * 0.2919,
+      this.width * 0.385,  // this.width * 0.2919
       this.height * 0.67
     );
     this.player2Slots = this.createItemSlots(
-      this.width * 0.709,
+      this.width * 0.61,  // this.width * 0.709
       this.height * 0.67
     );
 
@@ -106,11 +106,11 @@ export class ItemsCase {
     this.createItems();
 
     // Crear los cuadros que indican la posición de cada jugador
-    this.player1Indicator = this.scene.add.rectangle(0, 0, 75, 75).setDepth(2);
-    this.player1Indicator.setStrokeStyle(4, 0xff0000); // Rojo para jugador 1
+    this.player1Indicator = this.scene.add.rectangle(0, 0, 64, 64).setDepth(2);
+    this.player1Indicator.setStrokeStyle(4, 0xff004d); // Rojo para jugador 1
 
-    this.player2Indicator = this.scene.add.rectangle(0, 0, 75, 75).setDepth(2);
-    this.player2Indicator.setStrokeStyle(4, 0x0000ff); // Azul para jugador 2
+    this.player2Indicator = this.scene.add.rectangle(0, 0, 64, 64).setDepth(2);
+    this.player2Indicator.setStrokeStyle(4, 0x0778f2); // Azul para jugador 2
 
     this.player1Atributes = new AtributesPlayers(this, 1);
     this.player2Atributes = new AtributesPlayers(this, 2);
@@ -131,11 +131,11 @@ export class ItemsCase {
   // Método para crear los slots visuales de ítems para un jugador
   createItemSlots(x, y) {
     let slots = [];
-    const slotSize = 70; // Tamaño del slot
+    const slotSize = 62; // Tamaño del slot
 
     for (let i = 0; i < this.maxItems; i++) {
       let slot = this.scene.add
-        .rectangle(x, y + i * (slotSize + 15), slotSize, slotSize, 0x444444)
+        .rectangle(x, y + i * (slotSize + 12), slotSize, slotSize, 0x444444)
         .setStrokeStyle(2, 0xffffff)
         .setDepth(2);
       slot.itemSprite = null; // Aquí almacenaremos el sprite del ítem
@@ -271,7 +271,7 @@ export class ItemsCase {
 
   createItems() {
     const rows = 3;
-    const cols = 4;
+    const cols = 3;
     const itemSize = 70;
     const offsetX = this.width / 2 - (cols * itemSize) / 2 + 35;
     const offsetY = this.height / 1.2 - (rows * itemSize) / 2;
@@ -409,9 +409,9 @@ export class ItemsCase {
     }
 
     if (Phaser.Input.Keyboard.JustDown(playerKeys.left)) {
-      playerPosition.col = Phaser.Math.Clamp(playerPosition.col - 1, 0, 3);
+      playerPosition.col = Phaser.Math.Clamp(playerPosition.col - 1, 0, 2);
     } else if (Phaser.Input.Keyboard.JustDown(playerKeys.right)) {
-      playerPosition.col = Phaser.Math.Clamp(playerPosition.col + 1, 0, 3);
+      playerPosition.col = Phaser.Math.Clamp(playerPosition.col + 1, 0, 2);
     }
 
     this.paintPlayerPosition(prevPosition, 1);

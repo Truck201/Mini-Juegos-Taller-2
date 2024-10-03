@@ -214,10 +214,11 @@ export class Preloader extends Scene {
 
     const defaultText = this.add
       .text(width * 0.5, height * 0.4, "Cargando", {
-        font: "32px Arial black",
+        fontSize: '15px',
+        fontFamily: "'Press Start 2P'",
         fill: "#ffffff",
-      })
-      .setOrigin(0.5);
+      }).setOrigin(0.5)
+      
 
     let loadingText = "Cargando";
     let dotCount = 0;

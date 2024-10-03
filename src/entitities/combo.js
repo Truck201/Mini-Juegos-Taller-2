@@ -15,18 +15,17 @@ export class ComboPersonajes {
   create() {
     this.comboText1 = this.scene.add
       .text(this.scene.scale.width * 0.13, this.scene.scale.height * 0.5, "1", {
-        fontSize: "80px",
+        fontSize: "60px",
         fontFamily: "'Press Start 2P', sans-serif",
         color: "#fff",
-        stroke: "gold",
-        strokeThickness: 4,
+        stroke: "black",
+        strokeThickness: 6,
         maxLines: 4,
         shadow: {
           color: "#000000",
           fill: true,
-          offsetX: 3,
-          offsetY: 3,
-          blur: 3,
+          offsetX: 4,
+          offsetY: 4,
         },
       })
       .setDepth(3)
@@ -34,19 +33,18 @@ export class ComboPersonajes {
 
     this.comboText2 = this.scene.add
       .text(this.scene.scale.width * 0.8, this.scene.scale.height * 0.5, "1", {
-        fontSize: "90px",
+        fontSize: "60px",
 
         fontFamily: "'Press Start 2P', sans-serif",
         color: "#fff",
-        stroke: "gold",
-        strokeThickness: 4,
+        stroke: "black",
+        strokeThickness: 6,
         maxLines: 4,
         shadow: {
           color: "#000000",
           fill: true,
-          offsetX: 3,
-          offsetY: 3,
-          blur: 3,
+          offsetX: 4,
+          offsetY: 4,
         },
       })
       .setDepth(3)

@@ -28,7 +28,7 @@ export class AtributesPlayers {
         start: 0,
         end: 6,
       }),
-      frameRate: 6,
+      frameRate: 10,
       repeat: -1, // La animación se repite indefinidamente
     });
 
@@ -38,7 +38,7 @@ export class AtributesPlayers {
         start: 0,
         end: 6,
       }),
-      frameRate: 6,
+      frameRate: 10,
       repeat: -1, // La animación se repite indefinidamente
     });
   }
