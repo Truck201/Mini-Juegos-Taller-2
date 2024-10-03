@@ -53,7 +53,7 @@ export class Shop extends Scene {
 
     this.input.keyboard.on("keydown-ESC", () => {
       const currentTime = this.time.now;
-      console.log("pres scape");
+      
       // Verificar si ha pasado suficiente tiempo desde la última pulsación
       if (currentTime - this.lastKeyPressTime > 250) {
         // 700 ms de delay
@@ -90,8 +90,6 @@ export class Shop extends Scene {
     const selectedItems = this.itemsCase.selectedItems; // Obtén los ítems seleccionados
     const selected1Player = this.itemsCase.player1Atributes;
     const selected2Player = this.itemsCase.player2Atributes;
-    console.log(selected1Player, "player 1 items");
-    console.log(selected2Player, "player 2 items");
 
     this.scene.start("battleScene", {
       purchasedItems: selectedItems,

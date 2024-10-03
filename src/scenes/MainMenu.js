@@ -32,18 +32,15 @@ export class MainMenu extends BaseScene {
     playButton.on("pointerover", () => {
       // Cambia el tamaño de la imagen al pasar el mouse
       playButton.setScale(1.1);
-      console.log("on");
     });
 
     playButton.on("pointerout", () => {
       // Cambia el tamaño de la imagen al pasar el mouse
       playButton.setScale(1);
-      console.log("off");
     });
 
     playButton.on("pointerdown", () => {
       playButton.setScale(1.2); // Vuelve al tamaño original
-      console.log("active");
       optionsButton.setText('')
       playButton.setText('')
       // this.add.image(width / 2, height / 2, '').setScale(0.37); //Explosión
@@ -89,7 +86,6 @@ export class MainMenu extends BaseScene {
 
     optionsButton.on("pointerdown", () => {
       optionsButton.setScale(0.9); // Vuelve al tamaño original
-      console.log("active");
       this.cameras.main.zoomTo(1.8, 1200);
       this.cameras.main.fadeOut(1200, 0, 0, 0);
       optionsButton.setText('')

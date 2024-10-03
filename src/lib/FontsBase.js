@@ -28,7 +28,7 @@ export class BaseScene extends Scene {
     } else if (text.length <= 8) {
       fontSize = "30px"; // Para palabras medianas
     } else {
-      fontSize = "20px"; // Para palabras largas
+      fontSize = "19.5px"; // Para palabras largas
     }
     return this.add.text(x, y, text, this.getGlobalTextStyle(fontSize));
   }

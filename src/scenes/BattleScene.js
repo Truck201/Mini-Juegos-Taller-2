@@ -33,9 +33,6 @@ export class BattleScene extends BaseScene {
     this.selectedItemsPlayer1 = data.selectedItemsPlayer1 || {}; // Asegúrate de que sea un objeto
     this.selectedItemsPlayer2 = data.selectedItemsPlayer2 || {}; // Asegúrate de que sea un objeto
 
-    console.log(this.selectedItemsPlayer1);
-    console.log(this.selectedItemsPlayer2);
-
     // Lanzar la escena del HUD, pasando el tiempo y los puntajes iniciales
     this.scene.launch("hudBattle", {
       remaining_time: this.game_over_timeout,
@@ -89,10 +86,6 @@ export class BattleScene extends BaseScene {
       this.selectedItemsPlayer1.atributes?.hitPoints ||
       1; // int
 
-    console.log("Jugador 1 HP: ", this.player1HP);
-    console.log("Jugador 1 Speed: ", player1Speed);
-    console.log("Jugador 1 EvadeChance: ", this.player1EvadeChance);
-
     this.player1Atributes.updateHealthBar(1, this.player1HP);
 
     const player2Speed =
@@ -107,10 +100,6 @@ export class BattleScene extends BaseScene {
       this.player2Atributes.getHitPoints(2) ||
       this.selectedItemsPlayer2.atributes?.hitPoints ||
       1; // int
-
-    console.log("Jugador 2 HP: ", this.player2HP);
-    console.log("Jugador 2 Speed: ", player2Speed);
-    console.log("Jugador 2 EvadeChance: ", this.player2EvadeChance);
 
     this.player2Atributes.updateHealthBar(2, this.player2HP);
 
@@ -168,7 +157,7 @@ export class BattleScene extends BaseScene {
     this.imagenBar = this.add.sprite(barraX, barraY, "imagen-barra");
     this.imagenBar.setDepth(2);
 
-    this.attackBar = new Attack(this); 
+    this.attackBar = new Attack(this);
 
     this.movingBar1 = new MoveBar(
       this,
@@ -234,28 +223,29 @@ export class BattleScene extends BaseScene {
     ) {
       this.destroyAndRespawn(); // Destruye y reaparece
 
-      if (this.player2Atributes.takeDamage(
-        2,
-        this.player2EvadeChance,
-        this.player2HP
-      )) {
+      if (
+        this.player2Atributes.takeDamage(
+          2,
+          this.player2EvadeChance,
+          this.player2HP
+        )
+      ) {
         this.cameras.main.shake(200, 0.035);
       } else {
         this.showMissMessage();
       }
 
       this.player2HP = this.player2Atributes.getHitPoints(2);
-        console.log("Vida del jugador 2: Actual ", this.player2HP);
-        this.player2HPText.setText(
-          `${this.player2HP.toString().padStart(2, "0")}`
-        );
+      this.player2HPText.setText(
+        `${this.player2HP.toString().padStart(2, "0")}`
+      );
 
-        this.canAttackPlayer1 = false;
-        this.canAttackPlayer2 = false;
-        this.time.delayedCall(3000, () => {
-          this.canAttackPlayer1 = true;
-          this.canAttackPlayer2 = true;
-        });
+      this.canAttackPlayer1 = false;
+      this.canAttackPlayer2 = false;
+      this.time.delayedCall(3000, () => {
+        this.canAttackPlayer1 = true;
+        this.canAttackPlayer2 = true;
+      });
     }
 
     // Si se presiona enter, jugador 2 destruye un recolectable
@@ -266,18 +256,19 @@ export class BattleScene extends BaseScene {
     ) {
       this.destroyAndRespawn(); // Destruye y reaparece en rojo
 
-      if (this.player1Atributes.takeDamage(
-        1,
-        this.player1EvadeChance,
-        this.player1HP
-      )) {
-        this.cameras.main.shake(200, 0.035)
+      if (
+        this.player1Atributes.takeDamage(
+          1,
+          this.player1EvadeChance,
+          this.player1HP
+        )
+      ) {
+        this.cameras.main.shake(200, 0.035);
       } else {
         this.showMissMessage();
       }
 
       this.player1HP = this.player1Atributes.getHitPoints(1);
-      console.log("Vida del jugador 1: Actual  ", this.player1HP);
       this.player1HPText.setText(
         `${this.player1HP.toString().padStart(2, "0")}`
       );
@@ -289,7 +280,7 @@ export class BattleScene extends BaseScene {
         this.canAttackPlayer2 = true;
       });
     }
-    
+
     // Actualizar el texto de la televisión según el tiempo restante
     this.television.updateText(this.game_over_timeout);
   }
@@ -326,30 +317,31 @@ export class BattleScene extends BaseScene {
   }
 
   showMissMessage() {
-    const missText = this.add.text(this.attackBar.sprite.x, this.attackBar.sprite.y - 5, "MISS", {
-      fontSize: "190px",
-      color: "#fff",
-      fontFamily: "Press Start 2P",
-      fontWeight: "bold",
-      shadow: {
-        color: "#000000",
-        fill: true,
-        offsetX: 3,
-        offsetY: 3,
-      },
-    })
-    .setOrigin(0.5)
-    .setDepth(5);
-  
+    const missText = this.add
+      .text(this.attackBar.sprite.x, this.attackBar.sprite.y - 5, "MISS", {
+        fontSize: "190px",
+        color: "#fff",
+        fontFamily: "Press Start 2P",
+        fontWeight: "bold",
+        shadow: {
+          color: "#000000",
+          fill: true,
+          offsetX: 3,
+          offsetY: 3,
+        },
+      })
+      .setOrigin(0.5)
+      .setDepth(5);
+
     this.tweens.add({
       targets: missText,
       scale: { from: 2.1, to: 4.2 }, // Agrandar el texto
-      alpha: { from: 1, to: 0 },   // Desaparecer el texto
-      duration: 1500,              // Duración de la animación (1 segundo)
-      ease: 'Power2',
+      alpha: { from: 1, to: 0 }, // Desaparecer el texto
+      duration: 1500, // Duración de la animación (1 segundo)
+      ease: "Power2",
       onComplete: () => {
         missText.destroy(); // Eliminar el texto después de la animación
-      }
+      },
     });
   }
 }

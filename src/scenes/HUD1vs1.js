@@ -54,7 +54,7 @@ export class Hud extends BaseScene {
       if (timeout === 3) {
         this.remaining_time_text.destroy();
       }
-      if (timeout >= 4) {
+      if (timeout >= 4 && timeout < 15) {
         this.remaining_time_text.setText(
           `${timeout.toString().padStart(2, "0")}`
         )

@@ -244,7 +244,7 @@ export class AtributesPlayers {
       // Mostrar la barra correspondiente a los HP restantes
       const visibleBarIndex = healthBars.length - currentHP - 1;
       healthBars[visibleBarIndex].setVisible(true);
-      console.log(visibleBarIndex)
+      
       // Detener cualquier animación que se esté reproduciendo
       if (playerId === 1) {
         healthBars[0].stop("HealthLeft");

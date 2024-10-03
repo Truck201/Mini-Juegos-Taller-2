@@ -5,6 +5,7 @@ import { Character } from "../entitities/character";
 import { PopCorn } from "../entitities/popcorn";
 import { Television } from "../entitities/television";
 import { ComboPersonajes } from "../entitities/combo";
+import { KidKorn } from "../entitities/kidkorn";
 
 export class RecolectScene extends Scene {
   constructor() {
@@ -20,15 +21,15 @@ export class RecolectScene extends Scene {
   comboCount2 = 0; // Contador de combo para el jugador 2
   comboTimer1; // Temporizador de combo para el jugador 1
   comboTimer2; // Temporizador de combo para el jugador 2
-  comboDuration = 3000; // Duración del combo (3 segundos)
-  
+  comboDuration = 60000; // Duración del combo (3 segundos)
+
   popcornTimer; // Temporizador para la aparición de pochoclos
 
   init(data) {
     // Reset points
     this.points1 = data.points1 || 0; // Puntaje inicial jugador 1
     this.points2 = data.points2 || 0; // Puntaje inicial jugador 2
-    this.game_over_timeout = 10; // Tiempo límite de 30 segundos
+    this.game_over_timeout = 20; // Tiempo límite de 30 segundos
 
     // Lanzar la escena del HUD, pasando el tiempo y los puntajes iniciales
     this.scene.launch("Hud", {
@@ -45,8 +46,8 @@ export class RecolectScene extends Scene {
         if (this.game_over_timeout >= 0) {
           this.game_over_timeout--;
 
-        // Actualizar el tiempo en la escena del HUD
-        this.scene.get("Hud").update_timeout(this.game_over_timeout);
+          // Actualizar el tiempo en la escena del HUD
+          this.scene.get("Hud").update_timeout(this.game_over_timeout);
         }
         // Comprobar si el tiempo ha terminado
         if (this.game_over_timeout < 0) {
@@ -60,6 +61,10 @@ export class RecolectScene extends Scene {
             }); // Cambia a la escena Shop
           }, 980);
         }
+
+        if (this.game_over_timeout === 10) {
+          this.kidKorn.showKidKornBig(); // Mostrar KidKorn cuando queden 10 segundos
+        }
       },
     });
   }
@@ -70,6 +75,12 @@ export class RecolectScene extends Scene {
 
     this.television = new Television(this);
 
+    this.kidKorn = new KidKorn(this);
+
+    // Iniciar el temporizador aleatorio para que KidKorn aparezca
+    this.kidKorn.startKidKornAppearance();
+
+    
     let background = this.add.sprite(width / 2, height / 2 + 65, "escenario");
     background.setDepth(1);
 
@@ -111,7 +122,7 @@ export class RecolectScene extends Scene {
 
     this.combo2 = new ComboPersonajes(this, 2);
     this.combo2.create();
-    
+
     // Crear barras móviles usando la clase MoveBar
     this.movingBar1 = new MoveBar(
       this,
@@ -203,7 +214,7 @@ export class RecolectScene extends Scene {
 
   startPopcornTimer() {
     this.popcornTimer = this.time.addEvent({
-      delay: Phaser.Math.Between(1300, 4000),
+      delay: Phaser.Math.Between(6000, 9000),
       loop: true,
       callback: () => {
         if (this.game_over_timeout > 0) {
@@ -214,8 +225,8 @@ export class RecolectScene extends Scene {
   }
 
   generateMultiplePopcorn() {
-    let numberOfPopcorn = Phaser.Math.Between(3, 7); // Generar
-    let minDistance = 50; // Distancia mínima entre pochoclos
+    let numberOfPopcorn = Phaser.Math.Between(3, 5); // Generar
+    let minDistance = 55; // Distancia mínima entre pochoclos
     let generatedPositions = []; // Array para almacenar las posiciones generadas
 
     for (let i = 0; i < numberOfPopcorn; i++) {
@@ -252,7 +263,7 @@ export class RecolectScene extends Scene {
 
         // Crear temporizador para generar cada pochoclo en un tiempo aleatorio
         this.time.delayedCall(
-          Phaser.Math.Between(400, 1100),
+          Phaser.Math.Between(300, 900),
           () => {
             let newPopcorn = new PopCorn(this, randomX, barraY, "pochoclo");
             this.collectibles.push(newPopcorn); // Añadir al array de recolectables
@@ -261,6 +272,31 @@ export class RecolectScene extends Scene {
           this
         );
       }
+    }
+  }
+
+  startGeneratingPopcorn(param) {
+    // Generar pochoclos adicionales durante los 6 segundos en que KidKorn está en la pantalla
+    this.popcornTimer = this.time.addEvent({
+      delay: 600, // Generar cada medio segundo
+      loop: true,
+      callback: () => {
+        if (this.game_over_timeout > 0) {
+          this.generateMultiplePopcorn(); // Generar pochoclos mientras KidKorn está presente
+        }
+      },
+    });
+
+    if (param) {
+      // Detener la generación de pochoclos después de 6 segundos
+      this.time.delayedCall(4200, () => {
+        this.popcornTimer.remove(); // Detener la generación de pochoclos
+      });
+    } else if (!param) {
+      // Detener la generación de pochoclos después de 6 segundos
+      this.time.delayedCall(1800, () => {
+        this.popcornTimer.remove(); // Detener la generación de pochoclos
+      });
     }
   }
 

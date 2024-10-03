@@ -24,7 +24,6 @@ export class Game1v1 extends Scene {
 
     this.input.keyboard.on("keydown-ESC", () => {
       const currentTime = this.time.now;
-      console.log("pres scape");
       // Verificar si ha pasado suficiente tiempo desde la última pulsación
       if (currentTime - this.lastKeyPressTime > 250) {
         // 700 ms de delay

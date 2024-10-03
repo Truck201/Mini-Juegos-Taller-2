@@ -47,13 +47,10 @@ export class Preloader extends Scene {
     this.load.image("luho", "../public/assets/luho/luho.png"); // Neutral
 
     // Kid Korn
-    this.load.image("kid-korn1", "../public/assets/kid-korn/korn-defrente.png");
-    this.load.image("kid-korn2", "../public/assets/kid-korn/korn-frente.png");
-    this.load.image("kid-kornFrente", "../public/assets/kid-korn/korn-izq.png");
-    this.load.image(
-      "kid-kornFrente2",
-      "../public/assets/kid-korn/kron-derecha.png"
-    );
+    this.load.image("kid-kornS", "../public/assets/kid-korn/korn-defrente.png");
+    this.load.image("kid-kornB", "../public/assets/kid-korn/korn-frente.png");
+    this.load.image("kid-kornL", "../public/assets/kid-korn/korn-izq.png");
+    this.load.image("kid-kornR", "../public/assets/kid-korn/kron-derecha.png");
 
     //   Emociones
     this.load.image("logo", "../public/assets/menu/logo.png"); // Victoria
@@ -226,7 +223,7 @@ export class Preloader extends Scene {
     let dotCount = 0;
 
     this.time.addEvent({
-      delay: 200, // 1 segundo
+      delay: 220, // 1 segundo
       callback: () => {
         dotCount = (dotCount + 1) % 4; // Ciclo entre 0 y 3
         defaultText.setText(loadingText + ".".repeat(dotCount));
@@ -236,7 +233,7 @@ export class Preloader extends Scene {
   }
 
   gotoMainScene() {
-    this.time.delayedCall(900, () => {
+    this.time.delayedCall(1200, () => {
       this.scene.start("MainMenu");
     });
   }
