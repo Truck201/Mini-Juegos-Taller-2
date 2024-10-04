@@ -14,7 +14,7 @@ export class Shop extends Scene {
   init(data) {
     this.points1 = data.points1 || 0; // Puntaje inicial jugador 1
     this.points2 = data.points2 || 0; // Puntaje inicial jugador 2
-    this.game_over_timeout = 5;
+    this.game_over_timeout = 15;
     this.lastKeyPressTime = 0;
     this.background;
 

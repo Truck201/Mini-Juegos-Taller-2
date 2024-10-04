@@ -17,12 +17,12 @@ export class ItemsCase {
 
     // Slots para cada jugador
     this.player1Slots = this.createItemSlots(
-      this.width * 0.385,  // this.width * 0.2919
-      this.height * 0.67
+      this.width * 0.368,  // this.width * 0.2919
+      this.height * 0.68,
     );
     this.player2Slots = this.createItemSlots(
-      this.width * 0.61,  // this.width * 0.709
-      this.height * 0.67
+      this.width * 0.631,  // this.width * 0.709
+      this.height * 0.68,
     );
 
     this.mainItemCase = this.scene.add
@@ -37,11 +37,11 @@ export class ItemsCase {
 
     // Descripción del ítem para jugador 1 y jugador 2
     this.descriptionItemPlayer1 = this.scene.add.text(
-      this.width * 0.135,
-      this.height * 0.68,
+      this.width * 0.182,
+      this.height * 0.715,
       "",
       {
-        fontSize: "16px",
+        fontSize: "18px",
         fontFamily: "'Press Start 2P', sans-serif",
         color: "#fff",
         stroke: "black",
@@ -61,11 +61,11 @@ export class ItemsCase {
       .setDepth(2);
 
     this.descriptionItemPlayer2 = this.scene.add.text(
-      this.width * 0.868,
-      this.height * 0.68,
+      this.width * 0.835,
+      this.height * 0.715,
       "",
       {
-        fontSize: "16px",
+        fontSize: "18px",
         fontFamily: "'Press Start 2P', sans-serif",
         color: "#fff",
         stroke: "black",
@@ -131,11 +131,11 @@ export class ItemsCase {
   // Método para crear los slots visuales de ítems para un jugador
   createItemSlots(x, y) {
     let slots = [];
-    const slotSize = 62; // Tamaño del slot
+    const slotSize = 70; // Tamaño del slot
 
     for (let i = 0; i < this.maxItems; i++) {
       let slot = this.scene.add
-        .rectangle(x, y + i * (slotSize + 12), slotSize, slotSize, 0x444444)
+        .rectangle(x, y + i * (slotSize + 15), slotSize, slotSize, 0x444444)
         .setStrokeStyle(2, 0xffffff)
         .setDepth(2);
       slot.itemSprite = null; // Aquí almacenaremos el sprite del ítem
