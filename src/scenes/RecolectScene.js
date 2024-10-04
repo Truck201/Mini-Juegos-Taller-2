@@ -29,7 +29,7 @@ export class RecolectScene extends Scene {
     // Reset points
     this.points1 = data.points1 || 0; // Puntaje inicial jugador 1
     this.points2 = data.points2 || 0; // Puntaje inicial jugador 2
-    this.game_over_timeout = 3; // Tiempo límite de 30 segundos
+    this.game_over_timeout = 14; // Tiempo límite de 30 segundos
 
     // Lanzar la escena del HUD, pasando el tiempo y los puntajes iniciales
     this.scene.launch("Hud", {
@@ -81,18 +81,17 @@ export class RecolectScene extends Scene {
     this.kidKorn.startKidKornAppearance();
 
     
-    let background = this.add.sprite(width / 2, height / 2 + 65, "escenario");
+    let background = this.add.sprite(width / 2, height * 0.43, "escenario");
     background.setDepth(1);
 
     // Crear la barra principal
     let barraX = width / 2; // Posición Barra en X
     let barraY = (height * 4.3) / 5; // Posición de alto en las barras Y
-    this.mainBar = this.add
-      .rectangle(barraX, barraY, 1000, 95, 0x272736)
-      .setDepth(2);
+
     this.imagenBar = this.add
       .sprite(barraX, barraY, "imagen-barra")
-      .setDepth(2);
+      .setScale(1.5)
+      .setDepth(10);
 
     let border = 35;
 
@@ -126,7 +125,7 @@ export class RecolectScene extends Scene {
     // Crear barras móviles usando la clase MoveBar
     this.movingBar1 = new MoveBar(
       this,
-      barraX - 500,
+      barraX - 760,
       barraY,
       20,
       105,
@@ -137,12 +136,12 @@ export class RecolectScene extends Scene {
         right: Phaser.Input.Keyboard.KeyCodes.D,
       },
       true,
-      this.mainBar
+      this.imagenBar
     );
 
     this.movingBar2 = new MoveBar(
       this,
-      barraX + 500,
+      barraX + 760,
       barraY,
       20,
       105,
@@ -153,7 +152,7 @@ export class RecolectScene extends Scene {
         right: Phaser.Input.Keyboard.KeyCodes.RIGHT,
       },
       false,
-      this.mainBar
+      this.imagenBar
     );
 
     // Añadir detección de colisión para recolectables
@@ -237,8 +236,8 @@ export class RecolectScene extends Scene {
       for (let attempt = 0; attempt < 10; attempt++) {
         // Hasta 10 intentos para encontrar una posición válida
         randomX = Phaser.Math.Between(
-          this.mainBar.x - this.mainBar.width / 2,
-          this.mainBar.x + this.mainBar.width / 2
+          this.imagenBar.x - this.imagenBar.width / 2 -165,
+          this.imagenBar.x + this.imagenBar.width / 2 + 165
         );
         isFarEnough = true;
 
@@ -259,7 +258,7 @@ export class RecolectScene extends Scene {
       if (isFarEnough) {
         generatedPositions.push(randomX);
 
-        let barraY = this.mainBar.y;
+        let barraY = this.imagenBar.y;
 
         // Crear temporizador para generar cada pochoclo en un tiempo aleatorio
         this.time.delayedCall(

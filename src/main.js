@@ -17,8 +17,8 @@ import { BaseScene } from "./lib/FontsBase";
 
 const config = {
   type: Phaser.WEBGL,
-  width: window.innerWidth, // Ajusta el ancho al 90% del ancho de la ventana
-  height: window.innerHeight, // Ajusta la altura al 90% de la altura de la ventana
+  width: 1920, // Ajusta el ancho al 90% del ancho de la ventana    window.innerWidth
+  height: 1080, // Ajusta la altura al 90% de la altura de la ventana    window.innerHeight
   parent: "game-container",
 
   scale: {
@@ -53,18 +53,5 @@ const config = {
 
 // Create a new Phaser game instance
 window.game = new Phaser.Game(config);
-
-// Adjust the game size when the window is resized
-window.addEventListener("resize", () => {
-  game.scale.resize(window.innerWidth * 1, window.innerHeight * 1);
-});
-
-// Add event listener for F11 key press
-window.addEventListener("keydown", (event) => {
-  if (event.key === "F11") {
-    event.preventDefault(); // Prevent the default action of F11
-    game.scale.resize(window.innerWidth * 1, window.innerHeight * 1);
-  }
-});
 
 export default new Phaser.Game(config);

@@ -24,7 +24,7 @@ export class MoveBar {
 
     // Crear la barra
     this.bar = scene.add.sprite(x, y, sprite);
-    this.bar.setScale(0.7).setDepth(4);
+    this.bar.setScale(1.2).setDepth(15);
     
 
     // Añadir teclas de control
@@ -45,13 +45,13 @@ export class MoveBar {
     // Movimiento continuo dentro de los límites de la mainBar
     if (
       this.isMovingRight &&
-      this.bar.x + this.width / 2 < mainBarBounds.right
+      this.bar.x + this.width / 2 < mainBarBounds.right + 40
     ) {
       // Mover a la derecha si no supera el borde derecho de la mainBar
       this.bar.x += this.movingSpeed;
     } else if (
       !this.isMovingRight &&
-      this.bar.x - this.width / 2 > mainBarBounds.left
+      this.bar.x - this.width / 2 > mainBarBounds.left - 40
     ) {
       // Mover a la izquierda si no supera el borde izquierdo de la mainBar
       this.bar.x -= this.movingSpeed;

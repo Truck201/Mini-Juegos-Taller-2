@@ -51,6 +51,8 @@ export class Preloader extends Scene {
     this.load.image("kid-kornB", "../public/assets/kid-korn/korn-frente.png");
     this.load.image("kid-kornL", "../public/assets/kid-korn/korn-izq.png");
     this.load.image("kid-kornR", "../public/assets/kid-korn/kron-derecha.png");
+    // Dialogues
+    this.load.json('kidKornDialogues', '../public/data/DKidKorn.json')
 
     //   Emociones
     this.load.image("logo", "../public/assets/menu/logo.png"); // Victoria

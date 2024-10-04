@@ -17,7 +17,7 @@ export class Character {
     character.setImmovable;
     character.body.allowGravity = false;
     character.setDepth(2)
-    character.setScale(1)
+    character.setScale(1.3)
 
     // Name
     this.scene.add.text(this.x, this.y + 70, this.sprite.toUpperCase(), {

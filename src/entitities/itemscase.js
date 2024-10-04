@@ -17,12 +17,12 @@ export class ItemsCase {
 
     // Slots para cada jugador
     this.player1Slots = this.createItemSlots(
-      this.width * 0.368,  // this.width * 0.2919
-      this.height * 0.68,
+      this.width * 0.368, // this.width * 0.2919
+      this.height * 0.68
     );
     this.player2Slots = this.createItemSlots(
-      this.width * 0.631,  // this.width * 0.709
-      this.height * 0.68,
+      this.width * 0.631, // this.width * 0.709
+      this.height * 0.68
     );
 
     this.mainItemCase = this.scene.add
@@ -36,11 +36,8 @@ export class ItemsCase {
       .setDepth(0);
 
     // Descripción del ítem para jugador 1 y jugador 2
-    this.descriptionItemPlayer1 = this.scene.add.text(
-      this.width * 0.182,
-      this.height * 0.715,
-      "",
-      {
+    this.descriptionItemPlayer1 = this.scene.add
+      .text(this.width * 0.18, this.height * 0.715, "", {  // 0.715
         fontSize: "18px",
         fontFamily: "'Press Start 2P', sans-serif",
         color: "#fff",
@@ -53,18 +50,11 @@ export class ItemsCase {
           offsetX: 3,
           offsetY: 3,
         },
-      }
-    ).setOrigin(0.5, 0.5);
+      })
+      .setOrigin(0.5);
 
-    this.scene.add
-      .sprite(this.width * 0.14, this.height * 0.78, "pochoclo2")
-      .setDepth(2);
-
-    this.descriptionItemPlayer2 = this.scene.add.text(
-      this.width * 0.835,
-      this.height * 0.715,
-      "",
-      {
+    this.descriptionItemPlayer2 = this.scene.add
+      .text(this.width * 0.835, this.height * 0.715, "", {
         fontSize: "18px",
         fontFamily: "'Press Start 2P', sans-serif",
         color: "#fff",
@@ -77,12 +67,8 @@ export class ItemsCase {
           offsetX: 3,
           offsetY: 3,
         },
-      }
-    ).setOrigin(0.5, 0.5);
-
-    this.scene.add
-      .sprite(this.width * 0.862, this.height * 0.78, "pochoclo2")
-      .setDepth(2);
+      })
+      .setOrigin(0.5);
 
     this.itemDescriptions = {
       candy: { description: "A sweet treat!\n\t+1 Hit Point", value: 5 },
@@ -349,11 +335,13 @@ export class ItemsCase {
     // Verificar si las posiciones de los jugadores coinciden con los ítems
     this.checkPlayerItemCollision(
       this.player1Position,
-      this.descriptionItemPlayer1
+      this.descriptionItemPlayer1,
+      1
     );
     this.checkPlayerItemCollision(
       this.player2Position,
-      this.descriptionItemPlayer2
+      this.descriptionItemPlayer2,
+      2
     );
 
     // Lógica de selección de jugadores
@@ -366,7 +354,7 @@ export class ItemsCase {
     this.items.push(item);
   }
 
-  checkPlayerItemCollision(playerPosition, descriptionText) {
+  checkPlayerItemCollision(playerPosition, descriptionText, playerIndex) {
     const item = this.items.find(
       (item) =>
         item.row === playerPosition.row && item.col === playerPosition.col
@@ -377,13 +365,34 @@ export class ItemsCase {
       if (description) {
         descriptionText
           .setText(
-            `${description.description}\n\n\t  costo  $${description.value}`
+            `${description.description}\n\ncosto P${description.value}`
           )
           .setDepth(2)
-          .setOrigin(0.5, 0.5);
+          .setOrigin(0.5);
+
+        // Calcula la posición de la imagen en función del tamaño del texto
+        const textBounds = descriptionText.getBounds();
+        this.updatePochocloImagePosition(playerIndex, textBounds.right - 45, textBounds.top + 77);
       }
     } else {
       descriptionText.setText(""); // Limpiar la descripción si no hay coincidencia
+      this.updatePochocloImagePosition(playerIndex, -100, -100); // Mueve la imagen fuera de la pantalla
+      console.log("-- fuera")
+    }
+  }
+
+  updatePochocloImagePosition(playerIndex, x, y) {
+    if (!this.pochoclos) {
+      this.pochoclos = [];
+    }
+  
+    if (!this.pochoclos[playerIndex]) {
+      this.pochoclos[playerIndex] = this.scene.add
+        .sprite(x, y, "pochoclo2")
+        .setDepth(2)
+        .setScale(1.3);
+    } else {
+      this.pochoclos[playerIndex].setPosition(x, y);
     }
   }
 
@@ -445,13 +454,18 @@ export class ItemsCase {
         item.isSelected = false;
         item.selectedBy = null;
         const index = selectedItems.indexOf(item);
-        
 
         if (index !== -1) {
-          console.log(`Antes de eliminar el ítem, selectedItems: `,selectedItems);
-        
+          console.log(
+            `Antes de eliminar el ítem, selectedItems: `,
+            selectedItems
+          );
+
           this.selectedItems.splice(index, 1);
-          console.log(`Después de eliminar el ítem, selectedItems: `,selectedItems);
+          console.log(
+            `Después de eliminar el ítem, selectedItems: `,
+            selectedItems
+          );
           this.removeItemFromSlot(player, item);
           this.returnPoints(player, item.texture.key);
           console.log(`Puntos devueltos para el jugador ${player}`);

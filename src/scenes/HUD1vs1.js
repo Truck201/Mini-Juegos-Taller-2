@@ -25,13 +25,13 @@ export class Hud extends BaseScene {
     this.points_text1 = this.createText(
       this.scale.width * 0.075,
       this.scale.height * 0.255,
-      `SCORE: ${this.points1.toString().padStart(2, '0')}`
+      `SCORE: ${this.points1.toString().padStart(2, "0")}`
     ).setOrigin(0.5);
 
     this.points_text2 = this.createText(
       this.scale.width * 0.935,
       this.scale.height * 0.255,
-      `SCORE: ${this.points2.toString().padStart(2, '0')}`
+      `SCORE: ${this.points2.toString().padStart(2, "0")}`
     ).setOrigin(0.5);
 
     this.remaining_time_text = this.createText(
@@ -43,21 +43,61 @@ export class Hud extends BaseScene {
 
   update_points(player, points) {
     if (player === 1) {
-      this.points_text1.setText(`SCORE: ${points.toString().padStart(2, '0')}`);
+      this.points_text1.setText(`SCORE: ${points.toString().padStart(2, "0")}`);
     } else if (player === 2) {
-      this.points_text2.setText(`SCORE: ${points.toString().padStart(2, '0')}`);
+      this.points_text2.setText(`SCORE: ${points.toString().padStart(2, "0")}`);
     }
   }
 
   update_timeout(timeout) {
     if (this.remaining_time_text) {
-      if (timeout === 3) {
+      if (timeout < 0) {
         this.remaining_time_text.destroy();
-      }
-      if (timeout >= 4) {
-        this.remaining_time_text.setText(
-          `${timeout.toString().padStart(2, "0")}`
-        )
+      } else {
+        this.remaining_time_text.setText(`${timeout.toString().padStart(2, "0")}`);
+  
+        if (timeout === 5 || timeout === 4  || (timeout <= 3 && timeout >= 0)) {
+          this.remaining_time_text.setScale(0.05).setOrigin(0.5); // Escala grande
+  
+          // Temblor
+          this.tweens.add({
+            targets: this.remaining_time_text,
+            x: this.remaining_time_text.x + 10,
+            yoyo: true,
+            repeat: 5,
+            duration: 150,
+            ease: 'Sine.easeInOut',
+            onComplete: () => {
+              this.remaining_time_text.setX(this.scale.width / 2); // Reset position
+            }
+          });
+  
+          // Animación para reducir el tamaño
+          this.tweens.add({
+            targets: this.remaining_time_text,
+            scaleX: 4.2,
+            scaleY: 4.2,
+            duration: 900,
+            ease: 'Power1'
+          });
+        } else if (timeout <= 10 && timeout > 5) {
+          this.remaining_time_text.setScale(3).setOrigin(0.5); // Escala intermedia
+  
+          // Temblor
+          this.tweens.add({
+            targets: this.remaining_time_text,
+            x: this.remaining_time_text.x + 10,
+            yoyo: true,
+            repeat: 5,
+            duration: 150,
+            ease: 'Sine.easeInOut',
+            onComplete: () => {
+              this.remaining_time_text.setX(this.scale.width / 2); // Reset position
+            }
+          });
+        } else {
+          this.remaining_time_text.setScale(1).setOrigin(0.5); // Escala normal
+        }
       }
     } else {
       console.warn("remaining_time_text is not defined yet.");

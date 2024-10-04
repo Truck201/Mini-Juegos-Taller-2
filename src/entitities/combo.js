@@ -14,7 +14,7 @@ export class ComboPersonajes {
 
   create() {
     this.comboText1 = this.scene.add
-      .text(this.scene.scale.width * 0.13, this.scene.scale.height * 0.5, "1", {
+      .text(this.scene.scale.width * 0.1, this.scene.scale.height * 0.5, "1", {
         fontSize: "60px",
         fontFamily: "'Press Start 2P', sans-serif",
         color: "#fff",
@@ -28,11 +28,11 @@ export class ComboPersonajes {
           offsetY: 4,
         },
       })
-      .setDepth(3)
+      .setDepth(7)
       .setVisible(false);
 
     this.comboText2 = this.scene.add
-      .text(this.scene.scale.width * 0.8, this.scene.scale.height * 0.5, "1", {
+      .text(this.scene.scale.width * 0.9, this.scene.scale.height * 0.5, "1", {
         fontSize: "60px",
 
         fontFamily: "'Press Start 2P', sans-serif",
@@ -47,7 +47,7 @@ export class ComboPersonajes {
           offsetY: 4,
         },
       })
-      .setDepth(3)
+      .setDepth(7)
       .setVisible(false);
 
     this.scene.comboDuration = 3000;

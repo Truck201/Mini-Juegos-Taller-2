@@ -1,22 +1,17 @@
 {
-    "dialogue": {
-        "Kid Korn": [],
-        "Luho": [],
-        "Mimbo": [],
-        "Televison": []
-    },
     "powerUps": {
         "type": [
-            "speed",
-            "strength",
-            "shield",
-            "health"
+            "HitPoints",
+            "Speed",
+            "EvadeChance"
         ],
+
         "duration": [
             10,
             20,
             30
         ],
+        
         "rarity": [
             "common",
             "rare",

@@ -23,15 +23,15 @@ export class HudShop extends BaseScene {
     let height = this.game.scale.height;
     
     this.points_text1 = this.createText(
-      width * 0.132,
-      height * 0.85,
-      `P1 Points: ${this.points1}`,
+      width * 0.165,
+      height * 0.855,
+      `P1: ${this.points1.toString().padStart(2, '0')}`,
     ).setOrigin(0.5);
 
-    this.points_text2 = this.createText(
-      width * 0.868,
-      height * 0.85,
-      `P2 Points: ${this.points2}`,
+    this.points_text2 = this.createText( // 0.855
+      width * 0.835,
+      height * 0.855,
+      `P2: ${this.points2.toString().padStart(2, '0')}`,
     ).setOrigin(0.5);
 
     this.remaining_time_text = this.createText(
@@ -43,9 +43,9 @@ export class HudShop extends BaseScene {
 
   update_points(player, points) {
     if (player === 1) {
-      this.points_text1.setText(`P1 Points: ${points}`);
+      this.points_text1.setText(`P1: ${points.toString().padStart(2, '0')}`);
     } else if (player === 2) {
-      this.points_text2.setText(`P2 Points: ${points}`);
+      this.points_text2.setText(`P2: ${points.toString().padStart(2, '0')}`);
     }
   }
 

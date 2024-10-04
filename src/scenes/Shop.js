@@ -24,7 +24,9 @@ export class Shop extends Scene {
       points1: this.points1,
       points2: this.points2,
     });
+  }
 
+  create() {
     this.timer_event = this.time.addEvent({
       delay: 1000, // Ejecutar cada segundo
       loop: true,
@@ -45,9 +47,7 @@ export class Shop extends Scene {
         this.scene.get("hudShop").update_timeout(this.game_over_timeout);
       },
     });
-  }
 
-  create() {
     let width = this.game.scale.width;
     let height = this.game.scale.height;
 
@@ -67,14 +67,9 @@ export class Shop extends Scene {
 
     // Crea un nuevo sprite para la animación y colócalo detrás del fondo
     const animatedBackground = this.add
-      .sprite(width / 2, height * 0.4, "backgroundShop")
-      .setScale(0.46);
+      .sprite(width / 2, height * 0.5, "backgroundShop")
+      .setScale(1);
     animatedBackground.setDepth(0);
-
-    this.add
-      .image(width / 2, height * 0.79, "backShop")
-      .setScale(0.913)
-      .setDepth(1);
 
     this.itemsCase = new ItemsCase(this, this.scale.width, this.scale.height);
   }
