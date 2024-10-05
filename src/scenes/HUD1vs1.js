@@ -36,7 +36,7 @@ export class Hud extends BaseScene {
 
     this.remaining_time_text = this.createText(
       this.scale.width / 2,
-      this.scale.height / 2 - 35,
+      this.scale.height * 0.415,
       `${this.remaining_time.toString().padStart(2, "0")}`
     ).setOrigin(0.5);
   }
@@ -57,15 +57,15 @@ export class Hud extends BaseScene {
         this.remaining_time_text.setText(`${timeout.toString().padStart(2, "0")}`);
   
         if (timeout === 5 || timeout === 4  || (timeout <= 3 && timeout >= 0)) {
-          this.remaining_time_text.setScale(0.05).setOrigin(0.5); // Escala grande
+          this.remaining_time_text.setScale(0.05); // Escala grande
   
           // Temblor
           this.tweens.add({
             targets: this.remaining_time_text,
-            x: this.remaining_time_text.x + 10,
+            x: Phaser.Math.Between(this.remaining_time_text.x - 15, this.remaining_time_text.x + 15),
             yoyo: true,
-            repeat: 5,
-            duration: 150,
+            repeat: 25,
+            duration: 100,
             ease: 'Sine.easeInOut',
             onComplete: () => {
               this.remaining_time_text.setX(this.scale.width / 2); // Reset position
@@ -81,22 +81,22 @@ export class Hud extends BaseScene {
             ease: 'Power1'
           });
         } else if (timeout <= 10 && timeout > 5) {
-          this.remaining_time_text.setScale(3).setOrigin(0.5); // Escala intermedia
+          this.remaining_time_text.setScale(3); // Escala intermedia
   
           // Temblor
           this.tweens.add({
             targets: this.remaining_time_text,
-            x: this.remaining_time_text.x + 10,
+            x: Phaser.Math.Between(this.remaining_time_text.x - 30, this.remaining_time_text.x + 30),
             yoyo: true,
-            repeat: 5,
-            duration: 150,
+            repeat: 25,
+            duration: 100,
             ease: 'Sine.easeInOut',
             onComplete: () => {
               this.remaining_time_text.setX(this.scale.width / 2); // Reset position
             }
           });
         } else {
-          this.remaining_time_text.setScale(1).setOrigin(0.5); // Escala normal
+          this.remaining_time_text.setScale(1); // Escala normal
         }
       }
     } else {

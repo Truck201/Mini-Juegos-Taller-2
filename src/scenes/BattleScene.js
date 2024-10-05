@@ -141,9 +141,9 @@ export class BattleScene extends BaseScene {
       `Evade: ${this.player2EvadeChance.toString().padStart(2, "0")}`
     ).setDepth(3);
 
-    this.television = new Television(this);
+    this.television = new Television(this, false);
 
-    let background = this.add.sprite(width / 2, height / 2 + 65, "escenario");
+    let background = this.add.sprite(width * 0.5, height * 0.43, "escenario");
     background.setDepth(1);
 
     const itemsCase = this.scene.get("ItemsCase");
@@ -153,9 +153,11 @@ export class BattleScene extends BaseScene {
 
     let barraX = width / 2; // Posición Barra en X
     let barraY = (height * 4.3) / 5; // Posición de alto en las barras Y
-    this.mainBar = this.add.rectangle(barraX, barraY, 1000, 95, 0x272736);
-    this.imagenBar = this.add.sprite(barraX, barraY, "imagen-barra");
-    this.imagenBar.setDepth(2);
+    
+    this.imagenBar = this.add
+      .sprite(barraX, barraY, "imagen-barra")
+      .setScale(1.5)
+      .setDepth(10);
 
     this.attackBar = new Attack(this);
 
@@ -319,9 +321,9 @@ export class BattleScene extends BaseScene {
   showMissMessage() {
     const missText = this.add
       .text(this.attackBar.sprite.x, this.attackBar.sprite.y - 5, "MISS", {
-        fontSize: "190px",
+        fontSize: "35px",
         color: "#fff",
-        fontFamily: "Press Start 2P",
+        fontFamily: "'Press Start 2P'",
         fontWeight: "bold",
         shadow: {
           color: "#000000",
@@ -331,7 +333,7 @@ export class BattleScene extends BaseScene {
         },
       })
       .setOrigin(0.5)
-      .setDepth(5);
+      .setDepth(15);
 
     this.tweens.add({
       targets: missText,

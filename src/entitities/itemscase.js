@@ -17,12 +17,12 @@ export class ItemsCase {
 
     // Slots para cada jugador
     this.player1Slots = this.createItemSlots(
-      this.width * 0.368, // this.width * 0.2919
-      this.height * 0.68
+      this.width * 0.39, // this.width * 0.2919
+      this.height * 0.747
     );
     this.player2Slots = this.createItemSlots(
-      this.width * 0.631, // this.width * 0.709
-      this.height * 0.68
+      this.width * 0.6123, // this.width * 0.709
+      this.height * 0.747
     );
 
     this.mainItemCase = this.scene.add
@@ -33,12 +33,14 @@ export class ItemsCase {
         220,
         0x272736
       )
-      .setDepth(0);
+      .setDepth(0)
+      .setAlpha(0);
 
     // Descripción del ítem para jugador 1 y jugador 2
     this.descriptionItemPlayer1 = this.scene.add
-      .text(this.width * 0.18, this.height * 0.715, "", {  // 0.715
-        fontSize: "18px",
+      .text(this.width * 0.18, this.height * 0.7895, "", {
+        // 0.715
+        fontSize: "24px",
         fontFamily: "'Press Start 2P', sans-serif",
         color: "#fff",
         stroke: "black",
@@ -54,8 +56,8 @@ export class ItemsCase {
       .setOrigin(0.5);
 
     this.descriptionItemPlayer2 = this.scene.add
-      .text(this.width * 0.835, this.height * 0.715, "", {
-        fontSize: "18px",
+      .text(this.width * 0.82, this.height * 0.7895, "", {
+        fontSize: "24px",
         fontFamily: "'Press Start 2P', sans-serif",
         color: "#fff",
         stroke: "black",
@@ -71,12 +73,12 @@ export class ItemsCase {
       .setOrigin(0.5);
 
     this.itemDescriptions = {
-      candy: { description: "A sweet treat!\n\t+1 Hit Point", value: 5 },
+      candy: { description: "A sweet treat!\n\t+1 Hit Point", value: 30 },
       popcorn: {
         description: "Perfect for movies!\n\t+10% Evade Chance",
-        value: 15,
+        value: 25,
       },
-      pizza: { description: "Delicious slice!\n\t+1.5 Speed", value: 20 },
+      pizza: { description: "Delicious slice!\n\t  +1.5 Speed", value: 50 },
     };
 
     // Definición de atributos de los ítems
@@ -260,7 +262,7 @@ export class ItemsCase {
     const cols = 3;
     const itemSize = 70;
     const offsetX = this.width / 2 - (cols * itemSize) / 2 + 35;
-    const offsetY = this.height / 1.2 - (rows * itemSize) / 2;
+    const offsetY = this.height * 0.855 - (rows * itemSize) / 2;
 
     // Solo 9 items
     const avalibleItems = [
@@ -335,13 +337,11 @@ export class ItemsCase {
     // Verificar si las posiciones de los jugadores coinciden con los ítems
     this.checkPlayerItemCollision(
       this.player1Position,
-      this.descriptionItemPlayer1,
-      1
+      this.descriptionItemPlayer1
     );
     this.checkPlayerItemCollision(
       this.player2Position,
-      this.descriptionItemPlayer2,
-      2
+      this.descriptionItemPlayer2
     );
 
     // Lógica de selección de jugadores
@@ -354,7 +354,7 @@ export class ItemsCase {
     this.items.push(item);
   }
 
-  checkPlayerItemCollision(playerPosition, descriptionText, playerIndex) {
+  checkPlayerItemCollision(playerPosition, descriptionText) {
     const item = this.items.find(
       (item) =>
         item.row === playerPosition.row && item.col === playerPosition.col
@@ -364,35 +364,12 @@ export class ItemsCase {
       const description = this.itemDescriptions[item.texture.key];
       if (description) {
         descriptionText
-          .setText(
-            `${description.description}\n\ncosto P${description.value}`
-          )
+          .setText(`${description.description}\n\n\t  Costo ${description.value}P`)
           .setDepth(2)
           .setOrigin(0.5);
-
-        // Calcula la posición de la imagen en función del tamaño del texto
-        const textBounds = descriptionText.getBounds();
-        this.updatePochocloImagePosition(playerIndex, textBounds.right - 45, textBounds.top + 77);
       }
     } else {
       descriptionText.setText(""); // Limpiar la descripción si no hay coincidencia
-      this.updatePochocloImagePosition(playerIndex, -100, -100); // Mueve la imagen fuera de la pantalla
-      console.log("-- fuera")
-    }
-  }
-
-  updatePochocloImagePosition(playerIndex, x, y) {
-    if (!this.pochoclos) {
-      this.pochoclos = [];
-    }
-  
-    if (!this.pochoclos[playerIndex]) {
-      this.pochoclos[playerIndex] = this.scene.add
-        .sprite(x, y, "pochoclo2")
-        .setDepth(2)
-        .setScale(1.3);
-    } else {
-      this.pochoclos[playerIndex].setPosition(x, y);
     }
   }
 

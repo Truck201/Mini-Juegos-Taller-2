@@ -1,4 +1,5 @@
 import { BaseScene } from "../lib/FontsBase";
+import { Television } from "../entitities/television";
 export class MainMenu extends BaseScene {
   constructor() {
     super("MainMenu");
@@ -16,12 +17,13 @@ export class MainMenu extends BaseScene {
 
     //Title
     this.background = this.add
-      .sprite(width / 2, height / 2, "menu-background")
-      .setScale(2.2153)
+      .sprite(width / 2, height * 0.33, "menu-background")
+      .setScale(2.4)
       .setDepth(2);
 
     //Button
-    const playButton = this.createText(width / 2, 240, "Play")
+    const playButton = this.createText(width / 2, height * 0.37, "Play")
+      .setScale(1.4)
       .setInteractive()
       .setDepth(3)
       .setOrigin(0.5, 0.5);
@@ -31,23 +33,23 @@ export class MainMenu extends BaseScene {
     //Button Animations Hover, Down, Out
     playButton.on("pointerover", () => {
       // Cambia el tamaño de la imagen al pasar el mouse
-      playButton.setScale(1.1);
+      playButton.setScale(1.7);
     });
 
     playButton.on("pointerout", () => {
       // Cambia el tamaño de la imagen al pasar el mouse
-      playButton.setScale(1);
+      playButton.setScale(1.4);
     });
 
     playButton.on("pointerdown", () => {
-      playButton.setScale(1.2); // Vuelve al tamaño original
-      optionsButton.setText('')
-      playButton.setText('')
+      playButton.setScale(1.3); // Vuelve al tamaño original
       // this.add.image(width / 2, height / 2, '').setScale(0.37); //Explosión
       this.time.addEvent({
         delay: 900, // demora 1 segundo en iniciar
         loop: true,
         callback: () => {
+          optionsButton.setText("");
+          playButton.setText("");
           this.transitionToNextScene(); //Llama la escena Main
         },
       });
@@ -67,7 +69,7 @@ export class MainMenu extends BaseScene {
     });
 
     //Button
-    const optionsButton = this.createText(width / 2, 310, "Options")
+    const optionsButton = this.createText(width / 2, height * 0.47, "Options")
       .setDepth(3)
       .setOrigin(0.5, 0.5);
     //this.add.image(width / 2, height / 2, '').setScale(0.15);
@@ -88,27 +90,20 @@ export class MainMenu extends BaseScene {
       optionsButton.setScale(0.9); // Vuelve al tamaño original
       this.cameras.main.zoomTo(1.8, 1200);
       this.cameras.main.fadeOut(1200, 0, 0, 0);
-      optionsButton.setText('')
-      playButton.setText('')
       // this.add.image(width / 2, height / 2, '').setScale(0.37); //Explosión
       this.time.addEvent({
         delay: 1200, // demora 1 segundo en iniciar
         loop: true,
         callback: () => {
+          optionsButton.setText("");
+          playButton.setText("");
           this.toOptionsScene(); //Llama la escena Main
         },
       });
     });
 
-    this.television = this.physics.add
-      .sprite(width / 2, height / 2, "l-opacidad")
-      .setScale(0.4)
-      .setAlpha(0.4)
-      .setDepth(0);
-
-    this.television.setImmovable;
-    this.television.body.allowGravity = false;
-    this.television.setDepth(1);
+    this.television = new Television(this, true)
+  
   }
 
   resetInactivityTimer() {

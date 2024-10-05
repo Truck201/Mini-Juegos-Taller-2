@@ -3,7 +3,7 @@ export class Character {
     this.scene = scene;
     this.sprite = sprite;
     this.isPlayerOne = isPlayerOne;
-    this.y = this.scene.scale.height / 7.5;
+    this.y = this.scene.scale.height * 0.15;
 
 
     if (this.isPlayerOne) {
@@ -17,7 +17,7 @@ export class Character {
     character.setImmovable;
     character.body.allowGravity = false;
     character.setDepth(2)
-    character.setScale(1.3)
+    character.setScale(1.5)
 
     // Name
     this.scene.add.text(this.x, this.y + 70, this.sprite.toUpperCase(), {

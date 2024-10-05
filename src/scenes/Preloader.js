@@ -34,7 +34,7 @@ export class Preloader extends Scene {
     //  Main Menu
     // LOGO
     this.load.image("logo", "../public/assets/menu/logo.png");
-    this.load.image("menu-background", "../public/assets/escenario/image.png");
+    this.load.image("menu-background", "../public/assets/escenario/principal.png");  // /public/assets/escenario/principal.png   image.png
 
     // Barra Audio Master
     this.load.image("sliderHandle", "../public/assets/menu/anillo_volumen.png"); // Derrota
@@ -46,11 +46,17 @@ export class Preloader extends Scene {
     this.load.image("mimbo", "../public/assets/mimbo/mimbo.png"); // Neutral
     this.load.image("luho", "../public/assets/luho/luho.png"); // Neutral
 
+
+    //Globos de Texto
+    this.load.image("globoTextoL", "../public/assets/kid-korn/izquierda.png");
+    this.load.image("globoTextoR", "../public/assets/kid-korn/derecha.png");
+
     // Kid Korn
     this.load.image("kid-kornS", "../public/assets/kid-korn/korn-defrente.png");
     this.load.image("kid-kornB", "../public/assets/kid-korn/korn-frente.png");
     this.load.image("kid-kornL", "../public/assets/kid-korn/korn-izq.png");
     this.load.image("kid-kornR", "../public/assets/kid-korn/kron-derecha.png");
+
     // Dialogues
     this.load.json('kidKornDialogues', '../public/data/DKidKorn.json')
 
@@ -86,6 +92,11 @@ export class Preloader extends Scene {
     this.load.image("l-opacidad", "../public/assets/opacidad.png");
 
     //  Tienda
+    this.load.image('low-points', '../public/assets/tienda/poco.png')
+    this.load.image('medium-points', '../public/assets/tienda/medio.png')
+    this.load.image('high-points', '../public/assets/tienda/rebalsa.png')
+
+
     this.load.image(
       "backgroundShop",
       "../public/assets/tienda/shop-background-sprite.png"
@@ -216,7 +227,7 @@ export class Preloader extends Scene {
 
     const defaultText = this.add
       .text(width * 0.5, height * 0.4, "Cargando", {
-        fontSize: '15px',
+        fontSize: '25px',
         fontFamily: "'Press Start 2P'",
         fill: "#ffffff",
       }).setOrigin(0.5)

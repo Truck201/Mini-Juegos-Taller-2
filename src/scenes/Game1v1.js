@@ -14,7 +14,7 @@ export class Game1v1 extends Scene {
     let height = this.scale.height;
 
     // Crear Televisor Instancar
-    let television = new Television(this);
+    let television = new Television(this, false);
     
     let background = this.add.sprite(width / 2, height * 0.43, "escenario");
     background.setDepth(1)

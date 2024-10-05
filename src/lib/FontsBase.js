@@ -15,16 +15,18 @@ export class BaseScene extends Scene {
       shadow: {
         color: "#000000",
         fill: true,
-        offsetX: 3,
-        offsetY: 3,
+        offsetX: 7,
+        offsetY: 7,
       },
     };
   }
 
   createText(x, y, text) {
     let fontSize;
-    if (text.length <= 4) {
+    if (text.length <= 2) {
       fontSize = "50px"; // Para palabras cortas
+    } else if (text.length <= 4) {
+      fontSize = "48px"; // Para palabras cortas
     } else if (text.length <= 8) {
       fontSize = "30px"; // Para palabras medianas
     } else {

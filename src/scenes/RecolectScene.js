@@ -73,7 +73,7 @@ export class RecolectScene extends Scene {
     let width = this.game.scale.width;
     let height = this.game.scale.height;
 
-    this.television = new Television(this);
+    this.television = new Television(this, false);
 
     this.kidKorn = new KidKorn(this);
 

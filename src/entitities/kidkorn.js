@@ -44,14 +44,20 @@ export class KidKorn {
     // Mostrar la frase en el juego
     const text = this.scene.add
       .text(this.x / 2, this.y * 0.6, randomDialogue, {
-        fontSize: "40px",
-        fontFamily: "Press Start 2P",
-        fill: "#fff",
+        fontSize: "30px",
+        fontFamily: "'Press Start 2P'",
+        fill: "#ffffff",
         align: "center",
         backgroundColor: "#000",
+        shadow: {
+          color: "#000000",
+          fill: true,
+          offsetX: 3,
+          offsetY: 3,
+        },
       })
       .setOrigin(0.5)
-      .setDepth(5);
+      .setDepth(23);
 
     // Animar a KidKorn para que suba desde la parte inferior
     this.scene.tweens.add({
@@ -116,17 +122,55 @@ export class KidKorn {
     );
     const randomDialogue = this.dialogues.Neutral[randomIndex];
 
+    if (fromLeft) {
+      this.dialogueWidth = this.scene.scale.width * 0.255;
+      this.image = "globoTextoL";
+    } else if (!fromLeft) {
+      this.dialogueWidth = this.scene.scale.width * 0.739;
+      this.image = "globoTextoR";
+    }
+
+    let fontSize, globoSize;
+    if (randomDialogue.length <= 18) {
+      console.log("corto")
+      fontSize = "39px"; // Para palabras cortas
+      globoSize = 1.1;
+    } else if (randomDialogue.length <= 30){
+      console.log("medio chico")
+      fontSize = "29.4px"; // Para palabras medianas
+      globoSize = 1.23;
+    } else if (randomDialogue.length <= 37) {
+      console.log("mediano alto")
+      fontSize = "26px"; // Para palabras medianas
+      globoSize = 1.34;
+    } else {
+      console.log("grande")
+      fontSize = "21px"; // Para palabras largas
+      globoSize = 1.45;
+    }
+
+    const globoTexto = this.scene.add
+      .sprite(this.dialogueWidth, this.y * 0.4, this.image)
+      .setScale(globoSize)
+      .setDepth(20);
+
     // Mostrar la frase en el juego
     const text = this.scene.add
-      .text(this.x / 2, this.y * 0.6, randomDialogue, {
-        fontSize: "40px",
-        fontFamily: "Press Start 2P",
-        fill: "#fff",
+      .text(this.dialogueWidth, this.y * 0.37, randomDialogue, {
+        fontSize: fontSize,
+        fontFamily: "'Press Start 2P'",
+        fill: "#000",
         align: "center",
-        backgroundColor: "#000",
+        backgroundColor: "#ffffff",
+        shadow: {
+          color: "#ffffff",
+          fill: true,
+          offsetX: 3,
+          offsetY: 3,
+        },
       })
       .setOrigin(0.5)
-      .setDepth(5);
+      .setDepth(23);
 
     // Animar la entrada
     this.scene.tweens.add({
@@ -138,9 +182,10 @@ export class KidKorn {
         // Generar pochoclos cuando llega al centro
         this.scene.startGeneratingPopcorn(false);
         // Desaparecer después de un tiempo aleatorio entre 1 y 2 segundos
-        this.scene.time.delayedCall(Phaser.Math.Between(1200, 2000), () => {
+        this.scene.time.delayedCall(Phaser.Math.Between(1300, 2000), () => {
           this.hideKidKornChild(sprite, fromLeft);
           text.destroy(); // Destruir el texto después de que KidKorn desaparezca
+          globoTexto.destroy();
         });
       },
     });
@@ -154,7 +199,7 @@ export class KidKorn {
     this.scene.tweens.add({
       targets: sprite,
       x: endX,
-      duration: 2000, // Duración de la animación (2 segundos)
+      duration: 1200, // Duración de la animación (2 segundos)
       ease: "Power2",
       onComplete: () => {
         sprite.setVisible(false); // Ocultar después de la animación
@@ -168,7 +213,7 @@ export class KidKorn {
       delay: Phaser.Math.Between(5000, 7000),
       loop: true,
       callback: () => {
-        if (this.scene.game_over_timeout > 16) {
+        if (this.scene.game_over_timeout > 13) {
           this.showKidKorn(); // Mostrar KidKorn de forma aleatoria
         }
       },

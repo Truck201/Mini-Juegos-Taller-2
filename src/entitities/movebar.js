@@ -9,7 +9,7 @@ export class MoveBar {
     sprite,
     controls,
     isMovingRight,
-    mainBar
+    imagenBar
   ) {
     this.scene = scene;
     this.x = x;
@@ -20,7 +20,7 @@ export class MoveBar {
     this.sprite = sprite;
     this.controls = controls;
     this.isMovingRight = isMovingRight; // Estado de movimiento
-    this.mainBar = mainBar;
+    this.imagenBar = imagenBar;
 
     // Crear la barra
     this.bar = scene.add.sprite(x, y, sprite);
@@ -33,7 +33,7 @@ export class MoveBar {
   }
 
   update() {
-    const mainBarBounds = this.mainBar.getBounds();
+    const imagenBarBounds = this.scene.imagenBar.getBounds();
 
     // Cambiar dirección solo cuando se presionan las teclas
     if (Phaser.Input.Keyboard.JustDown(this.keyRight)) {
@@ -42,25 +42,25 @@ export class MoveBar {
       this.isMovingRight = false;
     }
 
-    // Movimiento continuo dentro de los límites de la mainBar
+    // Movimiento continuo dentro de los límites de la imagenBar
     if (
       this.isMovingRight &&
-      this.bar.x + this.width / 2 < mainBarBounds.right + 40
+      this.bar.x + this.width / 2 < imagenBarBounds.right + 40
     ) {
-      // Mover a la derecha si no supera el borde derecho de la mainBar
+      // Mover a la derecha si no supera el borde derecho de la imagenBar
       this.bar.x += this.movingSpeed;
     } else if (
       !this.isMovingRight &&
-      this.bar.x - this.width / 2 > mainBarBounds.left - 40
+      this.bar.x - this.width / 2 > imagenBarBounds.left - 40
     ) {
-      // Mover a la izquierda si no supera el borde izquierdo de la mainBar
+      // Mover a la izquierda si no supera el borde izquierdo de la imagenBar
       this.bar.x -= this.movingSpeed;
     }
 
     // Verificar si la barra llega a los límites y cambiar la dirección automáticamente
-    if (this.bar.x + this.width / 2 >= mainBarBounds.right) {
+    if (this.bar.x + this.width / 2 >= imagenBarBounds.right) {
       this.isMovingRight = false; // Cambiar a izquierda si toca el borde derecho
-    } else if (this.bar.x - this.width / 2 <= mainBarBounds.left) {
+    } else if (this.bar.x - this.width / 2 <= imagenBarBounds.left) {
       this.isMovingRight = true; // Cambiar a derecha si toca el borde izquierdo
     }
   }

@@ -11,21 +11,21 @@ export class Attack {
 
   // Crear la attackBar en una posición aleatoria
   createAttackBar() {
-    const mainBar = this.scene.mainBar;
-    if (!mainBar) {
+    const imagenBar = this.scene.imagenBar;
+    if (!imagenBar) {
       console.error("MainBar no existe en la escena");
       return;
     }
 
-    const mainBarBounds = this.scene.mainBar.getBounds();
+    const imagenBarBounds = this.scene.imagenBar.getBounds();
 
-    // Posición aleatoria dentro de la barra principal (mainBar)
+    // Posición aleatoria dentro de la barra principal (imagenBar)
     const randomX = Phaser.Math.Between(
-      mainBarBounds.left + 25,
-      mainBarBounds.right - 25
+      imagenBarBounds.left + 25,
+      imagenBarBounds.right - 25
     );
-    this.sprite = this.scene.add.rectangle(randomX, this.y, 20, 85, 0xff0000);
-    this.sprite.setDepth(2);
+    this.sprite = this.scene.add.rectangle(randomX, this.y, 20, 120, 0xff0000);
+    this.sprite.setDepth(14);
   }
 
   // Método para actualizar o recrear el rectángulo en una nueva posición
