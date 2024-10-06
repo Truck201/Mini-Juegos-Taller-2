@@ -34,7 +34,10 @@ export class Preloader extends Scene {
     //  Main Menu
     // LOGO
     this.load.image("logo", "../public/assets/menu/logo.png");
-    this.load.image("menu-background", "../public/assets/escenario/principal.png");  // /public/assets/escenario/principal.png   image.png
+    this.load.image(
+      "menu-background",
+      "../public/assets/escenario/principal.png"
+    ); // /public/assets/escenario/principal.png   image.png
 
     // Barra Audio Master
     this.load.image("sliderHandle", "../public/assets/menu/anillo_volumen.png"); // Derrota
@@ -45,7 +48,6 @@ export class Preloader extends Scene {
     //  Personajes
     this.load.image("mimbo", "../public/assets/mimbo/mimbo.png"); // Neutral
     this.load.image("luho", "../public/assets/luho/luho.png"); // Neutral
-
 
     //Globos de Texto
     this.load.image("globoTextoL", "../public/assets/kid-korn/izquierda.png");
@@ -58,7 +60,7 @@ export class Preloader extends Scene {
     this.load.image("kid-kornR", "../public/assets/kid-korn/kron-derecha.png");
 
     // Dialogues
-    this.load.json('kidKornDialogues', '../public/data/DKidKorn.json')
+    this.load.json("kidKornDialogues", "../public/data/DKidKorn.json");
 
     //   Emociones
     this.load.image("logo", "../public/assets/menu/logo.png"); // Victoria
@@ -92,10 +94,9 @@ export class Preloader extends Scene {
     this.load.image("l-opacidad", "../public/assets/opacidad.png");
 
     //  Tienda
-    this.load.image('low-points', '../public/assets/tienda/poco.png')
-    this.load.image('medium-points', '../public/assets/tienda/medio.png')
-    this.load.image('high-points', '../public/assets/tienda/rebalsa.png')
-
+    this.load.image("low-points", "../public/assets/tienda/poco.png");
+    this.load.image("medium-points", "../public/assets/tienda/medio.png");
+    this.load.image("high-points", "../public/assets/tienda/rebalsa.png");
 
     this.load.image(
       "backgroundShop",
@@ -142,6 +143,40 @@ export class Preloader extends Scene {
     this.load.image("flare3", "../public/assets/particles/particles3.png"); //  1      particles3.png  red-particle.png
 
     // Battle
+    // Sword
+
+    this.load.image(
+      "static-sword",
+      "../public/assets/battle/espada/static-sword.png"
+    );
+
+    this.load.spritesheet(
+      "b-sword",
+      "../public/assets/battle/espada/idle-brkn-sword.png",
+      {
+        frameWidth: 52,
+        frameHeight: 168,
+      }
+    );
+
+    this.load.spritesheet(
+      "idle-sword",
+      "../public/assets/battle/espada/idle-sword.png",
+      {
+        frameWidth: 52,
+        frameHeight: 168,
+      }
+    );
+
+    this.load.spritesheet(
+      "r-sword",
+      "../public/assets/battle/espada/rotate-sword.png",
+      {
+        frameWidth: 52,
+        frameHeight: 168,
+      }
+    );
+
     // Left
     this.load.spritesheet(
       "healthBarLeftAnims",
@@ -227,11 +262,11 @@ export class Preloader extends Scene {
 
     const defaultText = this.add
       .text(width * 0.5, height * 0.4, "Cargando", {
-        fontSize: '25px',
+        fontSize: "25px",
         fontFamily: "'Press Start 2P'",
         fill: "#ffffff",
-      }).setOrigin(0.5)
-      
+      })
+      .setOrigin(0.5);
 
     let loadingText = "Cargando";
     let dotCount = 0;

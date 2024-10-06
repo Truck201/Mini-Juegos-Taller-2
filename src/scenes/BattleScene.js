@@ -160,6 +160,7 @@ export class BattleScene extends BaseScene {
       .setDepth(10);
 
     this.attackBar = new Attack(this);
+    this.attackBar.create()
 
     this.movingBar1 = new MoveBar(
       this,
