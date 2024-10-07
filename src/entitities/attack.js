@@ -4,16 +4,14 @@ export class Attack {
 
     this.y = (this.scene.scale.height * 4.3) / 5;
     this.x = this.scene.scale.width / 2;
-  }
 
-  create() {
     //Animaciones
     this.createAnims();
 
     // Crear el rectángulo inicial
     this.createAttackBar();
   }
-  
+
   createAnims() {
     // Anims Idle Sword
     this.scene.anims.create({
@@ -23,7 +21,7 @@ export class Attack {
         end: 3,
       }),
       frameRate: 8,
-      loop: true,
+      repeat: -1,
     });
 
     // Anims Broken
@@ -33,8 +31,8 @@ export class Attack {
         start: 0,
         end: 3,
       }),
-      frameRate: 8,
-      loop: true,
+      frameRate: 7.2,
+      repeat: -1,
     });
 
     // Anims Rotate
@@ -44,8 +42,8 @@ export class Attack {
         start: 0,
         end: 4,
       }),
-      frameRate: 8,
-      loop: true,
+      frameRate: 9,
+      repeat: 4,
     });
   }
 
@@ -65,9 +63,41 @@ export class Attack {
       imagenBarBounds.right - 25
     );
 
-    this.sprite = this.scene.add.sprite(randomX, this.y - 70, "static-sword");
+    this.sprite = this.scene.add.sprite(randomX, this.y - 900, "static-sword");
     this.sprite.setDepth(14).setScale(1.33);
-    this.sprite.anims.play("rotate", true);
+    this.sprite.anims.play("idle", true);
+
+    let endY = this.y * 0.4;
+
+    this.scene.tweens.add({
+      targets: this.sprite,
+      y: endY,
+      x: {
+        value: randomX + 10, // Pequeño desplazamiento en X
+        duration: 150,
+        ease: "Power1",
+        yoyo: true,
+        repeat: 2,
+      },
+      duration: 300,
+      ease: "Power2",
+      onComplete: () => {
+        this.sprite.anims.play("rotate", true);
+        this.scene.time.delayedCall(Phaser.Math.Between(300, 400), () => {
+          let endY = this.y;
+          this.scene.tweens.add({
+            targets: this.sprite,
+            y: endY,
+            duration: 300,
+            ease: "Power2",
+            onComplete: () => {
+              this.scene.cameras.main.shake(200, 0.005);
+              this.sprite.anims.play("broken", true);
+            },
+          });
+        });
+      },
+    });
   }
 
   // Método para actualizar o recrear el rectángulo en una nueva posición

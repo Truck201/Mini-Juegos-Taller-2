@@ -98,21 +98,31 @@ export class Preloader extends Scene {
     this.load.image("medium-points", "../public/assets/tienda/medio.png");
     this.load.image("high-points", "../public/assets/tienda/rebalsa.png");
 
-    this.load.image(
-      "backgroundShop",
-      "../public/assets/tienda/shop-background-sprite.png"
-    );
-
+    this.load.spritesheet("polilla", "../public/assets/tienda/pollilla.png", {
+      frameWidth: 16,
+      frameHeight: 16,
+    });
+    this.load.spritesheet("toby", "../public/assets/tienda/toby.png", {
+      frameWidth: 148,
+      frameHeight: 72,
+    });
+    this.load.spritesheet("mothman", "../public/assets/tienda/mothman.png", {
+      frameWidth: 160,
+      frameHeight: 188,
+    });
     this.load.spritesheet(
-      "backgroundSheet",
-      "../public/assets/tienda/shop-background.png",
+      "alcantarilla",
+      "../public/assets/tienda/alcantarilla.png",
       {
-        frameWidth: 1760,
-        frameHeight: 1272,
+        frameWidth: 20,
+        frameHeight: 4,
       }
     );
 
-    this.load.image("backShop", "../public/assets/tienda/slots_shop.png");
+    this.load.image(
+      "backgroundShop",
+      "../public/assets/tienda/shop-background.png"
+    );
 
     this.load.spritesheet(
       "popcorn",
@@ -144,7 +154,6 @@ export class Preloader extends Scene {
 
     // Battle
     // Sword
-
     this.load.image(
       "static-sword",
       "../public/assets/battle/espada/static-sword.png"
