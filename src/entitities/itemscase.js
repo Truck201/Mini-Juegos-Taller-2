@@ -79,13 +79,18 @@ export class ItemsCase {
         value: 25,
       },
       pizza: { description: "Delicious slice!\n\t  +1.5 Speed", value: 50 },
+      lentes: {
+        description: "Enhances vision.\n+30% Evade Chance",
+        value: 55,
+      },
     };
 
     // Definición de atributos de los ítems
     this.itemAttributes = {
       candy: { hitPoints: 1, speed: 0, evadeChance: 0 },
-      popcorn: { hitPoints: 0, speed: 0, evadeChance: 20 },
-      pizza: { hitPoints: 0, speed: 5, evadeChance: 0 },
+      popcorn: { hitPoints: 0, speed: 0, evadeChance: 10 },
+      pizza: { hitPoints: 0, speed: 7, evadeChance: 0 },
+      lentes: { hitPoints: 1, speed: 0, evadeChance: 30 },
     };
 
     // Inicializar animaciones
@@ -228,7 +233,7 @@ export class ItemsCase {
 
   initAnimations() {
     this.scene.anims.create({
-      key: "popcorn_idle",
+      key: "popcorn-idle",
       frames: this.scene.anims.generateFrameNumbers("popcorn", {
         start: 0,
         end: 3,
@@ -248,8 +253,18 @@ export class ItemsCase {
     });
 
     this.scene.anims.create({
-      key: "pizza_idle",
+      key: "pizza-idle",
       frames: this.scene.anims.generateFrameNumbers("pizza", {
+        start: 0,
+        end: 3,
+      }),
+      frameRate: 4,
+      repeat: -1,
+    });
+
+    this.scene.anims.create({
+      key: "lentes-idle",
+      frames: this.scene.anims.generateFrameNumbers("lentes", {
         start: 0,
         end: 3,
       }),
@@ -270,20 +285,16 @@ export class ItemsCase {
       "popcorn",
       "candy",
       "pizza",
+      "lentes",
       "popcorn",
       "candy",
       "pizza",
       "popcorn",
-      "candy",
-      "pizza",
-      "pizza",
-      "popcorn",
-      "candy",
+      "lentes",
       "pizza",
       "popcorn",
-      "candy",
-      "pizza",
-      "popcorn",
+      "lentes",
+      "lentes",
       "candy",
       "pizza",
       "candy",
@@ -315,11 +326,13 @@ export class ItemsCase {
 
         // Iniciar la animación dependiendo del tipo de ítem
         if (itemType === "popcorn") {
-          item.play("popcorn_idle");
+          item.play("popcorn-idle");
         } else if (itemType === "candy") {
           item.play("candy-idle");
         } else if (itemType === "pizza") {
-          item.play("pizza_idle");
+          item.play("pizza-idle");
+        } else if (itemType === "lentes") {
+          item.play("lentes-idle");
         }
 
         index++;
@@ -365,7 +378,9 @@ export class ItemsCase {
       const description = this.itemDescriptions[item.texture.key];
       if (description) {
         descriptionText
-          .setText(`${description.description}\n\n\t  Costo ${description.value}P`)
+          .setText(
+            `${description.description}\n\n\t  Costo ${description.value}P`
+          )
           .setDepth(2)
           .setOrigin(0.5);
       }

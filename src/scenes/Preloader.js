@@ -134,6 +134,15 @@ export class Preloader extends Scene {
     );
 
     this.load.spritesheet(
+      "lentes",
+      "../public/assets/tienda/idle-lentes.png",
+      {
+        frameWidth: 80,
+        frameHeight: 96,
+      }
+    );
+
+    this.load.spritesheet(
       "candy",
       "../public/assets/tienda/caramelo-azul.png",
       {
