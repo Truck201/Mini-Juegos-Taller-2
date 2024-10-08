@@ -343,6 +343,7 @@ export class BattleScene extends BaseScene {
       this.attackBar.respawn();
     });
   }
+  
 
   showMissMessage() {
     const missText = this.add

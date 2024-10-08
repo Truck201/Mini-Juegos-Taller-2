@@ -197,26 +197,29 @@ export class AtributesPlayers {
     }
 
     if (playerId === 1) {
-      let damage = this.getDamage(1)
-      let critical = this.getCritical(1)
-      if (critical > 0){
+      let damage = this.getDamage(1);
+      let critical = this.getCritical(1);
+      if (critical > 0) {
         const criticalChance = Phaser.Math.Between(0, 100);
         if (criticalChance < critical) {
-          damage + damage
+          console.log("CRITICAL");
+          damage + damage;
+          this.criticalVisual();
         }
       }
       this.removeAttributes(1, { hitPoints: damage });
       playerHp = this.getHitPoints(1);
       this.updateHealthBar(1, playerHp);
       return true;
-
     } else if (playerId === 2) {
-      let damage = this.getDamage(2)
-      let critical = this.getCritical(2)
-      if (critical > 0){
+      let damage = this.getDamage(2);
+      let critical = this.getCritical(2);
+      if (critical > 0) {
         const criticalChance = Phaser.Math.Between(0, 100);
-        if (criticalChance < critical){
-          damage + damage
+        if (criticalChance < critical) {
+          console.log("CRITICAL");
+          damage + damage;
+          this.criticalVisual();
         }
       }
       this.removeAttributes(2, { hitPoints: damage });
@@ -358,6 +361,36 @@ export class AtributesPlayers {
         this.atributes2.anchor -= newAttributes.anchor;
       }
     }
+  }
+
+  criticalVisual() {
+    const { width, height } = this.scene.game.scale;
+    const criticalText = this.scene.add
+      .text(width * 0.5 , height * 0.5, "¡¡CRITIAL!!", {
+        fontSize: "32px",
+        color: "#fff",
+        fontFamily: "'Press Start 2P'",
+        fontWeight: "bold",
+        shadow: {
+          color: "#000000",
+          fill: true,
+          offsetX: 3,
+          offsetY: 3,
+        },
+      })
+      .setOrigin(0.5)
+      .setDepth(15);
+
+    this.scene.tweens.add({
+      targets: criticalText,
+      scale: { from: 2.1, to: 4.2 }, // Agrandar el texto
+      alpha: { from: 1, to: 0 }, // Desaparecer el texto
+      duration: 1500, // Duración de la animación (1 segundo)
+      ease: "Power2",
+      onComplete: () => {
+        criticalText.destroy(); // Eliminar el texto después de la animación
+      },
+    });
   }
 
   getAnchor(player) {
