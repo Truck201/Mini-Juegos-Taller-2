@@ -29,7 +29,7 @@ export class RecolectScene extends Scene {
     // Reset points
     this.points1 = data.points1 || 0; // Puntaje inicial jugador 1
     this.points2 = data.points2 || 0; // Puntaje inicial jugador 2
-    this.game_over_timeout = 5; // Tiempo límite de 30 segundos
+    this.game_over_timeout = 35; // Tiempo límite de 30 segundos
 
     // Lanzar la escena del HUD, pasando el tiempo y los puntajes iniciales
     this.scene.launch("Hud", {
@@ -136,7 +136,8 @@ export class RecolectScene extends Scene {
         right: Phaser.Input.Keyboard.KeyCodes.D,
       },
       true,
-      this.imagenBar
+      this.imagenBar,
+      1.2
     );
 
     this.movingBar2 = new MoveBar(
@@ -152,7 +153,8 @@ export class RecolectScene extends Scene {
         right: Phaser.Input.Keyboard.KeyCodes.RIGHT,
       },
       false,
-      this.imagenBar
+      this.imagenBar,
+      1.2
     );
 
     // Añadir detección de colisión para recolectables

@@ -9,7 +9,8 @@ export class MoveBar {
     sprite,
     controls,
     isMovingRight,
-    imagenBar
+    imagenBar,
+    anchor
   ) {
     this.scene = scene;
     this.x = x;
@@ -24,7 +25,7 @@ export class MoveBar {
 
     // Crear la barra
     this.bar = scene.add.sprite(x, y, sprite);
-    this.bar.setScale(1.2).setDepth(15);
+    this.bar.setScale(anchor).setDepth(15);  // 1.2
     
 
     // Añadir teclas de control

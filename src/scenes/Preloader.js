@@ -124,37 +124,103 @@ export class Preloader extends Scene {
       "../public/assets/tienda/shop-background.png"
     );
 
-    this.load.spritesheet(
-      "popcorn",
-      "../public/assets/tienda/idle-pororo.png",
+    // ITEMS DE LA TIENDA
+    // Popcorn (7% EC)
+    this.load.spritesheet("popcorn", "../public/assets/tienda/idle-pororo.png",
       {
         frameWidth: 65,
         frameHeight: 64,
       }
     );
 
-    this.load.spritesheet(
-      "lentes",
-      "../public/assets/tienda/idle-lentes.png",
-      {
-        frameWidth: 80,
-        frameHeight: 96,
-      }
-    );
-
-    this.load.spritesheet(
-      "candy",
-      "../public/assets/tienda/caramelo-azul.png",
-      {
-        frameWidth: 60,
-        frameHeight: 70,
-      }
-    );
-
-    this.load.spritesheet("pizza", "../public/assets/tienda/zapi.png", {
-      frameWidth: 60,
-      frameHeight: 68,
+    // Lentes (++ Anchor)
+    this.load.spritesheet("glasses", "../public/assets/tienda/lentes1.png", {
+      frameWidth: 80,
+      frameHeight: 96,
     });
+ 
+    // Caramelos  (+1 HP) (+5 VEL) (Medio)
+    this.load.spritesheet("candy1", "../public/assets/tienda/caramelo1.png", {
+      frameWidth: 80,
+      frameHeight: 96,
+    });
+
+    this.load.spritesheet("candy2", "../public/assets/tienda/caramelo2.png", {
+      frameWidth: 80,
+      frameHeight: 96,
+    });
+
+    this.load.spritesheet("candy3", "../public/assets/tienda/caramelo3.png", {
+      frameWidth: 80,
+      frameHeight: 96,
+    });
+
+    // Helados  (+15% EC)
+    this.load.spritesheet("icecream1", "../public/assets/tienda/heladoA.png", {
+      frameWidth: 80,
+      frameHeight: 96,
+    });
+
+    this.load.spritesheet("icecream2", "../public/assets/tienda/heladoB.png", {
+      frameWidth: 80,
+      frameHeight: 96,
+    });
+
+    this.load.spritesheet("icecream3", "../public/assets/tienda/heladoC.png", {
+      frameWidth: 80,
+      frameHeight: 96,
+    });
+
+    // Energizante (+10 VEL)
+    this.load.spritesheet("energizing", "../public/assets/tienda/lata2.png",
+       {
+      frameWidth: 80,
+      frameHeight: 96,
+    });
+
+    // Ojo de cuthulu (15% CRT)
+    this.load.spritesheet("cuthulu", "../public/assets/tienda/ojo1.png", 
+      {
+      frameWidth: 80,
+      frameHeight: 96,
+    });
+
+    // Hacha (+2 DMG CARO)
+    this.load.spritesheet("axe", "../public/assets/tienda/hacha1.png", 
+      {
+      frameWidth: 80,
+      frameHeight: 96,
+    });
+
+    // Paleta  (+5 VEL) (+1 DMG)
+    this.load.spritesheet("palete", "../public/assets/tienda/chupetin2.png", 
+      {
+      frameWidth: 80,
+      frameHeight: 96,
+    });
+
+    // Hamburgesa (+3 HP)  (CARO)
+    this.load.spritesheet("burger", "../public/assets/tienda/hamburguesa.png", 
+      {
+      frameWidth: 80,
+      frameHeight: 96,
+    });
+
+    // Chocolate (+4 VEL) (+7% EC)
+    this.load.spritesheet("chocolate", "../public/assets/tienda/chocolate.png", 
+      {
+      frameWidth: 80,
+      frameHeight: 96,
+    });
+
+    // Pizza (+1 DMG) (+1 HP)
+    this.load.spritesheet("pizza", "../public/assets/tienda/pizza.png", 
+      {
+      frameWidth: 80,
+      frameHeight: 96,
+    });
+
+
 
     // Partículas
     this.load.image("flare", "../public/assets/particles/particles.png"); //  2      particles.png    blue-particle.png

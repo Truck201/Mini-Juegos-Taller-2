@@ -73,6 +73,18 @@ export class BattleScene extends BaseScene {
 
     console.log(this.selectedItemsPlayer2.atributes2);
 
+    this.player1CriticalChance =
+      this.player1Atributes.getCritical(1) ||
+      this.selectedItemsPlayer1.atributes?.critical ||
+      0;
+    this.player1Damage = 
+      this.player1Atributes.getDamage(1) ||
+      this.selectedItemsPlayer1.atributes?.damage ||
+      1;
+    this.player1Anchor =
+      this.player1Atributes.getAnchor(1) ||
+      this.selectedItemsPlayer1.atributes?.anchor ||
+      12;
     const player1Speed =
       this.player1Atributes.getSpeed(1) ||
       this.selectedItemsPlayer1.atributes?.speed ||
@@ -88,6 +100,18 @@ export class BattleScene extends BaseScene {
 
     this.player1Atributes.updateHealthBar(1, this.player1HP);
 
+    this.player2Damage =
+      this.player2Atributes.getDamage(2) ||
+      this.selectedItemsPlayer2.atributes?.damage ||
+      1;
+    this.player2CritialChance =
+      this.player2Atributes.getCritical(2) ||
+      this.selectedItemsPlayer2.atributes?.critical ||
+      0;
+    this.player2Anchor =
+      this.player2Atributes.getAnchor(2) ||
+      this.selectedItemsPlayer2.atributes?.anchor ||
+      12;
     const player2Speed =
       this.player2Atributes.getSpeed(2) ||
       this.selectedItemsPlayer2.atributes?.speed ||
@@ -174,7 +198,8 @@ export class BattleScene extends BaseScene {
         right: null,
       },
       true,
-      this.mainBar
+      this.mainBar,
+      this.player1Anchor
     );
 
     this.movingBar2 = new MoveBar(
@@ -190,7 +215,8 @@ export class BattleScene extends BaseScene {
         right: null,
       },
       false,
-      this.mainBar
+      this.mainBar,
+      this.player2Anchor
     );
 
     // Configurar las teclas para destruir recolectables

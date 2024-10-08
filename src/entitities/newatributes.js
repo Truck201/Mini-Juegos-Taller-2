@@ -3,8 +3,22 @@ export class AtributesPlayers {
     this.scene = scene;
     this.playerId = playerId;
 
-    const initialAttributes1 = { hitPoints: 5, speed: 10, evadeChance: 0 };
-    const initialAttributes2 = { hitPoints: 5, speed: 10, evadeChance: 0 };
+    const initialAttributes1 = {
+      hitPoints: 5,
+      speed: 10,
+      evadeChance: 0,
+      damage: 1,
+      critical: 0,
+      anchor: 1.2,
+    };
+    const initialAttributes2 = {
+      hitPoints: 5,
+      speed: 10,
+      evadeChance: 0,
+      damage: 1,
+      critical: 0,
+      anchor: 1.2,
+    };
 
     if (playerId === 1) {
       this.atributes1 = this.atributesData(initialAttributes1);
@@ -78,7 +92,7 @@ export class AtributesPlayers {
           .setScale(1.27)
           .setDepth(2),
         this.scene.add
-          .sprite(this.x * 0.225, this.y * 0.0775, "healthBarLNo") // 0 lifes index 6 
+          .sprite(this.x * 0.225, this.y * 0.0775, "healthBarLNo") // 0 lifes index 6
           .setVisible(false)
           .setScale(1.27)
           .setDepth(2),
@@ -127,6 +141,91 @@ export class AtributesPlayers {
     }
   }
 
+  updateHealthBar(playerId, playerHp) {
+    let healthBars, currentHP;
+
+    if (playerId === 1) {
+      healthBars = this.player1HealthBars;
+      currentHP = playerHp;
+    } else if (playerId === 2) {
+      healthBars = this.player2HealthBars;
+      currentHP = playerHp;
+    }
+
+    // Ocultar todas las barras inicialmente
+    healthBars.forEach((bar) => bar.setVisible(false));
+    // Mostrar la barra correspondiente a los HP restantes
+    if (currentHP > 5) {
+      healthBars[0].setVisible(true); // Mostrar el sprite que contiene la animación
+      if (playerId === 1) {
+        healthBars[0].play("HealthLeft");
+      } else if (playerId === 2) {
+        healthBars[0].play("HealthRight");
+      }
+    } else if (currentHP <= 5 && currentHP >= 0) {
+      // Mostrar la barra correspondiente a los HP restantes
+      const visibleBarIndex = healthBars.length - currentHP - 1;
+      healthBars[visibleBarIndex].setVisible(true);
+
+      // Detener cualquier animación que se esté reproduciendo
+      if (playerId === 1) {
+        healthBars[0].stop("HealthLeft");
+      } else if (playerId === 2) {
+        healthBars[0].stop("HealthRight");
+      }
+    }
+
+    // Verificar si el jugador ha perdido
+    if (currentHP < 1) {
+      this.scene.time.addEvent({
+        delay: 200,
+        callback: () => {
+          this.gameOver(playerId);
+        },
+        loop: false,
+      });
+    }
+  }
+
+  // Método para aplicar daño
+  takeDamage(playerId, evadeChance, playerHp) {
+    // Implementa la lógica de evadeChance
+    const evadeRoll = Phaser.Math.Between(0, 100);
+    if (evadeRoll < evadeChance) {
+      console.log("Attack evaded!");
+      return false;
+    }
+
+    if (playerId === 1) {
+      let damage = this.getDamage(1)
+      let critical = this.getCritical(1)
+      if (critical > 0){
+        const criticalChance = Phaser.Math.Between(0, 100);
+        if (criticalChance < critical) {
+          damage + damage
+        }
+      }
+      this.removeAttributes(1, { hitPoints: damage });
+      playerHp = this.getHitPoints(1);
+      this.updateHealthBar(1, playerHp);
+      return true;
+
+    } else if (playerId === 2) {
+      let damage = this.getDamage(2)
+      let critical = this.getCritical(2)
+      if (critical > 0){
+        const criticalChance = Phaser.Math.Between(0, 100);
+        if (criticalChance < critical){
+          damage + damage
+        }
+      }
+      this.removeAttributes(2, { hitPoints: damage });
+      playerHp = this.getHitPoints(2);
+      this.updateHealthBar(2, playerHp);
+      return true;
+    }
+  }
+
   atributesData(initialAttributes) {
     // Asignar atributos con valores predeterminados si son indefinidos
     return {
@@ -140,29 +239,15 @@ export class AtributesPlayers {
         initialAttributes.evadeChance !== undefined
           ? initialAttributes.evadeChance
           : 10,
+      damage:
+        initialAttributes.damage !== undefined ? initialAttributes.damage : 1,
+      critical:
+        initialAttributes.critical !== undefined
+          ? initialAttributes.critical
+          : 0,
+      anchor:
+        initialAttributes.anchor !== undefined ? initialAttributes.anchor : 12,
     };
-  }
-
-  // Método para aplicar daño
-  takeDamage(playerId, evadeChance, playerHp) {
-    // Implementa la lógica de evadeChance
-    const evadeRoll = Phaser.Math.Between(0, 100);
-    if (evadeRoll < evadeChance) {
-      console.log("Attack evaded!");
-      return false;
-    }
-  
-    if (playerId === 1) {
-      this.removeAttributes(1, { hitPoints: 1 });
-      playerHp = this.getHitPoints(1);  
-      this.updateHealthBar(1, playerHp); 
-      return true;
-    } else if (playerId === 2) {
-      this.removeAttributes(2, { hitPoints: 1 });
-      playerHp = this.getHitPoints(2); 
-      this.updateHealthBar(2, playerHp);
-      return true;
-    }
   }
 
   aboutWriteAtributes(newAttributes) {
@@ -172,12 +257,20 @@ export class AtributesPlayers {
       this.atributes1.speed = newAttributes.speed || this.atributes1.speed;
       this.atributes1.evadeChance =
         newAttributes.evadeChance || this.atributes1.evadeChance;
+      this.atributes1.damage = newAttributes.damage || this.atributes1.damage;
+      this.atributes1.critical =
+        newAttributes.critical || this.atributes1.critical;
+      this.atributes1.anchor = newAttributes.anchor || this.atributes1.anchor;
     } else if (this.playerId === 2) {
       this.atributes2.hitPoints =
         newAttributes.hitPoints || this.atributes2.hitPoints;
       this.atributes2.speed = newAttributes.speed || this.atributes2.speed;
       this.atributes2.evadeChance =
         newAttributes.evadeChance || this.atributes2.evadeChance;
+      this.atributes2.damage = newAttributes.damage || this.atributes2.damage;
+      this.atributes2.critical =
+        newAttributes.critical || this.atributes2.critical;
+      this.atributes2.anchor = newAttributes.anchor || this.atributes2.anchor;
     }
   }
 
@@ -192,6 +285,15 @@ export class AtributesPlayers {
       if (newAttributes.hitPoints) {
         this.atributes1.hitPoints += newAttributes.hitPoints;
       }
+      if (newAttributes.damage) {
+        this.atributes1.damage += newAttributes.damage;
+      }
+      if (newAttributes.critical) {
+        this.atributes1.critical += newAttributes.critical;
+      }
+      if (newAttributes.anchor) {
+        this.atributes1.anchor += newAttributes.anchor;
+      }
     }
     if (player === 2) {
       if (newAttributes.speed) {
@@ -202,6 +304,15 @@ export class AtributesPlayers {
       }
       if (newAttributes.hitPoints) {
         this.atributes2.hitPoints += newAttributes.hitPoints;
+      }
+      if (newAttributes.damage) {
+        this.atributes2.damage += newAttributes.damage;
+      }
+      if (newAttributes.critical) {
+        this.atributes2.critical += newAttributes.critical;
+      }
+      if (newAttributes.anchor) {
+        this.atributes2.anchor += newAttributes.anchor;
       }
     }
   }
@@ -217,6 +328,15 @@ export class AtributesPlayers {
       if (newAttributes.hitPoints) {
         this.atributes1.hitPoints -= newAttributes.hitPoints;
       }
+      if (newAttributes.damage) {
+        this.atributes1.damage -= newAttributes.damage;
+      }
+      if (newAttributes.critical) {
+        this.atributes1.critical -= newAttributes.critical;
+      }
+      if (newAttributes.anchor) {
+        this.atributes1.anchor -= newAttributes.anchor;
+      }
     }
     if (player === 2) {
       if (newAttributes.speed) {
@@ -228,68 +348,42 @@ export class AtributesPlayers {
       if (newAttributes.hitPoints) {
         this.atributes2.hitPoints -= newAttributes.hitPoints;
       }
-    }
-  }
-
-  updateHealthBar(playerId, playerHp) {
-    let healthBars, currentHP;
-  
-    if (playerId === 1) {
-      healthBars = this.player1HealthBars;
-      currentHP = playerHp;
-    } else if (playerId === 2) {
-      healthBars = this.player2HealthBars;
-      currentHP = playerHp;
-    }
-  
-    // Ocultar todas las barras inicialmente
-    healthBars.forEach((bar) => bar.setVisible(false));
-    // Mostrar la barra correspondiente a los HP restantes
-    if (currentHP > 5) {
-      healthBars[0].setVisible(true); // Mostrar el sprite que contiene la animación
-      if (playerId === 1) {
-        healthBars[0].play("HealthLeft");
-      } else if (playerId === 2) {
-        healthBars[0].play("HealthRight");
+      if (newAttributes.damage) {
+        this.atributes2.damage -= newAttributes.damage;
       }
-    } else if (currentHP <= 5 && currentHP >= 0) {
-      // Mostrar la barra correspondiente a los HP restantes
-      const visibleBarIndex = healthBars.length - currentHP - 1;
-      healthBars[visibleBarIndex].setVisible(true);
-      
-      // Detener cualquier animación que se esté reproduciendo
-      if (playerId === 1) {
-        healthBars[0].stop("HealthLeft");
-      } else if (playerId === 2) {
-        healthBars[0].stop("HealthRight");
+      if (newAttributes.critical) {
+        this.atributes2.critical -= newAttributes.critical;
+      }
+      if (newAttributes.anchor) {
+        this.atributes2.anchor -= newAttributes.anchor;
       }
     }
-  
-    // Verificar si el jugador ha perdido
-    if (currentHP < 1) {
-      this.scene.time.addEvent({
-        delay: 200,
-        callback: () => {
-          this.gameOver(playerId);
-        },
-        loop: false,
-      });
-    }
   }
 
-  gameOver(loser) {
-    console.log(`Jugador ${loser} ha perdido!`);
-    this.scene.scene.launch("GameOver", { player: loser }); // Game Over Scene
-    this.scene.scene.pause("battleScene");
-    this.scene.scene.bringToTop("GameOver");
-  }
-
-  getSpeed(player) {
+  getAnchor(player) {
     if (player === 1) {
-      return this.atributes1.speed;
+      return this.atributes1.anchor;
     }
     if (player === 2) {
-      return this.atributes2.speed;
+      return this.atributes2.anchor;
+    }
+  }
+
+  getCritical(player) {
+    if (player === 1) {
+      return this.atributes1.critical;
+    }
+    if (player === 2) {
+      return this.atributes2.critical;
+    }
+  }
+
+  getDamage(player) {
+    if (player === 1) {
+      return this.atributes1.damage;
+    }
+    if (player === 2) {
+      return this.atributes2.damage;
     }
   }
 
@@ -302,6 +396,15 @@ export class AtributesPlayers {
     }
   }
 
+  getSpeed(player) {
+    if (player === 1) {
+      return this.atributes1.speed;
+    }
+    if (player === 2) {
+      return this.atributes2.speed;
+    }
+  }
+
   getHitPoints(player) {
     if (player === 1) {
       return this.atributes1.hitPoints;
@@ -309,5 +412,12 @@ export class AtributesPlayers {
     if (player === 2) {
       return this.atributes2.hitPoints;
     }
+  }
+
+  gameOver(loser) {
+    console.log(`Jugador ${loser} ha perdido!`);
+    this.scene.scene.launch("GameOver", { player: loser }); // Game Over Scene
+    this.scene.scene.pause("battleScene");
+    this.scene.scene.bringToTop("GameOver");
   }
 }
