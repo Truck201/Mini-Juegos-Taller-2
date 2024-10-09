@@ -1,9 +1,12 @@
 import { MoveBar } from "../entitities/movebar";
 import { Television } from "../entitities/television";
-import { Attack } from "../entitities/attack";
 import { AtributesPlayers } from "../entitities/newatributes"; // Importa la clase
 import { Character } from "../entitities/character";
 import { BaseScene } from "../lib/FontsBase";
+import { Attack } from "../entitities/attack";
+import { SwordRain } from "../events/swordRain";
+import { PopcornRaining } from "../events/popcornRain";
+import { MedievalEvent } from "../events/medieval";
 
 export class BattleScene extends BaseScene {
   constructor() {
@@ -77,7 +80,7 @@ export class BattleScene extends BaseScene {
       this.player1Atributes.getCritical(1) ||
       this.selectedItemsPlayer1.atributes?.critical ||
       0;
-    this.player1Damage = 
+    this.player1Damage =
       this.player1Atributes.getDamage(1) ||
       this.selectedItemsPlayer1.atributes?.damage ||
       1;
@@ -177,13 +180,33 @@ export class BattleScene extends BaseScene {
 
     let barraX = width / 2; // Posición Barra en X
     let barraY = (height * 4.3) / 5; // Posición de alto en las barras Y
-    
+
     this.imagenBar = this.add
       .sprite(barraX, barraY, "imagen-barra")
       .setScale(1.5)
       .setDepth(10);
 
-    this.attackBar = new Attack(this);
+    const eventIndex = Phaser.Math.Between(1, 3);
+    switch (eventIndex) {
+      case 1:
+        this.swordRain = new SwordRain(this);
+        this.swordRain.startSwordRain();
+        this.attackBar = this.swordRain;
+        console.log("Lluvia de Espadas");
+        break;
+      case 2:
+        this.popcornRain = new PopcornRaining(this);
+        this.popcornRain.startPopcornRain();
+        this.attackBar = this.popcornRain;
+        console.log("Lluvia de Pororos");
+        break;
+      case 3:
+        this.medievalEvent = new MedievalEvent(this);
+        this.medievalEvent.startMedievalEvent();
+        this.attackBar = this.medievalEvent;
+        console.log("Evento Medieval");
+        break;
+    }
 
     this.movingBar1 = new MoveBar(
       this,
@@ -245,7 +268,7 @@ export class BattleScene extends BaseScene {
 
     // Si se presiona espacio, jugador 1 destruye un recolectable
     if (
-      this.checkCollision(movingBar1Sprite, this.attackBar.sprite) &&
+      this.checkCollision(movingBar1Sprite, this.attackBar?.getBounds()) &&
       Phaser.Input.Keyboard.JustDown(this.spaceKey) &&
       this.canAttackPlayer1 // Acción de jugador 1
     ) {
@@ -278,7 +301,7 @@ export class BattleScene extends BaseScene {
 
     // Si se presiona enter, jugador 2 destruye un recolectable
     if (
-      this.checkCollision(movingBar2Sprite, this.attackBar.sprite) &&
+      this.checkCollision(movingBar2Sprite, this.attackBar?.getBounds()) &&
       Phaser.Input.Keyboard.JustDown(this.enterKey) &&
       this.canAttackPlayer2 // Acción de jugador 2
     ) {
@@ -325,10 +348,11 @@ export class BattleScene extends BaseScene {
   }
 
   // Método para verificar la colisión entre dos objetos
-  checkCollision(bar, attackBar) {
+  checkCollision(bar, attackBarBounds) {
     const barBounds = bar.getBounds(); // Asegúrate de que bar sea un sprite
-    const attackBarBounds = attackBar.getBounds(); // Asegúrate de que attackBar sea un sprite
-
+    if (!barBounds || !attackBarBounds) {
+      return false; // Si no se pueden obtener los límites, no hay colisión
+    }
     return Phaser.Geom.Intersects.RectangleToRectangle(
       barBounds,
       attackBarBounds
@@ -337,13 +361,16 @@ export class BattleScene extends BaseScene {
 
   // Método para manejar la destrucción y reaparición de la attackBar
   destroyAndRespawn() {
-    this.attackBar.destroy();
+    if (this.attackBar && typeof this.attackBar.destroy === "function") {
+      this.attackBar.destroy(); // Destruir la attackBar
+    }
 
     this.time.delayedCall(Phaser.Math.Between(3000, 4500), () => {
-      this.attackBar.respawn();
+      if (this.attackBar && typeof this.attackBar.respawn === "function") {
+        this.attackBar.respawn(); // Llamar al respawn de la attackBar
+      }
     });
   }
-  
 
   showMissMessage() {
     const missText = this.add

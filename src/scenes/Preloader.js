@@ -126,7 +126,9 @@ export class Preloader extends Scene {
 
     // ITEMS DE LA TIENDA
     // Popcorn (7% EC)
-    this.load.spritesheet("popcorn", "../public/assets/tienda/idle-pororo.png",
+    this.load.spritesheet(
+      "popcorn",
+      "../public/assets/tienda/idle-pororo.png",
       {
         frameWidth: 65,
         frameHeight: 64,
@@ -138,7 +140,7 @@ export class Preloader extends Scene {
       frameWidth: 80,
       frameHeight: 96,
     });
- 
+
     // Caramelos  (+1 HP) (+5 VEL) (Medio)
     this.load.spritesheet("candy1", "../public/assets/tienda/caramelo1.png", {
       frameWidth: 80,
@@ -172,55 +174,50 @@ export class Preloader extends Scene {
     });
 
     // Energizante (+10 VEL)
-    this.load.spritesheet("energizing", "../public/assets/tienda/lata2.png",
-       {
+    this.load.spritesheet("energizing", "../public/assets/tienda/lata2.png", {
       frameWidth: 80,
       frameHeight: 96,
     });
 
     // Ojo de cuthulu (15% CRT)
-    this.load.spritesheet("cuthulu", "../public/assets/tienda/ojo1.png", 
-      {
+    this.load.spritesheet("cuthulu", "../public/assets/tienda/ojo1.png", {
       frameWidth: 80,
       frameHeight: 96,
     });
 
     // Hacha (+2 DMG CARO)
-    this.load.spritesheet("axe", "../public/assets/tienda/hacha1.png", 
-      {
+    this.load.spritesheet("axe", "../public/assets/tienda/hacha1.png", {
       frameWidth: 80,
       frameHeight: 96,
     });
 
     // Paleta  (+5 VEL) (+1 DMG)
-    this.load.spritesheet("palete", "../public/assets/tienda/chupetin2.png", 
-      {
+    this.load.spritesheet("palete", "../public/assets/tienda/chupetin2.png", {
       frameWidth: 80,
       frameHeight: 96,
     });
 
     // Hamburgesa (+3 HP)  (CARO)
-    this.load.spritesheet("burger", "../public/assets/tienda/hamburguesa.png", 
-      {
+    this.load.spritesheet("burger", "../public/assets/tienda/hamburguesa.png", {
       frameWidth: 80,
       frameHeight: 96,
     });
 
     // Chocolate (+4 VEL) (+7% EC)
-    this.load.spritesheet("chocolate", "../public/assets/tienda/chocolate.png", 
+    this.load.spritesheet(
+      "chocolate",
+      "../public/assets/tienda/chocolate.png",
       {
-      frameWidth: 80,
-      frameHeight: 96,
-    });
+        frameWidth: 80,
+        frameHeight: 96,
+      }
+    );
 
     // Pizza (+1 DMG) (+1 HP)
-    this.load.spritesheet("pizza", "../public/assets/tienda/pizza.png", 
-      {
+    this.load.spritesheet("pizza", "../public/assets/tienda/pizza.png", {
       frameWidth: 80,
       frameHeight: 96,
     });
-
-
 
     // Partículas
     this.load.image("flare", "../public/assets/particles/particles.png"); //  2      particles.png    blue-particle.png
@@ -260,6 +257,13 @@ export class Preloader extends Scene {
         frameHeight: 168,
       }
     );
+
+    // Popcorn Event Rain
+    this.load.image("popcorn1", "../public/assets/anims/popcorn.png");
+
+    this.load.image("popcorn2", "../public/assets/anims/popcorn.png");
+
+    this.load.image("popcorn3", "../public/assets/anims/popcorn.png");
 
     // Left
     this.load.spritesheet(
@@ -367,7 +371,7 @@ export class Preloader extends Scene {
 
   gotoMainScene() {
     this.time.delayedCall(1200, () => {
-      this.scene.start("MainMenu");
+      this.scene.start("Shop");
     });
   }
 }

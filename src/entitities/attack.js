@@ -55,9 +55,12 @@ export class Attack {
       return;
     }
 
-    const imagenBarBounds = this.scene.imagenBar.getBounds();
+    const imagenBarBounds = imagenBar.getBounds();
+    if (!imagenBarBounds) {
+      console.error("No se pueden obtener los bounds de imagenBar");
+      return;
+    }
 
-    // Posición aleatoria dentro de la barra principal (imagenBar)
     const randomX = Phaser.Math.Between(
       imagenBarBounds.left + 25,
       imagenBarBounds.right - 25
@@ -66,6 +69,7 @@ export class Attack {
     this.sprite = this.scene.add.sprite(randomX, this.y - 900, "static-sword");
     this.sprite.setDepth(14).setScale(1.33);
     this.sprite.anims.play("idle", true);
+    console.log("Sprite creado:", this.sprite);
 
     let endY = this.y * 0.4;
 
@@ -82,20 +86,27 @@ export class Attack {
       duration: 300,
       ease: "Power2",
       onComplete: () => {
-        this.sprite.anims.play("rotate", true);
-        this.scene.time.delayedCall(Phaser.Math.Between(300, 400), () => {
-          let endY = this.y;
-          this.scene.tweens.add({
-            targets: this.sprite,
-            y: endY,
-            duration: 300,
-            ease: "Power2",
-            onComplete: () => {
-              this.scene.cameras.main.shake(200, 0.005);
-              this.sprite.anims.play("broken", true);
-            },
+        if (this.sprite && this.sprite.anims) {
+          this.sprite.anims.play("rotate", true);
+          this.scene.time.delayedCall(Phaser.Math.Between(300, 400), () => {
+            if (this.sprite) {
+              // Verifica si el sprite aún existe
+              let endY = this.y;
+              this.scene.tweens.add({
+                targets: this.sprite,
+                y: endY,
+                duration: 300,
+                ease: "Power2",
+                onComplete: () => {
+                  if (this.sprite) {
+                    this.scene.cameras.main.shake(200, 0.005);
+                    this.sprite.anims.play("broken", true);
+                  }
+                },
+              });
+            }
           });
-        });
+        }
       },
     });
   }
@@ -103,18 +114,26 @@ export class Attack {
   // Método para actualizar o recrear el rectángulo en una nueva posición
   respawn() {
     if (this.sprite) {
-      this.sprite.destroy(); // Destruye el rectángulo anterior
-      this.sprite = null;
+      this.sprite.destroy(); // Destruye el sprite anterior
     }
-    this.createAttackBar(); // Crea un nuevo rectángulo en una posición aleatoria
+    this.createAttackBar(); // Crea un nuevo sprite en una posición aleatoria
   }
 
-  // Este método es útil si deseas acceder a las propiedades del sprite
+  // Asegúrate de que el método getBounds en Attack devuelva un objeto válido
   getBounds() {
-    return this.sprite.getBounds();
+    if (this.sprite) {
+      return this.sprite.getBounds();
+    } else {
+      console.warn("No hay sprite disponible para obtener bounds.");
+      return { width: 0, height: 0, x: 0, y: 0 }; // Devuelve un objeto vacío en lugar de null
+    }
   }
 
   destroy() {
-    this.sprite.destroy();
+    if (this.sprite) {
+      console.log("Destruyendo sprite:", this.sprite);
+      this.sprite.destroy();
+      this.sprite = null; // Asegúrate de limpiar la referencia
+    }
   }
 }
