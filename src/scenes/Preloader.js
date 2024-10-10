@@ -228,12 +228,12 @@ export class Preloader extends Scene {
     // Sword
     this.load.image(
       "static-sword",
-      "../public/assets/battle/espada/static-sword.png"
+      "../public/assets/battle/events/static-sword.png"
     );
 
     this.load.spritesheet(
       "b-sword",
-      "../public/assets/battle/espada/idle-brkn-sword.png",
+      "../public/assets/battle/events/idle-brkn-sword.png",
       {
         frameWidth: 52,
         frameHeight: 168,
@@ -242,7 +242,7 @@ export class Preloader extends Scene {
 
     this.load.spritesheet(
       "idle-sword",
-      "../public/assets/battle/espada/idle-sword.png",
+      "../public/assets/battle/events/idle-sword.png",
       {
         frameWidth: 52,
         frameHeight: 168,
@@ -251,12 +251,61 @@ export class Preloader extends Scene {
 
     this.load.spritesheet(
       "r-sword",
-      "../public/assets/battle/espada/rotate-sword.png",
+      "../public/assets/battle/events/rotate-sword.png",
       {
         frameWidth: 52,
         frameHeight: 168,
       }
     );
+
+    // Heart
+    this.load.image(
+      "static-heart",
+      "../public/assets/battle/events/static-heart.png"
+    );
+
+    this.load.spritesheet(
+      "idle-heart",
+      "../public/assets/battle/events/idle-heart.png",
+      {
+        frameWidth: 104,
+        frameHeight: 84,
+      }
+    );
+
+    this.load.spritesheet(
+      "flying-heart",
+      "../public/assets/battle/events/flying-heart.png",
+      {
+        frameWidth: 104,
+        frameHeight: 84,
+      }
+    );
+
+    // Shield
+    this.load.image(
+      "static-shield",
+      "../public/assets/battle/events/static-shield.png"
+    );
+
+    this.load.spritesheet(
+      "idle-shield",
+      "../public/assets/battle/events/idle-shield.png",
+      {
+        frameWidth: 80,
+        frameHeight: 100,
+      }
+    );
+
+    this.load.spritesheet(
+      "r-shield",
+      "../public/assets/battle/events/rotate-shield.png",
+      {
+        frameWidth: 80,
+        frameHeight: 100,
+      }
+    );
+
 
     // Popcorn Event Rain
     this.load.image("popcorn1", "../public/assets/anims/popcorn.png");

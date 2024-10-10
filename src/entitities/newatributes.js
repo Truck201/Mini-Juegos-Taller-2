@@ -188,8 +188,9 @@ export class AtributesPlayers {
   }
 
   // Método para aplicar daño
-  takeDamage(playerId, evadeChance, playerHp) {
-    // Implementa la lógica de evadeChance
+  takeDamage(playerId, evadeChance, playerHp, isShelded) {
+    if (!isShelded){
+          // Implementa la lógica de evadeChance
     const evadeRoll = Phaser.Math.Between(0, 100);
     if (evadeRoll < evadeChance) {
       console.log("Attack evaded!");
@@ -226,6 +227,7 @@ export class AtributesPlayers {
       playerHp = this.getHitPoints(2);
       this.updateHealthBar(2, playerHp);
       return true;
+    }
     }
   }
 

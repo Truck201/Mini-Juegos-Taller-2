@@ -1,4 +1,4 @@
-export class Attack {
+export class Shielder {
   constructor(scene) {
     this.scene = scene;
 
@@ -9,14 +9,14 @@ export class Attack {
     this.createAnims();
 
     // Crear el rectángulo inicial
-    this.createAttackBar();
+    this.createShield();
   }
 
   createAnims() {
     // Anims Idle Sword
     this.scene.anims.create({
-      key: "idle",
-      frames: this.scene.anims.generateFrameNumbers("idle-sword", {
+      key: "idle-Shield",
+      frames: this.scene.anims.generateFrameNumbers("idle-shield", {
         start: 0,
         end: 3,
       }),
@@ -24,21 +24,10 @@ export class Attack {
       repeat: -1,
     });
 
-    // Anims Broken
-    this.scene.anims.create({
-      key: "broken",
-      frames: this.scene.anims.generateFrameNumbers("b-sword", {
-        start: 0,
-        end: 3,
-      }),
-      frameRate: 7.2,
-      repeat: -1,
-    });
-
     // Anims Rotate
     this.scene.anims.create({
-      key: "rotate",
-      frames: this.scene.anims.generateFrameNumbers("r-sword", {
+      key: "r-Shield",
+      frames: this.scene.anims.generateFrameNumbers("r-shield", {
         start: 0,
         end: 4,
       }),
@@ -48,7 +37,7 @@ export class Attack {
   }
 
   // Crear la attackBar en una posición aleatoria
-  createAttackBar() {
+  createShield() {
     const imagenBar = this.scene.imagenBar;
     if (!imagenBar) {
       console.error("MainBar no existe en la escena");
@@ -66,9 +55,9 @@ export class Attack {
       imagenBarBounds.right - 25
     );
 
-    this.sprite = this.scene.add.sprite(randomX, this.y - 900, "static-sword");
+    this.sprite = this.scene.add.sprite(randomX, this.y - 900, "static-shield");
     this.sprite.setDepth(14).setScale(1.33);
-    this.sprite.anims.play("idle", true);
+    this.sprite.anims.play("idle-Shield", true);
     console.log("Sprite creado:", this.sprite);
 
     let endY = this.y * 0.4;
@@ -87,7 +76,7 @@ export class Attack {
       ease: "Power2",
       onComplete: () => {
         if (this.sprite && this.sprite.anims) {
-          this.sprite.anims.play("rotate", true);
+          this.sprite.anims.play("r-Shield", true);
           this.scene.time.delayedCall(Phaser.Math.Between(300, 400), () => {
             if (this.sprite) {
               // Verifica si el sprite aún existe
@@ -100,7 +89,7 @@ export class Attack {
                 onComplete: () => {
                   if (this.sprite) {
                     this.scene.cameras.main.shake(200, 0.005);
-                    this.sprite.anims.play("broken", true);
+                    this.sprite.anims.play("idle-Shield", true);
                   }
                 },
               });
@@ -111,15 +100,6 @@ export class Attack {
     });
   }
 
-  // Método para actualizar o recrear el rectángulo en una nueva posición
-  respawn() {
-    if (this.sprite) {
-      this.sprite.destroy(); // Destruye el sprite anterior
-    }
-    this.createAttackBar(); // Crea un nuevo sprite en una posición aleatoria
-  }
-
-  // Asegúrate de que el método getBounds en Attack devuelva un objeto válido
   getBounds() {
     if (this.sprite) {
       return this.sprite.getBounds();
@@ -129,40 +109,42 @@ export class Attack {
     }
   }
 
-  destroy() {
+  respawn(player) {
+    if (this.sprite) {
+      this.sprite.destroy(player); // Destruye el sprite anterior
+    }
+    this.createShield(); // Crea un nuevo sprite en una posición aleatoria
+  }
+
+  destroy(player) {
     if (this.sprite) {
       console.log("Destruyendo sprite:", this.sprite);
       this.sprite.destroy();
       this.sprite = null; // Asegúrate de limpiar la referencia
+
+      this.applyShield(player);
     }
   }
 
-  showMissMessage() {
-    const missText = this.add
-      .text(this.attackBar.sprite.x, this.attackBar.sprite.y - 5, "MISS", {
-        fontSize: "35px",
-        color: "#fff",
-        fontFamily: "'Press Start 2P'",
-        fontWeight: "bold",
-        shadow: {
-          color: "#000000",
-          fill: true,
-          offsetX: 3,
-          offsetY: 3,
-        },
-      })
-      .setOrigin(0.5)
-      .setDepth(15);
+  applyShield(player) {
+    if (player === 1) {
+      this.scene.isShelded1 = true;
+      console.log("is Sheld PJ ( 1 )");
+      this.scene.time.delayedCall(1200),
+        () => {
+          console.log("is NOT Sheld PJ ( 1 )");
+          this.scene.isShelded1 = false;
+        };
+    }
 
-    this.tweens.add({
-      targets: missText,
-      scale: { from: 2.1, to: 4.2 }, // Agrandar el texto
-      alpha: { from: 1, to: 0 }, // Desaparecer el texto
-      duration: 1500, // Duración de la animación (1 segundo)
-      ease: "Power2",
-      onComplete: () => {
-        missText.destroy(); // Eliminar el texto después de la animación
-      },
-    });
+    if (player === 2) {
+      this.scene.isShelded2 = true;
+      console.log("is Sheld PJ ( 2 )");
+      this.scene.time.delayedCall(1200),
+        () => {
+          console.log("is NOT Sheld PJ ( 2 )");
+          this.scene.isShelded2 = false;
+        };
+    }
   }
 }
