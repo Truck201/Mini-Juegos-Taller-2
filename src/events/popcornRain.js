@@ -4,7 +4,6 @@ export class PopcornRaining {
   constructor(scene) {
     this.scene = scene;
     this.swords = [];
-    this.sword;
 
     this.isShelded1 = false;
     this.isShelded2 = false;
@@ -19,6 +18,8 @@ export class PopcornRaining {
     this.enterKey = this.enterKey = this.scene.input.keyboard.addKey(
       Phaser.Input.Keyboard.KeyCodes.ENTER
     ); // Jugador 2
+
+    this.createPochoclosAires();
   }
 
   // Método para generar espadas
@@ -29,6 +30,52 @@ export class PopcornRaining {
     }
   }
 
+  createPochoclosAires() {
+    const popcornType = Phaser.Math.Between(1, 3);
+    const popcorn = this.scene.add
+      .sprite(
+        Phaser.Math.Between(120, this.scene.scale.width * 0.83),
+        0,
+        `popcorn${popcornType}`
+      )
+      .setDepth(70);
+
+    // Añadir físicas al popcorn
+    this.scene.physics.add.existing(popcorn);
+    popcorn.body.setCollideWorldBounds(false); // Asegúrate de permitir colisiones con los bordes
+
+    // Detectar colisiones con los bordes del mundo y destruir si colisiona
+    popcorn.body.world.on("worldbounds", (body) => {
+      if (body.gameObject === popcorn) {
+        popcorn.destroy();
+      }
+    });
+
+    this.scene.physics.add.overlap(
+      this.scene.movingBar1.bar, // Barra del jugador 1
+      popcorn, // Pochoclo
+      (bar, popcorn) => {
+        popcorn.destroy(); // Destruye el pochoclo cuando lo recoge el jugador
+        console.log("POCHOCLOOOO !! ");
+        this.applyBonus(1, this.scene.player1Atributes, popcornType); // Aplica el beneficio correspondiente
+      },
+      null,
+      this
+    );
+
+    this.scene.physics.add.overlap(
+      this.scene.movingBar2.bar, // Barra del jugador 2
+      popcorn,
+      (bar, popcorn) => {
+        popcorn.destroy();
+        console.log("POCHOCLOOOO !! ");
+        this.applyBonus(2, this.scene.player2Atributes, popcornType); // Aplica el beneficio correspondiente
+      },
+      null,
+      this
+    );
+  }
+
   // Lluvia de pororos
   startPopcornRain() {
     this.spawnSword(2); // Genera una espada al inicio
@@ -36,46 +83,6 @@ export class PopcornRaining {
     this.scene.time.addEvent({
       delay: 300,
       callback: () => {
-        const popcornType = Phaser.Math.Between(1, 3);
-        const popcorn = this.scene.add
-          .sprite(
-            Phaser.Math.Between(120, this.scene.scale.width * 0.83),
-            0,
-            `popcorn${popcornType}`
-          )
-          .setDepth(70);
-
-        // Añadir físicas al popcorn
-        this.scene.physics.add.existing(popcorn);
-        popcorn.body.setCollideWorldBounds(false); // Asegúrate de permitir colisiones con los bordes
-
-        // Detectar colisiones con los bordes del mundo y destruir si colisiona
-
-        popcorn.body.world.on("worldbounds", (body) => {
-          if (body.gameObject === popcorn) {
-            popcorn.destroy();
-          }
-        });
-
-        // Colisiones con las barras de los jugadores
-        this.scene.physics.add.overlap(
-          this.scene.movingBar1.bar,
-          popcorn,
-          (bar, popcorn) => {
-            popcorn.destroy();
-            this.applyBonus(1, this.scene.player1Atributes, popcornType); // Aplica el bonus correspondiente al jugador
-          }
-        );
-
-        this.scene.physics.add.overlap(
-          this.scene.movingBar2.bar,
-          popcorn,
-          (bar, popcorn) => {
-            popcorn.destroy();
-            this.applyBonus(2, this.scene.player2Atributes, popcornType);
-          }
-        );
-
         // Detectar colisiones entre los pochoclos y las espadas
         this.swords.forEach((sword) => {
           this.scene.physics.add.overlap(
@@ -152,28 +159,28 @@ export class PopcornRaining {
     switch (popcornType) {
       case 1:
         if (playerId === 1) {
-          atributos.updateAttributes(1, {hitPoints: 1});
+          atributos.updateAttributes(1, { hitPoints: 1 });
         }
         if (playerId === 2) {
-          atributos.updateAttributes(2, {hitPoints: 1});
+          atributos.updateAttributes(2, { hitPoints: 1 });
         }
         break;
 
       case 2:
         if (playerId === 1) {
-          atributos.updateAttributes(1, {damage: 1});
+          atributos.updateAttributes(1, { damage: 1 });
         }
         if (playerId === 2) {
-          atributos.updateAttributes(2, {damage: 1});
+          atributos.updateAttributes(2, { damage: 1 });
         }
         break;
-        
+
       case 3:
         if (playerId === 1) {
-          atributos.updateAttributes(1, {speed: 0.3});
+          atributos.updateAttributes(1, { speed: 0.3 });
         }
         if (playerId === 2) {
-          atributos.updateAttributes(2, {speed: 0.3});
+          atributos.updateAttributes(2, { speed: 0.3 });
         }
         break;
     }
@@ -229,6 +236,6 @@ export class PopcornRaining {
   }
 
   respawn() {
-    this.spawnSword(1)
+    this.spawnSword(1);
   }
 }

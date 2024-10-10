@@ -112,39 +112,27 @@ export class Shielder {
   respawn(player) {
     if (this.sprite) {
       this.sprite.destroy(player); // Destruye el sprite anterior
+      this.applyShield(player);
+
+      this.createShield(); // Crea un nuevo sprite en una posición aleatoria
     }
-    this.createShield(); // Crea un nuevo sprite en una posición aleatoria
   }
 
-  destroy(player) {
+  destroy() {
     if (this.sprite) {
       console.log("Destruyendo sprite:", this.sprite);
       this.sprite.destroy();
       this.sprite = null; // Asegúrate de limpiar la referencia
-
-      this.applyShield(player);
     }
   }
 
   applyShield(player) {
     if (player === 1) {
-      this.scene.isShelded1 = true;
-      console.log("is Sheld PJ ( 1 )");
-      this.scene.time.delayedCall(1200),
-        () => {
-          console.log("is NOT Sheld PJ ( 1 )");
-          this.scene.isShelded1 = false;
-        };
+      this.scene.isShelded(player)
     }
 
     if (player === 2) {
-      this.scene.isShelded2 = true;
-      console.log("is Sheld PJ ( 2 )");
-      this.scene.time.delayedCall(1200),
-        () => {
-          console.log("is NOT Sheld PJ ( 2 )");
-          this.scene.isShelded2 = false;
-        };
+      this.scene.isShelded(player)
     }
   }
 }

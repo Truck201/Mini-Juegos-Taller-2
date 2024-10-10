@@ -53,7 +53,7 @@ export class Heart {
     this.scene.tweens.add({
       targets: this.sprite,
       y: endY,
-      duration: 300,
+      duration: 400,
       ease: "Power2",
       onComplete: () => {
         if (this.sprite && this.sprite.anims) {
@@ -89,7 +89,9 @@ export class Heart {
   }
   
   destroy(player) {
+    console.log("va o no va? ")
     if (this.sprite) {
+      console.log("aquí estoy? ")
       this.sprite.destroy();
       this.sprite = null;
 

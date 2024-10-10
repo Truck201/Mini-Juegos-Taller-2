@@ -189,8 +189,22 @@ export class AtributesPlayers {
 
   // Método para aplicar daño
   takeDamage(playerId, evadeChance, playerHp, isShelded) {
-    if (!isShelded){
-          // Implementa la lógica de evadeChance
+    if (isShelded) {
+      console.log("Damage prevented: Player is immune.");
+      // Aquí podrías mostrar un mensaje en pantalla de "Immune"
+      this.scene.add
+        .text(playerId === 1 ? 100 : 500, 150, "Immune!", {
+          fontSize: "32px",
+          color: "#FFFFFF",
+        })
+        .setScrollFactor(0)
+        .setDepth(20)
+        .setAlpha(1)
+        .fadeOut(500);
+      return false;
+    }
+
+    // Implementa la lógica de evadeChance
     const evadeRoll = Phaser.Math.Between(0, 100);
     if (evadeRoll < evadeChance) {
       console.log("Attack evaded!");
@@ -227,7 +241,6 @@ export class AtributesPlayers {
       playerHp = this.getHitPoints(2);
       this.updateHealthBar(2, playerHp);
       return true;
-    }
     }
   }
 
@@ -368,7 +381,7 @@ export class AtributesPlayers {
   criticalVisual() {
     const { width, height } = this.scene.game.scale;
     const criticalText = this.scene.add
-      .text(width * 0.5 , height * 0.5, "¡¡CRITIAL!!", {
+      .text(width * 0.5, height * 0.5, "¡¡CRITIAL!!", {
         fontSize: "32px",
         color: "#fff",
         fontFamily: "'Press Start 2P'",

@@ -6,15 +6,18 @@ export class MedievalEvent {
   constructor(scene) {
     this.scene = scene;
     this.swords = [];
-    this.sword;
 
     this.isShelded1 = false;
     this.isShelded2 = false;
+
+    this.enfriamiento = 1200;
 
     this.create();
   }
 
   create() {
+    this.player1 = 1;
+    this.player2 = 2;
     this.spaceKey = this.spaceKey = this.scene.input.keyboard.addKey(
       Phaser.Input.Keyboard.KeyCodes.SPACE
     ); // Jugador 1
@@ -188,6 +191,46 @@ export class MedievalEvent {
     if (index > -1) {
       this.swords.splice(index, 1);
       console.log("Destruye");
+    }
+  }
+
+  isShelded(player) {
+    if (player === 1) {
+      this.isShelded1 = true;
+      console.log("Player 1 is now shielded!");
+
+      // Mostrar mensaje de "Immune"
+      this.scene.add
+        .text(100, 100, "Immune!", { fontSize: "32px", color: "#FFFFFF" })
+        .setScrollFactor(0)
+        .setDepth(20)
+        .setAlpha(1)
+        .fadeOut(500);
+
+      // Desactivar escudo después del tiempo de gracia
+      this.scene.time.delayedCall(this.enfriamiento, () => {
+        this.isShelded1 = false;
+        console.log("Player 1 is no longer shielded!");
+      });
+    }
+
+    if (player === 2) {
+      this.scene.isShelded2 = true;
+      console.log("Player 2 is now shielded!");
+
+      // Mostrar mensaje de "Immune"
+      this.scene.add
+        .text(500, 100, "Immune!", { fontSize: "32px", color: "#FFFFFF" })
+        .setScrollFactor(0)
+        .setDepth(20)
+        .setAlpha(1)
+        .fadeOut(500);
+
+      // Desactivar escudo después del tiempo de gracia
+      this.scene.time.delayedCall(this.enfriamiento, () => {
+        this.isShelded2 = false;
+        console.log("Player 2 is no longer shielded!");
+      });
     }
   }
 

@@ -83,19 +83,19 @@ export class Attack {
         yoyo: true,
         repeat: 2,
       },
-      duration: 300,
+      duration: 160,
       ease: "Power2",
       onComplete: () => {
         if (this.sprite && this.sprite.anims) {
           this.sprite.anims.play("rotate", true);
-          this.scene.time.delayedCall(Phaser.Math.Between(300, 400), () => {
+          this.scene.time.delayedCall(Phaser.Math.Between(200, 260), () => {
             if (this.sprite) {
               // Verifica si el sprite aún existe
               let endY = this.y;
               this.scene.tweens.add({
                 targets: this.sprite,
                 y: endY,
-                duration: 300,
+                duration: 100,
                 ease: "Power2",
                 onComplete: () => {
                   if (this.sprite) {

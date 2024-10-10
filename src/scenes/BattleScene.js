@@ -3,7 +3,6 @@ import { Television } from "../entitities/television";
 import { AtributesPlayers } from "../entitities/newatributes"; // Importa la clase
 import { Character } from "../entitities/character";
 import { BaseScene } from "../lib/FontsBase";
-import { Attack } from "../entitities/attack";
 import { SwordRain } from "../events/swordRain";
 import { PopcornRaining } from "../events/popcornRain";
 import { MedievalEvent } from "../events/medieval";
