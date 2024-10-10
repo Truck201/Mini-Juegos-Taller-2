@@ -420,7 +420,7 @@ export class Preloader extends Scene {
 
   gotoMainScene() {
     this.time.delayedCall(1200, () => {
-      this.scene.start("Shop");
+      this.scene.start("MainMenu");
     });
   }
 }
