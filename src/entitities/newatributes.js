@@ -191,16 +191,6 @@ export class AtributesPlayers {
   takeDamage(playerId, evadeChance, playerHp, isShelded) {
     if (isShelded) {
       console.log("Damage prevented: Player is immune.");
-      // Aquí podrías mostrar un mensaje en pantalla de "Immune"
-      this.scene.add
-        .text(playerId === 1 ? 100 : 500, 150, "Immune!", {
-          fontSize: "32px",
-          color: "#FFFFFF",
-        })
-        .setScrollFactor(0)
-        .setDepth(20)
-        .setAlpha(1)
-        .fadeOut(500);
       return false;
     }
 
@@ -218,7 +208,7 @@ export class AtributesPlayers {
         const criticalChance = Phaser.Math.Between(0, 100);
         if (criticalChance < critical) {
           console.log("CRITICAL");
-          damage + damage;
+          damage += damage;
           this.criticalVisual();
         }
       }
@@ -233,7 +223,7 @@ export class AtributesPlayers {
         const criticalChance = Phaser.Math.Between(0, 100);
         if (criticalChance < critical) {
           console.log("CRITICAL");
-          damage + damage;
+          damage += damage;
           this.criticalVisual();
         }
       }

@@ -10,7 +10,10 @@ export class MedievalEvent {
     this.isShelded1 = false;
     this.isShelded2 = false;
 
-    this.enfriamiento = 1200;
+    this.enfriamiento = 3800;
+
+    this.height = this.scene.game.scale.height
+    this.width = this.scene.game.scale.width
 
     this.create();
   }
@@ -198,19 +201,35 @@ export class MedievalEvent {
     if (player === 1) {
       this.isShelded1 = true;
       console.log("Player 1 is now shielded!");
-
+      
       // Mostrar mensaje de "Immune"
-      this.scene.add
-        .text(100, 100, "Immune!", { fontSize: "32px", color: "#FFFFFF" })
-        .setScrollFactor(0)
-        .setDepth(20)
-        .setAlpha(1)
-        .fadeOut(500);
+      const textInmune1 = this.scene.add
+        .text(this.width * 0.2, this.height * 0.6, "Immune!", {
+          fontSize: "35px",
+          color: "#fff",
+          fontFamily: "'Press Start 2P'",
+          fontWeight: "bold",
+          shadow: {
+            color: "#000000",
+            fill: true,
+            offsetX: 3,
+            offsetY: 3,
+          },
+        })
+        .setOrigin(0.5)
+        .setDepth(15);
 
-      // Desactivar escudo después del tiempo de gracia
-      this.scene.time.delayedCall(this.enfriamiento, () => {
-        this.isShelded1 = false;
-        console.log("Player 1 is no longer shielded!");
+      this.scene.tweens.add({
+        targets: textInmune1,
+        scale: { from: 2.1, to: 4.2 }, // Agrandar el texto
+        alpha: { from: 1, to: 0.08 }, // Desaparecer el texto
+        duration: this.enfriamiento, // Duración de la animación (1 segundo)
+        ease: "Power2",
+        onComplete: () => {
+          textInmune1.destroy(); // Eliminar el texto después de la animación
+          this.isShelded1 = false;
+          console.log("Player 1 is no longer shielded!");
+        },
       });
     }
 
@@ -219,17 +238,33 @@ export class MedievalEvent {
       console.log("Player 2 is now shielded!");
 
       // Mostrar mensaje de "Immune"
-      this.scene.add
-        .text(500, 100, "Immune!", { fontSize: "32px", color: "#FFFFFF" })
-        .setScrollFactor(0)
-        .setDepth(20)
-        .setAlpha(1)
-        .fadeOut(500);
+      const textInmune2 = this.scene.add
+        .text(this.width * 0.8, this.height * 0.6, "Immune!", {
+          fontSize: "35px",
+          color: "#fff",
+          fontFamily: "'Press Start 2P'",
+          fontWeight: "bold",
+          shadow: {
+            color: "#000000",
+            fill: true,
+            offsetX: 3,
+            offsetY: 3,
+          },
+        })
+        .setOrigin(0.5)
+        .setDepth(15);
 
-      // Desactivar escudo después del tiempo de gracia
-      this.scene.time.delayedCall(this.enfriamiento, () => {
-        this.isShelded2 = false;
-        console.log("Player 2 is no longer shielded!");
+      this.scene.tweens.add({
+        targets: textInmune2,
+        scale: { from: 2.1, to: 4.2 }, // Agrandar el texto
+        alpha: { from: 1, to: 0.08 }, // Desaparecer el texto
+        duration: this.enfriamiento, // Duración de la animación (1 segundo)
+        ease: "Power2",
+        onComplete: () => {
+          textInmune2.destroy(); // Eliminar el texto después de la animación
+          this.isShelded2 = false;
+          console.log("Player 2 is no longer shielded!");
+        },
       });
     }
   }

@@ -84,7 +84,7 @@ export class BattleScene extends BaseScene {
       this.player1Atributes.getAnchor(1) ||
       this.selectedItemsPlayer1.atributes?.anchor ||
       12;
-    const player1Speed =
+    this.player1Speed =
       this.player1Atributes.getSpeed(1) ||
       this.selectedItemsPlayer1.atributes?.speed ||
       5; // Valor por defecto si no existe
@@ -111,7 +111,7 @@ export class BattleScene extends BaseScene {
       this.player2Atributes.getAnchor(2) ||
       this.selectedItemsPlayer2.atributes?.anchor ||
       12;
-    const player2Speed =
+    this.player2Speed =
       this.player2Atributes.getSpeed(2) ||
       this.selectedItemsPlayer2.atributes?.speed ||
       5; // Valor por defecto si no existe
@@ -134,10 +134,10 @@ export class BattleScene extends BaseScene {
     )
       .setOrigin(0.5)
       .setDepth(3);
-    this.createText(
+    this.speedText1 = this.createText(
       width * 0.018,
       height * 0.25,
-      `Speed: ${player1Speed.toString().padStart(2, "0")}`
+      `Speed: ${this.player1Speed.toString().padStart(2, "0")}`
     ).setDepth(3);
     this.createText(
       width * 0.018,
@@ -153,10 +153,10 @@ export class BattleScene extends BaseScene {
     )
       .setOrigin(0.5)
       .setDepth(3);
-    this.createText(
+    this.speedText2 = this.createText(
       width * 0.858,
       height * 0.25,
-      `Speed: ${player2Speed.toString().padStart(2, "0")}`
+      `Speed: ${this.player2Speed.toString().padStart(2, "0")}`
     ).setDepth(3);
     this.createText(
       width * 0.858,
@@ -188,7 +188,7 @@ export class BattleScene extends BaseScene {
       barraY,
       20,
       105,
-      player1Speed,
+      this.player1Speed,
       "anilla-roja",
       {
         left: null,
@@ -205,7 +205,7 @@ export class BattleScene extends BaseScene {
       barraY,
       20,
       105,
-      player2Speed,
+      this.player2Speed,
       "anilla-azul",
       {
         left: null,

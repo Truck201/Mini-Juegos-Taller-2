@@ -138,8 +138,8 @@ export class Attack {
   }
 
   showMissMessage() {
-    const missText = this.add
-      .text(this.attackBar.sprite.x, this.attackBar.sprite.y - 5, "MISS", {
+    const missText = this.scene.add
+      .text(this.sprite.x, this.sprite.y - 5, "MISS", {
         fontSize: "35px",
         color: "#fff",
         fontFamily: "'Press Start 2P'",
@@ -154,7 +154,7 @@ export class Attack {
       .setOrigin(0.5)
       .setDepth(15);
 
-    this.tweens.add({
+    this.scene.tweens.add({
       targets: missText,
       scale: { from: 2.1, to: 4.2 }, // Agrandar el texto
       alpha: { from: 1, to: 0 }, // Desaparecer el texto

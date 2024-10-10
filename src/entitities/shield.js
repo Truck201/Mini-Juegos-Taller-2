@@ -127,12 +127,8 @@ export class Shielder {
   }
 
   applyShield(player) {
-    if (player === 1) {
-      this.scene.isShelded(player)
-    }
-
-    if (player === 2) {
-      this.scene.isShelded(player)
+    if (this.scene.attackBar && typeof this.scene.attackBar.isShelded === "function") {
+      this.scene.attackBar.isShelded(player);
     }
   }
 }
