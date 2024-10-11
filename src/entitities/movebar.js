@@ -25,8 +25,11 @@ export class MoveBar {
 
     // Crear la barra
     this.bar = scene.add.sprite(x, y, sprite);
-    this.bar.setScale(anchor).setDepth(15);  // 1.2
+    this.bar.setScale(anchor).setDepth(15); // 1.2
     
+    this.scene.physics.add.existing(this.bar); // Donde this.bar es el sprite de la barra
+    this.bar.body.setImmovable(true); // Si la barra no se debe mover por colisiones
+    this.bar.body.allowGravity = false
 
     // Añadir teclas de control
     this.keyLeft = scene.input.keyboard.addKey(controls.left);

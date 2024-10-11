@@ -1,9 +1,11 @@
 import { MoveBar } from "../entitities/movebar";
 import { Television } from "../entitities/television";
-import { Attack } from "../entitities/attack";
 import { AtributesPlayers } from "../entitities/newatributes"; // Importa la clase
 import { Character } from "../entitities/character";
 import { BaseScene } from "../lib/FontsBase";
+import { SwordRain } from "../events/swordRain";
+import { PopcornRaining } from "../events/popcornRain";
+import { MedievalEvent } from "../events/medieval";
 
 export class BattleScene extends BaseScene {
   constructor() {
@@ -18,9 +20,6 @@ export class BattleScene extends BaseScene {
     this.player2HPText = null;
 
     this.lastKeyPressTime = 0; // Pausa ?
-
-    this.canAttackPlayer1 = true;
-    this.canAttackPlayer2 = true;
   }
 
   game_over_timeout;
@@ -77,7 +76,7 @@ export class BattleScene extends BaseScene {
       this.player1Atributes.getCritical(1) ||
       this.selectedItemsPlayer1.atributes?.critical ||
       0;
-    this.player1Damage = 
+    this.player1Damage =
       this.player1Atributes.getDamage(1) ||
       this.selectedItemsPlayer1.atributes?.damage ||
       1;
@@ -85,7 +84,7 @@ export class BattleScene extends BaseScene {
       this.player1Atributes.getAnchor(1) ||
       this.selectedItemsPlayer1.atributes?.anchor ||
       12;
-    const player1Speed =
+    this.player1Speed =
       this.player1Atributes.getSpeed(1) ||
       this.selectedItemsPlayer1.atributes?.speed ||
       5; // Valor por defecto si no existe
@@ -112,7 +111,7 @@ export class BattleScene extends BaseScene {
       this.player2Atributes.getAnchor(2) ||
       this.selectedItemsPlayer2.atributes?.anchor ||
       12;
-    const player2Speed =
+    this.player2Speed =
       this.player2Atributes.getSpeed(2) ||
       this.selectedItemsPlayer2.atributes?.speed ||
       5; // Valor por defecto si no existe
@@ -135,10 +134,10 @@ export class BattleScene extends BaseScene {
     )
       .setOrigin(0.5)
       .setDepth(3);
-    this.createText(
+    this.speedText1 = this.createText(
       width * 0.018,
       height * 0.25,
-      `Speed: ${player1Speed.toString().padStart(2, "0")}`
+      `Speed: ${this.player1Speed.toString().padStart(2, "0")}`
     ).setDepth(3);
     this.createText(
       width * 0.018,
@@ -154,10 +153,10 @@ export class BattleScene extends BaseScene {
     )
       .setOrigin(0.5)
       .setDepth(3);
-    this.createText(
+    this.speedText2 = this.createText(
       width * 0.858,
       height * 0.25,
-      `Speed: ${player2Speed.toString().padStart(2, "0")}`
+      `Speed: ${this.player2Speed.toString().padStart(2, "0")}`
     ).setDepth(3);
     this.createText(
       width * 0.858,
@@ -177,13 +176,11 @@ export class BattleScene extends BaseScene {
 
     let barraX = width / 2; // Posición Barra en X
     let barraY = (height * 4.3) / 5; // Posición de alto en las barras Y
-    
+
     this.imagenBar = this.add
       .sprite(barraX, barraY, "imagen-barra")
       .setScale(1.5)
       .setDepth(10);
-
-    this.attackBar = new Attack(this);
 
     this.movingBar1 = new MoveBar(
       this,
@@ -191,7 +188,7 @@ export class BattleScene extends BaseScene {
       barraY,
       20,
       105,
-      player1Speed,
+      this.player1Speed,
       "anilla-roja",
       {
         left: null,
@@ -208,7 +205,7 @@ export class BattleScene extends BaseScene {
       barraY,
       20,
       105,
-      player2Speed,
+      this.player2Speed,
       "anilla-azul",
       {
         left: null,
@@ -219,158 +216,39 @@ export class BattleScene extends BaseScene {
       this.player2Anchor
     );
 
-    // Configurar las teclas para destruir recolectables
-    this.spaceKey = this.spaceKey = this.input.keyboard.addKey(
-      Phaser.Input.Keyboard.KeyCodes.SPACE
-    ); // Jugador 1
-    this.enterKey = this.enterKey = this.input.keyboard.addKey(
-      Phaser.Input.Keyboard.KeyCodes.ENTER
-    ); // Jugador 2
-
-    // Lógica para asignar atributos
-    this.showPurchasedItemIcons();
-
-    this.healthText = this.add.text(100, 240, "", {
-      fontSize: "33px",
-      fill: "#fff",
-    });
+    const eventIndex = Phaser.Math.Between(1, 3);
+    switch (eventIndex) {
+      case 1:
+        this.swordRain = new SwordRain(this);
+        this.swordRain.startSwordRain();
+        this.attackBar = this.swordRain;
+        console.log("Lluvia de Espadas");
+        break;
+      case 2:
+        this.popcornRain = new PopcornRaining(this);
+        this.popcornRain.startPopcornRain();
+        this.attackBar = this.popcornRain;
+        console.log("Lluvia de Pororos");
+        break;
+      case 3:
+        this.medievalEvent = new MedievalEvent(this);
+        this.medievalEvent.startMedievalEvent();
+        this.attackBar = this.medievalEvent;
+        console.log("Evento Medieval");
+        break;
+    }
   }
 
   update() {
     this.movingBar1.update();
     this.movingBar2.update();
 
-    const movingBar1Sprite = this.movingBar1.bar; // Cambia a this.movingBar1.bar
-    const movingBar2Sprite = this.movingBar2.bar; // Cambia a this.movingBar2.bar
-
-    // Si se presiona espacio, jugador 1 destruye un recolectable
-    if (
-      this.checkCollision(movingBar1Sprite, this.attackBar.sprite) &&
-      Phaser.Input.Keyboard.JustDown(this.spaceKey) &&
-      this.canAttackPlayer1 // Acción de jugador 1
-    ) {
-      this.destroyAndRespawn(); // Destruye y reaparece
-
-      if (
-        this.player2Atributes.takeDamage(
-          2,
-          this.player2EvadeChance,
-          this.player2HP
-        )
-      ) {
-        this.cameras.main.shake(200, 0.025);
-      } else {
-        this.showMissMessage();
-      }
-
-      this.player2HP = this.player2Atributes.getHitPoints(2);
-      this.player2HPText.setText(
-        `${this.player2HP.toString().padStart(2, "0")}`
-      );
-
-      this.canAttackPlayer1 = false;
-      this.canAttackPlayer2 = false;
-      this.time.delayedCall(3000, () => {
-        this.canAttackPlayer1 = true;
-        this.canAttackPlayer2 = true;
-      });
-    }
-
-    // Si se presiona enter, jugador 2 destruye un recolectable
-    if (
-      this.checkCollision(movingBar2Sprite, this.attackBar.sprite) &&
-      Phaser.Input.Keyboard.JustDown(this.enterKey) &&
-      this.canAttackPlayer2 // Acción de jugador 2
-    ) {
-      this.destroyAndRespawn(); // Destruye y reaparece en rojo
-
-      if (
-        this.player1Atributes.takeDamage(
-          1,
-          this.player1EvadeChance,
-          this.player1HP
-        )
-      ) {
-        this.cameras.main.shake(200, 0.025);
-      } else {
-        this.showMissMessage();
-      }
-
-      this.player1HP = this.player1Atributes.getHitPoints(1);
-      this.player1HPText.setText(
-        `${this.player1HP.toString().padStart(2, "0")}`
-      );
-
-      this.canAttackPlayer1 = false;
-      this.canAttackPlayer2 = false;
-      this.time.delayedCall(3000, () => {
-        this.canAttackPlayer1 = true;
-        this.canAttackPlayer2 = true;
-      });
+    // Llamar al update del evento actual (SwordRain, PopcornRaining, MedievalEvent)
+    if (this.attackBar && typeof this.attackBar.update === "function") {
+      this.attackBar.update(); // Actualiza las colisiones y lógica del evento
     }
 
     // Actualizar el texto de la televisión según el tiempo restante
     this.television.updateText(this.game_over_timeout);
-  }
-
-  showPurchasedItemIcons() {
-    const offsetX = 50; // Distancia horizontal de los íconos
-    const iconY = 50; // Altura donde se mostrarán los íconos
-
-    this.purchasedItems.forEach((item, index) => {
-      const icon = this.add.sprite(100 + index * offsetX, iconY, "item"); // Reemplaza item.spriteKey con la clave correcta de tu sprite
-      icon.setScale(0.5); // Escalar el ícono si es necesario
-      this.icons.push(icon);
-    });
-  }
-
-  // Método para verificar la colisión entre dos objetos
-  checkCollision(bar, attackBar) {
-    const barBounds = bar.getBounds(); // Asegúrate de que bar sea un sprite
-    const attackBarBounds = attackBar.getBounds(); // Asegúrate de que attackBar sea un sprite
-
-    return Phaser.Geom.Intersects.RectangleToRectangle(
-      barBounds,
-      attackBarBounds
-    );
-  }
-
-  // Método para manejar la destrucción y reaparición de la attackBar
-  destroyAndRespawn() {
-    this.attackBar.destroy();
-
-    this.time.delayedCall(Phaser.Math.Between(3000, 4500), () => {
-      this.attackBar.respawn();
-    });
-  }
-  
-
-  showMissMessage() {
-    const missText = this.add
-      .text(this.attackBar.sprite.x, this.attackBar.sprite.y - 5, "MISS", {
-        fontSize: "35px",
-        color: "#fff",
-        fontFamily: "'Press Start 2P'",
-        fontWeight: "bold",
-        shadow: {
-          color: "#000000",
-          fill: true,
-          offsetX: 3,
-          offsetY: 3,
-        },
-      })
-      .setOrigin(0.5)
-      .setDepth(15);
-
-    this.tweens.add({
-      targets: missText,
-      scale: { from: 2.1, to: 4.2 }, // Agrandar el texto
-      alpha: { from: 1, to: 0 }, // Desaparecer el texto
-      duration: 1500, // Duración de la animación (1 segundo)
-      ease: "Power2",
-      onComplete: () => {
-        missText.destroy(); // Eliminar el texto después de la animación
-      },
-    });
   }
 }

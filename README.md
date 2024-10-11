@@ -55,3 +55,16 @@ h: 72
 -- zapi
 w: 72
 h: 69
+
+https://traducila.vercel.app/api/translations/PROJECT_ID/LANGUAGE_CODE
+
+Nueva URL del panel de administración: https://traducila.vercel.app
+
+Nueva URL para el endpoint de la API (recuerden reemplazar PROJECT_ID y LANGUAGE_CODE): https://traducila.vercel.app/api/translations/PROJECT_ID/LANGUAGE_CODE
+
+Códigos de idioma disponibles:
+Inglés: en-US
+Portugués: pt-BR
+Francés: fr-FR
+Alemán: de-DE
+Español: es-AR

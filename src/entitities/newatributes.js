@@ -188,7 +188,12 @@ export class AtributesPlayers {
   }
 
   // Método para aplicar daño
-  takeDamage(playerId, evadeChance, playerHp) {
+  takeDamage(playerId, evadeChance, playerHp, isShelded) {
+    if (isShelded) {
+      console.log("Damage prevented: Player is immune.");
+      return false;
+    }
+
     // Implementa la lógica de evadeChance
     const evadeRoll = Phaser.Math.Between(0, 100);
     if (evadeRoll < evadeChance) {
@@ -203,7 +208,7 @@ export class AtributesPlayers {
         const criticalChance = Phaser.Math.Between(0, 100);
         if (criticalChance < critical) {
           console.log("CRITICAL");
-          damage + damage;
+          damage += damage;
           this.criticalVisual();
         }
       }
@@ -218,7 +223,7 @@ export class AtributesPlayers {
         const criticalChance = Phaser.Math.Between(0, 100);
         if (criticalChance < critical) {
           console.log("CRITICAL");
-          damage + damage;
+          damage += damage;
           this.criticalVisual();
         }
       }
@@ -366,7 +371,7 @@ export class AtributesPlayers {
   criticalVisual() {
     const { width, height } = this.scene.game.scale;
     const criticalText = this.scene.add
-      .text(width * 0.5 , height * 0.5, "¡¡CRITIAL!!", {
+      .text(width * 0.5, height * 0.5, "¡¡CRITIAL!!", {
         fontSize: "32px",
         color: "#fff",
         fontFamily: "'Press Start 2P'",
