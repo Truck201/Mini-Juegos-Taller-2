@@ -63,12 +63,6 @@ export class Game1v1 extends Scene {
       }
     });
 
-    // Añadir Cuadro de Personaje Uno
-    let personaje1 = new Character(this, "mimbo", true);
-
-    // Añadir Cuadro de Personaje Uno
-    let personaje2 = new Character(this, "luho", false);
-
     // Posición
     let teleY = height / 2 - 60;
   }

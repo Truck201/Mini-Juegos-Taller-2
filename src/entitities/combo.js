@@ -103,9 +103,13 @@ export class ComboPersonajes {
         // Animación del jugador 1 (victoria) y del enemigo (enojo)
         this.scene.player1.change_emotion("Mimbo", 2, this.scene.player1); // Mimbo: animación de victoria
         this.scene.player2.change_emotion("Luho", 1, this.scene.player2); // Luho: animación de daño
-
+        
         this.scene.time.delayedCall(1200, () => {
           this.comboText1.setVisible(false); // Ocultar el marcador
+
+          console.log("va??")
+          this.scene.player1.change_emotion("Mimbo", 0, this.scene.player1); // Mimbo: IDLE
+          this.scene.player2.change_emotion("Luho", 0, this.scene.player2); // Luho: IDLE
         });
       }
 
@@ -140,8 +144,13 @@ export class ComboPersonajes {
         this.scene.player1.change_emotion("Mimbo", 1, this.scene.player1); // Mimbo: animación de victoria
         this.scene.player2.change_emotion("Luho", 2, this.scene.player2); // Luho: animación de daño
 
+
         this.scene.time.delayedCall(1200, () => {
           this.comboText2.setVisible(false); // Ocultar el marcador
+
+          console.log("va??  -->>")
+          this.scene.player1.change_emotion("Mimbo", 0, this.scene.player1); // Mimbo: IDLE
+          this.scene.player2.change_emotion("Luho", 0, this.scene.player2); // Luho: IDLE
         });
       }
 

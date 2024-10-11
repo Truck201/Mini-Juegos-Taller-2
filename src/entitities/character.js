@@ -11,14 +11,18 @@ export class Character {
       this.x = this.scene.game.config.width * 0.934;
     }
 
-    let character = this.scene.physics.add.sprite(this.x, this.y, this.sprite);
+    this.characterSprite = this.scene.physics.add.sprite(
+      this.x,
+      this.y,
+      this.sprite
+    );
 
-    character.setImmovable;
-    character.body.allowGravity = false;
-    character.setDepth(2);
-    character.setScale(1.5);
+    this.characterSprite.setImmovable;
+    this.characterSprite.body.allowGravity = false;
+    this.characterSprite.setDepth(2);
+    this.characterSprite.setScale(1.2);
 
-    this.initAnimations()
+    this.initAnimations();
 
     // Name
     this.scene.add
@@ -41,30 +45,24 @@ export class Character {
   }
 
   // Añadir Estados, linkear a la función de Collectar pochoclos
-  change_emotion(player, num, playerInstance) {
-    if (!playerInstance) {
-      console.error('playerInstance es undefined');
+  change_emotion(player, num) {
+    if (!this.characterSprite) {
+      console.error("playerInstance es undefined");
       return;
     }
 
-    console.log(playerInstance)
-    // Agregar las emociones como animaciones. Luego en colección de Battle, hacer una play otra stop
     if (num === 0) {
-      playerInstance.anims.play(`Idle-${player}`, true);
+      this.characterSprite.anims.play(`Idle-${player}`, true);
     }
     if (num === 1) {
-      playerInstance.anims.play(`Dam-${player}`, true);
+      this.characterSprite.anims.play(`Dam-${player}`, true);
     }
     if (num === 2) {
-      playerInstance.anims.play(`Win-${player}`, true);
+      this.characterSprite.anims.play(`Win-${player}`, true);
     }
     if (num === 3) {
-      playerInstance.anims.play(`Def-${player}`, true);
+      this.characterSprite.anims.play(`Def-${player}`, true);
     }
-
-    this.scene.time.delayedCall(Phaser.Math.Between(900), () => {
-      playerInstance.anims.play(`Idle-${player}`, true);
-    });
   }
 
   initAnimations() {
@@ -74,7 +72,7 @@ export class Character {
         start: 0,
         end: 1,
       }),
-      frameRate: 7,
+      frameRate: 5,
       repeat: -1,
     });
 
@@ -84,7 +82,7 @@ export class Character {
         start: 0,
         end: 1,
       }),
-      frameRate: 7,
+      frameRate: 5,
       repeat: -1,
     });
 
@@ -94,7 +92,7 @@ export class Character {
         start: 0,
         end: 1,
       }),
-      frameRate: 7,
+      frameRate: 5,
       repeat: -1,
     });
 
@@ -104,7 +102,7 @@ export class Character {
         start: 0,
         end: 1,
       }),
-      frameRate: 7,
+      frameRate: 5,
       repeat: -1,
     });
 
@@ -114,7 +112,7 @@ export class Character {
         start: 0,
         end: 1,
       }),
-      frameRate: 7,
+      frameRate: 5,
       repeat: -1,
     });
 
@@ -124,7 +122,7 @@ export class Character {
         start: 0,
         end: 1,
       }),
-      frameRate: 7,
+      frameRate: 5,
       repeat: -1,
     });
 
@@ -134,7 +132,7 @@ export class Character {
         start: 0,
         end: 1,
       }),
-      frameRate: 7,
+      frameRate: 5,
       repeat: -1,
     });
 
@@ -144,7 +142,7 @@ export class Character {
         start: 0,
         end: 1,
       }),
-      frameRate: 7,
+      frameRate: 5,
       repeat: -1,
     });
   }
