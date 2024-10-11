@@ -1,11 +1,5 @@
 import "@fontsource/press-start-2p";
 
-app.use(
-  cors({
-    origin: "http://localhost:8080/",
-  })
-);
-
 import { Boot } from "./scenes/Boot";
 import { Preloader } from "./scenes/Preloader";
 import { PauseMenu } from "./scenes/PauseMenu";

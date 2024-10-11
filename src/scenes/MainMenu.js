@@ -1,7 +1,5 @@
 import { BaseScene } from "../lib/FontsBase";
 import { Television } from "../entitities/television";
-import { getPhrase, getTranslations } from "../services/translations";
-
 export class MainMenu extends BaseScene {
   constructor() {
     super("MainMenu");
@@ -13,7 +11,6 @@ export class MainMenu extends BaseScene {
     this.cameras.main.fadeIn(500, 0, 0, 0);
     this.allicons = [];
   }
-
   create() {
     let width = this.scale.width; //Definir la mitad del Ancho
     let height = this.scale.height; //Definir la mitad del Alto
@@ -25,15 +22,11 @@ export class MainMenu extends BaseScene {
       .setDepth(2);
 
     //Button
-    const playButton = this.createText(
-      width / 2,
-      height * 0.37,
-      getPhrase('JugarContra')
-    )
+    const playButton = this.createText(width / 2, height * 0.37, "Play")
       .setScale(1.4)
       .setInteractive()
       .setDepth(3)
-      .setOrigin(0.5);
+      .setOrigin(0.5, 0.5);
     //this.add.image(width / 2, height / 2, '').setScale(0.15);
     playButton.setInteractive();
 
@@ -62,12 +55,21 @@ export class MainMenu extends BaseScene {
       });
     });
 
+    // Control de inactividad
+    this.inactivityTimer = this.time.addEvent({
+      delay: 11000, // 1 minuto
+      callback: this.showIconScreen,
+      callbackScope: this,
+      loop: true,
+    });
+
+    // Detectar movimiento del mouse
+    this.input.on("pointermove", () => {
+      this.resetInactivityTimer();
+    });
+
     //Button
-    const optionsButton = this.createText(
-      width / 2,
-      height * 0.47,
-      getPhrase('Opciones')
-    )
+    const optionsButton = this.createText(width / 2, height * 0.47, "Options")
       .setDepth(3)
       .setOrigin(0.5, 0.5);
     //this.add.image(width / 2, height / 2, '').setScale(0.15);
@@ -100,20 +102,8 @@ export class MainMenu extends BaseScene {
       });
     });
 
-    // Control de inactividad
-    this.inactivityTimer = this.time.addEvent({
-      delay: 11000, // 1 minuto
-      callback: this.showIconScreen,
-      callbackScope: this,
-      loop: true,
-    });
-
-    // Detectar movimiento del mouse
-    this.input.on("pointermove", () => {
-      this.resetInactivityTimer();
-    });
-
-    this.television = new Television(this, true);
+    this.television = new Television(this, true)
+  
   }
 
   resetInactivityTimer() {
