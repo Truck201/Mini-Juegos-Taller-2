@@ -1,5 +1,11 @@
 import "@fontsource/press-start-2p";
 
+app.use(
+  cors({
+    origin: "http://localhost:8080/",
+  })
+);
+
 import { Boot } from "./scenes/Boot";
 import { Preloader } from "./scenes/Preloader";
 import { PauseMenu } from "./scenes/PauseMenu";
@@ -14,6 +20,7 @@ import { BattleScene } from "./scenes/BattleScene";
 import { HudBattle } from "./scenes/HudBattle";
 import { GameOver } from "./scenes/GameOver";
 import { BaseScene } from "./lib/FontsBase";
+import { LanguageScene } from "./scenes/LanguageChoose";
 
 const config = {
   type: Phaser.WEBGL,
@@ -36,6 +43,7 @@ const config = {
   scene: [
     Boot,
     Preloader,
+    LanguageScene,
     MainMenu,
     Game1v1,
     GameOver,

@@ -1,7 +1,9 @@
 import { Scene } from "phaser";
 import WebFont from "webfontloader";
+import { getLanguageConfig, getTranslations } from "../services/translations";
 
 export class Preloader extends Scene {
+  #language;
   constructor() {
     super("Preloader");
   }
@@ -30,6 +32,45 @@ export class Preloader extends Scene {
         console.error("Failed to load shader.");
       }
     });
+
+    // Agregar Lenguaje
+    this.#language = getLanguageConfig();
+    alert(this.#language);
+
+    // ChooseLanguage
+    this.load.image("Argentina", "../public/assets/flags/flag-arg-simple.png");
+    this.load.image(
+      "EstadosUnidos",
+      "../public/assets/flags/flag-eeuu-simple.png"
+    );
+
+    this.load.spritesheet("CUT-ARG", "../public/assets/flags/flag-arg.png", {
+      frameWidth: 228,
+      frameHeight: 92,
+    });
+
+    this.load.spritesheet("CUT-EEUU", "../public/assets/flags/flag-eeuu.png", {
+      frameWidth: 228,
+      frameHeight: 92,
+    });
+
+    this.load.spritesheet(
+      "IDLE-ARG",
+      "../public/assets/flags/flag-arg-simple.png",
+      {
+        frameWidth: 212,
+        frameHeight: 92,
+      }
+    );
+
+    this.load.spritesheet(
+      "IDLE-EEUU",
+      "../public/assets/flags/flag-eeuu-simple.png",
+      {
+        frameWidth: 212,
+        frameHeight: 92,
+      }
+    );
 
     //  Main Menu
     // LOGO
@@ -306,7 +347,6 @@ export class Preloader extends Scene {
       }
     );
 
-
     // Popcorn Event Rain
     this.load.image("popcorn1", "../public/assets/anims/popcorn.png");
 
@@ -388,7 +428,6 @@ export class Preloader extends Scene {
       },
       active: () => {
         console.log("Fuentes cargadas.");
-        this.gotoMainScene();
       },
     });
   }
@@ -396,6 +435,10 @@ export class Preloader extends Scene {
   create() {
     let width = this.game.scale.width;
     let height = this.game.scale.height;
+
+    getTranslations(this.#language, () =>
+      this.scene.start("ChooseLanguage", { language: this.#language })
+    );
 
     const defaultText = this.add
       .text(width * 0.5, height * 0.4, "Cargando", {
@@ -415,12 +458,6 @@ export class Preloader extends Scene {
         defaultText.setText(loadingText + ".".repeat(dotCount));
       },
       loop: true,
-    });
-  }
-
-  gotoMainScene() {
-    this.time.delayedCall(1200, () => {
-      this.scene.start("MainMenu");
     });
   }
 }
