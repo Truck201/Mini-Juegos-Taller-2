@@ -1,4 +1,3 @@
-import { CRTShaderPipeline } from "../lib/CRTShadersPipeline";
 export class Television {
   constructor(scene) {
     this.scene = scene;
@@ -35,12 +34,6 @@ export class Television {
       this.text.setText("0");
     } else {
       this.text.setText(""); // Limpiar el texto si el tiempo es mayor a 3 o menor que 0
-    }
-  }
-
-  update(time, delta) {
-    if (this.crtPipeline) {
-      this.crtPipeline.setFloat1("time", time / 1000);
     }
   }
 }
