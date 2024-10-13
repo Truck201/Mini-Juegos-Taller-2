@@ -17,11 +17,6 @@ export class Television {
     this.television.body.allowGravity = false;
     this.television.setDepth(1);
 
-    // Solo aplica el pipeline si está disponible
-    if (this.crtPipeline) {
-      this.television.setPipeline("crt");
-    }
-
     this.text = this.scene.add
       .text(this.x - 15, this.y - 50, "", {
         fontSize: "70px",
@@ -29,22 +24,8 @@ export class Television {
       })
       .setDepth(1);
 
-    // Asegúrate de que el shader ha sido cargado
-    if (this.scene.cache.shader.has("crtShader")) {
-      // Usa sys.renderer para acceder al renderer
-      if (this.scene.sys.renderer && this.scene.sys.renderer.addPipeline) {
-        this.crtPipeline = this.scene.sys.renderer.addPipeline(
-          "crt",
-          new CRTShaderPipeline(this.scene)
-        );
-      } else {
-        console.error(
-          "Renderer no está disponible o addPipeline no es una función."
-        );
-      }
-    } else {
-      console.warn("El shader CRT no ha sido cargado todavía.");
-    }
+    // Shader
+   this.television.setPostPipeline('CRTPostFx');
   }
 
   updateText(remainingTime) {
