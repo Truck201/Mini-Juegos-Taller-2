@@ -14,9 +14,9 @@ export class Game1v1 extends Scene {
     let height = this.scale.height;
 
     // Crear Televisor Instancar
-    let television = new Television(this);
+    let television = new Television(this, false);
     
-    let background = this.add.sprite(width / 2, height / 2 + 65, "escenario");
+    let background = this.add.sprite(width / 2, height * 0.43, "escenario");
     background.setDepth(1)
 
     //Agregar los cursores
@@ -24,7 +24,6 @@ export class Game1v1 extends Scene {
 
     this.input.keyboard.on("keydown-ESC", () => {
       const currentTime = this.time.now;
-      console.log("pres scape");
       // Verificar si ha pasado suficiente tiempo desde la última pulsación
       if (currentTime - this.lastKeyPressTime > 250) {
         // 700 ms de delay
@@ -34,6 +33,7 @@ export class Game1v1 extends Scene {
         this.scene.pause("battleScene");
         console.log("Pause Game");
         this.scene.launch("PauseMenu", { mainScene: this });
+        this.scene.bringToTop("PauseMenu");
       }
     });
 

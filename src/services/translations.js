@@ -1,63 +1,64 @@
-// import { EN_US, ES_AR } from '../enums/languages';
-const ES_AR = 'es-AR';
-const EN_US = 'en-US';
+import { EN_US, ES_AR, FR_FR } from "../enums/languages";
 
-const PROJECT_ID = '1';
+const PROJECT_ID = "cm23nl3nl0001icradqod0htk";
 let translations = null;
 let language = ES_AR;
 
 export async function getTranslations(lang, callback) {
-    localStorage.clear();
-    translations = null;
-    language = lang;
-    if (language === ES_AR) {
-        return callback ? callback() : false;
-    }
+  localStorage.clear();
+  translations = null;
+  language = lang;
+  console.log(language);
+  if (language === ES_AR) {
+    return callback ? callback() : false;
+  }
 
-    return await fetch(`https://traducila-ffeb6da1cd57.herokuapp.com/api/translations/${PROJECT_ID}/${language}`)
-    .then(response => response.json())
-    .then(data => {
-        localStorage.setItem('translations', JSON.stringify(data));
-        translations = data;
-        if(callback) callback()
+  // https://traducila.vercel.app/api/translations/cm23nl3nl0001icradqod0htk/en-US
+  return await fetch(
+    `https://traducila.vercel.app/api/translations/${PROJECT_ID}/${language}`,
+    { mode: "cors" }
+  )
+    .then((response) => {
+      if (!response.ok) {
+        throw new Error("Network response was not ok");
+      }
+      return response.json();
+    })
+
+    .then((data) => {
+      localStorage.setItem("translations", JSON.stringify(data));
+      translations = data;
+      if (callback) callback();
     });
 }
 
-
-
-
-
 export function getPhrase(key) {
-    if (!translations) {
-        const locals = localStorage.getItem('translations');
-        translations = locals ? JSON.parse(locals) : null;
-    }
+  if (!translations) {
+    const locals = localStorage.getItem("translations");
+    translations = locals ? JSON.parse(locals) : null;
+  }
 
-    let phrase = key;
-    if (translations && translations[key]) {
-        phrase = translations[key];
-    }
-
-    return phrase;
+  let phrase = key;
+  if (translations && translations.hasOwnProperty(key)) {
+    phrase = translations[key];
+    console.log(phrase)
 }
 
-
-
-
-
+  return phrase;
+}
 
 function isAllowedLanguge(language) {
-    const allowedLanguages = [ES_AR, EN_US, PT_BR, DE_DE];
-    return allowedLanguages.includes(language);
+  const allowedLanguages = [ES_AR, EN_US, FR_FR];
+  return allowedLanguages.includes(language);
 }
 
 export function getLanguageConfig() {
-    let languageConfig;
+  let languageConfig;
 
-    // Obtener desde la URL el idioma
-    console.log(window.location.href)
+  // Obtener desde la URL el idioma
+  console.log(window.location.href);
 
-    /* 
+  /* 
       depende como lo manejemos: 
       1) puede venir como www.dominio.com/es-AR
       2) puede venir como www.dominio.com?lang=es-AR
@@ -68,22 +69,23 @@ export function getLanguageConfig() {
       vamos a implementar una logica que cubra ambos casos
     */
 
-    const path = window.location.pathname !== '/' ? window.location.pathname : null;
-    const params = new URL(window.location.href).searchParams;
-    const queryLang = params.get('lang');
+  const path =
+    window.location.pathname !== "/" ? window.location.pathname : null;
+  const params = new URL(window.location.href).searchParams;
+  const queryLang = params.get("lang");
 
-    languageConfig = path ?? queryLang;
+  languageConfig = path ?? queryLang;
 
-    if (languageConfig) {
-        if (isAllowedLanguge(languageConfig)) {
-            return languageConfig;
-        }
+  if (languageConfig) {
+    if (isAllowedLanguge(languageConfig)) {
+      return languageConfig;
     }
+  }
 
-    const browserLanguage = window.navigator.language;
-    if (isAllowedLanguge(browserLanguage)) {
-        return browserLanguage;
-    }
+  const browserLanguage = window.navigator.language;
+  if (isAllowedLanguge(browserLanguage)) {
+    return browserLanguage;
+  }
 
-    return ES_AR;
+  return ES_AR;
 }

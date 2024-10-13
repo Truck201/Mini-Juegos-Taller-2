@@ -1,4 +1,7 @@
 import { BaseScene } from "../lib/FontsBase";
+import { Television } from "../entitities/television";
+import { getPhrase, getTranslations } from "../services/translations";
+
 export class MainMenu extends BaseScene {
   constructor() {
     super("MainMenu");
@@ -10,65 +13,61 @@ export class MainMenu extends BaseScene {
     this.cameras.main.fadeIn(500, 0, 0, 0);
     this.allicons = [];
   }
+
   create() {
     let width = this.scale.width; //Definir la mitad del Ancho
     let height = this.scale.height; //Definir la mitad del Alto
 
     //Title
     this.background = this.add
-      .sprite(width / 2, height / 2, "menu-background")
-      .setScale(2.2153)
+      .sprite(width / 2, height * 0.33, "menu-background")
+      .setScale(2.4)
       .setDepth(2);
 
     //Button
-    const playButton = this.createText(width / 2, 240, "Play")
+    const playButton = this.createText(
+      width / 2,
+      height * 0.37,
+      getPhrase('JugarContra')
+    )
+      .setScale(1.4)
       .setInteractive()
       .setDepth(3)
-      .setOrigin(0.5, 0.5);
+      .setOrigin(0.5);
     //this.add.image(width / 2, height / 2, '').setScale(0.15);
     playButton.setInteractive();
 
     //Button Animations Hover, Down, Out
     playButton.on("pointerover", () => {
       // Cambia el tamaño de la imagen al pasar el mouse
-      playButton.setScale(1.1);
-      console.log("on");
+      playButton.setScale(1.7);
     });
 
     playButton.on("pointerout", () => {
       // Cambia el tamaño de la imagen al pasar el mouse
-      playButton.setScale(1);
-      console.log("off");
+      playButton.setScale(1.4);
     });
 
     playButton.on("pointerdown", () => {
-      playButton.setScale(1.2); // Vuelve al tamaño original
-      console.log("active");
+      playButton.setScale(1.3); // Vuelve al tamaño original
       // this.add.image(width / 2, height / 2, '').setScale(0.37); //Explosión
       this.time.addEvent({
         delay: 900, // demora 1 segundo en iniciar
         loop: true,
         callback: () => {
+          optionsButton.setText("");
+          playButton.setText("");
           this.transitionToNextScene(); //Llama la escena Main
         },
       });
     });
 
-    // Control de inactividad
-    this.inactivityTimer = this.time.addEvent({
-      delay: 11000, // 1 minuto
-      callback: this.showIconScreen,
-      callbackScope: this,
-      loop: true,
-    });
-
-    // Detectar movimiento del mouse
-    this.input.on("pointermove", () => {
-      this.resetInactivityTimer();
-    });
-
     //Button
-    const optionsButton = this.createText(width / 2, 310, "Options")
+    const optionsButton = this.createText(
+      width / 2,
+      height * 0.47,
+      getPhrase('Opciones')
+    )
       .setDepth(3)
       .setOrigin(0.5, 0.5);
     //this.add.image(width / 2, height / 2, '').setScale(0.15);
@@ -87,26 +86,34 @@ export class MainMenu extends BaseScene {
 
     optionsButton.on("pointerdown", () => {
       optionsButton.setScale(0.9); // Vuelve al tamaño original
-      console.log("active");
+      this.cameras.main.zoomTo(1.8, 1200);
+      this.cameras.main.fadeOut(1200, 0, 0, 0);
       // this.add.image(width / 2, height / 2, '').setScale(0.37); //Explosión
       this.time.addEvent({
-        delay: 300, // demora 1 segundo en iniciar
+        delay: 1200, // demora 1 segundo en iniciar
         loop: true,
         callback: () => {
+          optionsButton.setText("");
+          playButton.setText("");
           this.toOptionsScene(); //Llama la escena Main
         },
       });
     });
 
-    this.television = this.physics.add
-      .sprite(width / 2, height / 2, "l-opacidad")
-      .setScale(0.4)
-      .setAlpha(0.4)
-      .setDepth(0);
+    // Control de inactividad
+    this.inactivityTimer = this.time.addEvent({
+      delay: 11000, // 1 minuto
+      callback: this.showIconScreen,
+      callbackScope: this,
+      loop: true,
+    });
 
-    this.television.setImmovable;
-    this.television.body.allowGravity = false;
-    this.television.setDepth(1);
+    // Detectar movimiento del mouse
+    this.input.on("pointermove", () => {
+      this.resetInactivityTimer();
+    });
+
+    this.television = new Television(this, true);
   }
 
   resetInactivityTimer() {

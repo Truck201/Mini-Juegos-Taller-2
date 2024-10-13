@@ -3,13 +3,13 @@ export class Character {
     this.scene = scene;
     this.sprite = sprite;
     this.isPlayerOne = isPlayerOne;
-    this.y = this.scene.scale.height / 7.5;
+    this.y = this.scene.scale.height * 0.15;
 
 
     if (this.isPlayerOne) {
-      this.x = this.scene.game.config.width / 15;
+      this.x = this.scene.game.config.width * 0.0667;
     } else {
-      this.x = this.scene.game.config.width / 1.07;
+      this.x = this.scene.game.config.width * 0.934;
     }
 
     let character = this.scene.physics.add.sprite(this.x, this.y, this.sprite);
@@ -17,17 +17,23 @@ export class Character {
     character.setImmovable;
     character.body.allowGravity = false;
     character.setDepth(2)
+    character.setScale(1.5)
 
     // Name
-    this.scene.add.text(this.x - 35, this.y + 70, this.sprite.toUpperCase(), {
-      fontSize: "16px",
-      fontFamily: "Arial Black, Gadget, sans-serif",
-      fill: "#ff004d", // ROJO
-      fontWeight: "bold",
-      padding: { x: 6, y: 3 },
-      backgroundColor: "#ffffff",
-      border: "60px solid #000000",
-    });
+    this.scene.add.text(this.x, this.y + 70, this.sprite.toUpperCase(), {
+      fontSize: "95px",
+      fontFamily: "Press Start 2P",
+      color: "#fff",
+      stroke: "black",
+      strokeThickness: 7,
+      maxLines: 6,
+      shadow: {
+        color: "#000000",
+        fill: true,
+        offsetX: 5,
+        offsetY: 5,
+      },
+    }).setDepth(3).setOrigin(0.5);
 
   }
 

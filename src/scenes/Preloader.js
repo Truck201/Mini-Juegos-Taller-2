@@ -1,7 +1,9 @@
 import { Scene } from "phaser";
 import WebFont from "webfontloader";
+import { getLanguageConfig, getTranslations } from "../services/translations";
 
 export class Preloader extends Scene {
+  #language;
   constructor() {
     super("Preloader");
   }
@@ -31,10 +33,52 @@ export class Preloader extends Scene {
       }
     });
 
+    // Agregar Lenguaje
+    this.#language = getLanguageConfig();
+    alert(this.#language);
+
+    // ChooseLanguage
+    this.load.image("Argentina", "../public/assets/flags/flag-arg-simple.png");
+    this.load.image(
+      "EstadosUnidos",
+      "../public/assets/flags/flag-eeuu-simple.png"
+    );
+
+    this.load.spritesheet("CUT-ARG", "../public/assets/flags/flag-arg.png", {
+      frameWidth: 228,
+      frameHeight: 92,
+    });
+
+    this.load.spritesheet("CUT-EEUU", "../public/assets/flags/flag-eeuu.png", {
+      frameWidth: 228,
+      frameHeight: 92,
+    });
+
+    this.load.spritesheet(
+      "IDLE-ARG",
+      "../public/assets/flags/flag-arg-simple.png",
+      {
+        frameWidth: 212,
+        frameHeight: 92,
+      }
+    );
+
+    this.load.spritesheet(
+      "IDLE-EEUU",
+      "../public/assets/flags/flag-eeuu-simple.png",
+      {
+        frameWidth: 212,
+        frameHeight: 92,
+      }
+    );
+
     //  Main Menu
     // LOGO
     this.load.image("logo", "../public/assets/menu/logo.png");
-    this.load.image("menu-background", "../public/assets/escenario/image.png");
+    this.load.image(
+      "menu-background",
+      "../public/assets/escenario/principal.png"
+    ); // /public/assets/escenario/principal.png   image.png
 
     // Barra Audio Master
     this.load.image("sliderHandle", "../public/assets/menu/anillo_volumen.png"); // Derrota
@@ -46,14 +90,18 @@ export class Preloader extends Scene {
     this.load.image("mimbo", "../public/assets/mimbo/mimbo.png"); // Neutral
     this.load.image("luho", "../public/assets/luho/luho.png"); // Neutral
 
+    //Globos de Texto
+    this.load.image("globoTextoL", "../public/assets/kid-korn/izquierda.png");
+    this.load.image("globoTextoR", "../public/assets/kid-korn/derecha.png");
+
     // Kid Korn
-    this.load.image("kid-korn1", "../public/assets/kid-korn/korn-defrente.png");
-    this.load.image("kid-korn2", "../public/assets/kid-korn/korn-frente.png");
-    this.load.image("kid-kornFrente", "../public/assets/kid-korn/korn-izq.png");
-    this.load.image(
-      "kid-kornFrente2",
-      "../public/assets/kid-korn/kron-derecha.png"
-    );
+    this.load.image("kid-kornS", "../public/assets/kid-korn/korn-defrente.png");
+    this.load.image("kid-kornB", "../public/assets/kid-korn/korn-frente.png");
+    this.load.image("kid-kornL", "../public/assets/kid-korn/korn-izq.png");
+    this.load.image("kid-kornR", "../public/assets/kid-korn/kron-derecha.png");
+
+    // Dialogues
+    this.load.json("kidKornDialogues", "../public/data/DKidKorn.json");
 
     //   Emociones
     this.load.image("logo", "../public/assets/menu/logo.png"); // Victoria
@@ -87,22 +135,38 @@ export class Preloader extends Scene {
     this.load.image("l-opacidad", "../public/assets/opacidad.png");
 
     //  Tienda
-    this.load.image(
-      "backgroundShop",
-      "../public/assets/tienda/shop-background-sprite.png"
-    );
+    this.load.image("low-points", "../public/assets/tienda/poco.png");
+    this.load.image("medium-points", "../public/assets/tienda/medio.png");
+    this.load.image("high-points", "../public/assets/tienda/rebalsa.png");
 
+    this.load.spritesheet("polilla", "../public/assets/tienda/pollilla.png", {
+      frameWidth: 16,
+      frameHeight: 16,
+    });
+    this.load.spritesheet("toby", "../public/assets/tienda/toby.png", {
+      frameWidth: 148,
+      frameHeight: 72,
+    });
+    this.load.spritesheet("mothman", "../public/assets/tienda/mothman.png", {
+      frameWidth: 160,
+      frameHeight: 188,
+    });
     this.load.spritesheet(
-      "backgroundSheet",
-      "../public/assets/tienda/shop-background.png",
+      "alcantarilla",
+      "../public/assets/tienda/alcantarilla.png",
       {
-        frameWidth: 1760,
-        frameHeight: 1272,
+        frameWidth: 20,
+        frameHeight: 4,
       }
     );
 
-    this.load.image("backShop", "../public/assets/tienda/slots_shop.png");
+    this.load.image(
+      "backgroundShop",
+      "../public/assets/tienda/shop-background.png"
+    );
 
+    // ITEMS DE LA TIENDA
+    // Popcorn (7% EC)
     this.load.spritesheet(
       "popcorn",
       "../public/assets/tienda/idle-pororo.png",
@@ -112,27 +176,193 @@ export class Preloader extends Scene {
       }
     );
 
+    // Lentes (++ Anchor)
+    this.load.spritesheet("glasses", "../public/assets/tienda/lentes1.png", {
+      frameWidth: 80,
+      frameHeight: 96,
+    });
+
+    // Caramelos  (+1 HP) (+5 VEL) (Medio)
+    this.load.spritesheet("candy1", "../public/assets/tienda/caramelo1.png", {
+      frameWidth: 80,
+      frameHeight: 96,
+    });
+
+    this.load.spritesheet("candy2", "../public/assets/tienda/caramelo2.png", {
+      frameWidth: 80,
+      frameHeight: 96,
+    });
+
+    this.load.spritesheet("candy3", "../public/assets/tienda/caramelo3.png", {
+      frameWidth: 80,
+      frameHeight: 96,
+    });
+
+    // Helados  (+15% EC)
+    this.load.spritesheet("icecream1", "../public/assets/tienda/heladoA.png", {
+      frameWidth: 80,
+      frameHeight: 96,
+    });
+
+    this.load.spritesheet("icecream2", "../public/assets/tienda/heladoB.png", {
+      frameWidth: 80,
+      frameHeight: 96,
+    });
+
+    this.load.spritesheet("icecream3", "../public/assets/tienda/heladoC.png", {
+      frameWidth: 80,
+      frameHeight: 96,
+    });
+
+    // Energizante (+10 VEL)
+    this.load.spritesheet("energizing", "../public/assets/tienda/lata2.png", {
+      frameWidth: 80,
+      frameHeight: 96,
+    });
+
+    // Ojo de cuthulu (15% CRT)
+    this.load.spritesheet("cuthulu", "../public/assets/tienda/ojo1.png", {
+      frameWidth: 80,
+      frameHeight: 96,
+    });
+
+    // Hacha (+2 DMG CARO)
+    this.load.spritesheet("axe", "../public/assets/tienda/hacha1.png", {
+      frameWidth: 80,
+      frameHeight: 96,
+    });
+
+    // Paleta  (+5 VEL) (+1 DMG)
+    this.load.spritesheet("palete", "../public/assets/tienda/chupetin2.png", {
+      frameWidth: 80,
+      frameHeight: 96,
+    });
+
+    // Hamburgesa (+3 HP)  (CARO)
+    this.load.spritesheet("burger", "../public/assets/tienda/hamburguesa.png", {
+      frameWidth: 80,
+      frameHeight: 96,
+    });
+
+    // Chocolate (+4 VEL) (+7% EC)
     this.load.spritesheet(
-      "candy",
-      "../public/assets/tienda/caramelo-azul.png",
+      "chocolate",
+      "../public/assets/tienda/chocolate.png",
       {
-        frameWidth: 60,
-        frameHeight: 70,
+        frameWidth: 80,
+        frameHeight: 96,
       }
     );
 
-    this.load.spritesheet("pizza", "../public/assets/tienda/zapi.png", {
-      frameWidth: 60,
-      frameHeight: 68,
+    // Pizza (+1 DMG) (+1 HP)
+    this.load.spritesheet("pizza", "../public/assets/tienda/pizza.png", {
+      frameWidth: 80,
+      frameHeight: 96,
     });
 
     // Partículas
-    this.load.image("flare", "../public/assets/particles/blue-particle.png"); //  2      particles.png
+    this.load.image("flare", "../public/assets/particles/particles.png"); //  2      particles.png    blue-particle.png
     this.load.image("flare2", "../public/assets/particles/particles2.png");
-    this.load.image("flare3", "../public/assets/particles/red-particle.png"); //  1      particles3.png
+    this.load.image("flare3", "../public/assets/particles/particles3.png"); //  1      particles3.png  red-particle.png
 
     // Battle
+    // Sword
+    this.load.image(
+      "static-sword",
+      "../public/assets/battle/events/static-sword.png"
+    );
+
+    this.load.spritesheet(
+      "b-sword",
+      "../public/assets/battle/events/idle-brkn-sword.png",
+      {
+        frameWidth: 52,
+        frameHeight: 168,
+      }
+    );
+
+    this.load.spritesheet(
+      "idle-sword",
+      "../public/assets/battle/events/idle-sword.png",
+      {
+        frameWidth: 52,
+        frameHeight: 168,
+      }
+    );
+
+    this.load.spritesheet(
+      "r-sword",
+      "../public/assets/battle/events/rotate-sword.png",
+      {
+        frameWidth: 52,
+        frameHeight: 168,
+      }
+    );
+
+    // Heart
+    this.load.image(
+      "static-heart",
+      "../public/assets/battle/events/static-heart.png"
+    );
+
+    this.load.spritesheet(
+      "idle-heart",
+      "../public/assets/battle/events/idle-heart.png",
+      {
+        frameWidth: 104,
+        frameHeight: 84,
+      }
+    );
+
+    this.load.spritesheet(
+      "flying-heart",
+      "../public/assets/battle/events/flying-heart.png",
+      {
+        frameWidth: 104,
+        frameHeight: 84,
+      }
+    );
+
+    // Shield
+    this.load.image(
+      "static-shield",
+      "../public/assets/battle/events/static-shield.png"
+    );
+
+    this.load.spritesheet(
+      "idle-shield",
+      "../public/assets/battle/events/idle-shield.png",
+      {
+        frameWidth: 80,
+        frameHeight: 100,
+      }
+    );
+
+    this.load.spritesheet(
+      "r-shield",
+      "../public/assets/battle/events/rotate-shield.png",
+      {
+        frameWidth: 80,
+        frameHeight: 100,
+      }
+    );
+
+    // Popcorn Event Rain
+    this.load.image("popcorn1", "../public/assets/anims/popcorn.png");
+
+    this.load.image("popcorn2", "../public/assets/anims/popcorn.png");
+
+    this.load.image("popcorn3", "../public/assets/anims/popcorn.png");
+
     // Left
+    this.load.spritesheet(
+      "healthBarLeftAnims",
+      "../public/assets/battle/vida/pj1-xtra.png",
+      {
+        frameWidth: 324,
+        frameHeight: 84,
+      }
+    );
     this.load.image(
       "healthBarL1",
       "../public/assets/battle/vida/pj1_vida5.png"
@@ -159,6 +389,14 @@ export class Preloader extends Scene {
     );
 
     // Right
+    this.load.spritesheet(
+      "healthBarRightAnims",
+      "../public/assets/battle/vida/pj2-xtra.png",
+      {
+        frameWidth: 316,
+        frameHeight: 84,
+      }
+    );
     this.load.image(
       "healthBarR1",
       "../public/assets/battle/vida/pj2_vida5.png"
@@ -190,22 +428,36 @@ export class Preloader extends Scene {
       },
       active: () => {
         console.log("Fuentes cargadas.");
-        this.gotoMainScene();
       },
     });
   }
 
   create() {
-    // Aquí puedes mostrar una pantalla de carga si lo deseas.
-    this.add.text(100, 100, "Cargando...", {
-      font: "20px Arial",
-      fill: "#ffffff",
-    });
-  }
+    let width = this.game.scale.width;
+    let height = this.game.scale.height;
 
-  gotoMainScene() {
-    this.time.delayedCall(900, () => {
-      this.scene.start("MainMenu");
+    getTranslations(this.#language, () =>
+      this.scene.start("ChooseLanguage", { language: this.#language })
+    );
+
+    const defaultText = this.add
+      .text(width * 0.5, height * 0.4, "Cargando", {
+        fontSize: "25px",
+        fontFamily: "'Press Start 2P'",
+        fill: "#ffffff",
+      })
+      .setOrigin(0.5);
+
+    let loadingText = "Cargando";
+    let dotCount = 0;
+
+    this.time.addEvent({
+      delay: 220, // 1 segundo
+      callback: () => {
+        dotCount = (dotCount + 1) % 4; // Ciclo entre 0 y 3
+        defaultText.setText(loadingText + ".".repeat(dotCount));
+      },
+      loop: true,
     });
   }
 }

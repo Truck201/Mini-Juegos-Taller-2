@@ -12,17 +12,17 @@ export class ItemsCase {
     this.selectedItemsPlayer1 = [];
     this.selectedItemsPlayer2 = [];
 
-    this.player1Position = { row: 0, col: 0 };
-    this.player2Position = { row: 0, col: 3 };
+    this.player1Position = { row: 0, col: 0 }; // POSICIONES INICIALES
+    this.player2Position = { row: 0, col: 3 }; // POSICIONES INICIALES
 
     // Slots para cada jugador
     this.player1Slots = this.createItemSlots(
-      this.width * 0.286,
-      this.height * 0.67
+      this.width * 0.3328, // this.width * 0.2919
+      this.height * 0.7141
     );
     this.player2Slots = this.createItemSlots(
-      this.width * 0.715,
-      this.height * 0.67
+      this.width * 0.66876, // this.width * 0.709
+      this.height * 0.7141
     );
 
     this.mainItemCase = this.scene.add
@@ -33,15 +33,14 @@ export class ItemsCase {
         220,
         0x272736
       )
-      .setDepth(0);
+      .setDepth(0)
+      .setAlpha(0);
 
     // Descripción del ítem para jugador 1 y jugador 2
-    this.descriptionItemPlayer1 = this.scene.add.text(
-      this.width * 0.125,
-      this.height * 0.68,
-      "",
-      {
-        fontSize: "16px",
+    this.descriptionItemPlayer1 = this.scene.add
+      .text(this.width * 0.154, this.height * 0.764, "", {
+        // 0.715
+        fontSize: "22px",
         fontFamily: "'Press Start 2P', sans-serif",
         color: "#fff",
         stroke: "black",
@@ -53,19 +52,12 @@ export class ItemsCase {
           offsetX: 3,
           offsetY: 3,
         },
-      }
-    );
+      })
+      .setOrigin(0.5);
 
-    this.scene.add
-      .sprite(this.width * 0.193, this.height * 0.72, "pochoclo2")
-      .setDepth(2);
-
-    this.descriptionItemPlayer2 = this.scene.add.text(
-      this.width * 0.88,
-      this.height * 0.68,
-      "",
-      {
-        fontSize: "16px",
+    this.descriptionItemPlayer2 = this.scene.add
+      .text(this.width * 0.858, this.height * 0.764, "", {
+        fontSize: "22px",
         fontFamily: "'Press Start 2P', sans-serif",
         color: "#fff",
         stroke: "black",
@@ -77,27 +69,99 @@ export class ItemsCase {
           offsetX: 3,
           offsetY: 3,
         },
-      }
-    );
-
-    this.scene.add
-      .sprite(this.width * 0.95, this.height * 0.72, "pochoclo2")
-      .setDepth(2);
+      })
+      .setOrigin(0.5);
 
     this.itemDescriptions = {
-      candy: { description: "A sweet treat!\n\t+1 Hit Point", value: 5 },
       popcorn: {
-        description: "Perfect for movies!\n\t+10% Evade Chance",
-        value: 15,
+        description: "Perfect for movies!\n+7% Evade",
+        value: 10, // 7% Evade Chance
       },
-      pizza: { description: "Delicious slice!\n\t+1.5 Speed", value: 20 },
+      glasses: {
+        description: "Enhances vision.\n+1.3% Anchor",
+        value: 30, // 1.1% Anchor
+      },
+      candy1: {
+        description: "A sweet treat!\n+1 HP, +7 Speed",
+        value: 20, // 1 Hit Point + 7 Speed
+      },
+      candy2: {
+        description: "A sweet treat!\n+1 HP, +7 Speed",
+        value: 20, // 1 Hit Point + 7 Speed
+      },
+      candy3: {
+        description: "A sweet treat!\n+1 HP, +7 Speed",
+        value: 20, // 1 Hit Point + 7 Speed
+      },
+      icecream1: {
+        description: "Cool and refreshing!\n+15% Evade",
+        value: 20, // 15% Evade Chance
+      },
+      icecream2: {
+        description: "Cool and refreshing!\n+15% Evade",
+        value: 20, // 15% Evade Chance
+      },
+      icecream3: {
+        description: "Cool and refreshing!\n+15% Evade",
+        value: 20, // 15% Evade Chance
+      },
+      energizing: {
+        description: "Boosts your energy!\n+12 Speed",
+        value: 20, // 12 Speed
+      },
+      cuthulu: {
+        description: "Unleash the power!\n+15% CRT",
+        value: 75, // 15% Critical Chance
+      },
+      axe: {
+        description: "Sharp and deadly.\n+2 Damage",
+        value: 70, // 2 Damage
+      },
+      palete: {
+        description: "Swift and precise.\n+5 Speed +7% CRT",
+        value: 35, // 5 Speed + 7% Critical Chance
+      },
+      burger: {
+        description: "Juicy and filling.\n+3 HP",
+        value: 30, // 3 Hit Points
+      },
+      chocolate: {
+        description: "Sweet and speedy.\n+5 Speed +7% Evade",
+        value: 15, // 5 Speed + 7% Evade Chance
+      },
+      pizza: {
+        description: "Delicious slice!\n+1 HP +1 Damage",
+        value: 30, // 1 Hit Point + 1 Damage
+      },
     };
 
     // Definición de atributos de los ítems
     this.itemAttributes = {
-      candy: { hitPoints: 1, speed: 0, evadeChance: 0 },
-      popcorn: { hitPoints: 0, speed: 0, evadeChance: 20 },
-      pizza: { hitPoints: 0, speed: 5, evadeChance: 0 },
+      popcorn: { evadeChance: 7 },
+
+      glasses: { anchor: 0.3 },
+
+      candy1: { hitPoints: 1, speed: 7 },
+      candy2: { hitPoints: 1, speed: 7 },
+      candy3: { hitPoints: 1, speed: 7 },
+
+      icecream1: { evadeChance: 15 },
+      icecream2: { evadeChance: 15 },
+      icecream3: { evadeChance: 15 },
+
+      energizing: { speed: 12 },
+
+      cuthulu: { critical: 15 },
+
+      axe: { damage: 2 },
+
+      palete: { speed: 5, critical: 7 },
+
+      burger: { hitPoints: 3 },
+
+      chocolate: { speed: 5, evadeChance: 7 },
+
+      pizza: { hitPoints: 1, damage: 1 },
     };
 
     // Inicializar animaciones
@@ -105,23 +169,12 @@ export class ItemsCase {
 
     this.createItems();
 
-    // Agregar esto en el constructor después de crear los ítems
-    this.items.forEach((item) => {
-      item.on("pointerover", () => {
-        this.showItemDescription(item.texture.key);
-      });
-
-      item.on("pointerout", () => {
-        this.clearItemDescriptions();
-      });
-    });
-
     // Crear los cuadros que indican la posición de cada jugador
-    this.player1Indicator = this.scene.add.rectangle(0, 0, 75, 75).setDepth(2);
-    this.player1Indicator.setStrokeStyle(4, 0xff0000); // Rojo para jugador 1
+    this.player1Indicator = this.scene.add.rectangle(0, 0, 76, 76).setDepth(2);
+    this.player1Indicator.setStrokeStyle(4, 0xff004d); // Rojo para jugador 1
 
-    this.player2Indicator = this.scene.add.rectangle(0, 0, 75, 75).setDepth(2);
-    this.player2Indicator.setStrokeStyle(4, 0x0000ff); // Azul para jugador 2
+    this.player2Indicator = this.scene.add.rectangle(0, 0, 76, 76).setDepth(2);
+    this.player2Indicator.setStrokeStyle(4, 0x0778f2); // Azul para jugador 2
 
     this.player1Atributes = new AtributesPlayers(this, 1);
     this.player2Atributes = new AtributesPlayers(this, 2);
@@ -142,13 +195,14 @@ export class ItemsCase {
   // Método para crear los slots visuales de ítems para un jugador
   createItemSlots(x, y) {
     let slots = [];
-    const slotSize = 70; // Tamaño del slot
+    const slotSize = 75; // Tamaño del slot
 
     for (let i = 0; i < this.maxItems; i++) {
       let slot = this.scene.add
-        .rectangle(x, y + i * (slotSize + 15), slotSize, slotSize, 0x444444)
+        .rectangle(x, y + i * (slotSize + 30), slotSize, slotSize, 0x444444)
         .setStrokeStyle(2, 0xffffff)
-        .setDepth(2);
+        .setDepth(2)
+        .setVisible(false);
       slot.itemSprite = null; // Aquí almacenaremos el sprite del ítem
       slots.push(slot);
     }
@@ -225,19 +279,6 @@ export class ItemsCase {
     });
   }
 
-  showItemDescription(itemType) {
-    const description = this.itemDescriptions[itemType];
-    if (description) {
-      this.descriptionItemPlayer1
-        .setText(
-          `${description.description} \n\n\t  ${description.value}`
-        )
-        .setDepth(2)
-        .setOrigin(0.5, 0.5);
-      this.descriptionItemPlayer2.setText("");
-    }
-  }
-
   clearItemDescriptions() {
     this.descriptionItemPlayer1.setText("");
     this.descriptionItemPlayer2.setText("");
@@ -262,8 +303,9 @@ export class ItemsCase {
   }
 
   initAnimations() {
+    // Popcorn
     this.scene.anims.create({
-      key: "popcorn_idle",
+      key: "popcorn-idle",
       frames: this.scene.anims.generateFrameNumbers("popcorn", {
         start: 0,
         end: 3,
@@ -272,9 +314,21 @@ export class ItemsCase {
       repeat: -1, // La animación se repite indefinidamente
     });
 
+    // Glases
     this.scene.anims.create({
-      key: "candy-idle",
-      frames: this.scene.anims.generateFrameNumbers("candy", {
+      key: "glasses-idle",
+      frames: this.scene.anims.generateFrameNumbers("glasses", {
+        start: 0,
+        end: 3,
+      }),
+      frameRate: 4,
+      repeat: -1,
+    });
+
+    // Candy
+    this.scene.anims.create({
+      key: "candy-idle1",
+      frames: this.scene.anims.generateFrameNumbers("candy1", {
         start: 0,
         end: 3,
       }),
@@ -283,7 +337,125 @@ export class ItemsCase {
     });
 
     this.scene.anims.create({
-      key: "pizza_idle",
+      key: "candy-idle2",
+      frames: this.scene.anims.generateFrameNumbers("candy2", {
+        start: 0,
+        end: 3,
+      }),
+      frameRate: 4,
+      repeat: -1,
+    });
+
+    this.scene.anims.create({
+      key: "candy-idle3",
+      frames: this.scene.anims.generateFrameNumbers("candy3", {
+        start: 0,
+        end: 3,
+      }),
+      frameRate: 4,
+      repeat: -1,
+    });
+
+    // Helados
+    this.scene.anims.create({
+      key: "icecream-idle1",
+      frames: this.scene.anims.generateFrameNumbers("icecream1", {
+        start: 0,
+        end: 3,
+      }),
+      frameRate: 4,
+      repeat: -1,
+    });
+
+    this.scene.anims.create({
+      key: "icecream-idle2",
+      frames: this.scene.anims.generateFrameNumbers("icecream2", {
+        start: 0,
+        end: 3,
+      }),
+      frameRate: 4,
+      repeat: -1,
+    });
+
+    this.scene.anims.create({
+      key: "icecream-idle3",
+      frames: this.scene.anims.generateFrameNumbers("icecream3", {
+        start: 0,
+        end: 3,
+      }),
+      frameRate: 4,
+      repeat: -1,
+    });
+
+    // Energizante
+    this.scene.anims.create({
+      key: "energizing-idle",
+      frames: this.scene.anims.generateFrameNumbers("energizing", {
+        start: 0,
+        end: 3,
+      }),
+      frameRate: 4,
+      repeat: -1,
+    });
+
+    // Ojo de cuthulu
+    this.scene.anims.create({
+      key: "cuthulu-idle",
+      frames: this.scene.anims.generateFrameNumbers("cuthulu", {
+        start: 0,
+        end: 3,
+      }),
+      frameRate: 4,
+      repeat: -1,
+    });
+
+    // Hacha
+    this.scene.anims.create({
+      key: "axe-idle",
+      frames: this.scene.anims.generateFrameNumbers("axe", {
+        start: 0,
+        end: 3,
+      }),
+      frameRate: 4,
+      repeat: -1,
+    });
+
+    // Paleta
+    this.scene.anims.create({
+      key: "palete-idle",
+      frames: this.scene.anims.generateFrameNumbers("palete", {
+        start: 0,
+        end: 3,
+      }),
+      frameRate: 4,
+      repeat: -1,
+    });
+
+    // Hamburgesa
+    this.scene.anims.create({
+      key: "burger-idle",
+      frames: this.scene.anims.generateFrameNumbers("burger", {
+        start: 0,
+        end: 3,
+      }),
+      frameRate: 4,
+      repeat: -1,
+    });
+
+    // Chocolate
+    this.scene.anims.create({
+      key: "chocolate-idle",
+      frames: this.scene.anims.generateFrameNumbers("chocolate", {
+        start: 0,
+        end: 3,
+      }),
+      frameRate: 4,
+      repeat: -1,
+    });
+
+    // Pizza
+    this.scene.anims.create({
+      key: "pizza-idle",
       frames: this.scene.anims.generateFrameNumbers("pizza", {
         start: 0,
         end: 3,
@@ -296,32 +468,53 @@ export class ItemsCase {
   createItems() {
     const rows = 3;
     const cols = 4;
-    const itemSize = 70;
-    const offsetX = this.width / 2 - (cols * itemSize) / 2 + 35;
-    const offsetY = this.height / 1.2 - (rows * itemSize) / 2;
+    const itemSize = 82;
+    const offsetX = this.width / 2 - (cols * itemSize) / 2 + 45;
+    const offsetY = this.height * 0.847 - (rows * itemSize) / 2;
 
     // Solo 9 items
     const avalibleItems = [
       "popcorn",
-      "candy",
-      "pizza",
       "popcorn",
-      "candy",
-      "pizza",
       "popcorn",
-      "candy",
+      "glasses",
+      "glasses",
+      "glasses",
+      "candy1",
+      "candy1",
+      "candy1",
+      "candy2",
+      "candy2",
+      "candy2",
+      "candy3",
+      "candy3",
+      "candy3",
+      "icecream1",
+      "icecream1",
+      "icecream1",
+      "icecream2",
+      "icecream2",
+      "icecream2",
+      "icecream3",
+      "icecream3",
+      "icecream3",
+      "energizing",
+      "energizing",
+      "cuthulu",
+      "cuthulu",
+      "axe",
+      "axe",
+      "palete",
+      "palete",
+      "palete",
+      "burger",
+      "burger",
+      "chocolate",
+      "chocolate",
+      "chocolate",
       "pizza",
       "pizza",
-      "popcorn",
-      "candy",
       "pizza",
-      "popcorn",
-      "candy",
-      "pizza",
-      "popcorn",
-      "candy",
-      "pizza",
-      "candy",
     ];
 
     const randomItems = Phaser.Utils.Array.Shuffle(avalibleItems).slice(0, 20);
@@ -339,7 +532,7 @@ export class ItemsCase {
         item.setImmovable;
         item.body.allowGravity = false;
         item.setInteractive();
-        item.setScale(0.9);
+        item.setScale(0.92);
         item.setDepth(3);
 
         item.isSelected = false; // Estado de selección
@@ -350,13 +543,36 @@ export class ItemsCase {
 
         // Iniciar la animación dependiendo del tipo de ítem
         if (itemType === "popcorn") {
-          item.play("popcorn_idle");
-        } else if (itemType === "candy") {
-          item.play("candy-idle");
+          item.play("popcorn-idle");
+        } else if (itemType === "glasses") {
+          item.play("glasses-idle");
+        } else if (itemType === "candy1") {
+          item.play("candy-idle1");
+        } else if (itemType === "candy2") {
+          item.play("candy-idle2");
+        } else if (itemType === "candy3") {
+          item.play("candy-idle3");
+        } else if (itemType === "icecream1") {
+          item.play("icecream-idle1");
+        } else if (itemType === "icecream2") {
+          item.play("icecream-idle2");
+        } else if (itemType === "icecream3") {
+          item.play("icecream-idle3");
+        } else if (itemType === "energizing") {
+          item.play("energizing-idle");
+        } else if (itemType === "cuthulu") {
+          item.play("cuthulu-idle");
+        } else if (itemType === "axe") {
+          item.play("axe-idle");
+        } else if (itemType === "palete") {
+          item.play("palete-idle");
+        } else if (itemType === "burger") {
+          item.play("burger-idle");
+        } else if (itemType === "chocolate") {
+          item.play("chocolate-idle");
         } else if (itemType === "pizza") {
-          item.play("pizza_idle");
+          item.play("pizza-idle");
         }
-
         index++;
       }
     }
@@ -401,10 +617,10 @@ export class ItemsCase {
       if (description) {
         descriptionText
           .setText(
-            `${description.description} \n\n\t  ${description.value}`
+            `${description.description}\n\nValue ${description.value}P`
           )
           .setDepth(2)
-          .setOrigin(0.5, 0.5);
+          .setOrigin(0.5);
       }
     } else {
       descriptionText.setText(""); // Limpiar la descripción si no hay coincidencia
@@ -469,13 +685,18 @@ export class ItemsCase {
         item.isSelected = false;
         item.selectedBy = null;
         const index = selectedItems.indexOf(item);
-        
 
         if (index !== -1) {
-          console.log(`Antes de eliminar el ítem, selectedItems: `,selectedItems);
-        
+          console.log(
+            `Antes de eliminar el ítem, selectedItems: `,
+            selectedItems
+          );
+
           this.selectedItems.splice(index, 1);
-          console.log(`Después de eliminar el ítem, selectedItems: `,selectedItems);
+          console.log(
+            `Después de eliminar el ítem, selectedItems: `,
+            selectedItems
+          );
           this.removeItemFromSlot(player, item);
           this.returnPoints(player, item.texture.key);
           console.log(`Puntos devueltos para el jugador ${player}`);

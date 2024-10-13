@@ -1,0 +1,30 @@
+{
+    "Instructor": [
+        "¡Junta pororós!",
+        "¡En la tienda intercambias tus pororós!",
+        "¡Más pororós, más ganancias!",
+        "¡Ataca!",
+        "Junta las bonificaciones"
+    ],
+
+    "Afirmación": [
+        "¡Bien hecho!",
+        "¡Bien jugado!",
+        "Aún no se termina",
+        "¡Buena suerte!",
+        "¡WOW!",
+        "¡Éxito!"
+    ],
+
+    "Animar": [
+        "¡Ánimo, Mimbo!",
+        "¡Ánimo, Luho!"
+    ],
+
+    "Estado": [
+        "Mimbo lleva la delantera",
+        "Luho lleva la Delantera",
+        "Mimbo atacó a Luho",
+        "Luho atacó a Mimbo"
+    ]
+}

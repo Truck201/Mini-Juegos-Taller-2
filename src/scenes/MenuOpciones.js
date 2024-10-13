@@ -4,16 +4,24 @@ export class MenuOpciones extends BaseScene {
     super("opcionesScene");
   }
 
+  init() {
+    this.cameras.main.zoomTo(1.2, 1200); // Reducir el zoom en 1 segundo (1000 ms)
+    this.cameras.main.fadeIn(1500, 0, 0, 0); // Cuando Inica la escena
+  }
+
   create() {
     let width = this.game.scale.width;
     let height = this.game.scale.height;
 
+    const backgroundTV = this.add.sprite(width * 0.5, height * 0.5, 'l-opacidad').setAlpha(0.4)
+
     // Agregar un botón para volver al menú principal
     const mainMenuButton = this.createText(
-      width / 2 - 160,
+      width * 0.5,
       height * 0.5,
       "Volver al Menú Principal"
     )
+      .setOrigin(0.5)
       .setInteractive()
       .setDepth(3)
       .on("pointerdown", () => {
@@ -32,9 +40,9 @@ export class MenuOpciones extends BaseScene {
     });
 
     // Crear la barra
-    this.sliderBar = this.add.image(width/2 + 20, 500, "sliderBar");
+    this.sliderBar = this.add.image(width / 2, height * 0.65, "sliderBar");
     this.sliderHandle = this.add
-      .image(width/2, 500, "sliderHandle")
+      .image(width / 2, height * 0.65, "sliderHandle")
       .setInteractive()
       .setDepth(3);
 
