@@ -10,7 +10,7 @@ export class MedievalEvent {
     this.isShelded1 = false;
     this.isShelded2 = false;
 
-    this.enfriamiento = 3800;
+    this.enfriamiento = 2600;
 
     this.height = this.scene.game.scale.height
     this.width = this.scene.game.scale.width
@@ -204,7 +204,7 @@ export class MedievalEvent {
       
       // Mostrar mensaje de "Immune"
       const textInmune1 = this.scene.add
-        .text(this.width * 0.2, this.height * 0.6, "Immune!", {
+        .text(this.width * 0.2, this.height * 0.6, "Inmune!", {
           fontSize: "35px",
           color: "#fff",
           fontFamily: "'Press Start 2P'",
@@ -234,12 +234,12 @@ export class MedievalEvent {
     }
 
     if (player === 2) {
-      this.scene.isShelded2 = true;
+      this.isShelded2 = true;
       console.log("Player 2 is now shielded!");
 
       // Mostrar mensaje de "Immune"
       const textInmune2 = this.scene.add
-        .text(this.width * 0.8, this.height * 0.6, "Immune!", {
+        .text(this.width * 0.8, this.height * 0.6, "Inmune!", {
           fontSize: "35px",
           color: "#fff",
           fontFamily: "'Press Start 2P'",

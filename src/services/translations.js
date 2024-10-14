@@ -13,10 +13,8 @@ export async function getTranslations(lang, callback) {
     return callback ? callback() : false;
   }
 
-  // https://traducila.vercel.app/api/translations/cm23nl3nl0001icradqod0htk/en-US
   return await fetch(
-    `https://traducila.vercel.app/api/translations/${PROJECT_ID}/${language}`,
-    { mode: "cors" }
+    `https://traducila.vercel.app/api/translations/${PROJECT_ID}/${language}`
   )
     .then((response) => {
       if (!response.ok) {
@@ -39,10 +37,10 @@ export function getPhrase(key) {
   }
 
   let phrase = key;
-  if (translations && translations.hasOwnProperty(key)) {
+  if (translations && translations[key]) {
     phrase = translations[key];
-    console.log(phrase)
-}
+    console.log(phrase);
+  }
 
   return phrase;
 }

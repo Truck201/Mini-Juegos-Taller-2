@@ -3,6 +3,7 @@
     "description": "Pochoclo Games, in Phaser",
     "version": "0.0.1",
     "type": "module",
+    "proxy": 8080,
     "repository": {
         "type": "git",
         "url": "git+https://github.com/phaserjs/template-vite.git"

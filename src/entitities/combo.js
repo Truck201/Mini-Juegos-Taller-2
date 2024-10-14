@@ -14,38 +14,48 @@ export class ComboPersonajes {
 
   create() {
     this.comboText1 = this.scene.add
-      .text(this.scene.scale.width * 0.035, this.scene.scale.height * 0.5, "1", {
-        fontSize: "78px",
-        fontFamily: "'Press Start 2P', sans-serif",
-        color: "#fff",
-        stroke: "black",
-        strokeThickness: 6,
-        maxLines: 4,
-        shadow: {
-          color: "#000000",
-          fill: true,
-          offsetX: 4,
-          offsetY: 4,
-        },
-      })
+      .text(
+        this.scene.scale.width * 0.035,
+        this.scene.scale.height * 0.5,
+        "1",
+        {
+          fontSize: "78px",
+          fontFamily: "'Press Start 2P', sans-serif",
+          color: "#fff",
+          stroke: "black",
+          strokeThickness: 6,
+          maxLines: 4,
+          shadow: {
+            color: "#000000",
+            fill: true,
+            offsetX: 4,
+            offsetY: 4,
+          },
+        }
+      )
       .setDepth(7)
       .setVisible(false);
 
     this.comboText2 = this.scene.add
-      .text(this.scene.scale.width * 0.867, this.scene.scale.height * 0.5, "1", {
-        fontSize: "78px",
-        fontFamily: "'Press Start 2P', sans-serif",
-        color: "#fff",
-        stroke: "black",
-        strokeThickness: 6,
-        maxLines: 4,
-        shadow: {
-          color: "#000000",
-          fill: true,
-          offsetX: 4,
-          offsetY: 4,
-        },
-      })
+      .text(
+        this.scene.scale.width * 0.867,
+        this.scene.scale.height * 0.5,
+        "1",
+        {
+          fontSize: "78px",
+          fontFamily: "'Press Start 2P', sans-serif",
+          color: "#fff",
+          stroke: "black",
+          strokeThickness: 6,
+          maxLines: 4,
+          shadow: {
+            color: "#000000",
+            fill: true,
+            offsetX: 4,
+            offsetY: 4,
+          },
+        }
+      )
       .setDepth(7)
       .setVisible(false);
 
@@ -89,8 +99,17 @@ export class ComboPersonajes {
         this.scene.points1 += 5; // Añadir puntos extra por el combo
         this.scene.scene.get("Hud").update_points(1, this.scene.points1);
         this.scene.comboCount1 = 0; // Reiniciar el contador de combo
+
+        // Animación del jugador 1 (victoria) y del enemigo (enojo)
+        this.scene.player1.change_emotion("Mimbo", 2, this.scene.player1); // Mimbo: animación de victoria
+        this.scene.player2.change_emotion("Luho", 1, this.scene.player2); // Luho: animación de daño
+        
         this.scene.time.delayedCall(1200, () => {
           this.comboText1.setVisible(false); // Ocultar el marcador
+
+          console.log("va??")
+          this.scene.player1.change_emotion("Mimbo", 0, this.scene.player1); // Mimbo: IDLE
+          this.scene.player2.change_emotion("Luho", 0, this.scene.player2); // Luho: IDLE
         });
       }
 
@@ -120,8 +139,18 @@ export class ComboPersonajes {
         this.scene.points2 += 5; // Añadir puntos extra por el combo
         this.scene.scene.get("Hud").update_points(2, this.scene.points2);
         this.scene.comboCount2 = 0; // Reiniciar el contador de combo
+
+        // Animación del jugador 1 (victoria) y del enemigo (enojo)
+        this.scene.player1.change_emotion("Mimbo", 1, this.scene.player1); // Mimbo: animación de victoria
+        this.scene.player2.change_emotion("Luho", 2, this.scene.player2); // Luho: animación de daño
+
+
         this.scene.time.delayedCall(1200, () => {
           this.comboText2.setVisible(false); // Ocultar el marcador
+
+          console.log("va??  -->>")
+          this.scene.player1.change_emotion("Mimbo", 0, this.scene.player1); // Mimbo: IDLE
+          this.scene.player2.change_emotion("Luho", 0, this.scene.player2); // Luho: IDLE
         });
       }
 

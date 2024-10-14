@@ -35,28 +35,36 @@ export class Preloader extends Scene {
 
     // Agregar Lenguaje
     this.#language = getLanguageConfig();
-    alert(this.#language);
 
     // ChooseLanguage
-    this.load.image("Argentina", "../public/assets/flags/flag-arg-simple.png");
-    this.load.image(
-      "EstadosUnidos",
-      "../public/assets/flags/flag-eeuu-simple.png"
+    this.load.spritesheet(
+      "boleteriaBackground",
+      "../public/assets/boleteria/lenguaje.png",
+      {
+        frameWidth:1920,
+        frameHeight: 1080,
+      }
     );
 
-    this.load.spritesheet("CUT-ARG", "../public/assets/flags/flag-arg.png", {
+    this.load.image("Argentina", "../public/assets/boleteria/flag-arg-simple.png");
+    this.load.image(
+      "EstadosUnidos",
+      "../public/assets/boleteria/flag-eeuu-simple.png"
+    );
+
+    this.load.spritesheet("CUT-ARG", "../public/assets/boleteria/flag-arg.png", {
       frameWidth: 228,
       frameHeight: 92,
     });
 
-    this.load.spritesheet("CUT-EEUU", "../public/assets/flags/flag-eeuu.png", {
+    this.load.spritesheet("CUT-EEUU", "../public/assets/boleteria/flag-eeuu.png", {
       frameWidth: 228,
       frameHeight: 92,
     });
 
     this.load.spritesheet(
       "IDLE-ARG",
-      "../public/assets/flags/flag-arg-simple.png",
+      "../public/assets/boleteria/flag-arg-simple.png",
       {
         frameWidth: 212,
         frameHeight: 92,
@@ -65,7 +73,7 @@ export class Preloader extends Scene {
 
     this.load.spritesheet(
       "IDLE-EEUU",
-      "../public/assets/flags/flag-eeuu-simple.png",
+      "../public/assets/boleteria/flag-eeuu-simple.png",
       {
         frameWidth: 212,
         frameHeight: 92,
@@ -86,9 +94,80 @@ export class Preloader extends Scene {
 
     //  Game
     this.load.image("escenario", "../public/assets/escenario/principal.png");
+
     //  Personajes
     this.load.image("mimbo", "../public/assets/mimbo/mimbo.png"); // Neutral
     this.load.image("luho", "../public/assets/luho/luho.png"); // Neutral
+
+    this.load.spritesheet(
+      "Damage-Mimbo",
+      "../public/assets/mimbo/mimbo-dano.png",
+      {
+        frameWidth: 232, // 90
+        frameHeight: 216, // 114
+      }
+    ); // DAÑO
+    this.load.spritesheet(
+      "Damage-Luho",
+      "../public/assets/luho/luho-dano.png",
+      {
+        frameWidth: 232, // 90
+        frameHeight: 216, // 114
+      }
+    ); // DAÑO
+
+    this.load.spritesheet(
+      "Defeat-Mimbo",
+      "../public/assets/mimbo/mimbo-derrota.png",
+      {
+        frameWidth: 232, // 90
+        frameHeight: 216, // 114
+      }
+    ); // DERROTA
+    this.load.spritesheet(
+      "Defeat-Luho",
+      "../public/assets/luho/luho-derrota.png",
+      {
+        frameWidth: 232, // 90
+        frameHeight: 216, // 114
+      }
+    ); // DERROTA
+
+
+    this.load.spritesheet(
+      "Victory-Mimbo",
+      "../public/assets/mimbo/mimbo-victoria.png",
+      {
+        frameWidth: 232, // 90
+        frameHeight: 216, // 114
+      }
+    ); // VICTORIA
+    this.load.spritesheet(
+      "Victory-Luho",
+      "../public/assets/luho/luho-victoria.png",
+      {
+        frameWidth: 232, // 90
+        frameHeight: 216, // 114
+      }
+    );  // VICTORIA
+
+    this.load.spritesheet(
+      "Neutral-Mimbo",
+      "../public/assets/mimbo/mimbo-neutral.png",
+      {
+        frameWidth: 232, // 90
+        frameHeight: 216, // 114
+      }
+    ); // NEUTRAL
+    this.load.spritesheet(
+      "Neutral-Luho",
+      "../public/assets/luho/luho-neutral.png",
+      {
+        frameWidth: 232, // 90
+        frameHeight: 216, // 114
+      }
+    ); // NEUTRAL  
+
 
     //Globos de Texto
     this.load.image("globoTextoL", "../public/assets/kid-korn/izquierda.png");

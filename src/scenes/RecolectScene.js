@@ -113,8 +113,14 @@ export class RecolectScene extends Scene {
     }
 
     // Crear instancias de Character
-    this.player1 = new Character(this, "mimbo", true); // Jugador 1
-    this.player2 = new Character(this, "luho", false); // Jugador 2
+    const player1 = new Character(this, "mimbo", true); // Jugador 1
+    const player2 = new Character(this, "luho", false); // Jugador 2
+
+    this.player1 = player1
+    this.player2 = player2
+
+    player1.change_emotion("Mimbo", 0, player1)
+    player2.change_emotion("Luho", 0, player2)
 
     this.combo1 = new ComboPersonajes(this, 1);
     this.combo1.create();

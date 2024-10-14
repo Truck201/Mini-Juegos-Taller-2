@@ -1,26 +1,17 @@
 import { BaseScene } from "../lib/FontsBase";
-import { getTranslations } from "../services/translations";
-import { EN_US, ES_AR, FR_FR } from "../enums/languages"
-
 export class LanguageScene extends BaseScene {
-    language = ES_AR;
   constructor() {
     super("ChooseLanguage");
   }
 
   create() {
-
     const width = this.game.scale.width;
     const height = this.game.scale.height;
 
     this.initAnimations();
 
-    // Añadimos Texto Cartelera
-    const textTickets = this.createText(
-      width * 0.5,
-      height * 0.3,
-      "Mufasa"
-    ).setOrigin(0.5);
+    const background = this.add.sprite(width * 0.5, height * 0.5, 'boleteriaBackground');
+    background.anims.play('Idle-Boleteria', true)
 
     // Añadimos las imágenes de ambas banderas
     const ARGLanguage = this.add
@@ -44,8 +35,6 @@ export class LanguageScene extends BaseScene {
 
     ARGLanguage.on("pointerdown", () => {
       ARGLanguage.setScale(1.6);
-
-      getTranslations(ES_AR);
 
       ARGLanguage.anims.play("Crush-ARG", true);
       this.time.addEvent({
@@ -78,8 +67,6 @@ export class LanguageScene extends BaseScene {
 
     USALanguage.on("pointerdown", () => {
       USALanguage.setScale(1.6);
-      
-      getTranslations(EN_US);
 
       USALanguage.anims.play("Crush-EEUU", true);
       this.time.addEvent({
@@ -93,6 +80,16 @@ export class LanguageScene extends BaseScene {
   }
 
   initAnimations() {
+    this.anims.create({
+      key: "Idle-Boleteria",
+      frames: this.anims.generateFrameNumbers("boleteriaBackground", {
+        start: 0,
+        end: 1,
+      }),
+      frameRate: 5,
+      repeat: -1, // La animación se repite indefinidamente
+    });
+
     this.anims.create({
       key: "Crush-ARG",
       frames: this.anims.generateFrameNumbers("CUT-ARG", {
@@ -136,7 +133,7 @@ export class LanguageScene extends BaseScene {
 
   gotoMainScene() {
     this.time.delayedCall(200, () => {
-      this.scene.start("MainMenu");
+      this.scene.start("Shop");
     });
   }
 }

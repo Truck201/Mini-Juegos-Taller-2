@@ -171,8 +171,11 @@ export class BattleScene extends BaseScene {
 
     const itemsCase = this.scene.get("ItemsCase");
 
-    let character1 = new Character(this, "mimbo", true);
-    let character2 = new Character(this, "luho", false);
+    const player1 = new Character(this, "mimbo", true);
+    const player2 = new Character(this, "luho", false);
+
+    player1.change_emotion("Mimbo", 0, player1)
+    player2.change_emotion("Luho", 0, player2)
 
     let barraX = width / 2; // Posición Barra en X
     let barraY = (height * 4.3) / 5; // Posición de alto en las barras Y
