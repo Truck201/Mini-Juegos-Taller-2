@@ -17,6 +17,7 @@ import { BaseScene } from "./lib/FontsBase";
 
 import CRTPostFx from "./lib/CRTPostFx";
 import { LanguageScene } from "./scenes/LanguageChoose";
+import { GameCoop } from "./scenes/GameCo-Op";
 
 const config = {
   type: Phaser.WEBGL,
@@ -52,6 +53,7 @@ const config = {
     BattleScene,
     HudBattle,
     BaseScene,
+    GameCoop,
   ],
   pipeline: {
     CRTPostFx: CRTPostFx,

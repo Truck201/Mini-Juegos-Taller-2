@@ -1,28 +1,23 @@
-import { Scene } from 'phaser';
+import { Scene } from "phaser";
 
-export class GameCoOp extends Scene
-{
-    constructor ()
-    {
-        super('GameCo-Op');
-    }
+export class GameCoop extends Scene {
+  constructor() {
+    super("GameCoop");
+  }
+  init(data) {
+    
+  }
 
-    create ()
-    {
-        this.cameras.main.setBackgroundColor(0xfffff);
+  create() {
+    const height = this.game.scale.height
+    const width = this.game.scale.width
 
-        this.add.image(512, 384, 'background').setAlpha(0.5);
+    // this.add.image(width * 0.5, height * 0.5, "background").setAlpha(0.5).setDepth(0);
 
-        this.add.text(512, 384, 'Game Cooperative', {
-            fontFamily: 'Arial Black', fontSize: 38, color: '#ffffff',
-            stroke: '#000000', strokeThickness: 8,
-            align: 'center'
-        }).setOrigin(0.5);
+    
 
-        this.input.once('pointerdown', () => {
-
-            this.scene.start('GameOver');
-
-        });
-    }
+    this.input.once("pointerdown", () => {
+      this.scene.start("GameOver");
+    });
+  }
 }

@@ -9,25 +9,25 @@ export async function getTranslations(lang, callback) {
   translations = null;
   language = lang;
   console.log(language);
-  if (language === ES_AR) {
-    return callback ? callback() : false;
-  }
-
+  // if (language === ES_AR) {
+  //   return callback ? callback() : false;
+  // }
+  
   return await fetch(
-    `https://traducila.vercel.app/api/translations/${PROJECT_ID}/${language}`
+    `https://cors-anywhere.herokuapp.com/https://traducila.vercel.app/api/translations/${PROJECT_ID}/${language}`
   )
-    .then((response) => {
-      if (!response.ok) {
-        throw new Error("Network response was not ok");
-      }
-      return response.json();
-    })
-
-    .then((data) => {
-      localStorage.setItem("translations", JSON.stringify(data));
-      translations = data;
-      if (callback) callback();
-    });
+  .then((response) => {
+    if (!response.ok) {
+      throw new Error("Network response was not ok");
+    }
+    return response.json();
+  })
+  .then((data) => {
+    localStorage.setItem("translations", JSON.stringify(data));
+    console.log("Realizado Traducciones")
+    translations = data;
+    if (callback) callback();
+  });
 }
 
 export function getPhrase(key) {
@@ -37,7 +37,10 @@ export function getPhrase(key) {
   }
 
   let phrase = key;
+  console.log(phrase)
   if (translations && translations[key]) {
+    console.log(translations)
+    console.log(translations[key])
     phrase = translations[key];
     console.log(phrase);
   }

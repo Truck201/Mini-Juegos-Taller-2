@@ -1,4 +1,7 @@
 import { BaseScene } from "../lib/FontsBase";
+import { ES_AR, EN_US } from "../enums/languages";
+import { getTranslations } from "../services/translations";
+
 export class LanguageScene extends BaseScene {
   constructor() {
     super("ChooseLanguage");
@@ -32,15 +35,19 @@ export class LanguageScene extends BaseScene {
       ARGLanguage.setScale(1.24);
     });
 
+    
+
     ARGLanguage.on("pointerdown", () => {
       ARGLanguage.setScale(1.6);
-
+      
+      getTranslations(ES_AR)
+      
       ARGLanguage.anims.play("Crush-ARG", true);
       this.time.addEvent({
-        delay: 100,
+        delay: 120,
         loop: true,
         callback: () => {
-          this.gotoMainScene(); //Llama la escena Main
+          this.gotoMainScene(ES_AR); //Llama la escena Main
         },
       });
     });
@@ -67,12 +74,14 @@ export class LanguageScene extends BaseScene {
     USALanguage.on("pointerdown", () => {
       USALanguage.setScale(1.6);
 
+      getTranslations(EN_US)
+
       USALanguage.anims.play("Crush-EEUU", true);
       this.time.addEvent({
-        delay: 100,
+        delay: 120,
         loop: true,
         callback: () => {
-          this.gotoMainScene(); //Llama la escena Main
+          this.gotoMainScene(EN_US); //Llama la escena Main
         },
       });
     });
@@ -130,9 +139,11 @@ export class LanguageScene extends BaseScene {
     });
   }
 
-  gotoMainScene() {
+  gotoMainScene(lang) {
     this.time.delayedCall(200, () => {
-      this.scene.start("Shop");
+      this.scene.start("MainMenu", {
+        language: lang
+      });
     });
   }
 }

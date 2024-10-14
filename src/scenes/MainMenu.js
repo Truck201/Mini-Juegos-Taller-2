@@ -1,5 +1,6 @@
 import { BaseScene } from "../lib/FontsBase";
 import { Television } from "../entitities/television";
+import { getPhrase, getTranslations } from "../services/translations";
 export class MainMenu extends BaseScene {
   constructor() {
     super("MainMenu");
@@ -7,50 +8,96 @@ export class MainMenu extends BaseScene {
     this.allicons = null;
   }
 
-  init() {
+  init(data) {
     this.cameras.main.fadeIn(500, 0, 0, 0);
     this.allicons = [];
+    this.language = data.language;
   }
-  create() {
+  async create() {
     let width = this.scale.width; //Definir la mitad del Ancho
     let height = this.scale.height; //Definir la mitad del Alto
 
+    await getTranslations(this.language);
     //Title
     this.background = this.add
-      .sprite(width * 0.5, height * 0.5, "menu-background")
-      .setScale(2.4)
+      .sprite(width * 0.5, height * 0.65, "menu-background")
+      .setScale(2.9)
       .setDepth(2);
 
-    //Button
-    const playButton = this.createText(width / 2, height * 0.37, "Play")
+    //Button Versus
+    const playVersusButton = this.createText(
+      width / 2,
+      height * 0.3,
+      getPhrase("JugarContra")
+    )
       .setScale(1.4)
       .setInteractive()
       .setDepth(3)
-      .setOrigin(0.5, 0.5);
+      .setOrigin(0.5);
     //this.add.image(width / 2, height / 2, '').setScale(0.15);
-    playButton.setInteractive();
+    playVersusButton.setInteractive();
 
     //Button Animations Hover, Down, Out
-    playButton.on("pointerover", () => {
+    playVersusButton.on("pointerover", () => {
       // Cambia el tamaño de la imagen al pasar el mouse
-      playButton.setScale(1.7);
+      playVersusButton.setScale(1.7);
     });
 
-    playButton.on("pointerout", () => {
+    playVersusButton.on("pointerout", () => {
       // Cambia el tamaño de la imagen al pasar el mouse
-      playButton.setScale(1.4);
+      playVersusButton.setScale(1.4);
     });
 
-    playButton.on("pointerdown", () => {
-      playButton.setScale(1.3); // Vuelve al tamaño original
+    playVersusButton.on("pointerdown", () => {
+      playVersusButton.setScale(1.3); // Vuelve al tamaño original
       // this.add.image(width / 2, height / 2, '').setScale(0.37); //Explosión
       this.time.addEvent({
         delay: 900, // demora 1 segundo en iniciar
         loop: true,
         callback: () => {
           optionsButton.setText("");
-          playButton.setText("");
-          this.transitionToNextScene(); //Llama la escena Main
+          playVersusButton.setText("");
+          playCooperativeButton.setText("");
+          this.transitionToVersus(); //Llama la escena Game 1vs1
+        },
+      });
+    });
+
+    //Button Cooperative
+    const playCooperativeButton = this.createText(
+      width / 2,
+      height * 0.42,
+      getPhrase("JugarCoop")
+    )
+      .setScale(1.4)
+      .setInteractive()
+      .setDepth(3)
+      .setOrigin(0.5);
+    //this.add.image(width / 2, height / 2, '').setScale(0.15);
+    playCooperativeButton.setInteractive();
+
+    //Button Animations Hover, Down, Out
+    playCooperativeButton.on("pointerover", () => {
+      // Cambia el tamaño de la imagen al pasar el mouse
+      playCooperativeButton.setScale(1.7);
+    });
+
+    playCooperativeButton.on("pointerout", () => {
+      // Cambia el tamaño de la imagen al pasar el mouse
+      playCooperativeButton.setScale(1.4);
+    });
+
+    playCooperativeButton.on("pointerdown", () => {
+      playCooperativeButton.setScale(1.3); // Vuelve al tamaño original
+      // this.add.image(width / 2, height / 2, '').setScale(0.37); //Explosión
+      this.time.addEvent({
+        delay: 900, // demora 1 segundo en iniciar
+        loop: true,
+        callback: () => {
+          optionsButton.setText("");
+          playVersusButton.setText("");
+          playCooperativeButton.setText("");
+          this.transitionToCoperative(); //Llama la escena Coop
         },
       });
     });
@@ -69,9 +116,13 @@ export class MainMenu extends BaseScene {
     });
 
     //Button
-    const optionsButton = this.createText(width / 2, height * 0.47, "Options")
+    const optionsButton = this.createText(
+      width / 2,
+      height * 0.5,
+      getPhrase("Opciones")
+    )
       .setDepth(3)
-      .setOrigin(0.5, 0.5);
+      .setOrigin(0.5);
     //this.add.image(width / 2, height / 2, '').setScale(0.15);
     optionsButton.setInteractive();
 
@@ -96,14 +147,14 @@ export class MainMenu extends BaseScene {
         loop: true,
         callback: () => {
           optionsButton.setText("");
-          playButton.setText("");
+          playVersusButton.setText("");
+          playCooperativeButton.setText("");
           this.toOptionsScene(); //Llama la escena Main
         },
       });
     });
 
-    this.television = new Television(this, true)
-  
+    this.television = new Television(this, true);
   }
 
   resetInactivityTimer() {
@@ -161,13 +212,22 @@ export class MainMenu extends BaseScene {
     this.scene.start("opcionesScene"); //Ir a escena Opciones
   }
 
-  transitionToNextScene() {
+  transitionToVersus() {
     // Crear el efecto de zoom out
     this.cameras.main.zoomTo(0.4179, 1300); // Reducir el zoom en 1 segundo (1000 ms)
 
     // Esperar un poco antes de iniciar la siguiente escena
     this.time.delayedCall(1500, () => {
       this.scene.start("Game1vs1"); //Ir a escena Main
+    });
+  }
+
+  transitionToCoperative() {
+    this.cameras.main.zoomTo(1.4179, 1300);
+
+    // Esperar un poco antes de iniciar la siguiente escena
+    this.time.delayedCall(1500, () => {
+      this.scene.start("GameCoop"); //Ir a escena Main
     });
   }
 }
