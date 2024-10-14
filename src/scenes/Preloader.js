@@ -41,26 +41,37 @@ export class Preloader extends Scene {
       "boleteriaBackground",
       "../public/assets/boleteria/lenguaje.png",
       {
-        frameWidth:1920,
+        frameWidth: 1920,
         frameHeight: 1080,
       }
     );
 
-    this.load.image("Argentina", "../public/assets/boleteria/flag-arg-simple.png");
+    this.load.image(
+      "Argentina",
+      "../public/assets/boleteria/flag-arg-simple.png"
+    );
     this.load.image(
       "EstadosUnidos",
       "../public/assets/boleteria/flag-eeuu-simple.png"
     );
 
-    this.load.spritesheet("CUT-ARG", "../public/assets/boleteria/flag-arg.png", {
-      frameWidth: 228,
-      frameHeight: 92,
-    });
+    this.load.spritesheet(
+      "CUT-ARG",
+      "../public/assets/boleteria/flag-arg.png",
+      {
+        frameWidth: 228,
+        frameHeight: 92,
+      }
+    );
 
-    this.load.spritesheet("CUT-EEUU", "../public/assets/boleteria/flag-eeuu.png", {
-      frameWidth: 228,
-      frameHeight: 92,
-    });
+    this.load.spritesheet(
+      "CUT-EEUU",
+      "../public/assets/boleteria/flag-eeuu.png",
+      {
+        frameWidth: 228,
+        frameHeight: 92,
+      }
+    );
 
     this.load.spritesheet(
       "IDLE-ARG",
@@ -87,6 +98,9 @@ export class Preloader extends Scene {
       "menu-background",
       "../public/assets/escenario/principal.png"
     ); // /public/assets/escenario/principal.png   image.png
+
+    // Televisión
+    this.load.image("TeleImagen", "../public/assets/menu/tv.png"); // Derrota
 
     // Barra Audio Master
     this.load.image("sliderHandle", "../public/assets/menu/anillo_volumen.png"); // Derrota
@@ -133,7 +147,6 @@ export class Preloader extends Scene {
       }
     ); // DERROTA
 
-
     this.load.spritesheet(
       "Victory-Mimbo",
       "../public/assets/mimbo/mimbo-victoria.png",
@@ -149,7 +162,7 @@ export class Preloader extends Scene {
         frameWidth: 232, // 90
         frameHeight: 216, // 114
       }
-    );  // VICTORIA
+    ); // VICTORIA
 
     this.load.spritesheet(
       "Neutral-Mimbo",
@@ -166,8 +179,7 @@ export class Preloader extends Scene {
         frameWidth: 232, // 90
         frameHeight: 216, // 114
       }
-    ); // NEUTRAL  
-
+    ); // NEUTRAL
 
     //Globos de Texto
     this.load.image("globoTextoL", "../public/assets/kid-korn/izquierda.png");
@@ -345,6 +357,32 @@ export class Preloader extends Scene {
     this.load.image("flare3", "../public/assets/particles/particles3.png"); //  1      particles3.png  red-particle.png
 
     // Battle
+    // Stats
+    this.load.image(
+      "IcoDam",
+      "../public/assets/battle/damage.png"
+    );
+
+    this.load.image(
+      "IcoDef",
+      "../public/assets/battle/defense.png",
+    );
+
+    this.load.image(
+      "IcoCrt",
+      "../public/assets/battle/critical.png",
+    );
+
+    this.load.image(
+      "IcoHp",
+      "../public/assets/battle/life.png",
+    );
+
+    this.load.image(
+      "IcoSp",
+      "../public/assets/battle/speed.png",
+    );
+
     // Sword
     this.load.image(
       "static-sword",

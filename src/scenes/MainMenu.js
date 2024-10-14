@@ -17,7 +17,7 @@ export class MainMenu extends BaseScene {
 
     //Title
     this.background = this.add
-      .sprite(width / 2, height * 0.33, "menu-background")
+      .sprite(width * 0.5, height * 0.5, "menu-background")
       .setScale(2.4)
       .setDepth(2);
 

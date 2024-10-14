@@ -51,7 +51,7 @@ class CRTPostFx extends Phaser.Renderer.WebGL.Pipelines.PostFXPipeline {
     }
 
     onPreRender() {
-        this.set1f("time", this.game.loop.time / 1000); // Actualizamos el tiempo cada frame
+        this.set1f("time", this.game.loop.time / 1600); // Actualizamos el tiempo cada frame
     }
 
     get hueSpeed() {

@@ -1,3 +1,4 @@
+import { Television } from "../entitities/television";
 import { BaseScene } from "../lib/FontsBase";
 export class MenuOpciones extends BaseScene {
   constructor() {
@@ -13,7 +14,7 @@ export class MenuOpciones extends BaseScene {
     let width = this.game.scale.width;
     let height = this.game.scale.height;
 
-    const backgroundTV = this.add.sprite(width * 0.5, height * 0.5, 'l-opacidad').setAlpha(0.4)
+    const backgroundTV = new Television(this, true)
 
     // Agregar un botón para volver al menú principal
     const mainMenuButton = this.createText(
@@ -40,7 +41,7 @@ export class MenuOpciones extends BaseScene {
     });
 
     // Crear la barra
-    this.sliderBar = this.add.image(width / 2, height * 0.65, "sliderBar");
+    this.sliderBar = this.add.image(width / 2, height * 0.65, "sliderBar").setDepth(2);;
     this.sliderHandle = this.add
       .image(width / 2, height * 0.65, "sliderHandle")
       .setInteractive()

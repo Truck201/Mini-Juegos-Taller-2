@@ -81,8 +81,9 @@ export class RecolectScene extends Scene {
     this.kidKorn.startKidKornAppearance();
 
     
-    let background = this.add.sprite(width / 2, height * 0.43, "escenario");
+    let background = this.add.sprite(width * 0.5, height * 0.5, "escenario");
     background.setDepth(1);
+    background.setScale(1)
 
     // Crear la barra principal
     let barraX = width / 2; // Posición Barra en X

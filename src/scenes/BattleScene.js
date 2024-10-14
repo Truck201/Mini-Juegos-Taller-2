@@ -126,47 +126,119 @@ export class BattleScene extends BaseScene {
 
     this.player2Atributes.updateHealthBar(2, this.player2HP);
 
+    let width1 = width * 0.115;
+    let height1 = height * 0.4;
+
     // Textos De Atributos 1
     this.player1HPText = this.createText(
-      width * 0.35,
-      height * 0.08,
+      width1,
+      height1,
       `${this.player1HP.toString().padStart(2, "0")}`
     )
       .setOrigin(0.5)
       .setDepth(3);
-    this.speedText1 = this.createText(
-      width * 0.018,
-      height * 0.25,
-      `Speed: ${this.player1Speed.toString().padStart(2, "0")}`
-    ).setDepth(3);
-    this.createText(
-      width * 0.018,
-      height * 0.3,
-      `Evade: ${this.player1EvadeChance.toString().padStart(2, "0")}`
-    ).setDepth(3);
 
+    this.createTextWithIcon(width1, height1, "IcoHp", true);
+
+    let height2 = height * 0.48;
+    this.speedText1 = this.createText(
+      width1,
+      height2,
+      `${this.player1Speed.toString().padStart(2, "0")}`
+    )
+      .setOrigin(0.5)
+      .setDepth(3);
+
+    this.createTextWithIcon(width1, height2, "IcoSp", true);
+
+    let height3 = height * 0.56;
+    this.createText(
+      width1,
+      height3,
+      `${this.player1EvadeChance.toString().padStart(2, "0")}`
+    )
+      .setOrigin(0.5)
+      .setDepth(3);
+
+    this.createTextWithIcon(width1, height3, "IcoDef", true); // 0.68  // 0.78
+
+    let height4 = height * 0.64;
+    this.damageText1 = this.createText(
+      width1,
+      height4,
+      `${this.player1Damage.toString().padStart(2, "0")}`
+    )
+      .setOrigin(0.5)
+      .setDepth(3);
+
+    this.createTextWithIcon(width1, height4, "IcoDam", true);
+
+    let height5 = height * 0.72;
+    this.criticalText1 = this.createText(
+      width1,
+      height5,
+      `${this.player1CriticalChance.toString().padStart(2, "0")}`
+    )
+      .setOrigin(0.5)
+      .setDepth(3);
+
+    this.createTextWithIcon(width1, height5, "IcoCrt", true);
+
+    let width2 = width * 0.885;
     // Textos De Atributos 2
     this.player2HPText = this.createText(
-      width * 0.66,
-      height * 0.08,
+      width2,
+      height1,
       `${this.player2HP.toString().padStart(2, "0")}`
     )
       .setOrigin(0.5)
       .setDepth(3);
+
+    this.createTextWithIcon(width2, height1, "IcoHp", false);
+
     this.speedText2 = this.createText(
-      width * 0.858,
-      height * 0.25,
-      `Speed: ${this.player2Speed.toString().padStart(2, "0")}`
-    ).setDepth(3);
+      width2,
+      height2,
+      `${this.player2Speed.toString().padStart(2, "0")}`
+    )
+      .setOrigin(0.5)
+      .setDepth(3);
+
+    this.createTextWithIcon(width2, height2, "IcoSp", false);
+
     this.createText(
-      width * 0.858,
-      height * 0.3,
-      `Evade: ${this.player2EvadeChance.toString().padStart(2, "0")}`
-    ).setDepth(3);
+      width2,
+      height3,
+      `${this.player2EvadeChance.toString().padStart(2, "0")}`
+    )
+      .setOrigin(0.5)
+      .setDepth(3);
+
+    this.createTextWithIcon(width2, height3, "IcoDef", false);
+
+    this.damageText2 = this.createText(
+      width2,
+      height4,
+      `${this.player2Damage.toString().padStart(2, "0")}`
+    )
+      .setOrigin(0.5)
+      .setDepth(3);
+
+    this.createTextWithIcon(width2, height4, "IcoDam", false);
+
+    this.criticalText2 = this.createText(
+      width2,
+      height5,
+      `${this.player2CritialChance.toString().padStart(2, "0")}`
+    )
+      .setOrigin(0.5)
+      .setDepth(3);
+
+    this.createTextWithIcon(width2, height5, "IcoCrt", false);
 
     this.television = new Television(this, false);
 
-    let background = this.add.sprite(width * 0.5, height * 0.43, "escenario");
+    let background = this.add.sprite(width * 0.5, height * 0.5, "escenario");
     background.setDepth(1);
 
     const itemsCase = this.scene.get("ItemsCase");
@@ -174,8 +246,8 @@ export class BattleScene extends BaseScene {
     const player1 = new Character(this, "mimbo", true);
     const player2 = new Character(this, "luho", false);
 
-    player1.change_emotion("Mimbo", 0, player1)
-    player2.change_emotion("Luho", 0, player2)
+    player1.change_emotion("Mimbo", 0, player1);
+    player2.change_emotion("Luho", 0, player2);
 
     let barraX = width / 2; // Posición Barra en X
     let barraY = (height * 4.3) / 5; // Posición de alto en las barras Y
@@ -194,8 +266,8 @@ export class BattleScene extends BaseScene {
       this.player1Speed,
       "anilla-roja",
       {
-        left: null,
-        right: null,
+        left: Phaser.Input.Keyboard.KeyCodes.A,
+        right: Phaser.Input.Keyboard.KeyCodes.D,
       },
       true,
       this.mainBar,
@@ -211,8 +283,8 @@ export class BattleScene extends BaseScene {
       this.player2Speed,
       "anilla-azul",
       {
-        left: null,
-        right: null,
+        left: Phaser.Input.Keyboard.KeyCodes.LEFT,
+        right: Phaser.Input.Keyboard.KeyCodes.RIGHT,
       },
       false,
       this.mainBar,
@@ -253,5 +325,22 @@ export class BattleScene extends BaseScene {
 
     // Actualizar el texto de la televisión según el tiempo restante
     this.television.updateText(this.game_over_timeout);
+  }
+
+  createTextWithIcon(x, y, iconKey, isPlayerOne) {
+    if (isPlayerOne) {
+      x = x - 73;
+    }
+
+    if (!isPlayerOne) {
+      x = x + 73;
+    }
+
+    const iconObject = this.add
+      .sprite(x, y, iconKey)
+      .setScale(0.9)
+      .setDepth(3)
+      .setOrigin(0.5); // Ajusta la posición y el tamaño del ícono
+    return iconObject;
   }
 }

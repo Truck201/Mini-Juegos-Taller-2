@@ -6,23 +6,43 @@ export class Television {
     this.x = this.scene.scale.width / 2;
 
     if (isInMenu) {
-      this.scale = 0.5;
-      this.y = this.scene.scale.height * 0.34
+      this.scale = 1.5;
+      this.y = this.scene.scale.height;
+
+      // Sprite Television
+      this.television = this.scene.physics.add
+        .sprite(this.x, this.y * 0.8, "l-opacidad")
+        .setScale(this.scale)
+        .setAlpha(0.4);
+      this.television.setImmovable;
+      this.television.body.allowGravity = false;
+      this.television.setDepth(0);
+
+      this.filtrado = this.scene.physics.add
+        .sprite(this.x, this.y, "l-opacidad")
+        .setScale(this.scale)
+        .setAlpha(0.5)
+        .setDepth(1);
+      this.filtrado.setImmovable;
+      this.filtrado.body.allowGravity = false;
+
+      // Shader
+      this.television.setPostPipeline("CRTPostFx");
     } else if (!isInMenu) {
-      this.scale = 0.18;
+      this.y = this.scene.scale.height * 1.2;
+      this.scale = 0.001;
+
+      // Sprite Television
+      this.television = this.scene.physics.add
+        .sprite(this.x, this.y, "l-opacidad")
+        .setScale(this.scale)
+        .setAlpha(0.4);
+      this.television.setImmovable;
+      this.television.body.allowGravity = false;
+      this.television.setDepth(1);
+
+      // Shader
     }
-
-    // Sprite Television
-    this.television = this.scene.physics.add
-      .sprite(this.x, this.y, "l-opacidad")
-      .setScale(this.scale)
-      .setAlpha(0.4)
-      .setDepth(80);
-
-    this.television.setImmovable;
-    this.television.body.allowGravity = false;
-    this.television.setDepth(1);
-
     this.text = this.scene.add
       .text(this.x - 15, this.y - 50, "", {
         fontSize: "70px",
@@ -30,8 +50,7 @@ export class Television {
       })
       .setDepth(1);
 
-    // Shader
-   this.television.setPostPipeline('CRTPostFx');
+    this.television.setPostPipeline("CRTPostFx");
   }
 
   updateText(remainingTime) {

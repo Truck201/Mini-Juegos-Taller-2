@@ -1,5 +1,4 @@
 import { Scene } from "phaser";
-import { Character } from "../entitities/character";
 import { Television } from "../entitities/television";
 
 export class Game1v1 extends Scene {
@@ -16,8 +15,9 @@ export class Game1v1 extends Scene {
     // Crear Televisor Instancar
     let television = new Television(this, false);
     
-    let background = this.add.sprite(width / 2, height * 0.43, "escenario");
+    let background = this.add.sprite(width * 0.5, height * 0.5, "escenario");
     background.setDepth(1)
+    background.setScale(1)
 
     //Agregar los cursores
     this.cursor = this.input.keyboard.createCursorKeys();

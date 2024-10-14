@@ -24,7 +24,7 @@ export class BaseScene extends Scene {
   createText(x, y, text) {
     let fontSize;
     if (text.length <= 2) {
-      fontSize = "50px"; // Para palabras cortas
+      fontSize = "30px"; // Para palabras cortas
     } else if (text.length <= 4) {
       fontSize = "48px"; // Para palabras cortas
     } else if (text.length <= 8) {

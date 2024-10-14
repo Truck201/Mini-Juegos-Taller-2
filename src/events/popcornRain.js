@@ -7,9 +7,6 @@ export class PopcornRaining {
     this.isShelded1 = false;
     this.isShelded2 = false;
 
-    this.canAttack1 = true
-    this.canAttack2 = true
-
     this.create();
   }
 
@@ -37,8 +34,7 @@ export class PopcornRaining {
     });
   }
 
-  // Método para generar espadas
-  spawnSword(numSwords = 1) {
+  addNewSword(numSwords = 1) {
     for (let i = 0; i < numSwords; i++) {
       const sword = new Attack(this.scene);
       this.swords.push(sword);
@@ -102,7 +98,7 @@ export class PopcornRaining {
 
   // Lluvia de pororos
   startPopcornRain() {
-    this.spawnSword(2); // Genera una espada al inicio
+    this.addNewSword(2); // Genera una espada al inicio
   }
 
   update() {
@@ -114,7 +110,7 @@ export class PopcornRaining {
       // Si se presiona espacio, jugador 1 destruye un recolectable
       if (
         this.checkCollision(movingBar1Sprite.getBounds(), swordBounds) &&
-        Phaser.Input.Keyboard.JustDown(this.spaceKey) && this.canAttack1
+        Phaser.Input.Keyboard.JustDown(this.spaceKey)
       ) {
         if (
           this.scene.player2Atributes.takeDamage(
@@ -133,20 +129,12 @@ export class PopcornRaining {
         this.scene.player2HPText.setText(
           `${this.scene.player2HP.toString().padStart(2, "0")}`
         );
-
-        // No poder Atacar Juntos
-        this.canAttack1 = false
-        this.canAttack2 = false
-        this.scene.time.delayedCall(Phaser.Math.Between(200), () => {
-          this.canAttack1 = true
-          this.canAttack2 = true
-        })
       }
 
       // Si se presiona enter, jugador 2 destruye un recolectable
       if (
         this.checkCollision(movingBar2Sprite.getBounds(), swordBounds) &&
-        Phaser.Input.Keyboard.JustDown(this.enterKey) && this.canAttack2
+        Phaser.Input.Keyboard.JustDown(this.enterKey)
       ) {
         if (
           this.scene.player1Atributes.takeDamage(
@@ -165,14 +153,6 @@ export class PopcornRaining {
         this.scene.player1HPText.setText(
           `${this.scene.player1HP.toString().padStart(2, "0")}`
         );
-        
-        //  No poder atacar juntos
-        this.canAttack1 = false
-        this.canAttack2 = false
-        this.scene.time.delayedCall(Phaser.Math.Between(200), () => {
-          this.canAttack1 = true
-          this.canAttack2 = true
-        })
       }
     });
   }
@@ -213,31 +193,45 @@ export class PopcornRaining {
 
       case 2:
         if (playerId === 1) {
-          atributos.updateAttributes(1, { damage: 0.4 });
+          atributos.updateAttributes(1, { damage: 1 });
+          this.damageP1 = this.scene.player1Atributes.getDamage(1);
+          if (Math.floor(this.damageP1) > this.scene.player1Damage) {
+            this.scene.player1Damage = Math.floor(this.damageP1);
+            this.scene.damageText1.setText(
+              `${this.scene.player1Damage.toString().padStart(2, "0")}`
+            );
+          }
         }
         if (playerId === 2) {
-          atributos.updateAttributes(2, { damage: 0.4 });
+          atributos.updateAttributes(2, { damage: 1 });
+          this.damageP2 = this.scene.player2Atributes.getDamage(2);
+          if (Math.floor(this.damageP2) > this.scene.player2Damage) {
+            this.scene.player2Damage = Math.floor(this.damageP2);
+            this.scene.damageText2.setText(
+              `${this.scene.player2Damage.toString().padStart(2, "0")}`
+            );
+          }
         }
         break;
 
       case 3:
         if (playerId === 1) {
-          atributos.updateAttributes(1, { speed: 0.3 });
+          atributos.updateAttributes(1, { speed: 1 });
           this.speedP1 = this.scene.player1Atributes.getSpeed(1);
           if (Math.floor(this.speedP1) > this.scene.player1Speed) {
             this.scene.player1Speed = Math.floor(this.speedP1);
             this.scene.speedText1.setText(
-              `Speed: ${this.scene.player1Speed.toString().padStart(2, "0")}`
+              `${this.scene.player1Speed.toString().padStart(2, "0")}`
             );
           }
         }
         if (playerId === 2) {
-          atributos.updateAttributes(2, { speed: 0.3 });
+          atributos.updateAttributes(2, { speed: 1 });
           this.speedP2 = this.scene.player2Atributes.getSpeed(2);
           if (Math.floor(this.speedP2) > this.scene.player1Speed) {
             this.scene.player2Speed = Math.floor(this.speedP2);
             this.scene.speedText2.setText(
-              `Speed: ${this.scene.player2Speed.toString().padStart(2, "0")}`
+              `${this.scene.player2Speed.toString().padStart(2, "0")}`
             );
           }
         }
@@ -295,6 +289,6 @@ export class PopcornRaining {
   }
 
   respawn() {
-    this.spawnSword(1);
+    this.addNewSword(1);
   }
 }

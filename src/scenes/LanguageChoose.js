@@ -17,8 +17,7 @@ export class LanguageScene extends BaseScene {
     const ARGLanguage = this.add
       .sprite(width * 0.3, height * 0.67, "Argentina")
       .setDepth(10)
-      .setOrigin(0.5)
-      .setScale(1.24);
+      .setOrigin(0.5);
     ARGLanguage.setInteractive();
 
     ARGLanguage.on("pointerover", () => {
