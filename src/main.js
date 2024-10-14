@@ -21,6 +21,8 @@ import { HudBattle } from "./scenes/HudBattle";
 import { GameOver } from "./scenes/GameOver";
 import { BaseScene } from "./lib/FontsBase";
 
+import CRTPostFx from "./lib/CRTPostFx";
+import { LanguageScene } from "./scenes/LanguageChoose";
 
 const config = {
   type: Phaser.WEBGL,
@@ -58,8 +60,8 @@ const config = {
     BaseScene,
   ],
   pipeline: {
-    'CRTPostFx': CRTPostFx
-  }
+    CRTPostFx: CRTPostFx,
+  },
 };
 
 // Create a new Phaser game instance
