@@ -7,8 +7,8 @@ export class GameCooperative extends Scene {
   constructor() {
     super("GameCoop");
 
-    this.targets = new Array();
-    this.slingshots = new Array();
+    this.targets = [];
+    this.slingshots = [];
   }
 
   create() {
@@ -23,40 +23,29 @@ export class GameCooperative extends Scene {
     this.limits.body.allowGravity = false;
     this.limits.body.setSize(width, 100);
 
-    // Crear los slingshots para ambos jugadores
-    this.slingshot1 = this.slingshots.push(
-      new SlingShot(this, width * 0.25, height * 0.85, "A", "D", "SPACE", true)
+    // Crear los slingshots
+    this.slingshots.push(
+      new SlingShot(this, width * 0.25, height * 0.85, 
+        Phaser.Input.Keyboard.KeyCodes.A, 
+        Phaser.Input.Keyboard.KeyCodes.D, 
+        Phaser.Input.Keyboard.KeyCodes.SPACE, 
+        true, 
+        this)
     ); // Jugador 1
-    this.slingshot2 = this.slingshots.push(
-      new SlingShot(
-        this,
-        width * 0.75,
-        height * 0.85,
-        "LEFT",
-        "RIGHT",
-        "ENTER",
-        false
-      )
+
+    this.slingshots.push(
+      new SlingShot(this, width * 0.75, height * 0.85, 
+        Phaser.Input.Keyboard.KeyCodes.LEFT, 
+        Phaser.Input.Keyboard.KeyCodes.RIGHT, 
+        Phaser.Input.Keyboard.KeyCodes.ENTER, 
+        false, 
+        this)
     ); // Jugador 2
 
     this.createNewTargets();
 
+    // Crear grupo para las balas
     this.bullets = this.physics.add.group();
-    const bullet1 = new Bullets(
-      this,
-      this.slingshot1.x,
-      this.slingshot1.y,
-      this.direction
-    );
-    this.bullets.add(bullet1.bullet); // Agregar la bala al grupo
-
-    const bullet2 = new Bullets(
-      this,
-      this.slingshot2.x,
-      this.slingshot2.y,
-      this.direction
-    );
-    this.bullets.add(bullet2.bullet); // Agregar la bala al grupo
 
     // Detectar colisiones entre balas y dianas
     this.physics.add.collider(
@@ -83,11 +72,7 @@ export class GameCooperative extends Scene {
     ];
 
     const avalibleColor = ["Blue", "Purple", "Orange", "Rose", "Green"];
-
-    const shuffledColors = Phaser.Utils.Array.Shuffle(avalibleColor).slice(
-      0,
-      5
-    );
+    const shuffledColors = Phaser.Utils.Array.Shuffle(avalibleColor).slice(0, 5);
 
     let index = 0;
     for (let row = 0; row < layout.length; row++) {
@@ -95,13 +80,13 @@ export class GameCooperative extends Scene {
       const rowOffsetX = offsetX - (cols * size) / 2;
 
       for (let col = 0; col < cols; col++) {
-        const x = rowOffsetX + col * size; // Posición X basada en el espaciado
-        const y = offsetY + row * size2; // Posición Y con distancia entre filas
+        const x = rowOffsetX + col * size;
+        const y = offsetY + row * size2;
 
-        const color = shuffledColors[index]; // Asignar color al objetivo
+        const color = shuffledColors[index];
 
-        const target = new TargetsCoop(this, x, y, color); // Crear el objetivo
-        this.targets.push(target); // Añadir el objetivo al array
+        const target = new TargetsCoop(this, x, y, color);
+        this.targets.push(target);
 
         index++;
       }

@@ -35,7 +35,7 @@ const config = {
     default: "arcade",
     arcade: {
       gravity: { y: 360 },
-      debug: false,
+      debug: true,
     },
   },
   scene: [
