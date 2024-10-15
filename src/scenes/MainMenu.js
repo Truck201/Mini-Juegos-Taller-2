@@ -20,14 +20,14 @@ export class MainMenu extends BaseScene {
     await getTranslations(this.language);
     //Title
     this.background = this.add
-      .sprite(width * 0.5, height * 0.65, "menu-background")
+      .sprite(width * 0.48, height * 0.65, "menu-background")
       .setScale(2.9)
       .setDepth(2);
 
     //Button Versus
     const playVersusButton = this.createText(
       width / 2,
-      height * 0.3,
+      height * 0.34,
       getPhrase("JugarContra")
     )
       .setScale(1.4)
@@ -214,7 +214,7 @@ export class MainMenu extends BaseScene {
 
   transitionToVersus() {
     // Crear el efecto de zoom out
-    this.cameras.main.zoomTo(0.4179, 1300); // Reducir el zoom en 1 segundo (1000 ms)
+    this.cameras.main.zoomTo(0.6, 1300); // Reducir el zoom en 1 segundo (1000 ms)   0.4179
 
     // Esperar un poco antes de iniciar la siguiente escena
     this.time.delayedCall(1500, () => {
@@ -227,7 +227,7 @@ export class MainMenu extends BaseScene {
 
     // Esperar un poco antes de iniciar la siguiente escena
     this.time.delayedCall(1500, () => {
-      this.scene.start("GameCoop"); //Ir a escena Main
+      this.scene.start("startCoop"); //Ir a escena Main
     });
   }
 }

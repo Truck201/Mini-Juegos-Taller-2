@@ -39,7 +39,7 @@ export class Preloader extends Scene {
     // ChooseLanguage
     this.load.spritesheet(
       "boleteriaBackground",
-      "../public/assets/boleteria/lenguaje.png",
+      "../public/assets/versus/boleteria/lenguaje.png",
       {
         frameWidth: 1920,
         frameHeight: 1080,
@@ -48,16 +48,16 @@ export class Preloader extends Scene {
 
     this.load.image(
       "Argentina",
-      "../public/assets/boleteria/flag-arg-simple.png"
+      "../public/assets/versus/boleteria/flag-arg-simple.png"
     );
     this.load.image(
       "EstadosUnidos",
-      "../public/assets/boleteria/flag-eeuu-simple.png"
+      "../public/assets/versus/boleteria/flag-eeuu-simple.png"
     );
 
     this.load.spritesheet(
       "CUT-ARG",
-      "../public/assets/boleteria/flag-arg.png",
+      "../public/assets/versus/boleteria/flag-arg.png",
       {
         frameWidth: 228,
         frameHeight: 92,
@@ -66,7 +66,7 @@ export class Preloader extends Scene {
 
     this.load.spritesheet(
       "CUT-EEUU",
-      "../public/assets/boleteria/flag-eeuu.png",
+      "../public/assets/versus/boleteria/flag-eeuu.png",
       {
         frameWidth: 228,
         frameHeight: 92,
@@ -75,7 +75,7 @@ export class Preloader extends Scene {
 
     this.load.spritesheet(
       "IDLE-ARG",
-      "../public/assets/boleteria/flag-arg-simple.png",
+      "../public/assets/versus/boleteria/flag-arg-simple.png",
       {
         frameWidth: 212,
         frameHeight: 92,
@@ -84,7 +84,7 @@ export class Preloader extends Scene {
 
     this.load.spritesheet(
       "IDLE-EEUU",
-      "../public/assets/boleteria/flag-eeuu-simple.png",
+      "../public/assets/versus/boleteria/flag-eeuu-simple.png",
       {
         frameWidth: 212,
         frameHeight: 92,
@@ -93,29 +93,29 @@ export class Preloader extends Scene {
 
     //  Main Menu
     // LOGO
-    this.load.image("logo", "../public/assets/menu/logo.png");
+    this.load.image("logo", "../public/assets/versus/menu/logo.png");
     this.load.image(
       "menu-background",
-      "../public/assets/escenario/principal.png"
-    ); // /public/assets/escenario/principal.png   image.png
+      "../public/assets/versus/escenario/principal.png"
+    ); // /public/assets/versus/escenario/principal.png   image.png
 
     // Televisión
-    this.load.image("TeleImagen", "../public/assets/menu/tv.png"); // Derrota
+    this.load.image("TeleImagen", "../public/assets/versus/menu/tv.png"); // Derrota
 
     // Barra Audio Master
-    this.load.image("sliderHandle", "../public/assets/menu/anillo_volumen.png"); // Derrota
-    this.load.image("sliderBar", "../public/assets/menu/barra_volumen.png"); // Daño
+    this.load.image("sliderHandle", "../public/assets/versus/menu/anillo_volumen.png"); // Derrota
+    this.load.image("sliderBar", "../public/assets/versus/menu/barra_volumen.png"); // Daño
 
     //  Game
-    this.load.image("escenario", "../public/assets/escenario/principal.png");
+    this.load.image("escenario", "../public/assets/versus/escenario/principal.png");
 
     //  Personajes
-    this.load.image("mimbo", "../public/assets/mimbo/mimbo.png"); // Neutral
-    this.load.image("luho", "../public/assets/luho/luho.png"); // Neutral
+    this.load.image("mimbo", "../public/assets/versus/mimbo/mimbo.png"); // Neutral
+    this.load.image("luho", "../public/assets/versus/luho/luho.png"); // Neutral
 
     this.load.spritesheet(
       "Damage-Mimbo",
-      "../public/assets/mimbo/mimbo-dano.png",
+      "../public/assets/versus/mimbo/mimbo-dano.png",
       {
         frameWidth: 232, // 90
         frameHeight: 216, // 114
@@ -123,7 +123,7 @@ export class Preloader extends Scene {
     ); // DAÑO
     this.load.spritesheet(
       "Damage-Luho",
-      "../public/assets/luho/luho-dano.png",
+      "../public/assets/versus/luho/luho-dano.png",
       {
         frameWidth: 232, // 90
         frameHeight: 216, // 114
@@ -132,7 +132,7 @@ export class Preloader extends Scene {
 
     this.load.spritesheet(
       "Defeat-Mimbo",
-      "../public/assets/mimbo/mimbo-derrota.png",
+      "../public/assets/versus/mimbo/mimbo-derrota.png",
       {
         frameWidth: 232, // 90
         frameHeight: 216, // 114
@@ -140,7 +140,7 @@ export class Preloader extends Scene {
     ); // DERROTA
     this.load.spritesheet(
       "Defeat-Luho",
-      "../public/assets/luho/luho-derrota.png",
+      "../public/assets/versus/luho/luho-derrota.png",
       {
         frameWidth: 232, // 90
         frameHeight: 216, // 114
@@ -149,7 +149,7 @@ export class Preloader extends Scene {
 
     this.load.spritesheet(
       "Victory-Mimbo",
-      "../public/assets/mimbo/mimbo-victoria.png",
+      "../public/assets/versus/mimbo/mimbo-victoria.png",
       {
         frameWidth: 232, // 90
         frameHeight: 216, // 114
@@ -157,7 +157,7 @@ export class Preloader extends Scene {
     ); // VICTORIA
     this.load.spritesheet(
       "Victory-Luho",
-      "../public/assets/luho/luho-victoria.png",
+      "../public/assets/versus/luho/luho-victoria.png",
       {
         frameWidth: 232, // 90
         frameHeight: 216, // 114
@@ -166,7 +166,7 @@ export class Preloader extends Scene {
 
     this.load.spritesheet(
       "Neutral-Mimbo",
-      "../public/assets/mimbo/mimbo-neutral.png",
+      "../public/assets/versus/mimbo/mimbo-neutral.png",
       {
         frameWidth: 232, // 90
         frameHeight: 216, // 114
@@ -174,7 +174,7 @@ export class Preloader extends Scene {
     ); // NEUTRAL
     this.load.spritesheet(
       "Neutral-Luho",
-      "../public/assets/luho/luho-neutral.png",
+      "../public/assets/versus/luho/luho-neutral.png",
       {
         frameWidth: 232, // 90
         frameHeight: 216, // 114
@@ -182,35 +182,35 @@ export class Preloader extends Scene {
     ); // NEUTRAL
 
     //Globos de Texto
-    this.load.image("globoTextoL", "../public/assets/kid-korn/izquierda.png");
-    this.load.image("globoTextoR", "../public/assets/kid-korn/derecha.png");
+    this.load.image("globoTextoL", "../public/assets/versus/kid-korn/izquierda.png");
+    this.load.image("globoTextoR", "../public/assets/versus/kid-korn/derecha.png");
 
     // Kid Korn
-    this.load.image("kid-kornS", "../public/assets/kid-korn/korn-defrente.png");
-    this.load.image("kid-kornB", "../public/assets/kid-korn/korn-frente.png");
-    this.load.image("kid-kornL", "../public/assets/kid-korn/korn-izq.png");
-    this.load.image("kid-kornR", "../public/assets/kid-korn/kron-derecha.png");
+    this.load.image("kid-kornS", "../public/assets/versus/kid-korn/korn-defrente.png");
+    this.load.image("kid-kornB", "../public/assets/versus/kid-korn/korn-frente.png");
+    this.load.image("kid-kornL", "../public/assets/versus/kid-korn/korn-izq.png");
+    this.load.image("kid-kornR", "../public/assets/versus/kid-korn/kron-derecha.png");
 
     // Dialogues
     this.load.json("kidKornDialogues", "../public/data/DKidKorn.json");
 
     //   Emociones
-    this.load.image("logo", "../public/assets/menu/logo.png"); // Victoria
-    this.load.image("logo", "../public/assets/menu/logo.png"); // Derrota
-    this.load.image("logo", "../public/assets/menu/logo.png"); // Daño
+    this.load.image("logo", "../public/assets/versus/menu/logo.png"); // Victoria
+    this.load.image("logo", "../public/assets/versus/menu/logo.png"); // Derrota
+    this.load.image("logo", "../public/assets/versus/menu/logo.png"); // Daño
 
-    this.load.image("logo", "../public/assets/menu/logo.png"); // Victoria
-    this.load.image("logo", "../public/assets/menu/logo.png"); // Derrota
-    this.load.image("logo", "../public/assets/menu/logo.png"); // Daño
+    this.load.image("logo", "../public/assets/versus/menu/logo.png"); // Victoria
+    this.load.image("logo", "../public/assets/versus/menu/logo.png"); // Derrota
+    this.load.image("logo", "../public/assets/versus/menu/logo.png"); // Daño
 
     //   Pochoclos
-    this.load.image("pochoclo", "../public/assets/barra/static-pororo1.png");
-    this.load.image("pochoclo2", "../public/assets/barra/static-pororo.png");
+    this.load.image("pochoclo", "../public/assets/versus/barra/static-pororo1.png");
+    this.load.image("pochoclo2", "../public/assets/versus/barra/static-pororo.png");
 
     //   Anims
     this.load.spritesheet(
       "pochoclo-anims",
-      "../public/assets/anims/plop-pororo1.png",
+      "../public/assets/versus/anims/plop-pororo1.png",
       {
         frameWidth: 92, // 90
         frameHeight: 80, // 114
@@ -218,33 +218,33 @@ export class Preloader extends Scene {
     );
 
     //   Main Barra Sprite
-    this.load.image("imagen-barra", "../public/assets/barra/barra-1v1.png");
-    this.load.image("anilla-azul", "../public/assets/barra/barra-azul.png");
-    this.load.image("anilla-roja", "../public/assets/barra/barra-roja.png");
+    this.load.image("imagen-barra", "../public/assets/versus/barra/barra-1v1.png");
+    this.load.image("anilla-azul", "../public/assets/versus/barra/barra-azul.png");
+    this.load.image("anilla-roja", "../public/assets/versus/barra/barra-roja.png");
 
     //   Opacidad
-    this.load.image("l-opacidad", "../public/assets/opacidad.png");
+    this.load.image("l-opacidad", "../public/assets/versus/opacidad.png");
 
     //  Tienda
-    this.load.image("low-points", "../public/assets/tienda/poco.png");
-    this.load.image("medium-points", "../public/assets/tienda/medio.png");
-    this.load.image("high-points", "../public/assets/tienda/rebalsa.png");
+    this.load.image("low-points", "../public/assets/versus/tienda/poco.png");
+    this.load.image("medium-points", "../public/assets/versus/tienda/medio.png");
+    this.load.image("high-points", "../public/assets/versus/tienda/rebalsa.png");
 
-    this.load.spritesheet("polilla", "../public/assets/tienda/pollilla.png", {
+    this.load.spritesheet("polilla", "../public/assets/versus/tienda/pollilla.png", {
       frameWidth: 16,
       frameHeight: 16,
     });
-    this.load.spritesheet("toby", "../public/assets/tienda/toby.png", {
+    this.load.spritesheet("toby", "../public/assets/versus/tienda/toby.png", {
       frameWidth: 148,
       frameHeight: 72,
     });
-    this.load.spritesheet("mothman", "../public/assets/tienda/mothman.png", {
+    this.load.spritesheet("mothman", "../public/assets/versus/tienda/mothman.png", {
       frameWidth: 160,
       frameHeight: 188,
     });
     this.load.spritesheet(
       "alcantarilla",
-      "../public/assets/tienda/alcantarilla.png",
+      "../public/assets/versus/tienda/alcantarilla.png",
       {
         frameWidth: 20,
         frameHeight: 4,
@@ -253,14 +253,14 @@ export class Preloader extends Scene {
 
     this.load.image(
       "backgroundShop",
-      "../public/assets/tienda/shop-background.png"
+      "../public/assets/versus/tienda/shop-background.png"
     );
 
     // ITEMS DE LA TIENDA
     // Popcorn (7% EC)
     this.load.spritesheet(
       "popcorn",
-      "../public/assets/tienda/idle-pororo.png",
+      "../public/assets/versus/tienda/idle-pororo.png",
       {
         frameWidth: 65,
         frameHeight: 64,
@@ -268,69 +268,69 @@ export class Preloader extends Scene {
     );
 
     // Lentes (++ Anchor)
-    this.load.spritesheet("glasses", "../public/assets/tienda/lentes1.png", {
+    this.load.spritesheet("glasses", "../public/assets/versus/tienda/lentes1.png", {
       frameWidth: 80,
       frameHeight: 96,
     });
 
     // Caramelos  (+1 HP) (+5 VEL) (Medio)
-    this.load.spritesheet("candy1", "../public/assets/tienda/caramelo1.png", {
+    this.load.spritesheet("candy1", "../public/assets/versus/tienda/caramelo1.png", {
       frameWidth: 80,
       frameHeight: 96,
     });
 
-    this.load.spritesheet("candy2", "../public/assets/tienda/caramelo2.png", {
+    this.load.spritesheet("candy2", "../public/assets/versus/tienda/caramelo2.png", {
       frameWidth: 80,
       frameHeight: 96,
     });
 
-    this.load.spritesheet("candy3", "../public/assets/tienda/caramelo3.png", {
+    this.load.spritesheet("candy3", "../public/assets/versus/tienda/caramelo3.png", {
       frameWidth: 80,
       frameHeight: 96,
     });
 
     // Helados  (+15% EC)
-    this.load.spritesheet("icecream1", "../public/assets/tienda/heladoA.png", {
+    this.load.spritesheet("icecream1", "../public/assets/versus/tienda/heladoA.png", {
       frameWidth: 80,
       frameHeight: 96,
     });
 
-    this.load.spritesheet("icecream2", "../public/assets/tienda/heladoB.png", {
+    this.load.spritesheet("icecream2", "../public/assets/versus/tienda/heladoB.png", {
       frameWidth: 80,
       frameHeight: 96,
     });
 
-    this.load.spritesheet("icecream3", "../public/assets/tienda/heladoC.png", {
+    this.load.spritesheet("icecream3", "../public/assets/versus/tienda/heladoC.png", {
       frameWidth: 80,
       frameHeight: 96,
     });
 
     // Energizante (+10 VEL)
-    this.load.spritesheet("energizing", "../public/assets/tienda/lata2.png", {
+    this.load.spritesheet("energizing", "../public/assets/versus/tienda/lata2.png", {
       frameWidth: 80,
       frameHeight: 96,
     });
 
     // Ojo de cuthulu (15% CRT)
-    this.load.spritesheet("cuthulu", "../public/assets/tienda/ojo1.png", {
+    this.load.spritesheet("cuthulu", "../public/assets/versus/tienda/ojo1.png", {
       frameWidth: 80,
       frameHeight: 96,
     });
 
     // Hacha (+2 DMG CARO)
-    this.load.spritesheet("axe", "../public/assets/tienda/hacha1.png", {
+    this.load.spritesheet("axe", "../public/assets/versus/tienda/hacha1.png", {
       frameWidth: 80,
       frameHeight: 96,
     });
 
     // Paleta  (+5 VEL) (+1 DMG)
-    this.load.spritesheet("palete", "../public/assets/tienda/chupetin2.png", {
+    this.load.spritesheet("palete", "../public/assets/versus/tienda/chupetin2.png", {
       frameWidth: 80,
       frameHeight: 96,
     });
 
     // Hamburgesa (+3 HP)  (CARO)
-    this.load.spritesheet("burger", "../public/assets/tienda/hamburguesa.png", {
+    this.load.spritesheet("burger", "../public/assets/versus/tienda/hamburguesa.png", {
       frameWidth: 80,
       frameHeight: 96,
     });
@@ -338,7 +338,7 @@ export class Preloader extends Scene {
     // Chocolate (+4 VEL) (+7% EC)
     this.load.spritesheet(
       "chocolate",
-      "../public/assets/tienda/chocolate.png",
+      "../public/assets/versus/tienda/chocolate.png",
       {
         frameWidth: 80,
         frameHeight: 96,
@@ -346,52 +346,52 @@ export class Preloader extends Scene {
     );
 
     // Pizza (+1 DMG) (+1 HP)
-    this.load.spritesheet("pizza", "../public/assets/tienda/pizza.png", {
+    this.load.spritesheet("pizza", "../public/assets/versus/tienda/pizza.png", {
       frameWidth: 80,
       frameHeight: 96,
     });
 
     // Partículas
-    this.load.image("flare", "../public/assets/particles/particles.png"); //  2      particles.png    blue-particle.png
-    this.load.image("flare2", "../public/assets/particles/particles2.png");
-    this.load.image("flare3", "../public/assets/particles/particles3.png"); //  1      particles3.png  red-particle.png
+    this.load.image("flare", "../public/assets/versus/particles/particles.png"); //  2      particles.png    blue-particle.png
+    this.load.image("flare2", "../public/assets/versus/particles/particles2.png");
+    this.load.image("flare3", "../public/assets/versus/particles/particles3.png"); //  1      particles3.png  red-particle.png
 
     // Battle
     // Stats
     this.load.image(
       "IcoDam",
-      "../public/assets/battle/damage.png"
+      "../public/assets/versus/battle/damage.png"
     );
 
     this.load.image(
       "IcoDef",
-      "../public/assets/battle/defense.png",
+      "../public/assets/versus/battle/defense.png",
     );
 
     this.load.image(
       "IcoCrt",
-      "../public/assets/battle/critical.png",
+      "../public/assets/versus/battle/critical.png",
     );
 
     this.load.image(
       "IcoHp",
-      "../public/assets/battle/life.png",
+      "../public/assets/versus/battle/life.png",
     );
 
     this.load.image(
       "IcoSp",
-      "../public/assets/battle/speed.png",
+      "../public/assets/versus/battle/speed.png",
     );
 
     // Sword
     this.load.image(
       "static-sword",
-      "../public/assets/battle/events/static-sword.png"
+      "../public/assets/versus/battle/events/static-sword.png"
     );
 
     this.load.spritesheet(
       "b-sword",
-      "../public/assets/battle/events/idle-brkn-sword.png",
+      "../public/assets/versus/battle/events/idle-brkn-sword.png",
       {
         frameWidth: 52,
         frameHeight: 168,
@@ -400,7 +400,7 @@ export class Preloader extends Scene {
 
     this.load.spritesheet(
       "idle-sword",
-      "../public/assets/battle/events/idle-sword.png",
+      "../public/assets/versus/battle/events/idle-sword.png",
       {
         frameWidth: 52,
         frameHeight: 168,
@@ -409,7 +409,7 @@ export class Preloader extends Scene {
 
     this.load.spritesheet(
       "r-sword",
-      "../public/assets/battle/events/rotate-sword.png",
+      "../public/assets/versus/battle/events/rotate-sword.png",
       {
         frameWidth: 52,
         frameHeight: 168,
@@ -419,12 +419,12 @@ export class Preloader extends Scene {
     // Heart
     this.load.image(
       "static-heart",
-      "../public/assets/battle/events/static-heart.png"
+      "../public/assets/versus/battle/events/static-heart.png"
     );
 
     this.load.spritesheet(
       "idle-heart",
-      "../public/assets/battle/events/idle-heart.png",
+      "../public/assets/versus/battle/events/idle-heart.png",
       {
         frameWidth: 104,
         frameHeight: 84,
@@ -433,7 +433,7 @@ export class Preloader extends Scene {
 
     this.load.spritesheet(
       "flying-heart",
-      "../public/assets/battle/events/flying-heart.png",
+      "../public/assets/versus/battle/events/flying-heart.png",
       {
         frameWidth: 104,
         frameHeight: 84,
@@ -443,12 +443,12 @@ export class Preloader extends Scene {
     // Shield
     this.load.image(
       "static-shield",
-      "../public/assets/battle/events/static-shield.png"
+      "../public/assets/versus/battle/events/static-shield.png"
     );
 
     this.load.spritesheet(
       "idle-shield",
-      "../public/assets/battle/events/idle-shield.png",
+      "../public/assets/versus/battle/events/idle-shield.png",
       {
         frameWidth: 80,
         frameHeight: 100,
@@ -457,7 +457,7 @@ export class Preloader extends Scene {
 
     this.load.spritesheet(
       "r-shield",
-      "../public/assets/battle/events/rotate-shield.png",
+      "../public/assets/versus/battle/events/rotate-shield.png",
       {
         frameWidth: 80,
         frameHeight: 100,
@@ -465,16 +465,16 @@ export class Preloader extends Scene {
     );
 
     // Popcorn Event Rain
-    this.load.image("popcorn1", "../public/assets/anims/popcorn.png");
+    this.load.image("popcorn1", "../public/assets/versus/anims/popcorn.png");
 
-    this.load.image("popcorn2", "../public/assets/anims/popcorn.png");
+    this.load.image("popcorn2", "../public/assets/versus/anims/popcorn.png");
 
-    this.load.image("popcorn3", "../public/assets/anims/popcorn.png");
+    this.load.image("popcorn3", "../public/assets/versus/anims/popcorn.png");
 
     // Left
     this.load.spritesheet(
       "healthBarLeftAnims",
-      "../public/assets/battle/vida/pj1-xtra.png",
+      "../public/assets/versus/battle/vida/pj1-xtra.png",
       {
         frameWidth: 324,
         frameHeight: 84,
@@ -482,33 +482,33 @@ export class Preloader extends Scene {
     );
     this.load.image(
       "healthBarL1",
-      "../public/assets/battle/vida/pj1_vida5.png"
+      "../public/assets/versus/battle/vida/pj1_vida5.png"
     );
     this.load.image(
       "healthBarL2",
-      "../public/assets/battle/vida/pj1_vida4.png"
+      "../public/assets/versus/battle/vida/pj1_vida4.png"
     );
     this.load.image(
       "healthBarL3",
-      "../public/assets/battle/vida/pj1_vida3.png"
+      "../public/assets/versus/battle/vida/pj1_vida3.png"
     );
     this.load.image(
       "healthBarL4",
-      "../public/assets/battle/vida/pj1_vida2.png"
+      "../public/assets/versus/battle/vida/pj1_vida2.png"
     );
     this.load.image(
       "healthBarL5",
-      "../public/assets/battle/vida/pj1_vida1.png"
+      "../public/assets/versus/battle/vida/pj1_vida1.png"
     );
     this.load.image(
       "healthBarLNo",
-      "../public/assets/battle/vida/pj1_no-vida.png"
+      "../public/assets/versus/battle/vida/pj1_no-vida.png"
     );
 
     // Right
     this.load.spritesheet(
       "healthBarRightAnims",
-      "../public/assets/battle/vida/pj2-xtra.png",
+      "../public/assets/versus/battle/vida/pj2-xtra.png",
       {
         frameWidth: 316,
         frameHeight: 84,
@@ -516,28 +516,192 @@ export class Preloader extends Scene {
     );
     this.load.image(
       "healthBarR1",
-      "../public/assets/battle/vida/pj2_vida5.png"
+      "../public/assets/versus/battle/vida/pj2_vida5.png"
     );
     this.load.image(
       "healthBarR2",
-      "../public/assets/battle/vida/pj2_vida4.png"
+      "../public/assets/versus/battle/vida/pj2_vida4.png"
     );
     this.load.image(
       "healthBarR3",
-      "../public/assets/battle/vida/pj2_vida3.png"
+      "../public/assets/versus/battle/vida/pj2_vida3.png"
     );
     this.load.image(
       "healthBarR4",
-      "../public/assets/battle/vida/pj2_vida2.png"
+      "../public/assets/versus/battle/vida/pj2_vida2.png"
     );
     this.load.image(
       "healthBarR5",
-      "../public/assets/battle/vida/pj2_vida1.png"
+      "../public/assets/versus/battle/vida/pj2_vida1.png"
     );
     this.load.image(
       "healthBarRNo",
-      "../public/assets/battle/vida/pj2_no-vida.png"
+      "../public/assets/versus/battle/vida/pj2_no-vida.png"
     );
+
+
+
+
+    // Juego COPERATIVISMO SUNCHALE chunchale
+    // Background
+    this.load.image(
+      "BackgroundCoop",
+      "../public/assets/coop/escenarios/fondo.png"
+    );
+
+    // ANIMACIONES Bolsas
+    this.load.spritesheet(
+      "AnimsBlueBag",
+      "../public/assets/coop/animacion-bolsas/bolsa-azul.png",
+      {
+        frameWidth: 216,
+        frameHeight: 348,
+      }
+    );
+
+    this.load.spritesheet(
+      "AnimsPurpleBag",
+      "../public/assets/coop/animacion-bolsas/bolsa-morada.png",
+      {
+        frameWidth: 216,
+        frameHeight: 348,
+      }
+    );
+
+    this.load.spritesheet(
+      "AnimsOrangeBag",
+      "../public/assets/coop/animacion-bolsas/bolsa-naranja.png",
+      {
+        frameWidth: 216,
+        frameHeight: 348,
+      }
+    );
+
+    this.load.spritesheet(
+      "AnimsRoseBag",
+      "../public/assets/coop/animacion-bolsas/bolsa-rosa.png",
+      {
+        frameWidth: 216,
+        frameHeight: 348,
+      }
+    );
+
+    this.load.spritesheet(
+      "AnimsGreenBag",
+      "../public/assets/coop/animacion-bolsas/bolsa-verde.png",
+      {
+        frameWidth: 216,
+        frameHeight: 348,
+      }
+    );
+
+    // Pedidos de Misión
+    this.load.image(
+      "PedidosAzul",
+      "../public/assets/coop/bolsas-pedidos/pedido-azul.png"
+    );
+
+    this.load.image(
+      "PedidosMorado",
+      "../public/assets/coop/bolsas-pedidos/pedido-morada.png"
+    );
+
+    this.load.image(
+      "PedidosNaranja",
+      "../public/assets/coop/bolsas-pedidos/pedido-naranja.png"
+    );
+
+    this.load.image(
+      "PedidosRosa",
+      "../public/assets/coop/bolsas-pedidos/pedido-rosa.png"
+    );
+
+    this.load.image(
+      "PedidosVerde",
+      "../public/assets/coop/bolsas-pedidos/pedido-verde.png"
+    );
+
+    // Bolsitas Vacias
+    this.load.image(
+      "EmptyBlue",
+      "../public/assets/coop/bolsitas-vacias/empty-azul.png"
+    );
+
+    this.load.image(
+      "EmptyPurple",
+      "../public/assets/coop/bolsitas-vacias/empty-morada.png"
+    );
+
+    this.load.image(
+      "EmptyOrange",
+      "../public/assets/coop/bolsitas-vacias/empty-naranja.png"
+    );
+
+    this.load.image(
+      "EmptyRose",
+      "../public/assets/coop/bolsitas-vacias/empty-rosa.png"
+    );
+
+    this.load.image(
+      "EmptyGreen",
+      "../public/assets/coop/bolsitas-vacias/empty-verde.png"
+    );
+
+    // Diana
+    this.load.image(
+      "StaticTarget",
+      "../public/assets/coop/diana/static-diana.png"
+    );
+
+    this.load.spritesheet(
+      "Diana",
+      "../public/assets/coop/diana/diana.png",
+      {
+        frameWidth: 112,
+        frameHeight: 132
+      }
+    );
+
+    // Resorteras
+    this.load.image(
+      "StaticResortera",
+      "../public/assets/coop/resortera/static-resortera.png"
+    );
+
+    this.load.spritesheet(
+      "MiraResortera",
+      "../public/assets/coop/resortera/resortera-idle.png",
+      {
+        frameWidth: 140,
+        frameHeight: 275
+      }
+    );
+
+    this.load.spritesheet(
+      "MiraResortera",
+      "../public/assets/coop/resortera/resortera-shooting.png",
+      {
+        frameWidth: 140,
+        frameHeight: 275
+      }
+    );
+
+    // Tirachinas
+    this.load.image(
+      "TirachinasRoja",
+      "../public/assets/coop/tirachinas/gomera-azul.png"
+    );
+
+    this.load.image(
+      "TirachinasAzul",
+      "../public/assets/coop/tirachinas/gomera-roja.png"
+    );
+
+    this.load.image(
+      "bulletSprite",
+      "../public/assets/coop/tirachinas/bullet.png"
+    );
+
 
     WebFont.load({
       google: {

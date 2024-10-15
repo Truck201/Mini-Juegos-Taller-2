@@ -13,11 +13,11 @@ export class Game1v1 extends Scene {
     let height = this.scale.height;
 
     // Crear Televisor Instancar
-    let television = new Television(this, false);
+    let television = new Television(this, true);
     
-    let background = this.add.sprite(width * 0.5, height * 0.5, "escenario");
+    let background = this.add.sprite(width * 0.488, height * 0.586, "escenario");
     background.setDepth(1)
-    background.setScale(1)
+    background.setScale(1.7)
 
     //Agregar los cursores
     this.cursor = this.input.keyboard.createCursorKeys();

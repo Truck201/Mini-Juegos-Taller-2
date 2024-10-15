@@ -17,7 +17,8 @@ import { BaseScene } from "./lib/FontsBase";
 
 import CRTPostFx from "./lib/CRTPostFx";
 import { LanguageScene } from "./scenes/LanguageChoose";
-import { GameCoop } from "./scenes/GameCo-Op";
+import { StartCooperative } from "./scenes/CoopStarter";
+import { GameCooperative } from "./scenes/GameCoOp";
 
 const config = {
   type: Phaser.WEBGL,
@@ -33,7 +34,7 @@ const config = {
   physics: {
     default: "arcade",
     arcade: {
-      gravity: { y: 240 },
+      gravity: { y: 360 },
       debug: false,
     },
   },
@@ -53,7 +54,8 @@ const config = {
     BattleScene,
     HudBattle,
     BaseScene,
-    GameCoop,
+    StartCooperative,
+    GameCooperative
   ],
   pipeline: {
     CRTPostFx: CRTPostFx,

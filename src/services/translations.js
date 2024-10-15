@@ -3,31 +3,49 @@ import { EN_US, ES_AR, FR_FR } from "../enums/languages";
 const PROJECT_ID = "cm23nl3nl0001icradqod0htk";
 let translations = null;
 let language = ES_AR;
+const CACHE_EXPIRATION = 3600 * 1000; // 1 hora en milisegundos
 
 export async function getTranslations(lang, callback) {
-  localStorage.clear();
-  translations = null;
+  
+  const cachedTranslations = localStorage?.getItem("translations");
+  const cachedTimestamp = localStorage?.getItem("translations-timestamp");
+
+  if (cachedTranslations && cachedTimestamp) {
+    const now = Date.now();
+    if (now - cachedTimestamp < CACHE_EXPIRATION) {
+      translations = JSON.parse(cachedTranslations);
+      console.log("Usando traducciones del caché");
+      return callback ? callback() : false;
+    }
+  }
+
+  // localStorage.clear();
+  // translations = null;
+
   language = lang;
   console.log(language);
   // if (language === ES_AR) {
   //   return callback ? callback() : false;
   // }
-  
-  return await fetch(
-    `https://cors-anywhere.herokuapp.com/https://traducila.vercel.app/api/translations/${PROJECT_ID}/${language}`
-  )
-  .then((response) => {
+
+  try {
+    const response = await fetch(
+      `https://cors-anywhere.herokuapp.com/https://traducila.vercel.app/api/translations/${PROJECT_ID}/${language}`
+    );
+
     if (!response.ok) {
       throw new Error("Network response was not ok");
     }
-    return response.json();
-  })
-  .then((data) => {
+
+    const data = await response.json();
     localStorage.setItem("translations", JSON.stringify(data));
-    console.log("Realizado Traducciones")
+    localStorage.setItem("translations-timestamp", Date.now()); // Almacena el tiempo de la última actualización
+    console.log("Traducciones actualizadas");
     translations = data;
     if (callback) callback();
-  });
+  } catch (error) {
+    console.error(error);
+  }
 }
 
 export function getPhrase(key) {
@@ -37,10 +55,10 @@ export function getPhrase(key) {
   }
 
   let phrase = key;
-  console.log(phrase)
+  console.log(phrase);
   if (translations && translations[key]) {
-    console.log(translations)
-    console.log(translations[key])
+    console.log(translations);
+    console.log(translations[key]);
     phrase = translations[key];
     console.log(phrase);
   }
