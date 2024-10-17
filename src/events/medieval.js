@@ -118,7 +118,7 @@ export class MedievalEvent {
           this.showMissMensaje(sword);
         }
 
-        this.scene.player2HP = this.scene.player2Atributes.getHitPoints(2);
+        this.scene.player2HP = this.scene.player2Atributes.getHitPoints();
         this.scene.player2HPText.setText(
           `${this.scene.player2HP.toString().padStart(2, "0")}`
         );
@@ -147,7 +147,9 @@ export class MedievalEvent {
           this.showMissMensaje(sword);
         }
 
-        this.scene.player1HP = this.scene.player1Atributes.getHitPoints(1);
+        this.scene.player1HP = Math.floor(
+          this.scene.player1Atributes.getHitPoints()
+        );
         this.scene.player1HPText.setText(
           `${this.scene.player1HP.toString().padStart(2, "0")}`
         );
@@ -294,5 +296,13 @@ export class MedievalEvent {
 
   respawnShield() {
     this.shield.respawn();
+  }
+
+  visualCritical() {
+    this.scene.visualCritical();
+  }
+
+  gameOver(player) {
+    this.scene.gameOver(player);
   }
 }

@@ -29,8 +29,9 @@ export class RecolectScene extends Scene {
     // Reset points
     this.points1 = data.points1 || 0; // Puntaje inicial jugador 1
     this.points2 = data.points2 || 0; // Puntaje inicial jugador 2
-    this.game_over_timeout = 35; // Tiempo límite de 30 segundos
+    this.game_over_timeout = 25; // Tiempo límite de 30 segundos
     this.dialogues = data.dialogues
+    this.language = data.language
 
     // Lanzar la escena del HUD, pasando el tiempo y los puntajes iniciales
     this.scene.launch("Hud", {
@@ -59,6 +60,7 @@ export class RecolectScene extends Scene {
             this.scene.start("Shop", {
               points1: this.points1,
               points2: this.points2,
+              language: this.language
             }); // Cambia a la escena Shop
           }, 980);
         }

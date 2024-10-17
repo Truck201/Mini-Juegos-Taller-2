@@ -68,7 +68,6 @@ export function getPhrase(key) {
   let phrase = key;
   if (translations && translations[key]) {
     phrase = translations[key];
-    console.log(phrase);
   }
 
   return phrase;

@@ -1,22 +1,26 @@
 import { Scene } from "phaser";
 import { ItemsCase } from "../functions/itemscase";
 import { MonsterShop } from "../entitities/monsters";
-
+import { getLanguageConfig } from "../services/translations";
 export class Shop extends Scene {
   game_over_timeout;
   timer_event;
   purchasedItems = [];
+  itemDescriptions = null;
 
   constructor() {
     super("Shop");
     this.itemsCase = null;
     this.Monsters = null;
+    this.dialoguesPath = null;
   }
 
   init(data) {
     this.points1 = data.points1 || 0; // Puntaje inicial jugador 1
     this.points2 = data.points2 || 0; // Puntaje inicial jugador 2
-    this.game_over_timeout = 5;
+    this.language = data.language || getLanguageConfig();
+    console.log(this.language)
+    this.game_over_timeout = 15;
     this.lastKeyPressTime = 0;
     this.background;
 
@@ -28,10 +32,37 @@ export class Shop extends Scene {
     });
   }
 
+  preload() {
+    // Cargar los diálogos del archivo correspondiente según el idioma seleccionado
+    this.dialoguesPath = `itemsDescription_${this.language}`;
+    console.log(`Charging Descriptions from: ${this.dialoguesPath}`);
+
+    this.load.json(
+      this.dialoguesPath,
+      `../public/data/itemsDescription_${this.language}.json`
+    );
+  }
+
   create() {
+    // Cargar el JSON después de que esté disponible
+    this.itemDescriptions = this.cache.json.get(this.dialoguesPath);
+    console.log("Charge Descriptions", this.itemDescriptions);
+
+    // Asegúrate de que itemDescriptions no sea nulo o indefinido
+    if (!this.itemDescriptions) {
+      console.error("No se pudo cargar las descripciones de los ítems");
+      return;
+    }
+    this.itemsCase = new ItemsCase(
+      this,
+      this.scale.width,
+      this.scale.height,
+      this.itemDescriptions
+    );
+
     this.input.keyboard.on("keydown-ESC", () => {
       const currentTime = this.time.now;
-      
+
       // Verificar si ha pasado suficiente tiempo desde la última pulsación
       if (currentTime - this.lastKeyPressTime > 250) {
         // 700 ms de delay
@@ -43,11 +74,10 @@ export class Shop extends Scene {
       }
     });
 
-    this.timerForSecond()
-    this.createBackground()
+    this.timerForSecond();
+    this.createBackground();
 
-    this.itemsCase = new ItemsCase(this, this.scale.width, this.scale.height);
-    this.Monsters = new MonsterShop(this)
+    this.Monsters = new MonsterShop(this);
   }
 
   update() {
@@ -82,7 +112,7 @@ export class Shop extends Scene {
   createBackground() {
     let width = this.game.scale.width;
     let height = this.game.scale.height;
-    this.add.sprite(width * 0.5, height * 0.5, 'backgroundShop').setDepth(0)
+    this.add.sprite(width * 0.5, height * 0.5, "backgroundShop").setDepth(0);
   }
 
   // Método para pasar ítems seleccionados a BattleScene

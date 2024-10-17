@@ -13,6 +13,7 @@ export class Game1v1 extends Scene {
     let height = this.scale.height;
 
     const dialogues = data.dialogues
+    const language = data.language
 
     // Crear Televisor Instancar
     let television = new Television(this, false);
@@ -43,7 +44,7 @@ export class Game1v1 extends Scene {
       console.log("Start Recolect");
       // Atacar
       if (barra) {
-        this.scene.launch("recolectScene", {dialogues: dialogues});
+        this.scene.launch("recolectScene", {dialogues: dialogues, language: language});
         barra = false;
       } else {
         this.scene.stop("recolectScene", {});

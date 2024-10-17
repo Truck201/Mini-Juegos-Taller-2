@@ -13,7 +13,7 @@ export class PopcornRaining {
   }
 
   create() {
-    initAnimationsPopcorn(this.scene)
+    initAnimationsPopcorn(this.scene);
     this.spaceKey = this.spaceKey = this.scene.input.keyboard.addKey(
       Phaser.Input.Keyboard.KeyCodes.SPACE
     ); // Jugador 1
@@ -133,7 +133,9 @@ export class PopcornRaining {
         } else {
           this.showMissMensaje(sword);
         }
-        this.scene.player2HP = this.scene.player2Atributes.getHitPoints(2);
+        this.scene.player2HP = Math.floor(
+          this.scene.player2Atributes.getHitPoints()
+        );
         this.scene.player2HPText.setText(
           `${this.scene.player2HP.toString().padStart(2, "0")}`
         );
@@ -161,7 +163,9 @@ export class PopcornRaining {
         } else {
           this.showMissMensaje(sword);
         }
-        this.scene.player1HP = this.scene.player1Atributes.getHitPoints(1);
+        this.scene.player1HP = Math.floor(
+          this.scene.player1Atributes.getHitPoints()
+        );
         this.scene.player1HPText.setText(
           `${this.scene.player1HP.toString().padStart(2, "0")}`
         );
@@ -176,10 +180,12 @@ export class PopcornRaining {
     switch (popcornType) {
       case 1:
         if (playerId === 1) {
-          atributos.updateAttributes({ hitPoints: 0.3 });
-          this.player1HP = this.scene.player1Atributes.getHitPoints();
-          if (Math.floor(this.player1HP) > this.scene.player1HP) {
-            this.scene.player1HP = Math.floor(this.player1HP);
+          atributos.updateAttributes({ hitPoints: 0.2 });
+          this.player1HP = Math.floor(
+            this.scene.player1Atributes.getHitPoints()
+          );
+          // Actualizar solo si el nuevo HP es un entero
+          if (Number.isInteger(this.player1HP)) {
             this.scene.player1HPText.setText(
               `${this.scene.player1HP.toString().padStart(2, "0")}`
             );
@@ -187,10 +193,12 @@ export class PopcornRaining {
           }
         }
         if (playerId === 2) {
-          atributos.updateAttributes({ hitPoints: 0.3 });
-          this.player2HP = this.scene.player2Atributes.getHitPoints();
-          if (Math.floor(this.player2HP) > this.scene.player2HP) {
-            this.scene.player2HP = Math.floor(this.player2HP);
+          atributos.updateAttributes({ hitPoints: 0.2 });
+          this.player2HP = Math.floor(
+            this.scene.player2Atributes.getHitPoints()
+          );
+          // Actualizar solo si el nuevo HP es un entero
+          if (Number.isInteger(this.player2HP)) {
             this.scene.player2HPText.setText(
               `${this.scene.player2HP.toString().padStart(2, "0")}`
             );
@@ -201,22 +209,20 @@ export class PopcornRaining {
 
       case 2:
         if (playerId === 1) {
-          atributos.updateAttributes({ damage: 0.3 });
+          atributos.updateAttributes({ damage: 0.2 });
           this.damageP1 = this.scene.player1Atributes.getDamage();
-          if (Math.floor(this.damageP1) > this.scene.player1Damage) {
-            this.scene.player1Damage = Math.floor(this.damageP1);
+          if (Number.isInteger(this.damageP1)) {
             this.scene.damageText1.setText(
-              `${this.scene.player1Damage.toString().padStart(2, "0")}`
+              `${this.damageP1.toString().padStart(2, "0")}`
             );
           }
         }
         if (playerId === 2) {
-          atributos.updateAttributes({ damage: 0.3 });
+          atributos.updateAttributes({ damage: 0.2 });
           this.damageP2 = this.scene.player2Atributes.getDamage();
-          if (Math.floor(this.damageP2) > this.scene.player2Damage) {
-            this.scene.player2Damage = Math.floor(this.damageP2);
+          if (Number.isInteger(this.damageP2)) {
             this.scene.damageText2.setText(
-              `${this.scene.player2Damage.toString().padStart(2, "0")}`
+              `${this.damageP2.toString().padStart(2, "0")}`
             );
           }
         }
@@ -298,5 +304,13 @@ export class PopcornRaining {
 
   respawn() {
     this.addNewSword(1);
+  }
+
+  visualCritical() {
+    this.scene.visualCritical();
+  }
+
+  gameOver(player) {
+    this.scene.gameOver(player);
   }
 }

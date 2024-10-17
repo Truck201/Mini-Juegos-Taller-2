@@ -1,9 +1,8 @@
-import { criticalVisual } from "./criticalVisuals";
 // Método para aplicar daño
 export function takeDamage(
   scene,
-  player1,
-  player2,
+  atributosPlayer1,
+  AtributosPlayer2,
   evadeChance,
   playerHp,
   isShelded
@@ -20,8 +19,8 @@ export function takeDamage(
     return false;
   }
 
-  let damage = player1.getDamage();
-  let critical = player1.getCritical();
+  let damage = atributosPlayer1.getDamage();
+  let critical = atributosPlayer1.getCritical();
 
   console.log("DAMAGE -->" + damage);
   console.log("CRITICAL -->" + critical);
@@ -30,15 +29,18 @@ export function takeDamage(
     const criticalChance = Phaser.Math.Between(0, 100);
     if (criticalChance < critical) {
       damage += damage;
-      criticalVisual(scene);
+      scene.visualCritical()
     }
   }
 
-  console.log("player -->" + player2);
-
-  player2.removeAttributes({ hitPoints: damage });
-  playerHp = player2.getHitPoints();
+  console.log("player -->" + AtributosPlayer2);
+  AtributosPlayer2.removeAttributes({ hitPoints: damage });
+  playerHp = AtributosPlayer2.getHitPoints();
   console.log(`Jugador 2 HP después del daño: ${playerHp}`);
 
+  // Verificar si el jugador ha perdido
+  if (playerHp < 1) {
+    scene.gameOver(AtributosPlayer2);
+  }
   return true;
 }

@@ -1,14 +1,14 @@
 export class AtributesPlayers {
   constructor(scene) {
     this.scene = scene;
-    this.atributes = null
+    this.atributes = null;
 
     const initialAttributes = {
       hitPoints: 10,
       speed: 10,
-      evadeChance: 0,
+      evadeChance: 10,
       damage: 1,
-      critical: 0,
+      critical: 5,
       anchor: 1.2,
     };
 
@@ -38,9 +38,9 @@ export class AtributesPlayers {
       critical:
         initialAttributes.critical !== undefined
           ? initialAttributes.critical
-          : 0,
+          : 5,
       anchor:
-        initialAttributes.anchor !== undefined ? initialAttributes.anchor : 12,
+        initialAttributes.anchor !== undefined ? initialAttributes.anchor : 1.2,
     };
   }
 
@@ -51,50 +51,61 @@ export class AtributesPlayers {
     this.atributes.evadeChance =
       newAttributes.evadeChance || this.atributes.evadeChance;
     this.atributes.damage = newAttributes.damage || this.atributes.damage;
-    this.atributes.critical =
-      newAttributes.critical || this.atributes.critical;
+    this.atributes.critical = newAttributes.critical || this.atributes.critical;
     this.atributes.anchor = newAttributes.anchor || this.atributes.anchor;
   }
 
   updateAttributes(newAttributes) {
     if (newAttributes.speed) {
       this.atributes.speed += newAttributes.speed;
+      console.log("Adding -> Speed " + this.atributes.speed);
     }
     if (newAttributes.evadeChance) {
       this.atributes.evadeChance += newAttributes.evadeChance;
+      console.log("Adding -> EC " + this.atributes.evadeChance);
     }
     if (newAttributes.hitPoints) {
       this.atributes.hitPoints += newAttributes.hitPoints;
+      console.log("Adding -> HP " + this.atributes.hitPoints);
     }
     if (newAttributes.damage) {
       this.atributes.damage += newAttributes.damage;
+      console.log("Adding -> DMG " + this.atributes.damage);
     }
     if (newAttributes.critical) {
       this.atributes.critical += newAttributes.critical;
+      console.log("Adding -> CRT " + this.atributes.critical);
     }
     if (newAttributes.anchor) {
       this.atributes.anchor += newAttributes.anchor;
+      console.log("Adding -> Anchor " + this.atributes.anchor);
     }
   }
 
   removeAttributes(newAttributes) {
     if (newAttributes.speed) {
       this.atributes.speed -= newAttributes.speed;
+      console.log("Remove Speed " + this.atributes.speed);
     }
     if (newAttributes.evadeChance) {
       this.atributes.evadeChance -= newAttributes.evadeChance;
+      console.log("Remove EC " + this.atributes.evadeChance);
     }
     if (newAttributes.hitPoints) {
       this.atributes.hitPoints -= newAttributes.hitPoints;
+      console.log("Remove HP " + this.atributes.hitPoints);
     }
     if (newAttributes.damage) {
       this.atributes.damage -= newAttributes.damage;
+      console.log("Remove DMG " + this.atributes.damage);
     }
     if (newAttributes.critical) {
       this.atributes.critical -= newAttributes.critical;
+      console.log("Remove CRT " + this.atributes.critical);
     }
     if (newAttributes.anchor) {
       this.atributes.anchor -= newAttributes.anchor;
+      console.log("Remove Anchor " + this.atributes.anchor);
     }
   }
 
@@ -122,10 +133,10 @@ export class AtributesPlayers {
     return this.atributes.hitPoints;
   }
 
-  gameOver(loser) {
+  gameOver(scene, loser) {
     console.log(`Jugador ${loser} ha perdido!`);
-    this.scene.scene.launch("GameOver", { player: loser }); // Game Over Scene
-    this.scene.scene.pause("battleScene");
-    this.scene.scene.bringToTop("GameOver");
+    scene.launch("GameOver", { player: loser }); // Game Over Scene
+    scene.pause("battleScene");
+    scene.bringToTop("GameOver");
   }
 }

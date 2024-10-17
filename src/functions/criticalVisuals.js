@@ -1,7 +1,6 @@
 export function criticalVisual(scene) {
-  this.scene = scene
-  const { width, height } = this.scene.game.scale;
-  const criticalText = this.scene.add
+  const { width, height } = scene.game.scale;
+  const criticalText = scene.add
     .text(width * 0.5, height * 0.5, "¡¡CRITIAL!!", {
       fontSize: "32px",
       color: "#fff",
@@ -17,7 +16,7 @@ export function criticalVisual(scene) {
     .setOrigin(0.5)
     .setDepth(15);
 
-  this.scene.tweens.add({
+  scene.tweens.add({
     targets: criticalText,
     scale: { from: 2.1, to: 4.2 }, // Agrandar el texto
     alpha: { from: 1, to: 0 }, // Desaparecer el texto

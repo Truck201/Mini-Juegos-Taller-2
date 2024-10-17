@@ -259,7 +259,7 @@ export class MainMenu extends BaseScene {
 
     // Esperar un poco antes de iniciar la siguiente escena
     this.time.delayedCall(1500, () => {
-      this.scene.start("Game1vs1", { dialogues: this.dialogues }); //Ir a escena Main
+      this.scene.start("Game1vs1", { dialogues: this.dialogues, language: this.language }); //Ir a escena Main
     });
   }
 

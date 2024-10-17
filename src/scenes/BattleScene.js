@@ -7,6 +7,7 @@ import { PopcornRaining } from "../events/popcornRain";
 import { MedievalEvent } from "../events/medieval";
 import { AtributesPlayers } from "../functions/atributos";
 import { initializeHealthBars } from "../functions/createHealtBar";
+import { criticalVisual } from "../functions/criticalVisuals";
 
 export class BattleScene extends BaseScene {
   constructor() {
@@ -23,8 +24,10 @@ export class BattleScene extends BaseScene {
   init(data) {
     this.game_over_timeout = 60; // Tiempo límite de 30 segundos
     this.purchasedItems = data.purchasedItems || []; // Obtener los ítems comprados
-    this.selectedItemsPlayer1 = data.selectedItemsPlayer1 || {}; // Asegúrate de que sea un objeto
-    this.selectedItemsPlayer2 = data.selectedItemsPlayer2 || {}; // Asegúrate de que sea un objeto
+    this.selectedItemsPlayer1 =
+      data.selectedItemsPlayer1 || new AtributesPlayers(this) || {}; // Asegúrate de que sea un objeto
+    this.selectedItemsPlayer2 =
+      data.selectedItemsPlayer2 || new AtributesPlayers(this) || {}; // Asegúrate de que sea un objeto
 
     // Lanzar la escena del HUD, pasando el tiempo y los puntajes iniciales
     this.scene.launch("hudBattle", {
@@ -37,17 +40,19 @@ export class BattleScene extends BaseScene {
     this.height = this.game.scale.height;
 
     // Crear Atributos de Cada Jugador
-    this.player1Atributes = new AtributesPlayers(this);
-    this.player2Atributes = new AtributesPlayers(this);
+    this.player1Atributes = this.selectedItemsPlayer1;
+    this.player2Atributes = this.selectedItemsPlayer2;
 
     this.player1HP = this.player1Atributes.getHitPoints();
     this.player1Speed = this.player1Atributes.getSpeed();
+    this.player1Anchor = this.player1Atributes.getAnchor();
     this.player1EvadeChance = this.player1Atributes.getEvadeChance();
     this.player1Damage = this.player1Atributes.getDamage();
     this.player1CriticalChance = this.player1Atributes.getCritical();
 
     this.player2HP = this.player2Atributes.getHitPoints();
     this.player2Speed = this.player2Atributes.getSpeed();
+    this.player2Anchor = this.player2Atributes.getAnchor();
     this.player2EvadeChance = this.player2Atributes.getEvadeChance();
     this.player2Damage = this.player2Atributes.getDamage();
     this.player2CriticalChance = this.player2Atributes.getCritical();
@@ -274,16 +279,6 @@ export class BattleScene extends BaseScene {
     this.movingBar1.update();
     this.movingBar2.update();
 
-    // Si la vida del jugador 1 cae por debajo de 2, activa la segunda animación
-    if (this.player1HP < 2) {
-      this.createHealtBar1.createHeart(this.player1HP);
-    }
-
-    // Si la vida del jugador 2 cae por debajo de 2, activa la segunda animación
-    if (this.player2HP < 2) {
-      this.createHealtBar2.createHeart(this.player2HP);
-    }
-
     // Llamar al update del evento actual (SwordRain, PopcornRaining, MedievalEvent)
     if (this.attackBar && typeof this.attackBar.update === "function") {
       this.attackBar.update(); // Actualiza las colisiones y lógica del evento
@@ -309,4 +304,26 @@ export class BattleScene extends BaseScene {
       .setOrigin(0.5); // Ajusta la posición y el tamaño del ícono
     return iconObject;
   }
+
+  gameOver(player) {
+    if (player === this.player1Atributes) {
+      console.log(player)
+      console.log(this.player1Atributes)
+      looser = 1;
+    }
+    if (player === this.player2Atributes) {
+      console.log(player)
+      console.log(this.player2Atributes)
+      looser = 2;
+    } else {
+      console.log("NO FUNCIONA LA DERIVACIÓN A GAME OVER")
+      return false;
+    }
+
+    player.gameOver(this, looser);
+  }
+
+  visualCritical() {
+    criticalVisual(this)
+  } 
 }

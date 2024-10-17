@@ -1,11 +1,14 @@
 import { AtributesPlayers } from "./atributos";
+import { initAnimations } from "../anims/itemsAnims";
+import { getPhrase } from "../services/translations";
 export class ItemsCase {
-  constructor(scene, width, height) {
+  constructor(scene, width, height, itemDescriptions) {
     this.scene = scene;
     this.width = width;
     this.height = height;
     this.items = [];
     this.selectedItems = [];
+    this.itemDescriptions = itemDescriptions;
 
     this.maxItems = 3;
 
@@ -72,69 +75,6 @@ export class ItemsCase {
       })
       .setOrigin(0.5);
 
-    this.itemDescriptions = {
-      popcorn: {
-        description: "Perfect for movies!\n+7% Evade",
-        value: 10, // 7% Evade Chance
-      },
-      glasses: {
-        description: "Enhances vision.\n+1.3% Anchor",
-        value: 30, // 1.1% Anchor
-      },
-      candy1: {
-        description: "A sweet treat!\n+1 HP, +7 Speed",
-        value: 20, // 1 Hit Point + 7 Speed
-      },
-      candy2: {
-        description: "A sweet treat!\n+1 HP, +7 Speed",
-        value: 20, // 1 Hit Point + 7 Speed
-      },
-      candy3: {
-        description: "A sweet treat!\n+1 HP, +7 Speed",
-        value: 20, // 1 Hit Point + 7 Speed
-      },
-      icecream1: {
-        description: "Cool and refreshing!\n+15% Evade",
-        value: 20, // 15% Evade Chance
-      },
-      icecream2: {
-        description: "Cool and refreshing!\n+15% Evade",
-        value: 20, // 15% Evade Chance
-      },
-      icecream3: {
-        description: "Cool and refreshing!\n+15% Evade",
-        value: 20, // 15% Evade Chance
-      },
-      energizing: {
-        description: "Boosts your energy!\n+12 Speed",
-        value: 20, // 12 Speed
-      },
-      cuthulu: {
-        description: "Unleash the power!\n+15% CRT",
-        value: 75, // 15% Critical Chance
-      },
-      axe: {
-        description: "Sharp and deadly.\n+2 Damage",
-        value: 70, // 2 Damage
-      },
-      palete: {
-        description: "Swift and precise.\n+5 Speed +7% CRT",
-        value: 35, // 5 Speed + 7% Critical Chance
-      },
-      burger: {
-        description: "Juicy and filling.\n+3 HP",
-        value: 30, // 3 Hit Points
-      },
-      chocolate: {
-        description: "Sweet and speedy.\n+5 Speed +7% Evade",
-        value: 15, // 5 Speed + 7% Evade Chance
-      },
-      pizza: {
-        description: "Delicious slice!\n+1 HP +1 Damage",
-        value: 30, // 1 Hit Point + 1 Damage
-      },
-    };
-
     // Definición de atributos de los ítems
     this.itemAttributes = {
       popcorn: { evadeChance: 7 },
@@ -165,7 +105,7 @@ export class ItemsCase {
     };
 
     // Inicializar animaciones
-    this.initAnimations();
+    initAnimations(this.scene);
 
     this.createItems();
 
@@ -176,8 +116,8 @@ export class ItemsCase {
     this.player2Indicator = this.scene.add.rectangle(0, 0, 76, 76).setDepth(2);
     this.player2Indicator.setStrokeStyle(4, 0x0778f2); // Azul para jugador 2
 
-    this.player1Atributes = new AtributesPlayers(this, 1);
-    this.player2Atributes = new AtributesPlayers(this, 2);
+    this.player1Atributes = new AtributesPlayers(this);
+    this.player2Atributes = new AtributesPlayers(this);
 
     this.setupPlayerKeys();
 
@@ -302,169 +242,6 @@ export class ItemsCase {
     });
   }
 
-  initAnimations() {
-    // Popcorn
-    this.scene.anims.create({
-      key: "popcorn-idle",
-      frames: this.scene.anims.generateFrameNumbers("popcorn", {
-        start: 0,
-        end: 3,
-      }),
-      frameRate: 4,
-      repeat: -1, // La animación se repite indefinidamente
-    });
-
-    // Glases
-    this.scene.anims.create({
-      key: "glasses-idle",
-      frames: this.scene.anims.generateFrameNumbers("glasses", {
-        start: 0,
-        end: 3,
-      }),
-      frameRate: 4,
-      repeat: -1,
-    });
-
-    // Candy
-    this.scene.anims.create({
-      key: "candy-idle1",
-      frames: this.scene.anims.generateFrameNumbers("candy1", {
-        start: 0,
-        end: 3,
-      }),
-      frameRate: 4,
-      repeat: -1,
-    });
-
-    this.scene.anims.create({
-      key: "candy-idle2",
-      frames: this.scene.anims.generateFrameNumbers("candy2", {
-        start: 0,
-        end: 3,
-      }),
-      frameRate: 4,
-      repeat: -1,
-    });
-
-    this.scene.anims.create({
-      key: "candy-idle3",
-      frames: this.scene.anims.generateFrameNumbers("candy3", {
-        start: 0,
-        end: 3,
-      }),
-      frameRate: 4,
-      repeat: -1,
-    });
-
-    // Helados
-    this.scene.anims.create({
-      key: "icecream-idle1",
-      frames: this.scene.anims.generateFrameNumbers("icecream1", {
-        start: 0,
-        end: 3,
-      }),
-      frameRate: 4,
-      repeat: -1,
-    });
-
-    this.scene.anims.create({
-      key: "icecream-idle2",
-      frames: this.scene.anims.generateFrameNumbers("icecream2", {
-        start: 0,
-        end: 3,
-      }),
-      frameRate: 4,
-      repeat: -1,
-    });
-
-    this.scene.anims.create({
-      key: "icecream-idle3",
-      frames: this.scene.anims.generateFrameNumbers("icecream3", {
-        start: 0,
-        end: 3,
-      }),
-      frameRate: 4,
-      repeat: -1,
-    });
-
-    // Energizante
-    this.scene.anims.create({
-      key: "energizing-idle",
-      frames: this.scene.anims.generateFrameNumbers("energizing", {
-        start: 0,
-        end: 3,
-      }),
-      frameRate: 4,
-      repeat: -1,
-    });
-
-    // Ojo de cuthulu
-    this.scene.anims.create({
-      key: "cuthulu-idle",
-      frames: this.scene.anims.generateFrameNumbers("cuthulu", {
-        start: 0,
-        end: 3,
-      }),
-      frameRate: 4,
-      repeat: -1,
-    });
-
-    // Hacha
-    this.scene.anims.create({
-      key: "axe-idle",
-      frames: this.scene.anims.generateFrameNumbers("axe", {
-        start: 0,
-        end: 3,
-      }),
-      frameRate: 4,
-      repeat: -1,
-    });
-
-    // Paleta
-    this.scene.anims.create({
-      key: "palete-idle",
-      frames: this.scene.anims.generateFrameNumbers("palete", {
-        start: 0,
-        end: 3,
-      }),
-      frameRate: 4,
-      repeat: -1,
-    });
-
-    // Hamburgesa
-    this.scene.anims.create({
-      key: "burger-idle",
-      frames: this.scene.anims.generateFrameNumbers("burger", {
-        start: 0,
-        end: 3,
-      }),
-      frameRate: 4,
-      repeat: -1,
-    });
-
-    // Chocolate
-    this.scene.anims.create({
-      key: "chocolate-idle",
-      frames: this.scene.anims.generateFrameNumbers("chocolate", {
-        start: 0,
-        end: 3,
-      }),
-      frameRate: 4,
-      repeat: -1,
-    });
-
-    // Pizza
-    this.scene.anims.create({
-      key: "pizza-idle",
-      frames: this.scene.anims.generateFrameNumbers("pizza", {
-        start: 0,
-        end: 3,
-      }),
-      frameRate: 4,
-      repeat: -1,
-    });
-  }
-
   createItems() {
     const rows = 3;
     const cols = 4;
@@ -532,7 +309,7 @@ export class ItemsCase {
         item.setImmovable;
         item.body.allowGravity = false;
         item.setInteractive();
-        item.setScale(0.92);
+        item.setScale(0.79);
         item.setDepth(3);
 
         item.isSelected = false; // Estado de selección
@@ -612,15 +389,28 @@ export class ItemsCase {
         item.row === playerPosition.row && item.col === playerPosition.col
     );
 
-    if (item) {
-      const description = this.itemDescriptions[item.texture.key];
-      if (description) {
+    // Verificar si el item existe y si item.texture.key está definido
+    if (item && item.texture && item.texture.key) {
+      const itemType = item.texture.key;
+
+      // Acceder a la descripción y valor del ítem desde el JSON
+      const itemData = this.itemDescriptions[itemType];
+
+      if (!this.itemDescriptions) {
+        console.error("itemDescriptions no está definido");
+        return;
+      }
+
+      if (itemData) {
+        const description = itemData[0]; // Descripción del ítem
+        const price = itemData[1]; // Precio del ítem
+
         descriptionText
-          .setText(
-            `${description.description}\n\nValue ${description.value}P`
-          )
+          .setText(`${description}\n\n${getPhrase("Valor")} ${price}P`)
           .setDepth(2)
           .setOrigin(0.5);
+      } else {
+        descriptionText.setText("Descripción no disponible");
       }
     } else {
       descriptionText.setText(""); // Limpiar la descripción si no hay coincidencia
@@ -673,6 +463,23 @@ export class ItemsCase {
       return;
     }
 
+    // Verificar si item existe y si item.texture.key está definido
+    if (!item || !item.texture || !item.texture.key) {
+      console.error(
+        `No se encontró ningún ítem o clave de textura en la posición (${playerPosition.row}, ${playerPosition.col})`
+      );
+      return;
+    }
+    const itemType = item.texture.key;
+    const itemData = this.itemDescriptions[itemType];
+
+    if (!itemData) {
+      console.error(`No se encontró la descripción del ítem: ${itemType}`);
+      return;
+    }
+
+    const itemValue = itemData[1]; // Precio del ítem
+
     if (Phaser.Input.Keyboard.JustUp(playerKeys.select) && this.canSelect) {
       this.canSelect = false;
       setInterval(() => {
@@ -687,42 +494,32 @@ export class ItemsCase {
         const index = selectedItems.indexOf(item);
 
         if (index !== -1) {
-          console.log(
-            `Antes de eliminar el ítem, selectedItems: `,
-            selectedItems
-          );
-
           this.selectedItems.splice(index, 1);
-          console.log(
-            `Después de eliminar el ítem, selectedItems: `,
-            selectedItems
-          );
           this.removeItemFromSlot(player, item);
-          this.returnPoints(player, item.texture.key);
+          this.returnPoints(player, itemType);
           console.log(`Puntos devueltos para el jugador ${player}`);
-          this.removeItemAttributes(player, item.texture.key);
-          console.log(`Remove item for ${player}:`, item.texture.key);
+          this.removeItemAttributes(player, itemType);
+          console.log(`Remove item for ${player}:`, itemType);
         }
       } else if (!item.isSelected && selectedItems.length < this.maxItems) {
-        const itemValue = this.itemDescriptions[item.texture.key].value;
         if (player === 1 && this.scene.points1 >= itemValue) {
-          this.purchaseItem(player, item, item.texture.key);
+          this.purchaseItem(player, item, itemType);
           item.setTint(0x272736); //  0xff0000  Rojo
           item.setAlpha(0.5);
           this.addItemToSlot(player, item);
           item.isSelected = true;
           item.selectedBy = player;
-          console.log(`Selected item for jugador 2:`, item.texture.key);
-          this.applyItemAttributes(player, item.texture.key); // Asignar atributos al jugador 1
+          console.log(`Selected item for jugador 2:`, itemType);
+          this.applyItemAttributes(player, itemType); // Asignar atributos al jugador 1
         } else if (player === 2 && this.scene.points2 >= itemValue) {
-          this.purchaseItem(player, item, item.texture.key);
+          this.purchaseItem(player, item, itemType);
           item.setTint(0x272736); //  0x0000ff  Azul
           item.setAlpha(0.5);
           this.addItemToSlot(player, item);
           item.isSelected = true;
           item.selectedBy = player;
-          console.log(`Selected item for jugador 2:`, item.texture.key);
-          this.applyItemAttributes(player, item.texture.key); // Asignar atributos al jugador 2
+          console.log(`Selected item for jugador 2:`, itemType);
+          this.applyItemAttributes(player, itemType); // Asignar atributos al jugador 2
         }
       }
     }
@@ -742,7 +539,8 @@ export class ItemsCase {
   // Función para reducir puntos al comprar ítems
   purchaseItem(player, item, itemType) {
     const hudScene = this.scene.scene.get("hudShop");
-    const itemValue = this.itemDescriptions[itemType].value;
+    const itemValue = this.itemDescriptions[itemType][1];
+    console.log("pucharse value item --> " + itemValue);
     if (player === 1 && this.scene.points1 >= itemValue) {
       this.scene.points1 -= itemValue;
       hudScene.update_points(1, this.scene.points1);
@@ -761,7 +559,7 @@ export class ItemsCase {
 
   returnPoints(player, itemType) {
     const hudScene = this.scene.scene.get("hudShop");
-    const itemValue = this.itemDescriptions[itemType].value;
+    const itemValue = this.itemDescriptions[itemType][1];
     if (player === 1) {
       this.scene.points1 += itemValue;
       hudScene.update_points(1, this.scene.points1);
@@ -774,15 +572,26 @@ export class ItemsCase {
   }
 
   applyItemAttributes(player, itemType) {
+    console.log("Aplicando atributos del item " + itemType);
     const attributes = this.itemAttributes[itemType];
+    console.log(
+      `Tiene estos atributos -> 
+    HP ${attributes?.hitPoints}
+    \nDMG ${attributes?.damage}
+    \nCRT ${attributes?.critical}
+    \nEC ${attributes?.evadeChance}
+    \nSpeed ${attributes?.speed}
+    \nAnchor ${attributes?.anchor}`
+    );
+
     if (attributes) {
       console.log("Aplicando atributos:" + attributes);
       if (player === 1) {
         console.log("player 1");
-        this.player1Atributes.updateAttributes(1, attributes);
+        this.player1Atributes.updateAttributes(attributes);
       } else if (player === 2) {
         console.log("player 2");
-        this.player2Atributes.updateAttributes(2, attributes);
+        this.player2Atributes.updateAttributes(attributes);
       }
     } else {
       console.error(
@@ -805,9 +614,9 @@ export class ItemsCase {
     if (attributes) {
       console.log("Remove atributos:" + player + "," + attributes);
       if (player === 1) {
-        this.player1Atributes.removeAttributes(1, attributes);
+        this.player1Atributes.removeAttributes(attributes);
       } else if (player === 2) {
-        this.player2Atributes.removeAttributes(2, attributes);
+        this.player2Atributes.removeAttributes(attributes);
       }
     } else {
       console.error(

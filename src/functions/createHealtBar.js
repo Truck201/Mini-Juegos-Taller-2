@@ -5,6 +5,7 @@ export class initializeHealthBars {
     this.positionY = positionY;
     this.health = health;
     this.playerHealthBars = [];
+    this.currentHeart = null;
     this.create();
   }
 
@@ -21,28 +22,28 @@ export class initializeHealthBars {
         .setOrigin(0.5),
 
       this.scene.add
-        .sprite(this.positionX, this.positionY, "healthBar5") // EXT 7 HP index 0
+        .sprite(this.positionX, this.positionY, "healthBar5") // EXT 7 HP index 1
         .setVisible(false)
         .setScale(1)
         .setDepth(5)
         .setOrigin(0.5),
 
       this.scene.add
-        .sprite(this.positionX, this.positionY, "healthBar5") // EXT 8 HP index 0
+        .sprite(this.positionX, this.positionY, "healthBar5") // EXT 8 HP index 2
         .setVisible(false)
         .setScale(1)
         .setDepth(5)
         .setOrigin(0.5),
 
       this.scene.add
-        .sprite(this.positionX, this.positionY, "healthBar5") // EXT 9 HP index 0
+        .sprite(this.positionX, this.positionY, "healthBar5") // EXT 9 HP index 3
         .setVisible(false)
         .setScale(1)
         .setDepth(5)
         .setOrigin(0.5),
 
       this.scene.add
-        .sprite(this.positionX, this.positionY, "healthBar5") // EXT 10 HP index 0
+        .sprite(this.positionX, this.positionY, "healthBar5") // EXT 10 HP index 4
         .setVisible(false)
         .setScale(1)
         .setDepth(5)
@@ -86,40 +87,26 @@ export class initializeHealthBars {
         .setOrigin(0.5),
     ];
 
+    this.currentHeart = this.scene.add
+      .sprite(this.positionX, this.positionY - 160, "HeartLive")
+      .setScale(1.12)
+      .setDepth(6)
+      .setOrigin(0.5);
+
+    // Mostrar la animación Idle-Heart al inicio
+    this.currentHeart.anims.play("Idle-Heart", true);
+
     this.updateHealthBar(this.health);
-    this.createHeart(this.health);
   }
 
   createHeart(playerHp) {
-    let HitPoints = playerHp;
-    let heart1, heart2 
-
-    if (HitPoints >= 3) {
-      if (heart2) {
-        heart2.destroy();
-      }
-      if (!heart1) {
-        heart1 = this.scene.add
-          .sprite(this.positionX, this.positionY - 160, "HeartLive")
-          .setScale(1.12)
-          .setDepth(6)
-          .setOrigin(0.5);
-        heart1.anims.play("Idle-Heart", true);
-      }
-    } else if (HitPoints > 0) {
-      if (heart1) {
-        heart1.destroy();
-      }
-      if (!heart2) {
-        heart2 = this.scene.add
-          .sprite(this.positionX, this.positionY - 160, "HeartDeath")
-          .setScale(1.12)
-          .setDepth(6)
-          .setOrigin(0.5);
-        heart2.anims.play("Idle-HeartDeath", true);
-      }
+    if (playerHp <= 3) {
+      this.currentHeart.setTexture("HeartDeath"); // Cambiar textura
+      this.currentHeart.anims.play("Idle-HeartDeath", true); // Reproducir animación de muerte
     } else {
-      return false;
+      // Si la vida es mayor a 3, mostrar la animación Idle-Heart normal
+      this.currentHeart.setTexture("HeartLive"); // Cambiar textura
+      this.currentHeart.anims.play("Idle-Heart", true); // Reproducir animación normal
     }
   }
 
@@ -134,10 +121,21 @@ export class initializeHealthBars {
 
     // Ocultar todas las barras inicialmente
     healthBars.forEach((bar) => bar.setVisible(false));
+    if (currentHP >= 10) {
+      let maxLife = 10
+      let HealthIndex = maxLife - 6; // Índice para healthAnims (6-10 se mapean a 0-4)
+      let animKey = `healtAnims${HealthIndex + 1}`; // healthAnims1 para 6 HP, healthAnims2 para 7, etc.
 
+      // Mostrar y reproducir la animación correspondiente
+      healthBars[HealthIndex].setVisible(true);
+      healthBars[HealthIndex].play(animKey);
+
+      console.log(`Reproduciendo animación: ${animKey}`);
+      this.createHeart(currentHP);
+    }
     // Mostrar la barra correspondiente a los HP restantes
-    if (currentHP > 5 && currentHP <= 10) {
-      let extraHealthIndex = currentHP - 6; // Índice para healthAnims (6-10 se mapean a 0-4)
+    if (currentHP > 5 && currentHP < 10) {
+      let extraHealthIndex = currentHP - 6; // Índice para healthAnims (6-9 se mapean a 0-4)
       let animKey = `healtAnims${extraHealthIndex + 1}`; // healthAnims1 para 6 HP, healthAnims2 para 7, etc.
 
       // Mostrar y reproducir la animación correspondiente
@@ -145,6 +143,7 @@ export class initializeHealthBars {
       healthBars[extraHealthIndex].play(animKey);
 
       console.log(`Reproduciendo animación: ${animKey}`);
+      this.createHeart(currentHP);
     } else if (currentHP <= 5 && currentHP >= 0) {
       // Mostrar la barra correspondiente a los HP restantes
       const visibleBarIndex = healthBars.length - currentHP - 1;
@@ -153,19 +152,9 @@ export class initializeHealthBars {
       // Detener cualquier animación que se esté reproduciendo
 
       healthBars[visibleBarIndex].stop();
+      this.createHeart(currentHP);
     } else {
       return false;
-    }
-
-    // Verificar si el jugador ha perdido
-    if (currentHP < 1) {
-      scene.time.addEvent({
-        delay: 200,
-        callback: () => {
-          scene.gameOver();
-        },
-        loop: false,
-      });
     }
   }
 

@@ -1,0 +1,62 @@
+{
+    "popcorn": [
+        "Perfect for movies!\n+7% Evade",
+        10
+    ],
+    "glasses": [
+        "Enhances vision.\n+1.3% Anchor",
+        30
+    ],
+    "candy1": [
+        "A sweet treat!\n+1 HP, +7 Speed",
+        20
+    ],
+    "candy2": [
+        "A sweet treat!\n+1 HP, +7 Speed",
+        20
+    ],
+    "candy3": [
+        "A sweet treat!\n+1 HP, +7 Speed",
+        20
+    ],
+    "icecream1": [
+        "Cool and refreshing!\n+15% Evade",
+        20
+    ],
+    "icecream2": [
+        "Cool and refreshing!\n+15% Evade",
+        20
+    ],
+    "icecream3": [
+        "Cool and refreshing!\n+15% Evade",
+        20
+    ],
+    "energizing": [
+        "Boosts your energy!\n+12 Speed",
+        20
+    ],
+    "cuthulu": [
+        "Unleash the power!\n+15% CRT",
+        75
+    ],
+    "axe": [
+        "Sharp and deadly.\n+2 Damage",
+        70
+    ],
+    "palete": [
+        "Swift and precise.\n+5 Speed +7% CRT",
+        35
+    ],
+    "burger": [
+        "Juicy and filling.\n+3 HP",
+        30
+    ],
+    "chocolate": [
+        "Sweet and speedy.\n+5 Speed +7% Evade",
+        15
+    ],
+    "pizza": [
+        "Delicious slice!\n+1 HP +1 Damage",
+        30
+    ]
+}
