@@ -2,6 +2,8 @@ import { Attack } from "../entitities/attack";
 import { Heart } from "../entitities/heart";
 import { Shielder } from "../entitities/shield";
 
+import { takeDamage } from "../functions/takeDamage";
+
 export class MedievalEvent {
   constructor(scene) {
     this.scene = scene;
@@ -12,8 +14,8 @@ export class MedievalEvent {
 
     this.enfriamiento = 2600;
 
-    this.height = this.scene.game.scale.height
-    this.width = this.scene.game.scale.width
+    this.height = this.scene.game.scale.height;
+    this.width = this.scene.game.scale.width;
 
     this.create();
   }
@@ -21,6 +23,7 @@ export class MedievalEvent {
   create() {
     this.player1 = 1;
     this.player2 = 2;
+
     this.spaceKey = this.spaceKey = this.scene.input.keyboard.addKey(
       Phaser.Input.Keyboard.KeyCodes.SPACE
     ); // Jugador 1
@@ -100,8 +103,10 @@ export class MedievalEvent {
         Phaser.Input.Keyboard.JustDown(this.spaceKey)
       ) {
         if (
-          this.scene.player2Atributes.takeDamage(
-            2,
+          takeDamage(
+            this,
+            this.scene.player1Atributes,
+            this.scene.player2Atributes,
             this.scene.player2EvadeChance,
             this.scene.player2HP,
             this.isShelded2
@@ -117,6 +122,8 @@ export class MedievalEvent {
         this.scene.player2HPText.setText(
           `${this.scene.player2HP.toString().padStart(2, "0")}`
         );
+        // // Actualizar la vida
+        this.scene.createHealtBar2.updateHealthBar(this.scene.player2HP);
       }
 
       // Si se presiona enter, jugador 2 destruye un recolectable
@@ -125,8 +132,10 @@ export class MedievalEvent {
         Phaser.Input.Keyboard.JustDown(this.enterKey)
       ) {
         if (
-          this.scene.player1Atributes.takeDamage(
-            1,
+          takeDamage(
+            this,
+            this.scene.player2Atributes,
+            this.scene.player1Atributes,
             this.scene.player1EvadeChance,
             this.scene.player1HP,
             this.isShelded1
@@ -142,6 +151,8 @@ export class MedievalEvent {
         this.scene.player1HPText.setText(
           `${this.scene.player1HP.toString().padStart(2, "0")}`
         );
+        // // Actualizar la vida
+        this.scene.createHealtBar1.updateHealthBar(this.scene.player1HP);
       }
     });
   }
@@ -201,7 +212,7 @@ export class MedievalEvent {
     if (player === 1) {
       this.isShelded1 = true;
       console.log("Player 1 is now shielded!");
-      
+
       // Mostrar mensaje de "Immune"
       const textInmune1 = this.scene.add
         .text(this.width * 0.2, this.height * 0.6, "Inmune!", {

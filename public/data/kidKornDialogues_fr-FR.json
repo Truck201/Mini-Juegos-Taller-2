@@ -1,0 +1,45 @@
+{
+    "Neutral": [
+        "Ne vous\nlaissez pas,\ndistraire",   
+        "Je ne suis\nqu’une aide",  
+        "Quelqu’un\na-t-il un\nibuprofène ?",   
+        "J’ai été créé\npour faire\ndu pop-corn",  
+        "Qui veut\nun pororó\nspécial ? ",
+        "Ne vous\ninquiétez pas,\n\nj’ai une réserve INFINIE.",
+        "Popcorn frais\nfraîchement lancé.\n\nPrenez-les pendant\nqu’ils sont croustillants.",
+        "Ah, rien de tel\nque de lancer\ndu pop-corn.\n\nC’est comme\nêtre un chef...\nmais sans\napplaudissements.",
+        "Plus de pop-corn,\nmoins de combats.\n\nMême si,\nbien sûr,\nce serait trop\ndemander.",
+        "Voici votre\ndose quotidienne\nde pop-corn"
+    ],
+
+    "Efusive": [
+        "Ici,\nil pleut\nle pororós ",
+        "Noyez-vous !",
+        "Personne d’autre\nne me dira\nquoi faire !",
+        "Je sens\nla colère\ncouler dans\nmon sang !",
+        "J’ai besoin\nde dormir",
+        "J’ai mal\nà la tête",
+        "Vite,\nreprends avant\nque j’explose\nde rage !",
+        "J’ai mal\nau ventre",
+        "Qui aurait\ncru que jeter\ndes pores\nserait ma\npunition ?",
+        "Oh, bien sûr !\nJe suis ici\nà jeter des pores\net vous vous battez\npour savoir qui\nest le plus\ninutile.",
+        "Je suis\nà un pas de\nles lancer\nplus fort\nque leurs coups\nde poing !"
+    ],
+
+    "Attack": [
+        "Quelle bataille\nincroyable !",
+        "Ça me fait\nbouillir\nle sang ?",
+        "Un duel\nde cinéma !",
+        "Quelle façon\nmature de résoudre\nce problème !\n\nJ’ai toujours\nsu que la violence\nétait la réponse.",
+        "Wow, ils donnent\nvraiment tout\nce qu’ils ont.\n\nQuelqu’un a-t-il\ndéjà perdu sa\ndignité ou se\nbat-il encore\npour l’obtenir ?",
+        "Quel spectacle !\n\nY a-t-il des billets\nde première ligne\npour l’autodestruction ?",
+        "Eh bien,\nau moins,\nils font plus\nd’exercice que moi\ntoute l’année."      
+    ],
+
+    "Conclusión": [
+        "Félicitations au\nJoueur 1 !",
+        "Félicitations au\nJoueur 2 !",
+        "Vengeance ? ",
+        "Ah, la douce victoire...\n\nce qui durera environ cinq secondes\njusqu’à ce qu’ils recommencent."
+    ]
+}

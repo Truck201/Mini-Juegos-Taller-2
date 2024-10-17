@@ -23,38 +23,52 @@ export class GameCooperative extends Scene {
     this.limits.body.allowGravity = false;
     this.limits.body.setSize(width, 100);
 
+    this.createNewTargets();
+
     // Crear los slingshots
     this.slingshots.push(
-      new SlingShot(this, width * 0.25, height * 0.85, 
-        Phaser.Input.Keyboard.KeyCodes.A, 
-        Phaser.Input.Keyboard.KeyCodes.D, 
-        Phaser.Input.Keyboard.KeyCodes.SPACE, 
-        true, 
-        this)
+      new SlingShot(
+        this,
+        width * 0.25,
+        height * 0.885,
+        Phaser.Input.Keyboard.KeyCodes.A,
+        Phaser.Input.Keyboard.KeyCodes.D,
+        Phaser.Input.Keyboard.KeyCodes.SPACE,
+        true,
+        this
+      )
     ); // Jugador 1
 
     this.slingshots.push(
-      new SlingShot(this, width * 0.75, height * 0.85, 
-        Phaser.Input.Keyboard.KeyCodes.LEFT, 
-        Phaser.Input.Keyboard.KeyCodes.RIGHT, 
-        Phaser.Input.Keyboard.KeyCodes.ENTER, 
-        false, 
-        this)
+      new SlingShot(
+        this,
+        width * 0.75,
+        height * 0.885,
+        Phaser.Input.Keyboard.KeyCodes.LEFT,
+        Phaser.Input.Keyboard.KeyCodes.RIGHT,
+        Phaser.Input.Keyboard.KeyCodes.ENTER,
+        false,
+        this
+      )
     ); // Jugador 2
 
-    this.createNewTargets();
-
     // Crear grupo para las balas
-    this.bullets = this.physics.add.group();
+    this.bullets = this.physics.add.group({
+      defaultKey: "bulletSprite", // El nombre del sprite para las balas
+      maxSize: 0, // Número máximo de balas activas al mismo tiempo
+      allowGravity: true, // Desactivar la gravedad para este grupo
+    });
 
     // Detectar colisiones entre balas y dianas
-    this.physics.add.collider(
-      this.bullets,
-      this.targets.map((target) => target.target),
-      this.onBulletHitTarget,
-      null,
-      this
-    );
+    this.targets.forEach((target) => {
+      this.physics.add.collider(
+        this.bullets,
+        target.target,
+        this.onBulletHitTarget,
+        null,
+        this
+      );
+    });
   }
 
   createNewTargets() {
@@ -72,7 +86,10 @@ export class GameCooperative extends Scene {
     ];
 
     const avalibleColor = ["Blue", "Purple", "Orange", "Rose", "Green"];
-    const shuffledColors = Phaser.Utils.Array.Shuffle(avalibleColor).slice(0, 5);
+    const shuffledColors = Phaser.Utils.Array.Shuffle(avalibleColor).slice(
+      0,
+      5
+    );
 
     let index = 0;
     for (let row = 0; row < layout.length; row++) {
@@ -98,10 +115,18 @@ export class GameCooperative extends Scene {
     this.slingshots.forEach((slingshot) => {
       slingshot.update(time, delta);
     });
+
+    // Actualizar las balas en cada frame para asegurar su movimiento
+    this.bullets.children.each((bullet) => {
+      if (bullet.active && bullet.y < 0) {
+        bullet.destroy(); // Destruir balas que salgan de la pantalla
+      }
+    });
   }
 
   // Método para manejar colisiones entre balas y dianas
   onBulletHitTarget(bullet, target) {
+    console.log("Diana impactada!");
     target.onHit(bullet, target);
     bullet.destroy(); // Destruir la bala después de la colisión
   }

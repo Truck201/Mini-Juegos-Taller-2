@@ -1,9 +1,15 @@
-export class KidKorn {
-  constructor(scene) {
+import { BaseScene } from "../lib/FontsBase";
+import { getLanguageConfig } from "../services/translations";
+
+export class KidKorn extends BaseScene {
+  constructor(scene, dialogues) {
     this.scene = scene;
 
     this.y = this.scene.scale.height;
     this.x = this.scene.scale.width;
+
+    // Cargar los diálogos
+    this.dialogues = dialogues;
 
     this.kidKornBig = this.scene.add
       .sprite(this.x / 2, this.y * 1.9, "kid-kornB")
@@ -22,9 +28,6 @@ export class KidKorn {
 
     this.kidKornLeft.setVisible(false); // Ocultar al inicio
     this.kidKornRight.setVisible(false); // Ocultar al inicio
-
-    // Cargar los diálogos
-    this.dialogues = this.scene.cache.json.get("kidKornDialogues");
   }
 
   showKidKornBig() {
@@ -42,20 +45,7 @@ export class KidKorn {
     const randomDialogue = this.dialogues.Efusive[randomIndex];
 
     // Mostrar la frase en el juego
-    const text = this.scene.add
-      .text(this.x / 2, this.y * 0.6, randomDialogue, {
-        fontSize: "30px",
-        fontFamily: "'Press Start 2P'",
-        fill: "#ffffff",
-        align: "center",
-        backgroundColor: "#000",
-        shadow: {
-          color: "#000000",
-          fill: true,
-          offsetX: 3,
-          offsetY: 3,
-        },
-      })
+    const text = this.createText(this.x / 2, this.y * 0.6, randomDialogue)
       .setOrigin(0.5)
       .setDepth(23);
 
@@ -124,51 +114,35 @@ export class KidKorn {
 
     if (fromLeft) {
       this.dialogueWidth = this.scene.scale.width * 0.255;
-      this.image = "globoTextoL";
     } else if (!fromLeft) {
       this.dialogueWidth = this.scene.scale.width * 0.739;
-      this.image = "globoTextoR";
     }
 
     let fontSize, globoSize;
     if (randomDialogue.length <= 18) {
-      console.log("corto")
+      console.log("corto");
       fontSize = "39px"; // Para palabras cortas
       globoSize = 1.1;
-    } else if (randomDialogue.length <= 30){
-      console.log("medio chico")
+    } else if (randomDialogue.length <= 30) {
+      console.log("medio chico");
       fontSize = "29.4px"; // Para palabras medianas
       globoSize = 1.23;
     } else if (randomDialogue.length <= 37) {
-      console.log("mediano alto")
+      console.log("mediano alto");
       fontSize = "26px"; // Para palabras medianas
       globoSize = 1.34;
     } else {
-      console.log("grande")
+      console.log("grande");
       fontSize = "21px"; // Para palabras largas
       globoSize = 1.45;
     }
 
-    const globoTexto = this.scene.add
-      .sprite(this.dialogueWidth, this.y * 0.4, this.image)
-      .setScale(globoSize)
-      .setDepth(20);
-
     // Mostrar la frase en el juego
-    const text = this.scene.add
-      .text(this.dialogueWidth, this.y * 0.37, randomDialogue, {
-        fontSize: fontSize,
-        fontFamily: "'Press Start 2P'",
-        fill: "#000",
-        align: "center",
-        backgroundColor: "#ffffff",
-        shadow: {
-          color: "#ffffff",
-          fill: true,
-          offsetX: 3,
-          offsetY: 3,
-        },
-      })
+    const text = this.createText(
+      this.dialogueWidth,
+      this.y * 0.37,
+      randomDialogue
+    )
       .setOrigin(0.5)
       .setDepth(23);
 

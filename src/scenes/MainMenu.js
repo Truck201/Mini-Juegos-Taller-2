@@ -1,6 +1,8 @@
+import CRTPostFx from "../lib/CRTPostFx";
+import TVDistortionFx from "../lib/TVDistortion";
 import { BaseScene } from "../lib/FontsBase";
 import { Television } from "../entitities/television";
-import { getPhrase, getTranslations } from "../services/translations";
+import { getLanguageConfig, getPhrase } from "../services/translations";
 export class MainMenu extends BaseScene {
   constructor() {
     super("MainMenu");
@@ -11,18 +13,45 @@ export class MainMenu extends BaseScene {
   init(data) {
     this.cameras.main.fadeIn(500, 0, 0, 0);
     this.allicons = [];
-    this.language = data.language;
+    this.language = data.language || getLanguageConfig();
   }
-  async create() {
+
+  create() {
     let width = this.scale.width; //Definir la mitad del Ancho
     let height = this.scale.height; //Definir la mitad del Alto
 
-    await getTranslations(this.language);
+    // Añadir los efectos shader a la cámara
+    this.crtEffect = this.game.renderer.pipelines.addPostPipeline(
+      "CRTPostFx",
+      CRTPostFx
+    );
+    this.distortionEffect = this.game.renderer.pipelines.addPostPipeline(
+      "TVDistortionFx",
+      TVDistortionFx
+    );
+
+    // Aplicar el efecto CRT a la cámara principal
+    this.cameras.main.setPostPipeline(TVDistortionFx);
+
+    // Cargar los diálogos del archivo correspondiente según el idioma seleccionado
+    const dialoguesPath = `kidKornDialogues_${this.language}`;
+    console.log(`Cargando diálogos desde: ${dialoguesPath}`);
+
+    this.load.json(
+      dialoguesPath,
+      `../public/data/kidKornDialogues_${this.language}.json`
+    );
+    this.load.once("complete", () => {
+      this.dialogues = this.cache.json.get(dialoguesPath);
+      console.log("Cargaron Dialogos"); // Iniciar la lógica de tu escena una vez que los diálogos estén cargados
+    });
+    this.load.start(); // Iniciar la carga del JSON
+
     //Title
     this.background = this.add
       .sprite(width * 0.48, height * 0.65, "menu-background")
       .setScale(2.9)
-      .setDepth(2);
+      .setDepth(3);
 
     //Button Versus
     const playVersusButton = this.createText(
@@ -36,6 +65,9 @@ export class MainMenu extends BaseScene {
       .setOrigin(0.5);
     //this.add.image(width / 2, height / 2, '').setScale(0.15);
     playVersusButton.setInteractive();
+
+    // Aplicar el segundo shader al botón de Versus
+    playVersusButton.setPipeline("TVDistortionFx");
 
     //Button Animations Hover, Down, Out
     playVersusButton.on("pointerover", () => {
@@ -125,6 +157,9 @@ export class MainMenu extends BaseScene {
       .setOrigin(0.5);
     //this.add.image(width / 2, height / 2, '').setScale(0.15);
     optionsButton.setInteractive();
+
+    // Aplicar el segundo shader al botón de Opciones
+    optionsButton.setPipeline("TVDistortionFx");
 
     //Button Animations Hover, Down, Out
     optionsButton.on("pointerover", () => {
@@ -218,7 +253,7 @@ export class MainMenu extends BaseScene {
 
     // Esperar un poco antes de iniciar la siguiente escena
     this.time.delayedCall(1500, () => {
-      this.scene.start("Game1vs1"); //Ir a escena Main
+      this.scene.start("Game1vs1", { dialogues: this.dialogues }); //Ir a escena Main
     });
   }
 

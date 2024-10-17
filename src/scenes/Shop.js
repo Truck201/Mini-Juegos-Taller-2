@@ -1,5 +1,5 @@
 import { Scene } from "phaser";
-import { ItemsCase } from "../entitities/itemscase";
+import { ItemsCase } from "../functions/itemscase";
 import { MonsterShop } from "../entitities/monsters";
 
 export class Shop extends Scene {

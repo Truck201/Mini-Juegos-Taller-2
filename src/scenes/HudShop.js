@@ -1,4 +1,5 @@
 import { BaseScene } from "../lib/FontsBase";
+import { getPhrase } from "../services/translations";
 
 // The HUD scene is the scene that shows the points and the remaining time.
 export class HudShop extends BaseScene {
@@ -43,7 +44,7 @@ export class HudShop extends BaseScene {
     this.remaining_time_text = this.createText(
       width / 2,
       height * 0.6493,
-      `REMAINING: ${this.remaining_time.toString().padStart(2, "0")}s`
+      `${getPhrase('TiempoRestante')} ${this.remaining_time.toString().padStart(2, "0")}s`
     ).setOrigin(0.5).setDepth(10);
   }
 
@@ -89,7 +90,7 @@ export class HudShop extends BaseScene {
       }
       if (timeout >= 0) {
         this.remaining_time_text.setText(
-          `REMAINING: ${timeout.toString().padStart(2, "0")}s`
+          `${getPhrase('TiempoRestante')} ${timeout.toString().padStart(2, "0")}s`
         );
       }
     }

@@ -1,5 +1,5 @@
 import { Scene } from "phaser";
-import { BaseScene } from "../lib/FontsBase";
+import { getPhrase } from "../services/translations";
 
 export class PauseMenu extends Scene {
   constructor() {
@@ -26,7 +26,7 @@ export class PauseMenu extends Scene {
 
     // Agregar texto al menú de pausa
     this.add
-      .text(width / 2, height * 0.3, "Paused Game", {
+      .text(width / 2, height * 0.3, `${getPhrase('PausaMensaje')}`, {
         fontSize: "45px",
         fontFamily: "'Press Start 2P'",
         color: "#fff",
@@ -45,7 +45,7 @@ export class PauseMenu extends Scene {
 
     // Agregar un botón para volver al menú principal
     const mainMenuButton = this.add
-      .text(width / 2, height * 0.5, "Back to Main Menu", {
+      .text(width / 2, height * 0.5, `${getPhrase('VolverAlMenu')}`, {
         fontSize: "25px",
         fontFamily: "'Press Start 2P'",
         color: "#fff",
@@ -82,7 +82,7 @@ export class PauseMenu extends Scene {
     });
 
     this.add
-      .text(width / 2, height * 0.6, "Reanude Game press Esc", {
+      .text(width / 2, height * 0.6, `${getPhrase('ReanudarJuego')} Esc`, {
         fontSize: "25px",
         fontFamily: "'Press Start 2P'",
         color: "#fff",

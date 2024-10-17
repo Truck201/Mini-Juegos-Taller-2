@@ -1,4 +1,4 @@
-import { AtributesPlayers } from "./newatributes";
+import { AtributesPlayers } from "./atributos";
 export class ItemsCase {
   constructor(scene, width, height) {
     this.scene = scene;

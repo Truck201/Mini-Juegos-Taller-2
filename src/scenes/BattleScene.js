@@ -1,31 +1,25 @@
 import { MoveBar } from "../entitities/movebar";
 import { Television } from "../entitities/television";
-import { AtributesPlayers } from "../entitities/newatributes"; // Importa la clase
 import { Character } from "../entitities/character";
 import { BaseScene } from "../lib/FontsBase";
 import { SwordRain } from "../events/swordRain";
 import { PopcornRaining } from "../events/popcornRain";
 import { MedievalEvent } from "../events/medieval";
+import { AtributesPlayers } from "../functions/atributos";
+import { initializeHealthBars } from "../functions/createHealtBar";
 
 export class BattleScene extends BaseScene {
   constructor() {
     super("battleScene");
     this.movingBar1 = null;
     this.movingBar2 = null;
-
-    this.player1Atributes = new AtributesPlayers(this, 1); // Crear Atributos de Cada Jugador
-    this.player2Atributes = new AtributesPlayers(this, 2);
-
+    this.player1Atributes = null;
+    this.player2Atributes = null;
     this.player1HPText = null; // Vida de Cada Jugador
     this.player2HPText = null;
-
     this.lastKeyPressTime = 0; // Pausa ?
   }
-
   game_over_timeout;
-  timer_event;
-  icons = []; // Agregar un array para almacenar íconos de ítems
-
   init(data) {
     this.game_over_timeout = 60; // Tiempo límite de 30 segundos
     this.purchasedItems = data.purchasedItems || []; // Obtener los ítems comprados
@@ -39,6 +33,41 @@ export class BattleScene extends BaseScene {
   }
 
   create() {
+    this.width = this.game.scale.width;
+    this.height = this.game.scale.height;
+
+    // Crear Atributos de Cada Jugador
+    this.player1Atributes = new AtributesPlayers(this);
+    this.player2Atributes = new AtributesPlayers(this);
+
+    this.player1HP = this.player1Atributes.getHitPoints();
+    this.player1Speed = this.player1Atributes.getSpeed();
+    this.player1EvadeChance = this.player1Atributes.getEvadeChance();
+    this.player1Damage = this.player1Atributes.getDamage();
+    this.player1CriticalChance = this.player1Atributes.getCritical();
+
+    this.player2HP = this.player2Atributes.getHitPoints();
+    this.player2Speed = this.player2Atributes.getSpeed();
+    this.player2EvadeChance = this.player2Atributes.getEvadeChance();
+    this.player2Damage = this.player2Atributes.getDamage();
+    this.player2CriticalChance = this.player2Atributes.getCritical();
+
+    this.createHealtBar1 = new initializeHealthBars(
+      this,
+      this.width * 0.045,
+      this.height * 0.55,
+      this.player1HP
+    );
+    this.createHealtBar2 = new initializeHealthBars(
+      this,
+      this.width * 0.95,
+      this.height * 0.55,
+      this.player2HP
+    );
+
+    this.createHealtBar1.updateHealthBar(this.player1HP);
+    this.createHealtBar2.updateHealthBar(this.player2HP);
+
     let width = this.game.scale.width;
     let height = this.game.scale.height;
 
@@ -52,79 +81,6 @@ export class BattleScene extends BaseScene {
         this.scene.bringToTop("PauseMenu");
       }
     });
-
-    this.player1Atributes.create();
-    // Actualizar atributos del jugador 1 con los ítems seleccionados
-    if (this.selectedItemsPlayer1) {
-      this.player1Atributes.aboutWriteAtributes(
-        this.selectedItemsPlayer1.atributes1
-      );
-    }
-    console.log(this.selectedItemsPlayer1.atributes1);
-
-    this.player2Atributes.create();
-    // Actualizar atributos del jugador 2 con los ítems seleccionados
-    if (this.selectedItemsPlayer2) {
-      this.player2Atributes.aboutWriteAtributes(
-        this.selectedItemsPlayer2.atributes2
-      );
-    }
-
-    console.log(this.selectedItemsPlayer2.atributes2);
-
-    this.player1CriticalChance =
-      this.player1Atributes.getCritical(1) ||
-      this.selectedItemsPlayer1.atributes?.critical ||
-      0;
-    this.player1Damage =
-      this.player1Atributes.getDamage(1) ||
-      this.selectedItemsPlayer1.atributes?.damage ||
-      1;
-    this.player1Anchor =
-      this.player1Atributes.getAnchor(1) ||
-      this.selectedItemsPlayer1.atributes?.anchor ||
-      12;
-    this.player1Speed =
-      this.player1Atributes.getSpeed(1) ||
-      this.selectedItemsPlayer1.atributes?.speed ||
-      5; // Valor por defecto si no existe
-    this.player1EvadeChance =
-      this.player1Atributes.getEvadeChance(1) ||
-      this.selectedItemsPlayer1.atributes?.evadeChance ||
-      0;
-    this.player1HP =
-      this.player1Atributes.getHitPoints(1) ||
-      this.selectedItemsPlayer1.atributes?.hitPoints ||
-      1; // int
-
-    this.player1Atributes.updateHealthBar(1, this.player1HP);
-
-    this.player2Damage =
-      this.player2Atributes.getDamage(2) ||
-      this.selectedItemsPlayer2.atributes?.damage ||
-      1;
-    this.player2CritialChance =
-      this.player2Atributes.getCritical(2) ||
-      this.selectedItemsPlayer2.atributes?.critical ||
-      0;
-    this.player2Anchor =
-      this.player2Atributes.getAnchor(2) ||
-      this.selectedItemsPlayer2.atributes?.anchor ||
-      12;
-    this.player2Speed =
-      this.player2Atributes.getSpeed(2) ||
-      this.selectedItemsPlayer2.atributes?.speed ||
-      5; // Valor por defecto si no existe
-    this.player2EvadeChance =
-      this.player2Atributes.getEvadeChance(2) ||
-      this.selectedItemsPlayer2.atributes?.evadeChance ||
-      0;
-    this.player2HP =
-      this.player2Atributes.getHitPoints(2) ||
-      this.selectedItemsPlayer2.atributes?.hitPoints ||
-      1; // int
-
-    this.player2Atributes.updateHealthBar(2, this.player2HP);
 
     let width1 = width * 0.115;
     let height1 = height * 0.4;
@@ -229,7 +185,7 @@ export class BattleScene extends BaseScene {
     this.criticalText2 = this.createText(
       width2,
       height5,
-      `${this.player2CritialChance.toString().padStart(2, "0")}`
+      `${this.player2CriticalChance.toString().padStart(2, "0")}`
     )
       .setOrigin(0.5)
       .setDepth(3);
@@ -241,7 +197,7 @@ export class BattleScene extends BaseScene {
     let background = this.add.sprite(width * 0.5, height * 0.5, "escenario");
     background.setDepth(1);
 
-    const itemsCase = this.scene.get("ItemsCase");
+    // const itemsCase = this.scene.get("ItemsCase");
 
     const player1 = new Character(this, "mimbo", true);
     const player2 = new Character(this, "luho", false);

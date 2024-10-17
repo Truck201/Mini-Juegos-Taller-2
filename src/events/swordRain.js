@@ -1,4 +1,5 @@
 import { Attack } from "../entitities/attack";
+import { takeDamage } from "../functions/takeDamage";
 export class SwordRain {
   constructor(scene) {
     this.scene = scene;
@@ -36,8 +37,10 @@ export class SwordRain {
         Phaser.Input.Keyboard.JustDown(this.spaceKey)
       ) {
         if (
-          this.scene.player2Atributes.takeDamage(
-            2,
+          takeDamage(
+            this,
+            this.scene.player1Atributes,
+            this.scene.player2Atributes,
             this.scene.player2EvadeChance,
             this.scene.player2HP,
             this.isShelded2
@@ -48,11 +51,12 @@ export class SwordRain {
         } else {
           this.showMissMensaje(sword);
         }
-
         this.scene.player2HP = this.scene.player2Atributes.getHitPoints(2);
         this.scene.player2HPText.setText(
           `${this.scene.player2HP.toString().padStart(2, "0")}`
         );
+        // // Actualizar la vida
+        this.scene.createHealtBar2.updateHealthBar(this.scene.player2HP);
       }
 
       // Si se presiona enter, jugador 2 destruye un recolectable
@@ -61,8 +65,10 @@ export class SwordRain {
         Phaser.Input.Keyboard.JustDown(this.enterKey)
       ) {
         if (
-          this.scene.player1Atributes.takeDamage(
-            1,
+          takeDamage(
+            this,
+            this.scene.player2Atributes,
+            this.scene.player1Atributes,
             this.scene.player1EvadeChance,
             this.scene.player1HP,
             this.isShelded1
@@ -78,6 +84,8 @@ export class SwordRain {
         this.scene.player1HPText.setText(
           `${this.scene.player1HP.toString().padStart(2, "0")}`
         );
+        // // Actualizar la vida
+        this.scene.createHealtBar1.updateHealthBar(this.scene.player1HP);
       }
     });
   }
@@ -108,7 +116,7 @@ export class SwordRain {
 
   destroyAndRespawn(sword) {
     if (sword) {
-      sword.destroy(); 
+      sword.destroy();
       console.log("Espada destruida:", sword);
 
       const index = this.swords.indexOf(sword);

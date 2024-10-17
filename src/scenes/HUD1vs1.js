@@ -1,4 +1,5 @@
 import { BaseScene } from "../lib/FontsBase";
+import { getPhrase } from "../services/translations";
 
 // The HUD scene is the scene that shows the points and the remaining time.
 export class Hud extends BaseScene {
@@ -25,13 +26,13 @@ export class Hud extends BaseScene {
     this.points_text1 = this.createText(
       this.scale.width * 0.075,
       this.scale.height * 0.255,
-      `SCORE: ${this.points1.toString().padStart(2, "0")}`
+      `${getPhrase('Puntos')} ${this.points1.toString().padStart(2, "0")}`
     ).setOrigin(0.5);
 
     this.points_text2 = this.createText(
       this.scale.width * 0.935,
       this.scale.height * 0.255,
-      `SCORE: ${this.points2.toString().padStart(2, "0")}`
+      `${getPhrase('Puntos')} ${this.points2.toString().padStart(2, "0")}`
     ).setOrigin(0.5);
 
     this.remaining_time_text = this.createText(
@@ -43,9 +44,9 @@ export class Hud extends BaseScene {
 
   update_points(player, points) {
     if (player === 1) {
-      this.points_text1.setText(`SCORE: ${points.toString().padStart(2, "0")}`);
+      this.points_text1.setText(`${getPhrase('Puntos')} ${points.toString().padStart(2, "0")}`);
     } else if (player === 2) {
-      this.points_text2.setText(`SCORE: ${points.toString().padStart(2, "0")}`);
+      this.points_text2.setText(`${getPhrase('Puntos')} ${points.toString().padStart(2, "0")}`);
     }
   }
 

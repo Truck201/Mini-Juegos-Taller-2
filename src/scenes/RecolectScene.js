@@ -1,10 +1,10 @@
 import { Scene } from "phaser";
-import { Particles } from "../entitities/particles";
+import { Particles } from "../functions/particles";
 import { MoveBar } from "../entitities/movebar";
 import { Character } from "../entitities/character";
 import { PopCorn } from "../entitities/popcorn";
 import { Television } from "../entitities/television";
-import { ComboPersonajes } from "../entitities/combo";
+import { ComboPersonajes } from "../functions/combo";
 import { KidKorn } from "../entitities/kidkorn";
 
 export class RecolectScene extends Scene {
@@ -30,6 +30,7 @@ export class RecolectScene extends Scene {
     this.points1 = data.points1 || 0; // Puntaje inicial jugador 1
     this.points2 = data.points2 || 0; // Puntaje inicial jugador 2
     this.game_over_timeout = 35; // Tiempo límite de 30 segundos
+    this.dialogues = data.dialogues
 
     // Lanzar la escena del HUD, pasando el tiempo y los puntajes iniciales
     this.scene.launch("Hud", {
@@ -75,7 +76,7 @@ export class RecolectScene extends Scene {
 
     this.television = new Television(this, false);
 
-    this.kidKorn = new KidKorn(this);
+    this.kidKorn = new KidKorn(this, this.dialogues);
 
     // Iniciar el temporizador aleatorio para que KidKorn aparezca
     this.kidKorn.startKidKornAppearance();
@@ -83,7 +84,11 @@ export class RecolectScene extends Scene {
     
     let background = this.add.sprite(width * 0.5, height * 0.5, "escenario");
     background.setDepth(1);
-    background.setScale(1)
+    background.setScale(1);
+
+    let shadows = this.add.sprite(width * 0.5, height * 0.5, "shadowTotal")
+    shadows.setDepth(3);
+    shadows.setScale(1);
 
     // Crear la barra principal
     let barraX = width / 2; // Posición Barra en X

@@ -1,0 +1,45 @@
+{
+    "Neutral": [
+        "You didn't mislead,\nfriends", 
+        "I'm just\na helper",
+        "Does anyone\nhave an\nibuprofen?",
+        "I was created\nto make pororós",
+        "Who wants a\nspecial pororó?",
+        "Don't worry,\nI have an\nINFINITE supply.",
+        "Fresh pororos,\njust launched.\n\nTake them while\nthey're crispy.",
+        "Ah, nothing like\nthrowing popcorn.\n\nIt's like being\na chef...\nbut without applause.",
+        "More pororos,\nfewer fights.\n\nAlthough of course,\nthat would be asking\ntoo much.",
+        "Here's your\ndaily dose of\npororos"
+    ],
+
+    "Efusive": [
+        "Here it\nrains the\npororós!",
+        "Drown!",
+        "No one else\nwill tell me\nwhat to do!",
+        "I feel the anger\nrunning down\nmy-my-my blood!",
+        "I need\nto sleep,",
+        "My head\nHURTS",
+        "Quick,\npick up before\nI explode with\nRAGE!",
+        "My belly\nHURTS",
+        "Who knew\nthat throwing popcorn\nwould be my\npunishment?!",
+        "Oh, sure!\nI'm here throwing\npopcorn and you\nguys fighting over\nwho is more\nuseless.",
+        "I'm one step away\nfrom throwing them\nharder than\ntheir punches!"
+    ],
+
+    "Attack": [
+        "What an amazing\nbattle!",
+        "It makes my ...\nblood boil?",
+        "A movie duel!",
+        "What a mature way\nto solve this!\n\nI always knew that\nviolence was the answer.",
+        "Wow, they're really\ngiving it their all.\n\nHas someone already\nlost their dignity\nor are they still\nfighting for it?",
+        "What a show!\n\nAre there front-row\ntickets to\nself-destruction?",
+        "Well, at least\nthey're exercising\nmore than I do\nall year."      
+    ],
+
+    "Conclusión": [
+        "Congratulations\nPlayer 1!",
+        "Congratulations\nPlayer 2!",
+        "Revenge?",
+        "Ah, the sweet victory...\nwhich will last about\nfive seconds\nuntil they start again."
+    ]
+}

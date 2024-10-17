@@ -1,6 +1,7 @@
 import { BaseScene } from "../lib/FontsBase";
 import { ES_AR, EN_US } from "../enums/languages";
 import { getTranslations } from "../services/translations";
+import { initAnimations } from "../anims/flags";
 
 export class LanguageScene extends BaseScene {
   constructor() {
@@ -11,10 +12,14 @@ export class LanguageScene extends BaseScene {
     const width = this.game.scale.width;
     const height = this.game.scale.height;
 
-    this.initAnimations();
+    initAnimations(this);
 
-    const background = this.add.sprite(width * 0.5, height * 0.5, 'boleteriaBackground');
-    background.anims.play('Idle-Boleteria', true)
+    const background = this.add.sprite(
+      width * 0.5,
+      height * 0.5,
+      "boleteriaBackground"
+    );
+    background.anims.play("Idle-Boleteria", true);
 
     // Añadimos las imágenes de ambas banderas
     const ARGLanguage = this.add
@@ -36,20 +41,18 @@ export class LanguageScene extends BaseScene {
       ARGLanguage.setScale(1.24);
     });
 
-    
-
     ARGLanguage.on("pointerdown", () => {
       ARGLanguage.setScale(1.6);
-      
-      getTranslations(ES_AR)
-      
-      ARGLanguage.anims.play("Crush-ARG", true);
-      this.time.addEvent({
-        delay: 120,
-        loop: true,
-        callback: () => {
-          this.gotoMainScene(ES_AR); //Llama la escena Main
-        },
+
+      getTranslations(ES_AR, () => {
+        ARGLanguage.anims.play("Crush-ARG", true);
+        this.time.addEvent({
+          delay: 120,
+          loop: true,
+          callback: () => {
+            this.gotoMainScene(ES_AR); //Llama la escena Main
+          },
+        });
       });
     });
 
@@ -75,75 +78,23 @@ export class LanguageScene extends BaseScene {
     USALanguage.on("pointerdown", () => {
       USALanguage.setScale(1.6);
 
-      getTranslations(EN_US)
-
-      USALanguage.anims.play("Crush-EEUU", true);
-      this.time.addEvent({
-        delay: 120,
-        loop: true,
-        callback: () => {
-          this.gotoMainScene(EN_US); //Llama la escena Main
-        },
+      getTranslations(EN_US, () => {
+        USALanguage.anims.play("Crush-EEUU", true);
+        this.time.addEvent({
+          delay: 120,
+          loop: true,
+          callback: () => {
+            this.gotoMainScene(EN_US); //Llama la escena Main
+          },
+        });
       });
-    });
-  }
-
-  initAnimations() {
-    this.anims.create({
-      key: "Idle-Boleteria",
-      frames: this.anims.generateFrameNumbers("boleteriaBackground", {
-        start: 0,
-        end: 1,
-      }),
-      frameRate: 5,
-      repeat: -1, // La animación se repite indefinidamente
-    });
-
-    this.anims.create({
-      key: "Crush-ARG",
-      frames: this.anims.generateFrameNumbers("CUT-ARG", {
-        start: 0,
-        end: 1,
-      }),
-      frameRate: 2,
-      repeat: false, // La animación se repite indefinidamente
-    });
-
-    this.anims.create({
-      key: "Crush-EEUU",
-      frames: this.anims.generateFrameNumbers("CUT-EEUU", {
-        start: 0,
-        end: 1,
-      }),
-      frameRate: 2,
-      repeat: false, // La animación se repite indefinidamente
-    });
-
-    this.anims.create({
-      key: "Idle-ARG",
-      frames: this.anims.generateFrameNumbers("IDLE-ARG", {
-        start: 0,
-        end: 0,
-      }),
-      frameRate: 9,
-      repeat: false, // La animación se repite indefinidamente
-    });
-
-    this.anims.create({
-      key: "Idle-EEUU",
-      frames: this.anims.generateFrameNumbers("IDLE-EEUU", {
-        start: 0,
-        end: 0,
-      }),
-      frameRate: 2,
-      repeat: false, // La animación se repite indefinidamente
     });
   }
 
   gotoMainScene(lang) {
     this.time.delayedCall(200, () => {
       this.scene.start("MainMenu", {
-        language: lang
+        language: lang,
       });
     });
   }

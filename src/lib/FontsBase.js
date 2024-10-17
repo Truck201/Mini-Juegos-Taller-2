@@ -11,12 +11,14 @@ export class BaseScene extends Scene {
       color: "#fff",
       stroke: "black",
       strokeThickness: 4,
+      lineSpacing: 9, // Espaciado entre líneas
+      letterSpacing: 3, // Espaciado entre letras
       maxLines: 4,
       shadow: {
         color: "#000000",
         fill: true,
-        offsetX: 7,
-        offsetY: 7,
+        offsetX: 8,
+        offsetY: 8,
       },
     };
   }
@@ -29,9 +31,23 @@ export class BaseScene extends Scene {
       fontSize = "48px"; // Para palabras cortas
     } else if (text.length <= 8) {
       fontSize = "30px"; // Para palabras medianas
+    } else if (text.length <= 12) {
+      fontSize = "26px"; // Para palabras medianas
     } else {
       fontSize = "19.5px"; // Para palabras largas
     }
-    return this.add.text(x, y, text, this.getGlobalTextStyle(fontSize));
+
+    // Crea el texto con las configuraciones
+    const createdText = this.add.text(
+      x,
+      y,
+      text,
+      this.getGlobalTextStyle(fontSize)
+    );
+
+    // Establece el relleno alrededor del texto
+    createdText.setPadding(12, 12, 12, 12); // (top, right, bottom, left)
+
+    return createdText;
   }
 }

@@ -1,46 +1,57 @@
-import { EN_US, ES_AR, FR_FR } from "../enums/languages";
+import { EN_US, ES_AR, FR_FR } from '../enums/languages';
 
-const PROJECT_ID = "cm23nl3nl0001icradqod0htk";
+const PROJECT_ID = 'cm23nl3nl0001icradqod0htk';
 let translations = null;
 let language = ES_AR;
 const CACHE_EXPIRATION = 3600 * 1000; // 1 hora en milisegundos
 
 export async function getTranslations(lang, callback) {
-  
-  const cachedTranslations = localStorage?.getItem("translations");
-  const cachedTimestamp = localStorage?.getItem("translations-timestamp");
+  const cachedLanguage = localStorage?.getItem('language');
+  const cachedTranslations = localStorage?.getItem('translations');
+  const cachedTimestamp = localStorage?.getItem('translations-timestamp');
 
-  if (cachedTranslations && cachedTimestamp) {
+  // Si el idioma guardado en caché es el mismo que el seleccionado, usamos las traducciones almacenadas
+  if (cachedLanguage === lang && cachedTranslations && cachedTimestamp) {
     const now = Date.now();
+
+    // Verificamos si las traducciones en caché aún no han expirado
     if (now - cachedTimestamp < CACHE_EXPIRATION) {
       translations = JSON.parse(cachedTranslations);
-      console.log("Usando traducciones del caché");
+      console.log('Usando traducciones del caché');
       return callback ? callback() : false;
     }
   }
 
-  // localStorage.clear();
-  // translations = null;
+  // Si el idioma es diferente al que teníamos almacenado, limpiamos el almacenamiento y pedimos nuevas traducciones
+  if (cachedLanguage !== lang) {
+    localStorage.clear();
+    console.log(
+      `Idioma cambiado de ${cachedLanguage} a ${lang}. Limpiando caché y obteniendo nuevas traducciones.`
+    );
+  }
 
   language = lang;
-  console.log(language);
+
   // if (language === ES_AR) {
   //   return callback ? callback() : false;
   // }
 
   try {
     const response = await fetch(
-      `https://cors-anywhere.herokuapp.com/https://traducila.vercel.app/api/translations/${PROJECT_ID}/${language}`
+      `https://traducila.vercel.app/api/translations/${PROJECT_ID}/${language}`
     );
 
     if (!response.ok) {
-      throw new Error("Network response was not ok");
+      throw new Error('Network response was not ok');
     }
 
     const data = await response.json();
-    localStorage.setItem("translations", JSON.stringify(data));
-    localStorage.setItem("translations-timestamp", Date.now()); // Almacena el tiempo de la última actualización
-    console.log("Traducciones actualizadas");
+
+    localStorage.setItem('translations', JSON.stringify(data));
+    localStorage.setItem('translations-timestamp', Date.now()); // Almacena el tiempo de la última actualización
+    localStorage.setItem('language', lang); // Almacena el idioma seleccionado
+    console.log('Traducciones Locales');
+
     translations = data;
     if (callback) callback();
   } catch (error) {
@@ -50,15 +61,12 @@ export async function getTranslations(lang, callback) {
 
 export function getPhrase(key) {
   if (!translations) {
-    const locals = localStorage.getItem("translations");
+    const locals = localStorage.getItem('translations');
     translations = locals ? JSON.parse(locals) : null;
   }
 
   let phrase = key;
-  console.log(phrase);
   if (translations && translations[key]) {
-    console.log(translations);
-    console.log(translations[key]);
     phrase = translations[key];
     console.log(phrase);
   }
@@ -89,9 +97,9 @@ export function getLanguageConfig() {
     */
 
   const path =
-    window.location.pathname !== "/" ? window.location.pathname : null;
+    window.location.pathname !== '/' ? window.location.pathname : null;
   const params = new URL(window.location.href).searchParams;
-  const queryLang = params.get("lang");
+  const queryLang = params.get('lang');
 
   languageConfig = path ?? queryLang;
 
@@ -105,6 +113,6 @@ export function getLanguageConfig() {
   if (isAllowedLanguge(browserLanguage)) {
     return browserLanguage;
   }
-
+  
   return ES_AR;
 }

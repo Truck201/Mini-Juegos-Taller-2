@@ -103,11 +103,25 @@ export class Preloader extends Scene {
     this.load.image("TeleImagen", "../public/assets/versus/menu/tv.png"); // Derrota
 
     // Barra Audio Master
-    this.load.image("sliderHandle", "../public/assets/versus/menu/anillo_volumen.png"); // Derrota
-    this.load.image("sliderBar", "../public/assets/versus/menu/barra_volumen.png"); // Daño
+    this.load.image(
+      "sliderHandle",
+      "../public/assets/versus/menu/anillo_volumen.png"
+    ); // Derrota
+    this.load.image(
+      "sliderBar",
+      "../public/assets/versus/menu/barra_volumen.png"
+    ); // Daño
 
     //  Game
-    this.load.image("escenario", "../public/assets/versus/escenario/principal.png");
+    this.load.image(
+      "escenario",
+      "../public/assets/versus/escenario/principal.png"
+    );
+
+    this.load.image(
+      "shadowTotal",
+      "../public/assets/versus/escenario/sombras.png"
+    );
 
     //  Personajes
     this.load.image("mimbo", "../public/assets/versus/mimbo/mimbo.png"); // Neutral
@@ -182,17 +196,37 @@ export class Preloader extends Scene {
     ); // NEUTRAL
 
     //Globos de Texto
-    this.load.image("globoTextoL", "../public/assets/versus/kid-korn/izquierda.png");
-    this.load.image("globoTextoR", "../public/assets/versus/kid-korn/derecha.png");
+    this.load.image(
+      "globoTextoL",
+      "../public/assets/versus/kid-korn/izquierda.png"
+    );
+    this.load.image(
+      "globoTextoR",
+      "../public/assets/versus/kid-korn/derecha.png"
+    );
 
     // Kid Korn
-    this.load.image("kid-kornS", "../public/assets/versus/kid-korn/korn-defrente.png");
-    this.load.image("kid-kornB", "../public/assets/versus/kid-korn/korn-frente.png");
-    this.load.image("kid-kornL", "../public/assets/versus/kid-korn/korn-izq.png");
-    this.load.image("kid-kornR", "../public/assets/versus/kid-korn/kron-derecha.png");
+    this.load.image(
+      "kid-kornS",
+      "../public/assets/versus/kid-korn/korn-defrente.png"
+    );
+    this.load.image(
+      "kid-kornB",
+      "../public/assets/versus/kid-korn/korn-frente.png"
+    );
+    this.load.image(
+      "kid-kornL",
+      "../public/assets/versus/kid-korn/korn-izq.png"
+    );
+    this.load.image(
+      "kid-kornR",
+      "../public/assets/versus/kid-korn/kron-derecha.png"
+    );
 
     // Dialogues
-    this.load.json("kidKornDialogues", "../public/data/DKidKorn.json");
+    this.load.json("kidKornDialogues_en-US.json", "../public/data/kidKornDialogues_en-US.json");
+    this.load.json("kidKornDialogues_es-AR.json", "../public/data/kidKornDialogues_es-AR.json");
+    this.load.json("kidKornDialogues_fr-FR.json", "../public/data/kidKornDialogues_fr-FR.json");
 
     //   Emociones
     this.load.image("logo", "../public/assets/versus/menu/logo.png"); // Victoria
@@ -204,8 +238,14 @@ export class Preloader extends Scene {
     this.load.image("logo", "../public/assets/versus/menu/logo.png"); // Daño
 
     //   Pochoclos
-    this.load.image("pochoclo", "../public/assets/versus/barra/static-pororo1.png");
-    this.load.image("pochoclo2", "../public/assets/versus/barra/static-pororo.png");
+    this.load.image(
+      "pochoclo",
+      "../public/assets/versus/barra/static-pororo1.png"
+    );
+    this.load.image(
+      "pochoclo2",
+      "../public/assets/versus/barra/static-pororo.png"
+    );
 
     //   Anims
     this.load.spritesheet(
@@ -218,30 +258,53 @@ export class Preloader extends Scene {
     );
 
     //   Main Barra Sprite
-    this.load.image("imagen-barra", "../public/assets/versus/barra/barra-1v1.png");
-    this.load.image("anilla-azul", "../public/assets/versus/barra/barra-azul.png");
-    this.load.image("anilla-roja", "../public/assets/versus/barra/barra-roja.png");
+    this.load.image(
+      "imagen-barra",
+      "../public/assets/versus/barra/barra-1v1.png"
+    );
+    this.load.image(
+      "anilla-azul",
+      "../public/assets/versus/barra/barra-azul.png"
+    );
+    this.load.image(
+      "anilla-roja",
+      "../public/assets/versus/barra/barra-roja.png"
+    );
 
     //   Opacidad
     this.load.image("l-opacidad", "../public/assets/versus/opacidad.png");
 
     //  Tienda
     this.load.image("low-points", "../public/assets/versus/tienda/poco.png");
-    this.load.image("medium-points", "../public/assets/versus/tienda/medio.png");
-    this.load.image("high-points", "../public/assets/versus/tienda/rebalsa.png");
+    this.load.image(
+      "medium-points",
+      "../public/assets/versus/tienda/medio.png"
+    );
+    this.load.image(
+      "high-points",
+      "../public/assets/versus/tienda/rebalsa.png"
+    );
 
-    this.load.spritesheet("polilla", "../public/assets/versus/tienda/pollilla.png", {
-      frameWidth: 16,
-      frameHeight: 16,
-    });
+    this.load.spritesheet(
+      "polilla",
+      "../public/assets/versus/tienda/pollilla.png",
+      {
+        frameWidth: 16,
+        frameHeight: 16,
+      }
+    );
     this.load.spritesheet("toby", "../public/assets/versus/tienda/toby.png", {
       frameWidth: 148,
       frameHeight: 72,
     });
-    this.load.spritesheet("mothman", "../public/assets/versus/tienda/mothman.png", {
-      frameWidth: 160,
-      frameHeight: 188,
-    });
+    this.load.spritesheet(
+      "mothman",
+      "../public/assets/versus/tienda/mothman.png",
+      {
+        frameWidth: 160,
+        frameHeight: 188,
+      }
+    );
     this.load.spritesheet(
       "alcantarilla",
       "../public/assets/versus/tienda/alcantarilla.png",
@@ -268,54 +331,90 @@ export class Preloader extends Scene {
     );
 
     // Lentes (++ Anchor)
-    this.load.spritesheet("glasses", "../public/assets/versus/tienda/lentes1.png", {
-      frameWidth: 80,
-      frameHeight: 96,
-    });
+    this.load.spritesheet(
+      "glasses",
+      "../public/assets/versus/tienda/lentes1.png",
+      {
+        frameWidth: 80,
+        frameHeight: 96,
+      }
+    );
 
     // Caramelos  (+1 HP) (+5 VEL) (Medio)
-    this.load.spritesheet("candy1", "../public/assets/versus/tienda/caramelo1.png", {
-      frameWidth: 80,
-      frameHeight: 96,
-    });
+    this.load.spritesheet(
+      "candy1",
+      "../public/assets/versus/tienda/caramelo1.png",
+      {
+        frameWidth: 80,
+        frameHeight: 96,
+      }
+    );
 
-    this.load.spritesheet("candy2", "../public/assets/versus/tienda/caramelo2.png", {
-      frameWidth: 80,
-      frameHeight: 96,
-    });
+    this.load.spritesheet(
+      "candy2",
+      "../public/assets/versus/tienda/caramelo2.png",
+      {
+        frameWidth: 80,
+        frameHeight: 96,
+      }
+    );
 
-    this.load.spritesheet("candy3", "../public/assets/versus/tienda/caramelo3.png", {
-      frameWidth: 80,
-      frameHeight: 96,
-    });
+    this.load.spritesheet(
+      "candy3",
+      "../public/assets/versus/tienda/caramelo3.png",
+      {
+        frameWidth: 80,
+        frameHeight: 96,
+      }
+    );
 
     // Helados  (+15% EC)
-    this.load.spritesheet("icecream1", "../public/assets/versus/tienda/heladoA.png", {
-      frameWidth: 80,
-      frameHeight: 96,
-    });
+    this.load.spritesheet(
+      "icecream1",
+      "../public/assets/versus/tienda/heladoA.png",
+      {
+        frameWidth: 80,
+        frameHeight: 96,
+      }
+    );
 
-    this.load.spritesheet("icecream2", "../public/assets/versus/tienda/heladoB.png", {
-      frameWidth: 80,
-      frameHeight: 96,
-    });
+    this.load.spritesheet(
+      "icecream2",
+      "../public/assets/versus/tienda/heladoB.png",
+      {
+        frameWidth: 80,
+        frameHeight: 96,
+      }
+    );
 
-    this.load.spritesheet("icecream3", "../public/assets/versus/tienda/heladoC.png", {
-      frameWidth: 80,
-      frameHeight: 96,
-    });
+    this.load.spritesheet(
+      "icecream3",
+      "../public/assets/versus/tienda/heladoC.png",
+      {
+        frameWidth: 80,
+        frameHeight: 96,
+      }
+    );
 
     // Energizante (+10 VEL)
-    this.load.spritesheet("energizing", "../public/assets/versus/tienda/lata2.png", {
-      frameWidth: 80,
-      frameHeight: 96,
-    });
+    this.load.spritesheet(
+      "energizing",
+      "../public/assets/versus/tienda/lata2.png",
+      {
+        frameWidth: 80,
+        frameHeight: 96,
+      }
+    );
 
     // Ojo de cuthulu (15% CRT)
-    this.load.spritesheet("cuthulu", "../public/assets/versus/tienda/ojo1.png", {
-      frameWidth: 80,
-      frameHeight: 96,
-    });
+    this.load.spritesheet(
+      "cuthulu",
+      "../public/assets/versus/tienda/ojo1.png",
+      {
+        frameWidth: 80,
+        frameHeight: 96,
+      }
+    );
 
     // Hacha (+2 DMG CARO)
     this.load.spritesheet("axe", "../public/assets/versus/tienda/hacha1.png", {
@@ -324,16 +423,24 @@ export class Preloader extends Scene {
     });
 
     // Paleta  (+5 VEL) (+1 DMG)
-    this.load.spritesheet("palete", "../public/assets/versus/tienda/chupetin2.png", {
-      frameWidth: 80,
-      frameHeight: 96,
-    });
+    this.load.spritesheet(
+      "palete",
+      "../public/assets/versus/tienda/chupetin2.png",
+      {
+        frameWidth: 80,
+        frameHeight: 96,
+      }
+    );
 
     // Hamburgesa (+3 HP)  (CARO)
-    this.load.spritesheet("burger", "../public/assets/versus/tienda/hamburguesa.png", {
-      frameWidth: 80,
-      frameHeight: 96,
-    });
+    this.load.spritesheet(
+      "burger",
+      "../public/assets/versus/tienda/hamburguesa.png",
+      {
+        frameWidth: 80,
+        frameHeight: 96,
+      }
+    );
 
     // Chocolate (+4 VEL) (+7% EC)
     this.load.spritesheet(
@@ -353,35 +460,26 @@ export class Preloader extends Scene {
 
     // Partículas
     this.load.image("flare", "../public/assets/versus/particles/particles.png"); //  2      particles.png    blue-particle.png
-    this.load.image("flare2", "../public/assets/versus/particles/particles2.png");
-    this.load.image("flare3", "../public/assets/versus/particles/particles3.png"); //  1      particles3.png  red-particle.png
+    this.load.image(
+      "flare2",
+      "../public/assets/versus/particles/particles2.png"
+    );
+    this.load.image(
+      "flare3",
+      "../public/assets/versus/particles/particles3.png"
+    ); //  1      particles3.png  red-particle.png
 
     // Battle
     // Stats
-    this.load.image(
-      "IcoDam",
-      "../public/assets/versus/battle/damage.png"
-    );
+    this.load.image("IcoDam", "../public/assets/versus/battle/damage.png");
 
-    this.load.image(
-      "IcoDef",
-      "../public/assets/versus/battle/defense.png",
-    );
+    this.load.image("IcoDef", "../public/assets/versus/battle/defense.png");
 
-    this.load.image(
-      "IcoCrt",
-      "../public/assets/versus/battle/critical.png",
-    );
+    this.load.image("IcoCrt", "../public/assets/versus/battle/critical.png");
 
-    this.load.image(
-      "IcoHp",
-      "../public/assets/versus/battle/life.png",
-    );
+    this.load.image("IcoHp", "../public/assets/versus/battle/life.png");
 
-    this.load.image(
-      "IcoSp",
-      "../public/assets/versus/battle/speed.png",
-    );
+    this.load.image("IcoSp", "../public/assets/versus/battle/speed.png");
 
     // Sword
     this.load.image(
@@ -466,81 +564,125 @@ export class Preloader extends Scene {
 
     // Popcorn Event Rain
     this.load.image("popcorn1", "../public/assets/versus/anims/popcorn.png");
-
     this.load.image("popcorn2", "../public/assets/versus/anims/popcorn.png");
-
     this.load.image("popcorn3", "../public/assets/versus/anims/popcorn.png");
 
-    // Left
-    this.load.spritesheet(
-      "healthBarLeftAnims",
-      "../public/assets/versus/battle/vida/pj1-xtra.png",
+    // Animación Evento Rain[Popcorn]
+    this.load.spritesheet('popcorn1Sprites',
+      "../public/assets/versus/battle/events/pochoclo-clasico.png",
       {
-        frameWidth: 324,
-        frameHeight: 84,
+        frameWidth: 92,
+        frameHeight: 80
       }
     );
-    this.load.image(
-      "healthBarL1",
-      "../public/assets/versus/battle/vida/pj1_vida5.png"
-    );
-    this.load.image(
-      "healthBarL2",
-      "../public/assets/versus/battle/vida/pj1_vida4.png"
-    );
-    this.load.image(
-      "healthBarL3",
-      "../public/assets/versus/battle/vida/pj1_vida3.png"
-    );
-    this.load.image(
-      "healthBarL4",
-      "../public/assets/versus/battle/vida/pj1_vida2.png"
-    );
-    this.load.image(
-      "healthBarL5",
-      "../public/assets/versus/battle/vida/pj1_vida1.png"
-    );
-    this.load.image(
-      "healthBarLNo",
-      "../public/assets/versus/battle/vida/pj1_no-vida.png"
-    );
 
-    // Right
-    this.load.spritesheet(
-      "healthBarRightAnims",
-      "../public/assets/versus/battle/vida/pj2-xtra.png",
+    this.load.spritesheet('popcorn2Sprites',
+      "../public/assets/versus/battle/events/pochoclo-morado.png",
       {
-        frameWidth: 316,
-        frameHeight: 84,
+        frameWidth: 92,
+        frameHeight: 80
       }
     );
-    this.load.image(
-      "healthBarR1",
-      "../public/assets/versus/battle/vida/pj2_vida5.png"
-    );
-    this.load.image(
-      "healthBarR2",
-      "../public/assets/versus/battle/vida/pj2_vida4.png"
-    );
-    this.load.image(
-      "healthBarR3",
-      "../public/assets/versus/battle/vida/pj2_vida3.png"
-    );
-    this.load.image(
-      "healthBarR4",
-      "../public/assets/versus/battle/vida/pj2_vida2.png"
-    );
-    this.load.image(
-      "healthBarR5",
-      "../public/assets/versus/battle/vida/pj2_vida1.png"
-    );
-    this.load.image(
-      "healthBarRNo",
-      "../public/assets/versus/battle/vida/pj2_no-vida.png"
+
+    this.load.spritesheet('popcorn3Sprites',
+      "../public/assets/versus/battle/events/pochoclo-naranja.png",
+      {
+        frameWidth: 92,
+        frameHeight: 80
+      }
     );
 
+    // Sprite Health Static
+    this.load.image(
+      "healthStatic",
+      "../public/assets/versus/battle/vida/hearth.png"
+    );
+    this.load.image(
+      "healthStaticDeath",
+      "../public/assets/versus/battle/vida/dead-hearth.png"
+    );
 
+    // SpriteSheet Hearth
+    this.load.spritesheet(
+      "healthBarIdle",
+      "../public/assets/versus/battle/vida/idle-hearth.png",
+      {
+        frameWidth: 80,
+        frameHeight: 92,
+      }
+    );
 
+    // Anims HealthBar
+    this.load.spritesheet(
+      "healthBarExtra1",
+      "../public/assets/versus/battle/vida/xtra-vida1.png",
+      {
+        frameWidth: 88,
+        frameHeight: 328,
+      }
+    );
+
+    this.load.spritesheet(
+      "healthBarExtra2",
+      "../public/assets/versus/battle/vida/xtra-vida2.png",
+      {
+        frameWidth: 88,
+        frameHeight: 328,
+      }
+    );
+
+    this.load.spritesheet(
+      "healthBarExtra3",
+      "../public/assets/versus/battle/vida/xtra-vida3.png",
+      {
+        frameWidth: 88,
+        frameHeight: 328,
+      }
+    );
+
+    this.load.spritesheet(
+      "healthBarExtra4",
+      "../public/assets/versus/battle/vida/xtra-vida4.png",
+      {
+        frameWidth: 88,
+        frameHeight: 328,
+      }
+    );
+
+    this.load.spritesheet(
+      "healthBarExtra5",
+      "../public/assets/versus/battle/vida/xtra-vida5.png",
+      {
+        frameWidth: 88,
+        frameHeight: 328,
+      }
+    );
+
+    // Barra de vida
+    this.load.image(
+      "healthBar5",
+      "../public/assets/versus/battle/vida/vida5.png"
+    );
+    this.load.image(
+      "healthBar4",
+      "../public/assets/versus/battle/vida/vida4.png"
+    );
+    this.load.image(
+      "healthBar3",
+      "../public/assets/versus/battle/vida/vida3.png"
+    );
+    this.load.image(
+      "healthBar2",
+      "../public/assets/versus/battle/vida/vida2.png"
+    );
+    this.load.image(
+      "healthBar1",
+      "../public/assets/versus/battle/vida/vida1.png"
+    );
+    this.load.image(
+      "healthBarNo",
+      "../public/assets/versus/battle/vida/vida0.png"
+    );
 
     // Juego COPERATIVISMO SUNCHALE chunchale
     // Background
@@ -653,14 +795,10 @@ export class Preloader extends Scene {
       "../public/assets/coop/diana/static-diana.png"
     );
 
-    this.load.spritesheet(
-      "Diana",
-      "../public/assets/coop/diana/diana.png",
-      {
-        frameWidth: 112,
-        frameHeight: 132
-      }
-    );
+    this.load.spritesheet("Diana", "../public/assets/coop/diana/diana.png", {
+      frameWidth: 112,
+      frameHeight: 132,
+    });
 
     // Resorteras
     this.load.image(
@@ -673,7 +811,7 @@ export class Preloader extends Scene {
       "../public/assets/coop/resortera/resortera-idle.png",
       {
         frameWidth: 140,
-        frameHeight: 275
+        frameHeight: 275,
       }
     );
 
@@ -682,7 +820,7 @@ export class Preloader extends Scene {
       "../public/assets/coop/resortera/resortera-shooting.png",
       {
         frameWidth: 140,
-        frameHeight: 275
+        frameHeight: 275,
       }
     );
 
@@ -701,7 +839,6 @@ export class Preloader extends Scene {
       "bulletSprite",
       "../public/assets/coop/tirachinas/bullet.png"
     );
-
 
     WebFont.load({
       google: {

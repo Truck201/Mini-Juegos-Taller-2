@@ -19,7 +19,7 @@ export class Character {
 
     this.characterSprite.setImmovable;
     this.characterSprite.body.allowGravity = false;
-    this.characterSprite.setDepth(2);
+    this.characterSprite.setDepth(8);
     this.characterSprite.setScale(1.2);
 
     this.initAnimations();

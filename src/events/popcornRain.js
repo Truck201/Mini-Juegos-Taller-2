@@ -1,4 +1,6 @@
+import { initAnimationsPopcorn } from "../anims/RainPopcorn";
 import { Attack } from "../entitities/attack";
+import { takeDamage } from "../functions/takeDamage";
 export class PopcornRaining {
   constructor(scene) {
     this.scene = scene;
@@ -11,6 +13,7 @@ export class PopcornRaining {
   }
 
   create() {
+    initAnimationsPopcorn(this.scene)
     this.spaceKey = this.spaceKey = this.scene.input.keyboard.addKey(
       Phaser.Input.Keyboard.KeyCodes.SPACE
     ); // Jugador 1
@@ -53,6 +56,8 @@ export class PopcornRaining {
         `popcorn${popcornType}`
       )
       .setDepth(70);
+
+    popcorn.play(`PopcornAnim${popcornType}`);
 
     // Añadir físicas al popcorn
     this.scene.physics.add.existing(popcorn);
@@ -113,14 +118,17 @@ export class PopcornRaining {
         Phaser.Input.Keyboard.JustDown(this.spaceKey)
       ) {
         if (
-          this.scene.player2Atributes.takeDamage(
-            2,
+          takeDamage(
+            this,
+            this.scene.player1Atributes,
+            this.scene.player2Atributes,
             this.scene.player2EvadeChance,
             this.scene.player2HP,
             this.isShelded2
           )
         ) {
           this.scene.cameras.main.shake(200, 0.025);
+
           this.destroyAndRespawn(sword);
         } else {
           this.showMissMensaje(sword);
@@ -129,6 +137,8 @@ export class PopcornRaining {
         this.scene.player2HPText.setText(
           `${this.scene.player2HP.toString().padStart(2, "0")}`
         );
+        // // Actualizar la vida
+        this.scene.createHealtBar2.updateHealthBar(this.scene.player2HP);
       }
 
       // Si se presiona enter, jugador 2 destruye un recolectable
@@ -137,8 +147,10 @@ export class PopcornRaining {
         Phaser.Input.Keyboard.JustDown(this.enterKey)
       ) {
         if (
-          this.scene.player1Atributes.takeDamage(
-            1,
+          takeDamage(
+            this,
+            this.scene.player2Atributes,
+            this.scene.player1Atributes,
             this.scene.player1EvadeChance,
             this.scene.player1HP,
             this.isShelded1
@@ -153,6 +165,8 @@ export class PopcornRaining {
         this.scene.player1HPText.setText(
           `${this.scene.player1HP.toString().padStart(2, "0")}`
         );
+        // // Actualizar la vida
+        this.scene.createHealtBar1.updateHealthBar(this.scene.player1HP);
       }
     });
   }
@@ -162,39 +176,33 @@ export class PopcornRaining {
     switch (popcornType) {
       case 1:
         if (playerId === 1) {
-          atributos.updateAttributes(1, { hitPoints: 1 });
-          this.player1HP = this.scene.player1Atributes.getHitPoints(1);
+          atributos.updateAttributes({ hitPoints: 0.3 });
+          this.player1HP = this.scene.player1Atributes.getHitPoints();
           if (Math.floor(this.player1HP) > this.scene.player1HP) {
             this.scene.player1HP = Math.floor(this.player1HP);
             this.scene.player1HPText.setText(
               `${this.scene.player1HP.toString().padStart(2, "0")}`
             );
-            this.scene.player1Atributes.updateHealthBar(
-              1,
-              this.scene.player1HP
-            );
+            this.scene.createHealtBar1.updateHealthBar(this.scene.player1HP);
           }
         }
         if (playerId === 2) {
-          atributos.updateAttributes(2, { hitPoints: 1 });
-          this.player2HP = this.scene.player2Atributes.getHitPoints(2);
+          atributos.updateAttributes({ hitPoints: 0.3 });
+          this.player2HP = this.scene.player2Atributes.getHitPoints();
           if (Math.floor(this.player2HP) > this.scene.player2HP) {
             this.scene.player2HP = Math.floor(this.player2HP);
             this.scene.player2HPText.setText(
               `${this.scene.player2HP.toString().padStart(2, "0")}`
             );
-            this.scene.player2Atributes.updateHealthBar(
-              2,
-              this.scene.player2HP
-            );
+            this.scene.createHealtBar2.updateHealthBar(this.scene.player2HP);
           }
         }
         break;
 
       case 2:
         if (playerId === 1) {
-          atributos.updateAttributes(1, { damage: 1 });
-          this.damageP1 = this.scene.player1Atributes.getDamage(1);
+          atributos.updateAttributes({ damage: 0.3 });
+          this.damageP1 = this.scene.player1Atributes.getDamage();
           if (Math.floor(this.damageP1) > this.scene.player1Damage) {
             this.scene.player1Damage = Math.floor(this.damageP1);
             this.scene.damageText1.setText(
@@ -203,8 +211,8 @@ export class PopcornRaining {
           }
         }
         if (playerId === 2) {
-          atributos.updateAttributes(2, { damage: 1 });
-          this.damageP2 = this.scene.player2Atributes.getDamage(2);
+          atributos.updateAttributes({ damage: 0.3 });
+          this.damageP2 = this.scene.player2Atributes.getDamage();
           if (Math.floor(this.damageP2) > this.scene.player2Damage) {
             this.scene.player2Damage = Math.floor(this.damageP2);
             this.scene.damageText2.setText(
@@ -216,8 +224,8 @@ export class PopcornRaining {
 
       case 3:
         if (playerId === 1) {
-          atributos.updateAttributes(1, { speed: 1 });
-          this.speedP1 = this.scene.player1Atributes.getSpeed(1);
+          atributos.updateAttributes({ speed: 1 });
+          this.speedP1 = this.scene.player1Atributes.getSpeed();
           if (Math.floor(this.speedP1) > this.scene.player1Speed) {
             this.scene.player1Speed = Math.floor(this.speedP1);
             this.scene.speedText1.setText(
@@ -226,8 +234,8 @@ export class PopcornRaining {
           }
         }
         if (playerId === 2) {
-          atributos.updateAttributes(2, { speed: 1 });
-          this.speedP2 = this.scene.player2Atributes.getSpeed(2);
+          atributos.updateAttributes({ speed: 1 });
+          this.speedP2 = this.scene.player2Atributes.getSpeed();
           if (Math.floor(this.speedP2) > this.scene.player1Speed) {
             this.scene.player2Speed = Math.floor(this.speedP2);
             this.scene.speedText2.setText(

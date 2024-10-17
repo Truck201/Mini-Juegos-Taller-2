@@ -1,4 +1,4 @@
-import { AtributesPlayers } from "./newatributes";
+import { AtributesPlayers } from "../functions/atributos";
 export class Heart {
   constructor(scene) {
     this.scene = scene;

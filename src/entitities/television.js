@@ -6,28 +6,22 @@ export class Television {
     this.x = this.scene.scale.width / 2;
 
     if (isInMenu) {
-      this.scale = 1.5;
+      this.scale = 0.83;
       this.y = this.scene.scale.height;
 
       // Sprite Television
       this.television = this.scene.physics.add
-        .sprite(this.x, this.y * 0.8, "l-opacidad")
+        .sprite(this.x, this.y * 0.5, "TeleImagen") // l-opacidad
         .setScale(this.scale)
-        .setAlpha(0.4);
+        .setAlpha(0.5)
+        .setDepth(1);
       this.television.setImmovable;
       this.television.body.allowGravity = false;
       this.television.setDepth(0);
 
-      this.filtrado = this.scene.physics.add
-        .sprite(this.x, this.y, "l-opacidad")
-        .setScale(this.scale)
-        .setAlpha(0.5)
-        .setDepth(1);
-      this.filtrado.setImmovable;
-      this.filtrado.body.allowGravity = false;
-
       // Shader
-      this.television.setPostPipeline("CRTPostFx");
+      this.television.setPostPipeline("TVScanlineFx");
+      
     } else if (!isInMenu) {
       this.y = this.scene.scale.height * 1.2;
       this.scale = 0.001;
@@ -41,7 +35,18 @@ export class Television {
       this.television.body.allowGravity = false;
       this.television.setDepth(1);
 
+      this.filtrado = this.scene.physics.add
+        .sprite(this.x, this.y, "l-opacidad") //
+        .setScale(this.scale)
+        .setAlpha(0.08)
+        .setDepth(1);
+      this.filtrado.setImmovable;
+      this.filtrado.body.allowGravity = false;
+
       // Shader
+
+      this.television.setPostPipeline("TVDistortionFx");
+      this.filtrado.setPostPipeline("CRTPostFx");
     }
     this.text = this.scene.add
       .text(this.x - 15, this.y - 50, "", {
@@ -49,8 +54,6 @@ export class Television {
         color: "#fff1e8",
       })
       .setDepth(1);
-
-    this.television.setPostPipeline("CRTPostFx");
   }
 
   updateText(remainingTime) {
