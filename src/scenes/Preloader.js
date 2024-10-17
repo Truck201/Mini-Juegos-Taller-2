@@ -224,9 +224,18 @@ export class Preloader extends Scene {
     );
 
     // Dialogues
-    this.load.json("kidKornDialogues_en-US.json", "../public/data/kidKornDialogues_en-US.json");
-    this.load.json("kidKornDialogues_es-AR.json", "../public/data/kidKornDialogues_es-AR.json");
-    this.load.json("kidKornDialogues_fr-FR.json", "../public/data/kidKornDialogues_fr-FR.json");
+    this.load.json(
+      "kidKornDialogues_en-US.json",
+      "../public/data/kidKornDialogues_en-US.json"
+    );
+    this.load.json(
+      "kidKornDialogues_es-AR.json",
+      "../public/data/kidKornDialogues_es-AR.json"
+    );
+    this.load.json(
+      "kidKornDialogues_fr-FR.json",
+      "../public/data/kidKornDialogues_fr-FR.json"
+    );
 
     //   Emociones
     this.load.image("logo", "../public/assets/versus/menu/logo.png"); // Victoria
@@ -568,27 +577,30 @@ export class Preloader extends Scene {
     this.load.image("popcorn3", "../public/assets/versus/anims/popcorn.png");
 
     // Animación Evento Rain[Popcorn]
-    this.load.spritesheet('popcorn1Sprites',
+    this.load.spritesheet(
+      "popcorn1Sprites",
       "../public/assets/versus/battle/events/pochoclo-clasico.png",
       {
         frameWidth: 92,
-        frameHeight: 80
+        frameHeight: 80,
       }
     );
 
-    this.load.spritesheet('popcorn2Sprites',
+    this.load.spritesheet(
+      "popcorn2Sprites",
       "../public/assets/versus/battle/events/pochoclo-morado.png",
       {
         frameWidth: 92,
-        frameHeight: 80
+        frameHeight: 80,
       }
     );
 
-    this.load.spritesheet('popcorn3Sprites',
+    this.load.spritesheet(
+      "popcorn3Sprites",
       "../public/assets/versus/battle/events/pochoclo-naranja.png",
       {
         frameWidth: 92,
-        frameHeight: 80
+        frameHeight: 80,
       }
     );
 
@@ -683,6 +695,37 @@ export class Preloader extends Scene {
       "healthBarNo",
       "../public/assets/versus/battle/vida/vida0.png"
     );
+
+    // Hearts on top Bar
+    this.load.image(
+      "HeartLive",
+      "../public/assets/versus/battle/vida/hearth.png"
+    );
+
+    this.load.image(
+      "HeartDeath",
+      "../public/assets/versus/battle/vida/dead-hearth.png"
+    );
+
+    this.load.spritesheet(
+      "AnimsHeart",
+      "../public/assets/versus/battle/vida/idle-hearth.png",
+      {
+        frameWidth: 80,
+        frameHeight: 92,
+      }
+    );
+
+    this.load.spritesheet(
+      "AnimsHeartDeath",
+      "../public/assets/versus/battle/vida/dead-hearth-sheet.png",
+      {
+        frameWidth: 80,
+        frameHeight: 92,
+      }
+    );
+
+    
 
     // Juego COPERATIVISMO SUNCHALE chunchale
     // Background

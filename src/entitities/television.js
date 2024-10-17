@@ -20,11 +20,11 @@ export class Television {
       this.television.setDepth(0);
 
       // Shader
-      this.television.setPostPipeline("TVScanlineFx");
+      this.television.setPostPipeline("TVStaticFx");
       
     } else if (!isInMenu) {
       this.y = this.scene.scale.height * 1.2;
-      this.scale = 0.001;
+      this.scale = 0.00092;
 
       // Sprite Television
       this.television = this.scene.physics.add
@@ -44,9 +44,9 @@ export class Television {
       this.filtrado.body.allowGravity = false;
 
       // Shader
-
       this.television.setPostPipeline("TVDistortionFx");
       this.filtrado.setPostPipeline("CRTPostFx");
+
     }
     this.text = this.scene.add
       .text(this.x - 15, this.y - 50, "", {
@@ -54,6 +54,7 @@ export class Television {
         color: "#fff1e8",
       })
       .setDepth(1);
+      this.television.setPostPipeline("TVStaticFx");
   }
 
   updateText(remainingTime) {

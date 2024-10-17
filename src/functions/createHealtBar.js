@@ -10,6 +10,7 @@ export class initializeHealthBars {
 
   create() {
     this.animsHealthBar(this.scene);
+    this.idleHeart(this.scene);
     // Añadir barras de vida del jugador
     this.playerHealthBars = [
       this.scene.add
@@ -86,11 +87,45 @@ export class initializeHealthBars {
     ];
 
     this.updateHealthBar(this.health);
+    this.createHeart(this.health);
+  }
+
+  createHeart(playerHp) {
+    let HitPoints = playerHp;
+    let heart1, heart2 
+
+    if (HitPoints >= 3) {
+      if (heart2) {
+        heart2.destroy();
+      }
+      if (!heart1) {
+        heart1 = this.scene.add
+          .sprite(this.positionX, this.positionY - 160, "HeartLive")
+          .setScale(1.12)
+          .setDepth(6)
+          .setOrigin(0.5);
+        heart1.anims.play("Idle-Heart", true);
+      }
+    } else if (HitPoints > 0) {
+      if (heart1) {
+        heart1.destroy();
+      }
+      if (!heart2) {
+        heart2 = this.scene.add
+          .sprite(this.positionX, this.positionY - 160, "HeartDeath")
+          .setScale(1.12)
+          .setDepth(6)
+          .setOrigin(0.5);
+        heart2.anims.play("Idle-HeartDeath", true);
+      }
+    } else {
+      return false;
+    }
   }
 
   updateHealthBar(playerHp) {
     let healthBars = this.playerHealthBars;
-    let currentHP = playerHp;
+    let currentHP = Math.floor(playerHp);
 
     if (!healthBars) {
       console.error("healthBars no está definido");
@@ -118,6 +153,8 @@ export class initializeHealthBars {
       // Detener cualquier animación que se esté reproduciendo
 
       healthBars[visibleBarIndex].stop();
+    } else {
+      return false;
     }
 
     // Verificar si el jugador ha perdido
@@ -130,6 +167,28 @@ export class initializeHealthBars {
         loop: false,
       });
     }
+  }
+
+  idleHeart(scene) {
+    scene.anims.create({
+      key: "Idle-Heart",
+      frames: scene.anims.generateFrameNumbers("AnimsHeart", {
+        start: 0,
+        end: 1,
+      }),
+      frameRate: 3.5,
+      repeat: -1, // La animación se repite indefinidamente
+    });
+
+    scene.anims.create({
+      key: "Idle-HeartDeath",
+      frames: scene.anims.generateFrameNumbers("AnimsHeartDeath", {
+        start: 0,
+        end: 1,
+      }),
+      frameRate: 4.5,
+      repeat: -1, // La animación se repite indefinidamente
+    });
   }
 
   animsHealthBar(scene) {

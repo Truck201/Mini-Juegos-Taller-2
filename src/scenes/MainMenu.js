@@ -3,6 +3,7 @@ import TVDistortionFx from "../lib/TVDistortion";
 import { BaseScene } from "../lib/FontsBase";
 import { Television } from "../entitities/television";
 import { getLanguageConfig, getPhrase } from "../services/translations";
+import TVStaticFx from "../lib/TVScanEffect";
 export class MainMenu extends BaseScene {
   constructor() {
     super("MainMenu");
@@ -29,9 +30,14 @@ export class MainMenu extends BaseScene {
       "TVDistortionFx",
       TVDistortionFx
     );
+    this.staticEffect = this.game.renderer.pipelines.addPostPipeline(
+      'TVStaticFx',
+      TVStaticFx
+    )
+
 
     // Aplicar el efecto CRT a la cámara principal
-    this.cameras.main.setPostPipeline(TVDistortionFx);
+    // this.cameras.main.setPostPipeline(TVStaticFx);
 
     // Cargar los diálogos del archivo correspondiente según el idioma seleccionado
     const dialoguesPath = `kidKornDialogues_${this.language}`;

@@ -1,7 +1,4 @@
-import { BaseScene } from "../lib/FontsBase";
-import { getLanguageConfig } from "../services/translations";
-
-export class KidKorn extends BaseScene {
+export class KidKorn {
   constructor(scene, dialogues) {
     this.scene = scene;
 
@@ -45,7 +42,23 @@ export class KidKorn extends BaseScene {
     const randomDialogue = this.dialogues.Efusive[randomIndex];
 
     // Mostrar la frase en el juego
-    const text = this.createText(this.x / 2, this.y * 0.6, randomDialogue)
+    const text = this.scene.add
+      .text(this.x / 2, this.y * 0.6, randomDialogue, {
+        fontSize: 50,
+        fontFamily: "'Press Start 2P'",
+        color: "#fff",
+        stroke: "black",
+        strokeThickness: 4,
+        lineSpacing: 9, // Espaciado entre líneas
+        letterSpacing: 3, // Espaciado entre letras
+        maxLines: 4,
+        shadow: {
+          color: "#000000",
+          fill: true,
+          offsetX: 5.7,
+          offsetY: 5.7,
+        },
+      })
       .setOrigin(0.5)
       .setDepth(23);
 
@@ -113,36 +126,40 @@ export class KidKorn extends BaseScene {
     const randomDialogue = this.dialogues.Neutral[randomIndex];
 
     if (fromLeft) {
-      this.dialogueWidth = this.scene.scale.width * 0.255;
+      this.dialogueWidth = this.scene.scale.width * 0.235;
     } else if (!fromLeft) {
-      this.dialogueWidth = this.scene.scale.width * 0.739;
+      this.dialogueWidth = this.scene.scale.width * 0.75;
     }
 
-    let fontSize, globoSize;
+    let fontSize
     if (randomDialogue.length <= 18) {
-      console.log("corto");
-      fontSize = "39px"; // Para palabras cortas
-      globoSize = 1.1;
+      fontSize = "40px"; // Para palabras cortas
     } else if (randomDialogue.length <= 30) {
-      console.log("medio chico");
-      fontSize = "29.4px"; // Para palabras medianas
-      globoSize = 1.23;
+      fontSize = "31.4px"; // Para palabras medianas
     } else if (randomDialogue.length <= 37) {
-      console.log("mediano alto");
-      fontSize = "26px"; // Para palabras medianas
-      globoSize = 1.34;
+      fontSize = "28px"; // Para palabras medianas
     } else {
-      console.log("grande");
-      fontSize = "21px"; // Para palabras largas
-      globoSize = 1.45;
+      fontSize = "22px"; // Para palabras largas
     }
 
     // Mostrar la frase en el juego
-    const text = this.createText(
-      this.dialogueWidth,
-      this.y * 0.37,
-      randomDialogue
-    )
+    const text = this.scene.add
+      .text(this.dialogueWidth, this.y * 0.37, randomDialogue, {
+        fontSize: fontSize,
+        fontFamily: "'Press Start 2P'",
+        color: "#fff",
+        stroke: "black",
+        strokeThickness: 4,
+        lineSpacing: 9, // Espaciado entre líneas
+        letterSpacing: 3, // Espaciado entre letras
+        maxLines: 4,
+        shadow: {
+          color: "#000000",
+          fill: true,
+          offsetX: 5.7,
+          offsetY: 5.7,
+        },
+      })
       .setOrigin(0.5)
       .setDepth(23);
 
@@ -159,7 +176,6 @@ export class KidKorn extends BaseScene {
         this.scene.time.delayedCall(Phaser.Math.Between(1300, 2000), () => {
           this.hideKidKornChild(sprite, fromLeft);
           text.destroy(); // Destruir el texto después de que KidKorn desaparezca
-          globoTexto.destroy();
         });
       },
     });

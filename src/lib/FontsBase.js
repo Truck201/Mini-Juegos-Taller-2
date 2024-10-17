@@ -17,8 +17,8 @@ export class BaseScene extends Scene {
       shadow: {
         color: "#000000",
         fill: true,
-        offsetX: 8,
-        offsetY: 8,
+        offsetX: 5.7,
+        offsetY: 5.7,
       },
     };
   }

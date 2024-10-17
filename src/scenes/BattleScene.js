@@ -274,6 +274,16 @@ export class BattleScene extends BaseScene {
     this.movingBar1.update();
     this.movingBar2.update();
 
+    // Si la vida del jugador 1 cae por debajo de 2, activa la segunda animación
+    if (this.player1HP < 2) {
+      this.createHealtBar1.createHeart(this.player1HP);
+    }
+
+    // Si la vida del jugador 2 cae por debajo de 2, activa la segunda animación
+    if (this.player2HP < 2) {
+      this.createHealtBar2.createHeart(this.player2HP);
+    }
+
     // Llamar al update del evento actual (SwordRain, PopcornRaining, MedievalEvent)
     if (this.attackBar && typeof this.attackBar.update === "function") {
       this.attackBar.update(); // Actualiza las colisiones y lógica del evento

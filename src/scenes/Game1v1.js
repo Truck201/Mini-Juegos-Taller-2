@@ -15,7 +15,7 @@ export class Game1v1 extends Scene {
     const dialogues = data.dialogues
 
     // Crear Televisor Instancar
-    let television = new Television(this, true);
+    let television = new Television(this, false);
     
     let background = this.add.sprite(width * 0.488, height * 0.586, "escenario");
     background.setDepth(1)

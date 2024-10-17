@@ -93,7 +93,7 @@ export class LanguageScene extends BaseScene {
 
   gotoMainScene(lang) {
     this.time.delayedCall(200, () => {
-      this.scene.start("MainMenu", {
+      this.scene.start("Shop", {
         language: lang,
       });
     });
