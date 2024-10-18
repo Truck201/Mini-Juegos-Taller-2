@@ -8,7 +8,6 @@ import { MedievalEvent } from "../events/medieval";
 import { AtributesPlayers } from "../functions/atributos";
 import { initializeHealthBars } from "../functions/createHealtBar";
 import { criticalVisual } from "../functions/criticalVisuals";
-
 export class BattleScene extends BaseScene {
   constructor() {
     super("battleScene");
@@ -36,6 +35,11 @@ export class BattleScene extends BaseScene {
   }
 
   create() {
+    this.critical1 = this.sound.add("doCritical1", { volume: 0.09 });
+    this.critical2 = this.sound.add("doCritical2", { volume: 0.09 });
+    this.winnerSound = this.sound.add("winnerSound", { volume: 0.09 });
+
+
     this.width = this.game.scale.width;
     this.height = this.game.scale.height;
 
@@ -307,23 +311,39 @@ export class BattleScene extends BaseScene {
 
   gameOver(player) {
     if (player === this.player1Atributes) {
-      console.log(player)
-      console.log(this.player1Atributes)
-      looser = 1;
+      console.log(player);
+      console.log(this.player1Atributes);
+      this.winnerSound.play();
+      const looser = 1;
+      this.gameOver(this, looser);
     }
     if (player === this.player2Atributes) {
-      console.log(player)
-      console.log(this.player2Atributes)
-      looser = 2;
+      console.log(player);
+      console.log(this.player2Atributes);
+      this.winnerSound.play();
+      const looser = 2;
+      this.gameOver(this, looser);
     } else {
-      console.log("NO FUNCIONA LA DERIVACIÓN A GAME OVER")
+      console.log("NO FUNCIONA LA DERIVACIÓN A GAME OVER");
       return false;
     }
-
-    player.gameOver(this, looser);
   }
 
   visualCritical() {
-    criticalVisual(this)
-  } 
+    criticalVisual(this);
+    let num = Phaser.Math.Between(0, 1);
+    if (num >= 0.5) {
+      this.critical1.play();
+    }
+    if (num < 0.5) {
+      this.critical2.play();
+    }
+  }
+
+  gameOver(loser) {
+    console.log(`Jugador ${loser} ha perdido!`);
+    this.scene.start("GameOver", { player: loser }); // Game Over Scene
+    this.scene.pause("battleScene");
+    this.scene.bringToTop("GameOver");
+  }
 }

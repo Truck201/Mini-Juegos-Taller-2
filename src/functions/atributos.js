@@ -132,11 +132,4 @@ export class AtributesPlayers {
   getHitPoints() {
     return this.atributes.hitPoints;
   }
-
-  gameOver(scene, loser) {
-    console.log(`Jugador ${loser} ha perdido!`);
-    scene.launch("GameOver", { player: loser }); // Game Over Scene
-    scene.pause("battleScene");
-    scene.bringToTop("GameOver");
-  }
 }

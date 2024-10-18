@@ -13,7 +13,24 @@ export class PopcornRaining {
   }
 
   create() {
+    // Añadimos Sonidos
+    this.pickSword = this.scene.sound.add("pickSword", { volume: 0.09 });
+    this.takeDamageSound = this.scene.sound.add("takeDamage", { volume: 0.09 });
+
+    this.popcorn1Sound = this.scene.sound.add("popcorn1Sound", {
+      volume: 0.09,
+    });
+    this.popcorn2Sound = this.scene.sound.add("popcorn2Sound", {
+      volume: 0.09,
+    });
+    this.popcorn3Sound = this.scene.sound.add("popcorn3Sound", {
+      volume: 0.09,
+    });
+    this.collectPopcorn = this.scene.sound.add("collectPopcorn", { volume: 0.09 });
+
+    // Añadimos Animaciones
     initAnimationsPopcorn(this.scene);
+
     this.spaceKey = this.spaceKey = this.scene.input.keyboard.addKey(
       Phaser.Input.Keyboard.KeyCodes.SPACE
     ); // Jugador 1
@@ -57,6 +74,8 @@ export class PopcornRaining {
       )
       .setDepth(70);
 
+    const sound = `popcorn${popcornType}Sound`;
+    sound.play();
     popcorn.play(`PopcornAnim${popcornType}`);
 
     // Añadir físicas al popcorn
@@ -81,6 +100,7 @@ export class PopcornRaining {
       popcornBounds, // Pochoclo
       (bar, popcorn) => {
         popcorn.destroy(); // Destruye el pochoclo cuando lo recoge el jugador
+
         console.log("POCHOCLOOOO !! ");
         this.applyBonus(1, this.scene.player1Atributes, popcornType); // Aplica el beneficio correspondiente
       },
@@ -94,6 +114,7 @@ export class PopcornRaining {
       (bar, popcorn) => {
         popcorn.destroy();
         console.log("POCHOCLOOOO !! ");
+        this.collectPopcorn.play();
         this.applyBonus(2, this.scene.player2Atributes, popcornType); // Aplica el beneficio correspondiente
       },
       null,
@@ -128,7 +149,8 @@ export class PopcornRaining {
           )
         ) {
           this.scene.cameras.main.shake(200, 0.025);
-
+          this.pickSword.play();
+          this.takeDamageSound.play();
           this.destroyAndRespawn(sword);
         } else {
           this.showMissMensaje(sword);
@@ -159,6 +181,8 @@ export class PopcornRaining {
           )
         ) {
           this.scene.cameras.main.shake(200, 0.025);
+          this.pickSword.play();
+          this.takeDamageSound.play();
           this.destroyAndRespawn(sword);
         } else {
           this.showMissMensaje(sword);
@@ -180,7 +204,7 @@ export class PopcornRaining {
     switch (popcornType) {
       case 1:
         if (playerId === 1) {
-          atributos.updateAttributes({ hitPoints: 0.2 });
+          atributos.updateAttributes({ hitPoints: 0.4 });
           this.player1HP = Math.floor(
             this.scene.player1Atributes.getHitPoints()
           );
@@ -193,7 +217,7 @@ export class PopcornRaining {
           }
         }
         if (playerId === 2) {
-          atributos.updateAttributes({ hitPoints: 0.2 });
+          atributos.updateAttributes({ hitPoints: 0.4 });
           this.player2HP = Math.floor(
             this.scene.player2Atributes.getHitPoints()
           );
@@ -209,8 +233,8 @@ export class PopcornRaining {
 
       case 2:
         if (playerId === 1) {
-          atributos.updateAttributes({ damage: 0.2 });
-          this.damageP1 = this.scene.player1Atributes.getDamage();
+          atributos.updateAttributes({ damage: 0.4 });
+          this.damageP1 = Math.floor(this.scene.player1Atributes.getDamage());
           if (Number.isInteger(this.damageP1)) {
             this.scene.damageText1.setText(
               `${this.damageP1.toString().padStart(2, "0")}`
@@ -218,8 +242,8 @@ export class PopcornRaining {
           }
         }
         if (playerId === 2) {
-          atributos.updateAttributes({ damage: 0.2 });
-          this.damageP2 = this.scene.player2Atributes.getDamage();
+          atributos.updateAttributes({ damage: 0.4 });
+          this.damageP2 = Math.floor(this.scene.player2Atributes.getDamage());
           if (Number.isInteger(this.damageP2)) {
             this.scene.damageText2.setText(
               `${this.damageP2.toString().padStart(2, "0")}`

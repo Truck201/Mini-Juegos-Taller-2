@@ -15,6 +15,9 @@ export class SwordRain {
   }
 
   create() {
+    this.pickSword = this.scene.sound.add("pickSword", { volume: 0.09 });
+    this.takeDamageSound = this.scene.sound.add("takeDamage", { volume: 0.09 });
+
     this.spaceKey = this.spaceKey = this.scene.input.keyboard.addKey(
       Phaser.Input.Keyboard.KeyCodes.SPACE
     ); // Jugador 1
@@ -47,6 +50,8 @@ export class SwordRain {
           )
         ) {
           this.scene.cameras.main.shake(200, 0.015);
+          this.pickSword.play();
+          this.takeDamageSound.play();
           this.destroyAndRespawn(sword);
         } else {
           this.showMissMensaje(sword);
@@ -77,6 +82,8 @@ export class SwordRain {
           )
         ) {
           this.scene.cameras.main.shake(200, 0.015);
+          this.pickSword.play();
+          this.takeDamageSound.play();
           this.destroyAndRespawn(sword);
         } else {
           this.showMissMensaje(sword);

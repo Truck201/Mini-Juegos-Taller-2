@@ -14,6 +14,13 @@ export class MedievalEvent {
 
     this.enfriamiento = 2600;
 
+    this.pickSword = this.scene.sound.add("pickSword", { volume: 0.09 });
+    this.takeDamageSound = this.scene.sound.add("takeDamage", { volume: 0.09 });
+
+    this.isShelded = this.scene.sound.add("isShelded", { volume: 0.09 });
+    this.pickHeart = this.scene.sound.add("pickHeart", { volume: 0.09 });
+    this.inmune = this.scene.sound.add("setInmune", { volume: 0.09 });
+
     this.height = this.scene.game.scale.height;
     this.width = this.scene.game.scale.width;
 
@@ -59,6 +66,7 @@ export class MedievalEvent {
       ) &&
       Phaser.Input.Keyboard.JustDown(this.spaceKey)
     ) {
+      this.isShelded.play();
       this.shield.respawn(this.player1);
       console.log("respawn shield pj 1");
     }
@@ -69,6 +77,7 @@ export class MedievalEvent {
       ) &&
       Phaser.Input.Keyboard.JustDown(this.spaceKey)
     ) {
+      this.pickHeart.play();
       this.heart.respawn(this.player1);
       console.log("respawn heart pj 1");
     }
@@ -80,6 +89,7 @@ export class MedievalEvent {
       ) &&
       Phaser.Input.Keyboard.JustDown(this.enterKey)
     ) {
+      this.isShelded.play();
       this.shield.respawn(this.player2);
       console.log("respawn shield pj 2");
     }
@@ -91,6 +101,7 @@ export class MedievalEvent {
       ) &&
       Phaser.Input.Keyboard.JustDown(this.enterKey)
     ) {
+      this.pickHeart.play();
       this.heart.respawn(this.player2);
       console.log("respawn heart pj 2");
     }
@@ -114,6 +125,8 @@ export class MedievalEvent {
         ) {
           this.scene.cameras.main.shake(200, 0.025);
           this.destroyAndRespawn(sword);
+          this.takeDamageSound.play();
+          this.pickSword.play();
         } else {
           this.showMissMensaje(sword);
         }
@@ -143,6 +156,8 @@ export class MedievalEvent {
         ) {
           this.scene.cameras.main.shake(200, 0.025);
           this.destroyAndRespawn(sword);
+          this.takeDamageSound.play();
+          this.pickSword.play();
         } else {
           this.showMissMensaje(sword);
         }
@@ -214,7 +229,7 @@ export class MedievalEvent {
     if (player === 1) {
       this.isShelded1 = true;
       console.log("Player 1 is now shielded!");
-
+      this.inmune.play();
       // Mostrar mensaje de "Immune"
       const textInmune1 = this.scene.add
         .text(this.width * 0.2, this.height * 0.6, "Inmune!", {
@@ -249,7 +264,7 @@ export class MedievalEvent {
     if (player === 2) {
       this.isShelded2 = true;
       console.log("Player 2 is now shielded!");
-
+      this.inmune.play();
       // Mostrar mensaje de "Immune"
       const textInmune2 = this.scene.add
         .text(this.width * 0.8, this.height * 0.6, "Inmune!", {

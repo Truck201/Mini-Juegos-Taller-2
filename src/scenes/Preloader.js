@@ -1,6 +1,7 @@
 import { Scene } from "phaser";
 import WebFont from "webfontloader";
 import { getLanguageConfig, getTranslations } from "../services/translations";
+import { Sounds } from "../load/audio";
 
 export class Preloader extends Scene {
   #language;
@@ -35,6 +36,8 @@ export class Preloader extends Scene {
 
     // Agregar Lenguaje
     this.#language = getLanguageConfig();
+
+    Sounds(this);
 
     // ChooseLanguage
     this.load.spritesheet(

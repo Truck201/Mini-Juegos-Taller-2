@@ -5,6 +5,12 @@ export class KidKorn {
     this.y = this.scene.scale.height;
     this.x = this.scene.scale.width;
 
+    this.appear = this.scene.sound.add("goInSound", { volume: 0.09 });
+    this.goBack = this.scene.sound.add("goBackSound", { volume: 0.09 });
+    this.dialogueSound = this.scene.sound.add("dialoguesSound", {
+      volume: 0.09,
+    });
+
     // Cargar los diálogos
     this.dialogues = dialogues;
 
@@ -33,6 +39,7 @@ export class KidKorn {
 
     // Hacer visible el sprite de KidKorn
     this.kidKornBig.setVisible(true);
+    this.appear.play();
 
     // Seleccionar una frase aleatoria
     const randomIndex = Phaser.Math.Between(
@@ -62,6 +69,8 @@ export class KidKorn {
       .setOrigin(0.5)
       .setDepth(23);
 
+    this.dialogueSound.play();
+
     // Animar a KidKorn para que suba desde la parte inferior
     this.scene.tweens.add({
       targets: this.kidKornBig,
@@ -71,9 +80,8 @@ export class KidKorn {
       onComplete: () => {
         // Una vez que llega a la mitad, comenzar a generar pochoclos
         this.scene.startGeneratingPopcorn(true);
-
         // Luego de 6 segundos, ocultar a KidKorn y detener la generación de pochoclos
-        this.scene.time.delayedCall(6000, () => {
+        this.scene.time.delayedCall(5400, () => {
           this.hideKidKornBig();
           text.destroy(); // Destruir el texto después de que KidKorn desaparezca
         });
@@ -95,7 +103,7 @@ export class KidKorn {
 
   hideKidKornBig() {
     let height = this.scene.game.scale.height;
-
+    this.goBack.play();
     // Hacer que KidKorn baje y luego desaparecerlo
     this.scene.tweens.add({
       targets: this.kidKornBig,
@@ -116,6 +124,7 @@ export class KidKorn {
     let endX = fromLeft ? this.x * 0.02 : this.x * 0.98;
 
     sprite.setVisible(true);
+    this.appear.play();
     sprite.x = startX;
 
     // Seleccionar una frase aleatoria
@@ -131,7 +140,7 @@ export class KidKorn {
       this.dialogueWidth = this.scene.scale.width * 0.75;
     }
 
-    let fontSize
+    let fontSize;
     if (randomDialogue.length <= 18) {
       fontSize = "40px"; // Para palabras cortas
     } else if (randomDialogue.length <= 30) {
@@ -141,6 +150,8 @@ export class KidKorn {
     } else {
       fontSize = "22px"; // Para palabras largas
     }
+
+    this.dialogueSound.play();
 
     // Mostrar la frase en el juego
     const text = this.scene.add
@@ -183,7 +194,7 @@ export class KidKorn {
 
   hideKidKornChild(sprite, fromLeft) {
     let endX = fromLeft ? -270 : this.scene.scale.width + 270;
-
+    this.goBack.play();
     console.log("sprite seleccionado:", sprite);
     // Animar la salida
     this.scene.tweens.add({

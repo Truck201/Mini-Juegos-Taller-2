@@ -13,6 +13,12 @@ export class ComboPersonajes {
   }
 
   create() {
+    // Añadimos sonidos
+    this.looseCombo = this.scene.sound.add("looseCombo", { volume: 0.09 });
+    this.winCombo = this.scene.sound.add("winCombo", { volume: 0.09 });
+    this.sadLuho = this.scene.sound.add("sadLuhoSound", { volume: 0.09 });
+
+    // Texto de los combos
     this.comboText1 = this.scene.add
       .text(
         this.scene.scale.width * 0.035,
@@ -103,10 +109,13 @@ export class ComboPersonajes {
         // Animación del jugador 1 (victoria) y del enemigo (enojo)
         this.scene.player1.change_emotion("Mimbo", 2, this.scene.player1); // Mimbo: animación de victoria
         this.scene.player2.change_emotion("Luho", 3, this.scene.player2); // Luho: animación de daño
+        this.sadLuho.play();
         
+        this.winCombo.play();
         this.scene.time.delayedCall(1200, () => {
           this.comboText1.setVisible(false); // Ocultar el marcador
-
+          this.looseCombo.play();
+          
           console.log("va??")
           this.scene.player1.change_emotion("Mimbo", 0, this.scene.player1); // Mimbo: IDLE
           this.scene.player2.change_emotion("Luho", 0, this.scene.player2); // Luho: IDLE
@@ -144,9 +153,10 @@ export class ComboPersonajes {
         this.scene.player1.change_emotion("Mimbo", 3, this.scene.player1); // Mimbo: animación de victoria
         this.scene.player2.change_emotion("Luho", 2, this.scene.player2); // Luho: animación de daño
 
-
+        this.winCombo.play();
         this.scene.time.delayedCall(1200, () => {
           this.comboText2.setVisible(false); // Ocultar el marcador
+          this.looseCombo.play();
 
           console.log("va??  -->>")
           this.scene.player1.change_emotion("Mimbo", 0, this.scene.player1); // Mimbo: IDLE

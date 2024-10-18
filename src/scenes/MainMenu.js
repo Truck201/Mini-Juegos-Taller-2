@@ -21,6 +21,13 @@ export class MainMenu extends BaseScene {
     let width = this.scale.width; //Definir la mitad del Ancho
     let height = this.scale.height; //Definir la mitad del Alto
 
+    // Añadimos los sonidos
+    this.HooverSelect1 = this.sound.add("hooverSelection1", { volume: 0.08 });
+    this.HooverSelect2 = this.sound.add("hooverSelection2", { volume: 0.08 });
+    this.HooverSelect3 = this.sound.add("hooverSelection3", { volume: 0.08 });
+
+    this.selected = this.sound.add("select");
+
     // Añadir los efectos shader a la cámara
     this.crtEffect = this.game.renderer.pipelines.addPostPipeline(
       "CRTPostFx",
@@ -31,10 +38,9 @@ export class MainMenu extends BaseScene {
       TVDistortionFx
     );
     this.staticEffect = this.game.renderer.pipelines.addPostPipeline(
-      'TVStaticFx',
+      "TVStaticFx",
       TVStaticFx
-    )
-
+    );
 
     // Aplicar el efecto CRT a la cámara principal
     // this.cameras.main.setPostPipeline(TVStaticFx);
@@ -78,24 +84,30 @@ export class MainMenu extends BaseScene {
     //Button Animations Hover, Down, Out
     playVersusButton.on("pointerover", () => {
       // Cambia el tamaño de la imagen al pasar el mouse
+      this.HooverSelect3.play();
       playVersusButton.setScale(1.7);
     });
 
     playVersusButton.on("pointerout", () => {
       // Cambia el tamaño de la imagen al pasar el mouse
+      this.HooverSelect3.stop();
       playVersusButton.setScale(1.4);
     });
 
     playVersusButton.on("pointerdown", () => {
+      this.selected.play();
+      optionsButton.setText("");
+      playVersusButton.setText("");
+      playCooperativeButton.setText("");
+      this.HooverSelect1.stop();
+      this.HooverSelect2.stop();
+      this.HooverSelect3.stop();
       playVersusButton.setScale(1.3); // Vuelve al tamaño original
       // this.add.image(width / 2, height / 2, '').setScale(0.37); //Explosión
       this.time.addEvent({
         delay: 900, // demora 1 segundo en iniciar
         loop: true,
         callback: () => {
-          optionsButton.setText("");
-          playVersusButton.setText("");
-          playCooperativeButton.setText("");
           this.transitionToVersus(); //Llama la escena Game 1vs1
         },
       });
@@ -118,11 +130,13 @@ export class MainMenu extends BaseScene {
     playCooperativeButton.on("pointerover", () => {
       // Cambia el tamaño de la imagen al pasar el mouse
       playCooperativeButton.setScale(1.7);
+      this.HooverSelect2.play();
     });
 
     playCooperativeButton.on("pointerout", () => {
       // Cambia el tamaño de la imagen al pasar el mouse
       playCooperativeButton.setScale(1.4);
+      this.HooverSelect2.stop();
     });
 
     playCooperativeButton.on("pointerdown", () => {
@@ -171,11 +185,13 @@ export class MainMenu extends BaseScene {
     optionsButton.on("pointerover", () => {
       // Cambia el tamaño de la imagen al pasar el mouse
       optionsButton.setScale(1.1);
+      this.HooverSelect1.play();
     });
 
     optionsButton.on("pointerout", () => {
       // Cambia el tamaño de la imagen al pasar el mouse
       optionsButton.setScale(1);
+      this.HooverSelect1.stop();
     });
 
     optionsButton.on("pointerdown", () => {
@@ -259,7 +275,10 @@ export class MainMenu extends BaseScene {
 
     // Esperar un poco antes de iniciar la siguiente escena
     this.time.delayedCall(1500, () => {
-      this.scene.start("Game1vs1", { dialogues: this.dialogues, language: this.language }); //Ir a escena Main
+      this.scene.start("Game1vs1", {
+        dialogues: this.dialogues,
+        language: this.language,
+      }); //Ir a escena Main
     });
   }
 

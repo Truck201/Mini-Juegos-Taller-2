@@ -12,6 +12,10 @@ export class LanguageScene extends BaseScene {
     const width = this.game.scale.width;
     const height = this.game.scale.height;
 
+    this.BreakTicket = this.sound.add("breakTicket", { volume: 0.09 });
+    this.selector1 = this.sound.add("hooverSelection1", { volume: 0.09 });
+    this.selector2 = this.sound.add("hooverSelection2", { volume: 0.09 });
+
     initAnimations(this);
 
     const background = this.add.sprite(
@@ -32,6 +36,10 @@ export class LanguageScene extends BaseScene {
     ARGLanguage.on("pointerover", () => {
       ARGLanguage.anims.play("Crush-ARG", true);
       // Cambia el tamaño de la imagen al pasar el mouse
+      this.selector2.play()
+      this.time.delayedCall(500, () => {
+        this.BreakTicket.play();
+      })
       ARGLanguage.setScale(1.46);
     });
 
@@ -43,7 +51,7 @@ export class LanguageScene extends BaseScene {
 
     ARGLanguage.on("pointerdown", () => {
       ARGLanguage.setScale(1.6);
-
+      this.BreakTicket.play();
       getTranslations(ES_AR, () => {
         ARGLanguage.anims.play("Crush-ARG", true);
         this.time.addEvent({
@@ -67,6 +75,10 @@ export class LanguageScene extends BaseScene {
       USALanguage.anims.play("Crush-EEUU", true);
       // Cambia el tamaño de la imagen al pasar el mouse
       USALanguage.setScale(1.46);
+      this.selector1.play()
+      this.time.delayedCall(500, () => {
+        this.BreakTicket.play();
+      })
     });
 
     USALanguage.on("pointerout", () => {
@@ -77,7 +89,7 @@ export class LanguageScene extends BaseScene {
 
     USALanguage.on("pointerdown", () => {
       USALanguage.setScale(1.6);
-
+      this.BreakTicket.play();
       getTranslations(EN_US, () => {
         USALanguage.anims.play("Crush-EEUU", true);
         this.time.addEvent({
@@ -93,7 +105,7 @@ export class LanguageScene extends BaseScene {
 
   gotoMainScene(lang) {
     this.time.delayedCall(200, () => {
-      this.scene.start("MainMenu", {
+      this.scene.start("Shop", {
         language: lang,
       });
     });

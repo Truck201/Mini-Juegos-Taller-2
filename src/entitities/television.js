@@ -5,6 +5,8 @@ export class Television {
     this.y = this.scene.scale.height * 0.4;
     this.x = this.scene.scale.width / 2;
 
+    this.whiteNoise = this.scene.sound.add("whiteNoise", { volume: 0.008 });
+
     if (isInMenu) {
       this.scale = 0.83;
       this.y = this.scene.scale.height;
@@ -21,6 +23,7 @@ export class Television {
 
       // Shader
       this.television.setPostPipeline("TVStaticFx");
+      
       
     } else if (!isInMenu) {
       this.y = this.scene.scale.height * 1.2;
@@ -48,6 +51,7 @@ export class Television {
       this.filtrado.setPostPipeline("CRTPostFx");
 
     }
+    this.whiteNoise.play()
     this.text = this.scene.add
       .text(this.x - 15, this.y - 50, "", {
         fontSize: "70px",

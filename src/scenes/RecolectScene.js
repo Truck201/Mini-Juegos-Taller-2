@@ -30,8 +30,8 @@ export class RecolectScene extends Scene {
     this.points1 = data.points1 || 0; // Puntaje inicial jugador 1
     this.points2 = data.points2 || 0; // Puntaje inicial jugador 2
     this.game_over_timeout = 25; // Tiempo límite de 30 segundos
-    this.dialogues = data.dialogues
-    this.language = data.language
+    this.dialogues = data.dialogues;
+    this.language = data.language;
 
     // Lanzar la escena del HUD, pasando el tiempo y los puntajes iniciales
     this.scene.launch("Hud", {
@@ -60,7 +60,7 @@ export class RecolectScene extends Scene {
             this.scene.start("Shop", {
               points1: this.points1,
               points2: this.points2,
-              language: this.language
+              language: this.language,
             }); // Cambia a la escena Shop
           }, 980);
         }
@@ -76,6 +76,12 @@ export class RecolectScene extends Scene {
     let width = this.game.scale.width;
     let height = this.game.scale.height;
 
+    // Añadimos sonidos
+    this.appearPopcorn1 = this.sound.add("appearPopcorn1", { volume: 0.09 });
+    this.appearPopcorn2 = this.sound.add("appearPopcorn2", { volume: 0.09 });
+    this.collectPopcorn = this.sound.add("collectPopcorn", { volume: 0.09 });
+    // this.popcornBuff = this.sound.add("");
+
     this.television = new Television(this, false);
 
     this.kidKorn = new KidKorn(this, this.dialogues);
@@ -83,12 +89,11 @@ export class RecolectScene extends Scene {
     // Iniciar el temporizador aleatorio para que KidKorn aparezca
     this.kidKorn.startKidKornAppearance();
 
-    
     let background = this.add.sprite(width * 0.5, height * 0.5, "escenario");
     background.setDepth(1);
     background.setScale(1);
 
-    let shadows = this.add.sprite(width * 0.5, height * 0.5, "shadowTotal")
+    let shadows = this.add.sprite(width * 0.5, height * 0.5, "shadowTotal");
     shadows.setDepth(3);
     shadows.setScale(1);
 
@@ -114,7 +119,7 @@ export class RecolectScene extends Scene {
       if (n > 9) {
         // Crear el rectángulo pequeño en medio de la barra principal
         let collectibleSprite = new PopCorn(this, keysX, barraY, "pochoclo");
-
+        this.appearPopcorn2.play();
         // Añadir el recolectable al array
         this.collectibles.push(collectibleSprite);
       }
@@ -124,11 +129,11 @@ export class RecolectScene extends Scene {
     const player1 = new Character(this, "mimbo", true); // Jugador 1
     const player2 = new Character(this, "luho", false); // Jugador 2
 
-    this.player1 = player1
-    this.player2 = player2
+    this.player1 = player1;
+    this.player2 = player2;
 
-    player1.change_emotion("Mimbo", 0, player1)
-    player2.change_emotion("Luho", 0, player2)
+    player1.change_emotion("Mimbo", 0, player1);
+    player2.change_emotion("Luho", 0, player2);
 
     this.combo1 = new ComboPersonajes(this, 1);
     this.combo1.create();
@@ -252,7 +257,7 @@ export class RecolectScene extends Scene {
       for (let attempt = 0; attempt < 10; attempt++) {
         // Hasta 10 intentos para encontrar una posición válida
         randomX = Phaser.Math.Between(
-          this.imagenBar.x - this.imagenBar.width / 2 -165,
+          this.imagenBar.x - this.imagenBar.width / 2 - 165,
           this.imagenBar.x + this.imagenBar.width / 2 + 165
         );
         isFarEnough = true;
@@ -282,6 +287,12 @@ export class RecolectScene extends Scene {
           () => {
             let newPopcorn = new PopCorn(this, randomX, barraY, "pochoclo");
             this.collectibles.push(newPopcorn); // Añadir al array de recolectables
+            let num = Phaser.Math.Between(0, 1);
+            if (num <= 0.5) {
+              this.appearPopcorn1.play();
+            } else if (num > 0.5) {
+              this.appearPopcorn2.play();
+            }
           },
           null,
           this
@@ -332,6 +343,7 @@ export class RecolectScene extends Scene {
 
         collectible.destroy(); // Destruir el recolectable
 
+        this.collectPopcorn.play();
         // Eliminar el recolectable del array
         this.collectibles.splice(collectibleIndex, 1);
 

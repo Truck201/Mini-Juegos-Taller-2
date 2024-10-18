@@ -9,6 +9,9 @@ export function takeDamage(
 ) {
   if (isShelded) {
     console.log("Damage prevented: Player is immune.");
+    if (scene && typeof scene.isShelded === "function") {
+      scene.isShelded(1); // Mostrar mensaje de inmunidad
+    }
     return false;
   }
 
@@ -29,7 +32,7 @@ export function takeDamage(
     const criticalChance = Phaser.Math.Between(0, 100);
     if (criticalChance < critical) {
       damage += damage;
-      scene.visualCritical()
+      scene.visualCritical();
     }
   }
 

@@ -48,6 +48,10 @@ export class Shop extends Scene {
     this.itemDescriptions = this.cache.json.get(this.dialoguesPath);
     console.log("Charge Descriptions", this.itemDescriptions);
 
+    this.barkDog = this.sound.add("dogBark", { volume: 0.2 });
+    this.startShop = this.sound.add("starterSoundShop", { volume: 0.3 });
+    this.urbanSound = this.sound.add("urbanSounds", { volume: 0.2 });
+
     // Asegúrate de que itemDescriptions no sea nulo o indefinido
     if (!this.itemDescriptions) {
       console.error("No se pudo cargar las descripciones de los ítems");

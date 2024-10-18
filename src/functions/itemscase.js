@@ -12,6 +12,12 @@ export class ItemsCase {
 
     this.maxItems = 3;
 
+    // Sounds
+    this.buySomething = this.scene.sound.add("buySomething", { volume: 0.09 });
+    this.noMoney = this.scene.sound.add("noCash", { volume: 0.09 });
+    this.sellSomething = this.scene.sound.add("sellSound", { volume: 0.09 });
+    this.chooseAnItem = this.scene.sound.add("chooseAnItem", { volume: 0.09 });
+
     this.selectedItemsPlayer1 = [];
     this.selectedItemsPlayer2 = [];
 
@@ -434,14 +440,18 @@ export class ItemsCase {
 
     if (Phaser.Input.Keyboard.JustDown(playerKeys.up)) {
       playerPosition.row = Phaser.Math.Clamp(playerPosition.row - 1, 0, 2);
+      this.chooseAnItem.play();
     } else if (Phaser.Input.Keyboard.JustDown(playerKeys.down)) {
       playerPosition.row = Phaser.Math.Clamp(playerPosition.row + 1, 0, 2);
+      this.chooseAnItem.play();
     }
 
     if (Phaser.Input.Keyboard.JustDown(playerKeys.left)) {
       playerPosition.col = Phaser.Math.Clamp(playerPosition.col - 1, 0, 3);
+      this.chooseAnItem.play();
     } else if (Phaser.Input.Keyboard.JustDown(playerKeys.right)) {
       playerPosition.col = Phaser.Math.Clamp(playerPosition.col + 1, 0, 3);
+      this.chooseAnItem.play();
     }
 
     this.paintPlayerPosition(prevPosition, 1);
@@ -462,7 +472,6 @@ export class ItemsCase {
       );
       return;
     }
-
     // Verificar si item existe y si item.texture.key está definido
     if (!item || !item.texture || !item.texture.key) {
       console.error(
@@ -511,6 +520,7 @@ export class ItemsCase {
           item.selectedBy = player;
           console.log(`Selected item for jugador 2:`, itemType);
           this.applyItemAttributes(player, itemType); // Asignar atributos al jugador 1
+          return true;
         } else if (player === 2 && this.scene.points2 >= itemValue) {
           this.purchaseItem(player, item, itemType);
           item.setTint(0x272736); //  0x0000ff  Azul
@@ -519,8 +529,11 @@ export class ItemsCase {
           item.isSelected = true;
           item.selectedBy = player;
           console.log(`Selected item for jugador 2:`, itemType);
-          this.applyItemAttributes(player, itemType); // Asignar atributos al jugador 2
+          this.applyItemAttributes(player, itemType); // Asignar atributos al jugador 2}
+          return true;
         }
+        // No money Sound
+        this.noMoney.play();
       }
     }
   }
@@ -545,11 +558,13 @@ export class ItemsCase {
       this.scene.points1 -= itemValue;
       hudScene.update_points(1, this.scene.points1);
       this.selectedItems.push(item); // Agregar ítem al array de seleccionados
+      this.buySomething.play();
       return true;
     } else if (player === 2 && this.scene.points2 >= itemValue) {
       this.scene.points2 -= itemValue;
       hudScene.update_points(2, this.scene.points2);
       this.selectedItems.push(item); // Agregar ítem al array de seleccionados
+      this.buySomething.play();
       return true;
     } else {
       console.log("No tiene suficientes puntos para comprar");
@@ -563,10 +578,12 @@ export class ItemsCase {
     if (player === 1) {
       this.scene.points1 += itemValue;
       hudScene.update_points(1, this.scene.points1);
+      this.sellSomething.play();
       console.log("Puntos devueltos al jugador 1: ", this.scene.points1);
     } else if (player === 2) {
       this.scene.points2 += itemValue;
       hudScene.update_points(2, this.scene.points2);
+      this.sellSomething.play();
       console.log("Puntos devueltos al jugador 2: ", this.scene.points2);
     }
   }
