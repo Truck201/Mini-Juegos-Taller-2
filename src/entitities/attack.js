@@ -71,6 +71,9 @@ export class Attack {
     this.sprite.anims.play("idle", true);
     console.log("Sprite creado:", this.sprite);
 
+    const fallSword = this.scene.fallingBonus;
+    fallSword.play();
+
     let endY = this.y * 0.4;
 
     this.scene.tweens.add({
@@ -101,6 +104,8 @@ export class Attack {
                   if (this.sprite) {
                     this.scene.cameras.main.shake(200, 0.005);
                     this.sprite.anims.play("broken", true);
+                    const collisionSword = this.scene.collisionSword;
+                    collisionSword.play();
                   }
                 },
               });
@@ -153,6 +158,9 @@ export class Attack {
       })
       .setOrigin(0.5)
       .setDepth(15);
+
+    const missSound = this.scene.missSound;
+    missSound.play();
 
     this.scene.tweens.add({
       targets: missText,

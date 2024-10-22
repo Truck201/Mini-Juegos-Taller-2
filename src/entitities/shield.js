@@ -60,6 +60,9 @@ export class Shielder {
     this.sprite.anims.play("idle-Shield", true);
     console.log("Sprite creado:", this.sprite);
 
+    const fallShield = this.scene.fallingBonus
+    fallShield.play()
+
     let endY = this.y * 0.4;
 
     this.scene.tweens.add({
@@ -90,6 +93,8 @@ export class Shielder {
                   if (this.sprite) {
                     this.scene.cameras.main.shake(200, 0.005);
                     this.sprite.anims.play("idle-Shield", true);
+                    const collisionShield = this.scene.collisionShield
+                    collisionShield.play()
                   }
                 },
               });

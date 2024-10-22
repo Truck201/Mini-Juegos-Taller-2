@@ -167,3 +167,18 @@ shakeAndMoveUp.call(this, mySprite, 1000, 100); // Subir el sprite a la posició
       this.movingBar2.evadeChance += player2Attributes.evadeChance;
     }
   }
+
+
+
+
+
+
+
+  width1 = width * 0.115
+  width2 = width * 0.885
+
+  height1 = height * 0.40
+  height2 = height * 0.48
+  height3 = height * 0.56
+  height4 = height * 0.64
+  height5 = height * 0.72

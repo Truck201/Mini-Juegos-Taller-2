@@ -13,6 +13,7 @@ export class LanguageScene extends BaseScene {
     const height = this.game.scale.height;
 
     this.BreakTicket = this.sound.add("breakTicket", { volume: 0.09 });
+    this.SelectTicket = this.sound.add("selectFlag", { volume: 0.12 });
     this.selector1 = this.sound.add("hooverSelection1", { volume: 0.09 });
     this.selector2 = this.sound.add("hooverSelection2", { volume: 0.09 });
 
@@ -25,6 +26,8 @@ export class LanguageScene extends BaseScene {
     );
     background.anims.play("Idle-Boleteria", true);
 
+    let isPlayingAnimationARG = false; // Flag para controlar animación
+
     // Añadimos las imágenes de ambas banderas
     const ARGLanguage = this.add
       .sprite(width * 0.3, height * 0.67, "Argentina")
@@ -34,24 +37,36 @@ export class LanguageScene extends BaseScene {
     ARGLanguage.setInteractive();
 
     ARGLanguage.on("pointerover", () => {
-      ARGLanguage.anims.play("Crush-ARG", true);
-      // Cambia el tamaño de la imagen al pasar el mouse
-      this.selector2.play()
-      this.time.delayedCall(500, () => {
-        this.BreakTicket.play();
-      })
-      ARGLanguage.setScale(1.46);
+      if (!isPlayingAnimationARG) {
+        isPlayingAnimationARG = true;
+        ARGLanguage.anims.play("Crush-ARG", true);
+        // Cambia el tamaño de la imagen al pasar el mouse
+        this.selector2.play();
+
+        this.time.delayedCall(470, () => {
+          this.BreakTicket.play();
+        });
+
+        this.time.delayedCall(2400, () => {
+          ARGLanguage.anims.play("Idle-ARG", true);
+          ARGLanguage.setScale(1.24);
+          isPlayingAnimationARG = false;
+        });
+
+        ARGLanguage.setScale(1.46);
+      }
     });
 
-    ARGLanguage.on("pointerout", () => {
-      ARGLanguage.anims.play("Idle-ARG", true);
-      // Cambia el tamaño de la imagen al pasar el mouse
-      ARGLanguage.setScale(1.24);
-    });
+    // ARGLanguage.on("pointerout", () => {
+    //   ARGLanguage.anims.play("Idle-ARG", true);
+    //   // Cambia el tamaño de la imagen al pasar el mouse
+    //   ARGLanguage.setScale(1.24);
+    // });
 
     ARGLanguage.on("pointerdown", () => {
       ARGLanguage.setScale(1.6);
-      this.BreakTicket.play();
+      this.SelectTicket.play();
+      // this.BreakTicket.play();
       getTranslations(ES_AR, () => {
         ARGLanguage.anims.play("Crush-ARG", true);
         this.time.addEvent({
@@ -71,25 +86,38 @@ export class LanguageScene extends BaseScene {
       .setScale(1.24);
     USALanguage.setInteractive();
 
+    let isPlayingAnimationUSA = false; // Flag para controlar animación de la bandera USA
+
     USALanguage.on("pointerover", () => {
-      USALanguage.anims.play("Crush-EEUU", true);
-      // Cambia el tamaño de la imagen al pasar el mouse
-      USALanguage.setScale(1.46);
-      this.selector1.play()
-      this.time.delayedCall(500, () => {
-        this.BreakTicket.play();
-      })
+      if (!isPlayingAnimationUSA) {
+        isPlayingAnimationUSA = true;
+        USALanguage.anims.play("Crush-EEUU", true);
+        USALanguage.setScale(1.46);
+        this.selector1.play();
+
+        this.time.delayedCall(470, () => {
+          this.BreakTicket.play();
+        });
+
+        this.time.delayedCall(3000, () => {
+          USALanguage.anims.play("Idle-EEUU", true);
+          USALanguage.setScale(1.24);
+          isPlayingAnimationUSA = false; // Permitir que vuelva a reproducirse la animación
+        });
+      }
     });
 
-    USALanguage.on("pointerout", () => {
-      USALanguage.anims.play("Idle-EEUU", true);
-      // Cambia el tamaño de la imagen al pasar el mouse
-      USALanguage.setScale(1.24);
-    });
+    // USALanguage.on("pointerout", () => {
+    //   USALanguage.anims.play("Idle-EEUU", true);
+
+    //   // Cambia el tamaño de la imagen al pasar el mouse
+    //   USALanguage.setScale(1.24);
+    // });
 
     USALanguage.on("pointerdown", () => {
       USALanguage.setScale(1.6);
-      this.BreakTicket.play();
+      this.SelectTicket.play();
+      // this.BreakTicket.play();
       getTranslations(EN_US, () => {
         USALanguage.anims.play("Crush-EEUU", true);
         this.time.addEvent({
@@ -105,7 +133,7 @@ export class LanguageScene extends BaseScene {
 
   gotoMainScene(lang) {
     this.time.delayedCall(200, () => {
-      this.scene.start("Shop", {
+      this.scene.start("MainMenu", {
         language: lang,
       });
     });

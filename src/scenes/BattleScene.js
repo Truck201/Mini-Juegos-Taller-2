@@ -1,44 +1,36 @@
 import { MoveBar } from "../entitities/movebar";
 import { Television } from "../entitities/television";
 import { Character } from "../entitities/character";
-import { BaseScene } from "../lib/FontsBase";
 import { SwordRain } from "../events/swordRain";
 import { PopcornRaining } from "../events/popcornRain";
 import { MedievalEvent } from "../events/medieval";
 import { AtributesPlayers } from "../functions/atributos";
 import { initializeHealthBars } from "../functions/createHealtBar";
+import { AtributeText } from "../functions/atributeTexts";
 import { criticalVisual } from "../functions/criticalVisuals";
-export class BattleScene extends BaseScene {
+import { BattleSounds } from "../functions/addSoundsBattle";
+import { Scene } from "phaser";
+export class BattleScene extends Scene {
   constructor() {
     super("battleScene");
     this.movingBar1 = null;
     this.movingBar2 = null;
     this.player1Atributes = null;
     this.player2Atributes = null;
-    this.player1HPText = null; // Vida de Cada Jugador
-    this.player2HPText = null;
     this.lastKeyPressTime = 0; // Pausa ?
   }
   game_over_timeout;
+
   init(data) {
-    this.game_over_timeout = 60; // Tiempo límite de 30 segundos
     this.purchasedItems = data.purchasedItems || []; // Obtener los ítems comprados
     this.selectedItemsPlayer1 =
       data.selectedItemsPlayer1 || new AtributesPlayers(this) || {}; // Asegúrate de que sea un objeto
     this.selectedItemsPlayer2 =
       data.selectedItemsPlayer2 || new AtributesPlayers(this) || {}; // Asegúrate de que sea un objeto
-
-    // Lanzar la escena del HUD, pasando el tiempo y los puntajes iniciales
-    this.scene.launch("hudBattle", {
-      remaining_time: this.game_over_timeout,
-    });
   }
 
   create() {
-    this.critical1 = this.sound.add("doCritical1", { volume: 0.09 });
-    this.critical2 = this.sound.add("doCritical2", { volume: 0.09 });
-    this.winnerSound = this.sound.add("winnerSound", { volume: 0.09 });
-
+    BattleSounds(this);
 
     this.width = this.game.scale.width;
     this.height = this.game.scale.height;
@@ -60,6 +52,8 @@ export class BattleScene extends BaseScene {
     this.player2EvadeChance = this.player2Atributes.getEvadeChance();
     this.player2Damage = this.player2Atributes.getDamage();
     this.player2CriticalChance = this.player2Atributes.getCritical();
+
+    this.atributesText = new AtributeText(this, this.width, this.height);
 
     this.createHealtBar1 = new initializeHealthBars(
       this,
@@ -91,122 +85,10 @@ export class BattleScene extends BaseScene {
       }
     });
 
-    let width1 = width * 0.115;
-    let height1 = height * 0.4;
-
-    // Textos De Atributos 1
-    this.player1HPText = this.createText(
-      width1,
-      height1,
-      `${this.player1HP.toString().padStart(2, "0")}`
-    )
-      .setOrigin(0.5)
-      .setDepth(3);
-
-    this.createTextWithIcon(width1, height1, "IcoHp", true);
-
-    let height2 = height * 0.48;
-    this.speedText1 = this.createText(
-      width1,
-      height2,
-      `${this.player1Speed.toString().padStart(2, "0")}`
-    )
-      .setOrigin(0.5)
-      .setDepth(3);
-
-    this.createTextWithIcon(width1, height2, "IcoSp", true);
-
-    let height3 = height * 0.56;
-    this.createText(
-      width1,
-      height3,
-      `${this.player1EvadeChance.toString().padStart(2, "0")}`
-    )
-      .setOrigin(0.5)
-      .setDepth(3);
-
-    this.createTextWithIcon(width1, height3, "IcoDef", true); // 0.68  // 0.78
-
-    let height4 = height * 0.64;
-    this.damageText1 = this.createText(
-      width1,
-      height4,
-      `${this.player1Damage.toString().padStart(2, "0")}`
-    )
-      .setOrigin(0.5)
-      .setDepth(3);
-
-    this.createTextWithIcon(width1, height4, "IcoDam", true);
-
-    let height5 = height * 0.72;
-    this.criticalText1 = this.createText(
-      width1,
-      height5,
-      `${this.player1CriticalChance.toString().padStart(2, "0")}`
-    )
-      .setOrigin(0.5)
-      .setDepth(3);
-
-    this.createTextWithIcon(width1, height5, "IcoCrt", true);
-
-    let width2 = width * 0.885;
-    // Textos De Atributos 2
-    this.player2HPText = this.createText(
-      width2,
-      height1,
-      `${this.player2HP.toString().padStart(2, "0")}`
-    )
-      .setOrigin(0.5)
-      .setDepth(3);
-
-    this.createTextWithIcon(width2, height1, "IcoHp", false);
-
-    this.speedText2 = this.createText(
-      width2,
-      height2,
-      `${this.player2Speed.toString().padStart(2, "0")}`
-    )
-      .setOrigin(0.5)
-      .setDepth(3);
-
-    this.createTextWithIcon(width2, height2, "IcoSp", false);
-
-    this.createText(
-      width2,
-      height3,
-      `${this.player2EvadeChance.toString().padStart(2, "0")}`
-    )
-      .setOrigin(0.5)
-      .setDepth(3);
-
-    this.createTextWithIcon(width2, height3, "IcoDef", false);
-
-    this.damageText2 = this.createText(
-      width2,
-      height4,
-      `${this.player2Damage.toString().padStart(2, "0")}`
-    )
-      .setOrigin(0.5)
-      .setDepth(3);
-
-    this.createTextWithIcon(width2, height4, "IcoDam", false);
-
-    this.criticalText2 = this.createText(
-      width2,
-      height5,
-      `${this.player2CriticalChance.toString().padStart(2, "0")}`
-    )
-      .setOrigin(0.5)
-      .setDepth(3);
-
-    this.createTextWithIcon(width2, height5, "IcoCrt", false);
-
     this.television = new Television(this, false);
 
     let background = this.add.sprite(width * 0.5, height * 0.5, "escenario");
     background.setDepth(1);
-
-    // const itemsCase = this.scene.get("ItemsCase");
 
     const player1 = new Character(this, "mimbo", true);
     const player2 = new Character(this, "luho", false);
@@ -292,37 +174,20 @@ export class BattleScene extends BaseScene {
     this.television.updateText(this.game_over_timeout);
   }
 
-  createTextWithIcon(x, y, iconKey, isPlayerOne) {
-    if (isPlayerOne) {
-      x = x - 73;
-    }
-
-    if (!isPlayerOne) {
-      x = x + 73;
-    }
-
-    const iconObject = this.add
-      .sprite(x, y, iconKey)
-      .setScale(0.9)
-      .setDepth(3)
-      .setOrigin(0.5); // Ajusta la posición y el tamaño del ícono
-    return iconObject;
-  }
-
   gameOver(player) {
     if (player === this.player1Atributes) {
       console.log(player);
       console.log(this.player1Atributes);
       this.winnerSound.play();
-      const looser = 1;
-      this.gameOver(this, looser);
+      let loser = 1;
+      this.gameOver(loser);
     }
     if (player === this.player2Atributes) {
       console.log(player);
       console.log(this.player2Atributes);
       this.winnerSound.play();
-      const looser = 2;
-      this.gameOver(this, looser);
+      let loser = 2;
+      this.gameOver(loser);
     } else {
       console.log("NO FUNCIONA LA DERIVACIÓN A GAME OVER");
       return false;

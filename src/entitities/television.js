@@ -5,8 +5,6 @@ export class Television {
     this.y = this.scene.scale.height * 0.4;
     this.x = this.scene.scale.width / 2;
 
-    this.whiteNoise = this.scene.sound.add("whiteNoise", { volume: 0.008 });
-
     if (isInMenu) {
       this.scale = 0.83;
       this.y = this.scene.scale.height;
@@ -23,8 +21,6 @@ export class Television {
 
       // Shader
       this.television.setPostPipeline("TVStaticFx");
-      
-      
     } else if (!isInMenu) {
       this.y = this.scene.scale.height * 1.2;
       this.scale = 0.00092;
@@ -49,16 +45,17 @@ export class Television {
       // Shader
       this.television.setPostPipeline("TVDistortionFx");
       this.filtrado.setPostPipeline("CRTPostFx");
-
     }
-    this.whiteNoise.play()
+
     this.text = this.scene.add
       .text(this.x - 15, this.y - 50, "", {
         fontSize: "70px",
         color: "#fff1e8",
       })
       .setDepth(1);
-      this.television.setPostPipeline("TVStaticFx");
+    this.television.setPostPipeline("TVStaticFx");
+
+    this.startWhiteNoise();
   }
 
   updateText(remainingTime) {
@@ -68,6 +65,29 @@ export class Television {
       this.text.setText("0");
     } else {
       this.text.setText(""); // Limpiar el texto si el tiempo es mayor a 3 o menor que 0
+    }
+  }
+
+  startWhiteNoise() {
+    if (!this.whiteNoiseTimer) {
+      this.whiteNoiseTimer = this.scene.time.addEvent({
+        delay: 550,
+        callback: () => {
+          const whiteNoise = this.scene.sound.add("whiteNoise", {
+            volume: 0.02,
+          });
+          whiteNoise.play();
+        },
+        loop: true,
+      });
+    }
+  }
+
+  // Método para detener el sonido del latido del corazón
+  stopWhiteNoise() {
+    if (this.whiteNoiseTimer) {
+      this.whiteNoiseTimer.remove(false); // Elimina el evento del temporizador
+      this.whiteNoiseTimer = null; // Resetea el temporizador
     }
   }
 }

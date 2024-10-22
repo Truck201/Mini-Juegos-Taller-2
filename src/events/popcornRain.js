@@ -13,21 +13,6 @@ export class PopcornRaining {
   }
 
   create() {
-    // Añadimos Sonidos
-    this.pickSword = this.scene.sound.add("pickSword", { volume: 0.09 });
-    this.takeDamageSound = this.scene.sound.add("takeDamage", { volume: 0.09 });
-
-    this.popcorn1Sound = this.scene.sound.add("popcorn1Sound", {
-      volume: 0.09,
-    });
-    this.popcorn2Sound = this.scene.sound.add("popcorn2Sound", {
-      volume: 0.09,
-    });
-    this.popcorn3Sound = this.scene.sound.add("popcorn3Sound", {
-      volume: 0.09,
-    });
-    this.collectPopcorn = this.scene.sound.add("collectPopcorn", { volume: 0.09 });
-
     // Añadimos Animaciones
     initAnimationsPopcorn(this.scene);
 
@@ -74,8 +59,22 @@ export class PopcornRaining {
       )
       .setDepth(70);
 
-    const sound = `popcorn${popcornType}Sound`;
-    sound.play();
+    // Reproduce el sonido dependiendo del tipo de pochoclo
+    switch (popcornType) {
+      case 1:
+        const popcorn1Sound = this.scene.popcorn1Sound;
+        popcorn1Sound.play();
+        break;
+      case 2:
+        const popcorn2Sound = this.scene.popcorn2Sound;
+        popcorn2Sound.play();
+        break;
+      case 3:
+        const popcorn3Sound = this.scene.popcorn3Sound;
+        popcorn3Sound.play();
+        break;
+    }
+
     popcorn.play(`PopcornAnim${popcornType}`);
 
     // Añadir físicas al popcorn
@@ -99,9 +98,10 @@ export class PopcornRaining {
       barBounds1, // Barra del jugador 1
       popcornBounds, // Pochoclo
       (bar, popcorn) => {
-        popcorn.destroy(); // Destruye el pochoclo cuando lo recoge el jugador
-
+        popcorn.destroy();
         console.log("POCHOCLOOOO !! ");
+        const collectPopcorn = this.scene.collectPopcorn;
+        collectPopcorn.play();
         this.applyBonus(1, this.scene.player1Atributes, popcornType); // Aplica el beneficio correspondiente
       },
       null,
@@ -114,7 +114,8 @@ export class PopcornRaining {
       (bar, popcorn) => {
         popcorn.destroy();
         console.log("POCHOCLOOOO !! ");
-        this.collectPopcorn.play();
+        const collectPopcorn = this.scene.collectPopcorn;
+        collectPopcorn.play();
         this.applyBonus(2, this.scene.player2Atributes, popcornType); // Aplica el beneficio correspondiente
       },
       null,
@@ -149,8 +150,10 @@ export class PopcornRaining {
           )
         ) {
           this.scene.cameras.main.shake(200, 0.025);
-          this.pickSword.play();
-          this.takeDamageSound.play();
+          const takeDamageSound = this.scene.takeDamageSound;
+          takeDamageSound.play();
+          const pickSword = this.scene.pickSword;
+          pickSword.play();
           this.destroyAndRespawn(sword);
         } else {
           this.showMissMensaje(sword);
@@ -181,8 +184,10 @@ export class PopcornRaining {
           )
         ) {
           this.scene.cameras.main.shake(200, 0.025);
-          this.pickSword.play();
-          this.takeDamageSound.play();
+          const takeDamageSound = this.scene.takeDamageSound;
+          takeDamageSound.play();
+          const pickSword = this.scene.pickSword;
+          pickSword.play();
           this.destroyAndRespawn(sword);
         } else {
           this.showMissMensaje(sword);
@@ -204,49 +209,49 @@ export class PopcornRaining {
     switch (popcornType) {
       case 1:
         if (playerId === 1) {
-          atributos.updateAttributes({ hitPoints: 0.4 });
+          atributos.updateAttributes({ hitPoints: 1 });
           this.player1HP = Math.floor(
             this.scene.player1Atributes.getHitPoints()
           );
           // Actualizar solo si el nuevo HP es un entero
           if (Number.isInteger(this.player1HP)) {
             this.scene.player1HPText.setText(
-              `${this.scene.player1HP.toString().padStart(2, "0")}`
+              `${this.player1HP.toString().padStart(2, "0")}`
             );
-            this.scene.createHealtBar1.updateHealthBar(this.scene.player1HP);
+            this.scene.createHealtBar1.updateHealthBar(this.player1HP);
           }
         }
         if (playerId === 2) {
-          atributos.updateAttributes({ hitPoints: 0.4 });
+          atributos.updateAttributes({ hitPoints: 1 });
           this.player2HP = Math.floor(
             this.scene.player2Atributes.getHitPoints()
           );
           // Actualizar solo si el nuevo HP es un entero
           if (Number.isInteger(this.player2HP)) {
             this.scene.player2HPText.setText(
-              `${this.scene.player2HP.toString().padStart(2, "0")}`
+              `${this.player2HP.toString().padStart(2, "0")}`
             );
-            this.scene.createHealtBar2.updateHealthBar(this.scene.player2HP);
+            this.scene.createHealtBar2.updateHealthBar(this.player2HP);
           }
         }
         break;
 
       case 2:
         if (playerId === 1) {
-          atributos.updateAttributes({ damage: 0.4 });
-          this.damageP1 = Math.floor(this.scene.player1Atributes.getDamage());
-          if (Number.isInteger(this.damageP1)) {
+          atributos.updateAttributes({ damage: 0.3 });
+          this.player1Damage = Math.floor(this.scene.player1Atributes.getDamage());
+          if (Number.isInteger(this.player1Damage)) {
             this.scene.damageText1.setText(
-              `${this.damageP1.toString().padStart(2, "0")}`
+              `${this.player1Damage.toString().padStart(2, "0")}`
             );
           }
         }
         if (playerId === 2) {
-          atributos.updateAttributes({ damage: 0.4 });
-          this.damageP2 = Math.floor(this.scene.player2Atributes.getDamage());
-          if (Number.isInteger(this.damageP2)) {
+          atributos.updateAttributes({ damage: 0.3 });
+          this.player2Damage = Math.floor(this.scene.player2Atributes.getDamage());
+          if (Number.isInteger(this.player2Damage)) {
             this.scene.damageText2.setText(
-              `${this.damageP2.toString().padStart(2, "0")}`
+              `${this.player2Damage.toString().padStart(2, "0")}`
             );
           }
         }
@@ -255,21 +260,19 @@ export class PopcornRaining {
       case 3:
         if (playerId === 1) {
           atributos.updateAttributes({ speed: 1 });
-          this.speedP1 = this.scene.player1Atributes.getSpeed();
-          if (Math.floor(this.speedP1) > this.scene.player1Speed) {
-            this.scene.player1Speed = Math.floor(this.speedP1);
+          this.speedP1 = Math.floor(this.scene.player1Atributes.getSpeed());
+          if (Number.isInteger(this.speedP1)) {
             this.scene.speedText1.setText(
-              `${this.scene.player1Speed.toString().padStart(2, "0")}`
+              `${this.speedP1.toString().padStart(2, "0")}`
             );
           }
         }
         if (playerId === 2) {
           atributos.updateAttributes({ speed: 1 });
-          this.speedP2 = this.scene.player2Atributes.getSpeed();
-          if (Math.floor(this.speedP2) > this.scene.player1Speed) {
-            this.scene.player2Speed = Math.floor(this.speedP2);
+          this.speedP2 = Math.floor(this.scene.player2Atributes.getSpeed());
+          if (Number.isInteger(this.speedP2 )) {
             this.scene.speedText2.setText(
-              `${this.scene.player2Speed.toString().padStart(2, "0")}`
+              `${this.speedP2.toString().padStart(2, "0")}`
             );
           }
         }

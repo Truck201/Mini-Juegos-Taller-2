@@ -48,6 +48,9 @@ export class Heart {
     this.sprite.setDepth(14).setScale(1.33);
     this.sprite.anims.play("flying-heart", true);
 
+    const fallHeart = this.scene.fallingBonus;
+    fallHeart.play();
+
     let endY = this.y * 0.4;
 
     this.scene.tweens.add({
@@ -70,6 +73,8 @@ export class Heart {
                 if (this.sprite) {
                   this.scene.cameras.main.shake(200, 0.005);
                   this.sprite.anims.play("idle-Heart", true);
+                  const collisionHeart = this.scene.collisionHeart;
+                  collisionHeart.play();
                 }
               },
             });
@@ -83,30 +88,18 @@ export class Heart {
     return this.sprite ? this.sprite.getBounds() : { width: 0, height: 0 };
   }
 
-  respawn(player) {
-    this.destroy(player);
+  respawn(atributes) {
+    atributes.updateAttributes({ hitPoints: 1 });
+    this.destroy();
     this.createHeart();
   }
-  
-  destroy(player) {
-    console.log("va o no va? ")
+
+  destroy() {
+    console.log("va o no va? ");
     if (this.sprite) {
-      console.log("aquí estoy? ")
+      console.log("aquí estoy? ");
       this.sprite.destroy();
       this.sprite = null;
-
-      this.applyBonus(player)
-    }
-  }
-
-  applyBonus(player) {
-    if (player === 1) {
-      console.log("wachear 1 ----- >");
-      this.player1Atributes.updateAttributes(player, { hitPoints: 1 });
-    }
-    if (player === 2) {
-      console.log("wachear 2 --> ");
-      this.player2Atributes.updateAttributes(player, { hitPoints: 1 });
     }
   }
 }

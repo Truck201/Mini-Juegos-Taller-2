@@ -14,9 +14,24 @@ export class ComboPersonajes {
 
   create() {
     // Añadimos sonidos
-    this.looseCombo = this.scene.sound.add("looseCombo", { volume: 0.09 });
-    this.winCombo = this.scene.sound.add("winCombo", { volume: 0.09 });
-    this.sadLuho = this.scene.sound.add("sadLuhoSound", { volume: 0.09 });
+    // this.looseCombo = this.scene.sound.add("looseCombo", { volume: 0.25 });
+    this.winCombo = this.scene.sound.add("winCombo", { volume: 0.25 });
+
+    this.combo1Sound = this.scene.sound.add("combo1", { volume: 0.25 });
+    this.combo2Sound = this.scene.sound.add("combo2", { volume: 0.25 });
+    this.combo3Sound = this.scene.sound.add("combo3", { volume: 0.25 });
+    this.combo4Sound = this.scene.sound.add("combo4", { volume: 0.25 });
+    this.combo5Sound = this.scene.sound.add("combo5", { volume: 0.25 });
+
+    this.sadLuho = this.scene.sound.add("sadLuhoSound", { volume: 0.25 });
+    this.embarassLuho = this.scene.sound.add("embarassLuho", { volume: 0.25 }); // añadir
+    this.angryLuho = this.scene.sound.add("angryLuho", { volume: 0.15 }); // añadir
+    this.happyLuho = this.scene.sound.add("happyLuho", { volume: 0.25 }); // añadir
+
+    this.cryMimbo = this.scene.sound.add("cryMimbo", { volume: 0.25 }); // añadir
+    this.angryMimbo = this.scene.sound.add("angryMimbo", { volume: 0.25 }); // añadir
+    this.happyMimbo1 = this.scene.sound.add("happyMimbo1", { volume: 0.25 }); // añadir
+    this.happyMimbo2 = this.scene.sound.add("happyMimbo2", { volume: 0.25 }); // añadir
 
     // Texto de los combos
     this.comboText1 = this.scene.add
@@ -100,6 +115,22 @@ export class ComboPersonajes {
         this.scene.scene.get("Hud").update_points(1, this.scene.points1);
         this.comboText1.setText(`${this.scene.comboCount1}x`).setVisible(true);
         console.log("MOSTRAR COMBOS P1", this.scene.comboCount1);
+
+        if (this.scene.comboCount1 === 5) {
+          this.combo1Sound.play();
+        }
+        if (this.scene.comboCount1 === 6) {
+          this.combo2Sound.play();
+        }
+        if (this.scene.comboCount1 === 7) {
+          this.combo3Sound.play();
+        }
+        if (this.scene.comboCount1 === 8) {
+          this.combo4Sound.play();
+        }
+        if (this.scene.comboCount1 === 9) {
+          this.combo5Sound.play();
+        }
       }
       if (this.scene.comboCount1 === 10) {
         this.scene.points1 += 5; // Añadir puntos extra por el combo
@@ -109,14 +140,15 @@ export class ComboPersonajes {
         // Animación del jugador 1 (victoria) y del enemigo (enojo)
         this.scene.player1.change_emotion("Mimbo", 2, this.scene.player1); // Mimbo: animación de victoria
         this.scene.player2.change_emotion("Luho", 3, this.scene.player2); // Luho: animación de daño
-        this.sadLuho.play();
-        
+
+        this.happyMimbo2.play();
+
+        this.angryLuho.play();
+
         this.winCombo.play();
         this.scene.time.delayedCall(1200, () => {
           this.comboText1.setVisible(false); // Ocultar el marcador
-          this.looseCombo.play();
-          
-          console.log("va??")
+
           this.scene.player1.change_emotion("Mimbo", 0, this.scene.player1); // Mimbo: IDLE
           this.scene.player2.change_emotion("Luho", 0, this.scene.player2); // Luho: IDLE
         });
@@ -143,6 +175,22 @@ export class ComboPersonajes {
         this.scene.scene.get("Hud").update_points(2, this.scene.points2);
         this.comboText2.setText(`${this.scene.comboCount2}x`).setVisible(true);
         console.log("MOSTRAR COMBOS P2", this.scene.comboCount2);
+
+        if (this.scene.comboCount2 === 5) {
+          this.combo1Sound.play();
+        }
+        if (this.scene.comboCount2 === 6) {
+          this.combo2Sound.play();
+        }
+        if (this.scene.comboCount2 === 7) {
+          this.combo3Sound.play();
+        }
+        if (this.scene.comboCount2 === 8) {
+          this.combo4Sound.play();
+        }
+        if (this.scene.comboCount2 === 9) {
+          this.combo5Sound.play();
+        }
       }
       if (this.scene.comboCount2 === 10) {
         this.scene.points2 += 5; // Añadir puntos extra por el combo
@@ -153,12 +201,14 @@ export class ComboPersonajes {
         this.scene.player1.change_emotion("Mimbo", 3, this.scene.player1); // Mimbo: animación de victoria
         this.scene.player2.change_emotion("Luho", 2, this.scene.player2); // Luho: animación de daño
 
+        this.cryMimbo.play();
+        this.happyLuho.play();
+
         this.winCombo.play();
         this.scene.time.delayedCall(1200, () => {
           this.comboText2.setVisible(false); // Ocultar el marcador
-          this.looseCombo.play();
 
-          console.log("va??  -->>")
+          console.log("va??  -->>");
           this.scene.player1.change_emotion("Mimbo", 0, this.scene.player1); // Mimbo: IDLE
           this.scene.player2.change_emotion("Luho", 0, this.scene.player2); // Luho: IDLE
         });

@@ -19,8 +19,8 @@ export class Shop extends Scene {
     this.points1 = data.points1 || 0; // Puntaje inicial jugador 1
     this.points2 = data.points2 || 0; // Puntaje inicial jugador 2
     this.language = data.language || getLanguageConfig();
-    console.log(this.language)
-    this.game_over_timeout = 15;
+    console.log(this.language);
+    this.game_over_timeout = 5;
     this.lastKeyPressTime = 0;
     this.background;
 
@@ -48,9 +48,10 @@ export class Shop extends Scene {
     this.itemDescriptions = this.cache.json.get(this.dialoguesPath);
     console.log("Charge Descriptions", this.itemDescriptions);
 
-    this.barkDog = this.sound.add("dogBark", { volume: 0.2 });
-    this.startShop = this.sound.add("starterSoundShop", { volume: 0.3 });
+    this.startShop = this.sound.add("starterSoundShop", { volume: 0.094 });
     this.urbanSound = this.sound.add("urbanSounds", { volume: 0.2 });
+
+    this.startShop.play();
 
     // Asegúrate de que itemDescriptions no sea nulo o indefinido
     if (!this.itemDescriptions) {
@@ -82,6 +83,7 @@ export class Shop extends Scene {
     this.createBackground();
 
     this.Monsters = new MonsterShop(this);
+    this.startBarking();
   }
 
   update() {
@@ -119,12 +121,43 @@ export class Shop extends Scene {
     this.add.sprite(width * 0.5, height * 0.5, "backgroundShop").setDepth(0);
   }
 
+  startBarking() {
+    if (!this.barkingTimer) {
+      this.barkingTimer = this.time.addEvent({
+        delay: Phaser.Math.Between(2300, 5600),
+        callback: () => {
+          let barkSoundNumber = Phaser.Math.Between(1, 3);
+          switch (barkSoundNumber) {
+            case 1:
+              const barkSound1 = this.sound.add("dogBark1", { volume: 0.2 });
+              barkSound1.play();
+            case 2:
+              const barkSound2 = this.sound.add("dogBark2", { volume: 0.2 });
+              barkSound2.play();
+            case 3:
+              const barkSound3 = this.sound.add("dogBark3", { volume: 0.2 });
+              barkSound3.play();
+          }
+        },
+        loop: true,
+      });
+    }
+  }
+
+  // Método para detener el sonido del latido del corazón
+  stopBarking() {
+    if (this.barkingTimer) {
+      this.barkingTimer.remove(false); // Elimina el evento del temporizador
+      this.barkingTimer = null; // Resetea el temporizador
+    }
+  }
+
   // Método para pasar ítems seleccionados a BattleScene
   startBattleScene = () => {
     const selectedItems = this.itemsCase.selectedItems; // Obtén los ítems seleccionados
     const selected1Player = this.itemsCase.player1Atributes;
     const selected2Player = this.itemsCase.player2Atributes;
-
+    this.stopBarking();
     this.scene.start("battleScene", {
       purchasedItems: selectedItems,
       selectedItemsPlayer1: selected1Player,

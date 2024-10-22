@@ -11,7 +11,6 @@ import { RecolectScene } from "./scenes/RecolectScene";
 import { HudShop } from "./scenes/HudShop";
 import { Shop } from "./scenes/Shop";
 import { BattleScene } from "./scenes/BattleScene";
-import { HudBattle } from "./scenes/HudBattle";
 import { GameOver } from "./scenes/GameOver";
 import { BaseScene } from "./lib/FontsBase";
 
@@ -52,7 +51,6 @@ const config = {
     Shop,
     HudShop,
     BattleScene,
-    HudBattle,
     BaseScene,
     StartCooperative,
     GameCooperative
