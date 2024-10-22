@@ -185,18 +185,22 @@ export class BattleScene extends Scene {
     }
   }
 
-  gameOver(player) {
+  gameOver(player, event) {
+    if (event === "PopcornRain") {
+      this.winnerPopcornRain.play();
+    }
+    if (event === "SwordRain") {
+      this.winnerSwordRain.play();
+    }
+    if (event === "Medieval") {
+      this.winnerMedieval.play();
+    }
+
     if (player === this.player1Atributes) {
-      console.log(player);
-      console.log(this.player1Atributes);
-      this.winnerSound.play();
       let loser = 1;
       this.goToGameOver(loser);
     }
     if (player === this.player2Atributes) {
-      console.log(player);
-      console.log(this.player2Atributes);
-      this.winnerSound.play();
       let loser = 2;
       this.goToGameOver(loser);
     } else {

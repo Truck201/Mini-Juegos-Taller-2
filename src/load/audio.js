@@ -47,7 +47,7 @@ export function Sounds(scene) {
     { key: "fallHeart", path: "battle/medieval/SFX-fallHeart" },
     { key: "isShelded", path: "battle/medieval/SFX-isShelded" },
     { key: "pickHeart", path: "battle/medieval/SFX-pickHeart" },
-    { key: "setInmune", path: "battle/medieval/SFX-pickShield" }, // AÑADIR
+    { key: "setInmune", path: "battle/medieval/SFX-pickShield" },
     { key: "popcorn1Sound", path: "battle/rainPopcorn/SFX-popcorn1" },
     { key: "popcorn2Sound", path: "battle/rainPopcorn/SFX-popcorn2" },
     { key: "popcorn3Sound", path: "battle/rainPopcorn/SFX-popcorn3" },
@@ -64,14 +64,14 @@ export function Sounds(scene) {
     { key: "combo5", path: "combo/SFX-comboHit5" },
 
     { key: "sadLuhoSound", path: "characters/SFX-sadLuho" },
-    { key: "embarassLuho", path: "characters/SFX-embarassLuho" }, // AÑADIR
-    { key: "angryLuho", path: "characters/SFX-angryLuho" }, // AÑADIR
-    { key: "happyLuho", path: "characters/SFX-smileLuho" }, // AÑADIR
+    { key: "embarassLuho", path: "characters/SFX-embarassLuho" }, 
+    { key: "angryLuho", path: "characters/SFX-angryLuho" }, 
+    { key: "happyLuho", path: "characters/SFX-smileLuho" }, 
 
-    { key: "angryMimbo", path: "characters/SFX-angryMimbo" }, // AÑADIR
-    { key: "happyMimbo1", path: "characters/SFX-happyMimbo2" }, // AÑADIR
-    { key: "happyMimbo2", path: "characters/SFX-happyMimbo1" }, // AÑADIR
-    { key: "cryMimbo", path: "characters/SFX-cryMimbo" }, // AÑADIR
+    { key: "angryMimbo", path: "characters/SFX-angryMimbo" }, 
+    { key: "happyMimbo1", path: "characters/SFX-happyMimbo2" }, 
+    { key: "happyMimbo2", path: "characters/SFX-happyMimbo1" }, 
+    { key: "cryMimbo", path: "characters/SFX-cryMimbo" }, 
 
     { key: "dialoguesSound", path: "dialogues/SFX-voiceDialogue" },
   ];

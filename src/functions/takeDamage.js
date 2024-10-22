@@ -5,7 +5,8 @@ export function takeDamage(
   AtributosPlayer2,
   evadeChance,
   playerHp,
-  isShelded
+  isShelded,
+  event
 ) {
   if (isShelded) {
     console.log("Damage prevented: Player is immune.");
@@ -43,7 +44,7 @@ export function takeDamage(
 
   // Verificar si el jugador ha perdido
   if (playerHp < 1) {
-    scene.gameOver(AtributosPlayer2);
+    scene.gameOver(AtributosPlayer2, event);
   }
   return true;
 }

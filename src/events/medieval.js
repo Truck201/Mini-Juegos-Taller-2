@@ -141,7 +141,8 @@ export class MedievalEvent {
             this.scene.player2Atributes,
             this.scene.player2EvadeChance,
             this.scene.player2HP,
-            this.isShelded2
+            this.isShelded2,
+            'Medieval'
           )
         ) {
           this.scene.cameras.main.shake(200, 0.025);
@@ -177,7 +178,8 @@ export class MedievalEvent {
             this.scene.player1Atributes,
             this.scene.player1EvadeChance,
             this.scene.player1HP,
-            this.isShelded1
+            this.isShelded1,
+            'Medieval'
           )
         ) {
           this.scene.cameras.main.shake(200, 0.025);
@@ -349,7 +351,7 @@ export class MedievalEvent {
     this.scene.visualCritical();
   }
 
-  gameOver(player) {
-    this.scene.gameOver(player);
+  gameOver(player, event) {
+    this.scene.gameOver(player, event);
   }
 }
