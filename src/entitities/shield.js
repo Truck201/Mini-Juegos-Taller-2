@@ -14,26 +14,30 @@ export class Shielder {
 
   createAnims() {
     // Anims Idle Sword
-    this.scene.anims.create({
-      key: "idle-Shield",
-      frames: this.scene.anims.generateFrameNumbers("idle-shield", {
-        start: 0,
-        end: 3,
-      }),
-      frameRate: 8,
-      repeat: -1,
-    });
+    if (!this.scene.anims.exists("idle-Shield")) {
+      this.scene.anims.create({
+        key: "idle-Shield",
+        frames: this.scene.anims.generateFrameNumbers("idle-shield", {
+          start: 0,
+          end: 3,
+        }),
+        frameRate: 8,
+        repeat: -1,
+      });
+    }
 
     // Anims Rotate
-    this.scene.anims.create({
-      key: "r-Shield",
-      frames: this.scene.anims.generateFrameNumbers("r-shield", {
-        start: 0,
-        end: 4,
-      }),
-      frameRate: 9,
-      repeat: 4,
-    });
+    if (!this.scene.anims.exists("r-Shield")) {
+      this.scene.anims.create({
+        key: "r-Shield",
+        frames: this.scene.anims.generateFrameNumbers("r-shield", {
+          start: 0,
+          end: 4,
+        }),
+        frameRate: 9,
+        repeat: 4,
+      });
+    }
   }
 
   // Crear la attackBar en una posición aleatoria
@@ -60,8 +64,8 @@ export class Shielder {
     this.sprite.anims.play("idle-Shield", true);
     console.log("Sprite creado:", this.sprite);
 
-    const fallShield = this.scene.fallingBonus
-    fallShield.play()
+    const fallShield = this.scene.fallingBonus;
+    fallShield.play();
 
     let endY = this.y * 0.4;
 
@@ -93,8 +97,8 @@ export class Shielder {
                   if (this.sprite) {
                     this.scene.cameras.main.shake(200, 0.005);
                     this.sprite.anims.play("idle-Shield", true);
-                    const collisionShield = this.scene.collisionShield
-                    collisionShield.play()
+                    const collisionShield = this.scene.collisionShield;
+                    collisionShield.play();
                   }
                 },
               });
@@ -132,9 +136,12 @@ export class Shielder {
   }
 
   applyShield(player) {
-    if (this.scene.attackBar && typeof this.scene.attackBar.isShelded === "function") {
+    if (
+      this.scene.attackBar &&
+      typeof this.scene.attackBar.isShelded === "function"
+    ) {
       this.scene.attackBar.isShelded(player);
-      console.log("isShelded go to function")
+      console.log("isShelded go to function");
     }
   }
 }

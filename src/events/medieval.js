@@ -1,7 +1,6 @@
 import { Attack } from "../entitities/attack";
 import { Heart } from "../entitities/heart";
 import { Shielder } from "../entitities/shield";
-
 import { takeDamage } from "../functions/takeDamage";
 
 export class MedievalEvent {
@@ -76,8 +75,9 @@ export class MedievalEvent {
       console.log("respawn heart pj 1");
 
       // // Actualizar la vida
-      this.scene.player1HP = Math.floor(
-        this.scene.player1Atributes.getHitPoints()
+      this.scene.player1HP = Math.max(
+        0,
+        Math.floor(this.scene.player1Atributes.getHitPoints())
       );
       this.scene.player1HPText.setText(
         `${this.scene.player1HP.toString().padStart(2, "0")}`
@@ -116,7 +116,10 @@ export class MedievalEvent {
       console.log("respawn heart pj 2");
 
       // // Actualizar la vida
-      this.scene.player2HP = this.scene.player2Atributes.getHitPoints();
+      this.scene.player2HP = Math.max(
+        0,
+        Math.floor(this.scene.player2Atributes.getHitPoints())
+      );
       this.scene.player2HPText.setText(
         `${this.scene.player2HP.toString().padStart(2, "0")}`
       );
@@ -151,7 +154,10 @@ export class MedievalEvent {
           this.showMissMensaje(sword);
         }
 
-        this.scene.player2HP = this.scene.player2Atributes.getHitPoints();
+        this.scene.player2HP = Math.max(
+          0,
+          Math.floor(this.scene.player2Atributes.getHitPoints())
+        );
         this.scene.player2HPText.setText(
           `${this.scene.player2HP.toString().padStart(2, "0")}`
         );
@@ -184,8 +190,9 @@ export class MedievalEvent {
           this.showMissMensaje(sword);
         }
 
-        this.scene.player1HP = Math.floor(
-          this.scene.player1Atributes.getHitPoints()
+        this.scene.player1HP = Math.max(
+          0,
+          Math.floor(this.scene.player1Atributes.getHitPoints())
         );
         this.scene.player1HPText.setText(
           `${this.scene.player1HP.toString().padStart(2, "0")}`
@@ -248,7 +255,7 @@ export class MedievalEvent {
   }
 
   isShelded(player) {
-    console.log("PLAYER ES -- >" + player)
+    console.log("PLAYER ES -- >" + player);
     if (player === this.scene.player1Atributes) {
       this.isShelded1 = true;
       console.log("Player 1 is now shielded!");

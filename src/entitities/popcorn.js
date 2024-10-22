@@ -10,20 +10,22 @@ export class PopCorn {
     this.height = this.scene.game.config.height;
 
     // Animations POPER Corns
-    this.scene.anims.create({
-      key: "appear",
-      frames: this.scene.anims.generateFrameNumbers("pochoclo-anims", {
-        start: 0,
-        end: 4,
-      }),
-      frameRate: 9.2,
-    });
+    if (!this.scene.anims.exists("appear")) {
+      this.scene.anims.create({
+        key: "appear",
+        frames: this.scene.anims.generateFrameNumbers("pochoclo-anims", {
+          start: 0,
+          end: 4,
+        }),
+        frameRate: 9.2,
+      });
+    }
 
     // Crear el sprite de popcorn como un objeto de Phaser
     this.sprite = this.scene.physics.add
-    .sprite(x, y, namesprite)
-    .setScale(1.05)
-    .setDepth(12);
+      .sprite(x, y, namesprite)
+      .setScale(1.05)
+      .setDepth(12);
 
     // Configuración inicial del sprite
     this.sprite.anims.play("appear", true);

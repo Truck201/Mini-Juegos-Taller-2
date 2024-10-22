@@ -66,84 +66,100 @@ export class Character {
   }
 
   initAnimations() {
-    this.scene.anims.create({
-      key: "Idle-Mimbo",
-      frames: this.scene.anims.generateFrameNumbers("Neutral-Mimbo", {
-        start: 0,
-        end: 1,
-      }),
-      frameRate: 5,
-      repeat: -1,
-    });
+    if (!this.scene.anims.exists("Idle-Mimbo")) {
+      this.scene.anims.create({
+        key: "Idle-Mimbo",
+        frames: this.scene.anims.generateFrameNumbers("Neutral-Mimbo", {
+          start: 0,
+          end: 1,
+        }),
+        frameRate: 5,
+        repeat: -1,
+      });
+    }
 
-    this.scene.anims.create({
-      key: "Idle-Luho",
-      frames: this.scene.anims.generateFrameNumbers("Neutral-Luho", {
-        start: 0,
-        end: 1,
-      }),
-      frameRate: 5,
-      repeat: -1,
-    });
+    if (!this.scene.anims.exists("Idle-Luho")) {
+      this.scene.anims.create({
+        key: "Idle-Luho",
+        frames: this.scene.anims.generateFrameNumbers("Neutral-Luho", {
+          start: 0,
+          end: 1,
+        }),
+        frameRate: 5,
+        repeat: -1,
+      });
+    }
 
-    this.scene.anims.create({
-      key: "Def-Mimbo",
-      frames: this.scene.anims.generateFrameNumbers("Defeat-Mimbo", {
-        start: 0,
-        end: 1,
-      }),
-      frameRate: 5,
-      repeat: -1,
-    });
+    if (!this.scene.anims.exists("Def-Mimbo")) {
+      this.scene.anims.create({
+        key: "Def-Mimbo",
+        frames: this.scene.anims.generateFrameNumbers("Defeat-Mimbo", {
+          start: 0,
+          end: 1,
+        }),
+        frameRate: 5,
+        repeat: -1,
+      });
+    }
 
-    this.scene.anims.create({
-      key: "Def-Luho",
-      frames: this.scene.anims.generateFrameNumbers("Defeat-Luho", {
-        start: 0,
-        end: 1,
-      }),
-      frameRate: 5,
-      repeat: -1,
-    });
+    if (!this.scene.anims.exists("Def-Luho")) {
+      this.scene.anims.create({
+        key: "Def-Luho",
+        frames: this.scene.anims.generateFrameNumbers("Defeat-Luho", {
+          start: 0,
+          end: 1,
+        }),
+        frameRate: 5,
+        repeat: -1,
+      });
+    }
 
-    this.scene.anims.create({
-      key: "Win-Mimbo",
-      frames: this.scene.anims.generateFrameNumbers("Victory-Mimbo", {
-        start: 0,
-        end: 1,
-      }),
-      frameRate: 5,
-      repeat: -1,
-    });
+    if (!this.scene.anims.exists("Win-Mimbo")) {
+      this.scene.anims.create({
+        key: "Win-Mimbo",
+        frames: this.scene.anims.generateFrameNumbers("Victory-Mimbo", {
+          start: 0,
+          end: 1,
+        }),
+        frameRate: 5,
+        repeat: -1,
+      });
+    }
 
-    this.scene.anims.create({
-      key: "Win-Luho",
-      frames: this.scene.anims.generateFrameNumbers("Victory-Luho", {
-        start: 0,
-        end: 1,
-      }),
-      frameRate: 5,
-      repeat: -1,
-    });
+    if (!this.scene.anims.exists("Win-Luho")) {
+      this.scene.anims.create({
+        key: "Win-Luho",
+        frames: this.scene.anims.generateFrameNumbers("Victory-Luho", {
+          start: 0,
+          end: 1,
+        }),
+        frameRate: 5,
+        repeat: -1,
+      });
+    }
 
-    this.scene.anims.create({
-      key: "Dam-Mimbo",
-      frames: this.scene.anims.generateFrameNumbers("Damage-Mimbo", {
-        start: 0,
-        end: 1,
-      }),
-      frameRate: 5,
-      repeat: -1,
-    });
+    if (!this.scene.anims.exists("Dam-Mimbo")) {
+      this.scene.anims.create({
+        key: "Dam-Mimbo",
+        frames: this.scene.anims.generateFrameNumbers("Damage-Mimbo", {
+          start: 0,
+          end: 1,
+        }),
+        frameRate: 5,
+        repeat: -1,
+      });
+    }
 
-    this.scene.anims.create({
-      key: "Dam-Luho",
-      frames: this.scene.anims.generateFrameNumbers("Damage-Luho", {
-        start: 0,
-        end: 1,
-      }),
-      frameRate: 5,
-      repeat: -1,
-    });
+    if (!this.scene.anims.exists("Dam-Luho")) {
+      this.scene.anims.create({
+        key: "Dam-Luho",
+        frames: this.scene.anims.generateFrameNumbers("Damage-Luho", {
+          start: 0,
+          end: 1,
+        }),
+        frameRate: 5,
+        repeat: -1,
+      });
+    }
   }
 }

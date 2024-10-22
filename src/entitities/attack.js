@@ -13,39 +13,48 @@ export class Attack {
   }
 
   createAnims() {
+    // Verifica si las animaciones ya están creadas antes de crearlas
+
     // Anims Idle Sword
-    this.scene.anims.create({
-      key: "idle",
-      frames: this.scene.anims.generateFrameNumbers("idle-sword", {
-        start: 0,
-        end: 3,
-      }),
-      frameRate: 8,
-      repeat: -1,
-    });
+    if (!this.scene.anims.exists("idle")) {
+      this.scene.anims.create({
+        key: "idle",
+        frames: this.scene.anims.generateFrameNumbers("idle-sword", {
+          start: 0,
+          end: 3,
+        }),
+        frameRate: 8,
+        repeat: -1,
+      });
+    }
 
     // Anims Broken
-    this.scene.anims.create({
-      key: "broken",
-      frames: this.scene.anims.generateFrameNumbers("b-sword", {
-        start: 0,
-        end: 3,
-      }),
-      frameRate: 7.2,
-      repeat: -1,
-    });
+    if (!this.scene.anims.exists("broken")) {
+      this.scene.anims.create({
+        key: "broken",
+        frames: this.scene.anims.generateFrameNumbers("b-sword", {
+          start: 0,
+          end: 3,
+        }),
+        frameRate: 7.2,
+        repeat: -1,
+      });
+    }
 
     // Anims Rotate
-    this.scene.anims.create({
-      key: "rotate",
-      frames: this.scene.anims.generateFrameNumbers("r-sword", {
-        start: 0,
-        end: 4,
-      }),
-      frameRate: 9,
-      repeat: 4,
-    });
+    if (!this.scene.anims.exists("rotate")) {
+      this.scene.anims.create({
+        key: "rotate",
+        frames: this.scene.anims.generateFrameNumbers("r-sword", {
+          start: 0,
+          end: 4,
+        }),
+        frameRate: 9,
+        repeat: 4,
+      });
+    }
   }
+  
 
   // Crear la attackBar en una posición aleatoria
   createAttackBar() {

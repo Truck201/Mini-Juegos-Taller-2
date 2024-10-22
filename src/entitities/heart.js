@@ -14,25 +14,29 @@ export class Heart {
   }
 
   createAnims() {
-    this.scene.anims.create({
-      key: "idle-Heart",
-      frames: this.scene.anims.generateFrameNumbers("idle-heart", {
-        start: 0,
-        end: 3,
-      }),
-      frameRate: 8,
-      repeat: -1,
-    });
+    if (!this.scene.anims.exists("idle-Heart")) {
+      this.scene.anims.create({
+        key: "idle-Heart",
+        frames: this.scene.anims.generateFrameNumbers("idle-heart", {
+          start: 0,
+          end: 3,
+        }),
+        frameRate: 8,
+        repeat: -1,
+      });
+    }
 
-    this.scene.anims.create({
-      key: "flying-heart",
-      frames: this.scene.anims.generateFrameNumbers("flying-heart", {
-        start: 0,
-        end: 3,
-      }),
-      frameRate: 8,
-      repeat: -1,
-    });
+    if (!this.scene.anims.exists("flying-heart")) {
+      this.scene.anims.create({
+        key: "flying-heart",
+        frames: this.scene.anims.generateFrameNumbers("flying-heart", {
+          start: 0,
+          end: 3,
+        }),
+        frameRate: 8,
+        repeat: -1,
+      });
+    }
   }
 
   createHeart() {

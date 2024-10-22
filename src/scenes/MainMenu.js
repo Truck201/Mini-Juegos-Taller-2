@@ -90,18 +90,14 @@ export class MainMenu extends BaseScene {
 
     playVersusButton.on("pointerout", () => {
       // Cambia el tamaño de la imagen al pasar el mouse
-      this.HooverSelect3.stop();
       playVersusButton.setScale(1.4);
     });
 
     playVersusButton.on("pointerdown", () => {
       this.selected.play();
-      optionsButton.setText("");
-      playVersusButton.setText("");
-      playCooperativeButton.setText("");
-      this.HooverSelect1.stop();
-      this.HooverSelect2.stop();
-      this.HooverSelect3.stop();
+      optionsButton.destroy();
+      playVersusButton.destroy();
+      playCooperativeButton.destroy();
       playVersusButton.setScale(1.3); // Vuelve al tamaño original
       // this.add.image(width / 2, height / 2, '').setScale(0.37); //Explosión
       this.time.addEvent({

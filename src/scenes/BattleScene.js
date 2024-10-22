@@ -174,26 +174,6 @@ export class BattleScene extends Scene {
     this.television.updateText(this.game_over_timeout);
   }
 
-  gameOver(player) {
-    if (player === this.player1Atributes) {
-      console.log(player);
-      console.log(this.player1Atributes);
-      this.winnerSound.play();
-      let loser = 1;
-      this.gameOver(loser);
-    }
-    if (player === this.player2Atributes) {
-      console.log(player);
-      console.log(this.player2Atributes);
-      this.winnerSound.play();
-      let loser = 2;
-      this.gameOver(loser);
-    } else {
-      console.log("NO FUNCIONA LA DERIVACIÓN A GAME OVER");
-      return false;
-    }
-  }
-
   visualCritical() {
     criticalVisual(this);
     let num = Phaser.Math.Between(0, 1);
@@ -205,9 +185,29 @@ export class BattleScene extends Scene {
     }
   }
 
-  gameOver(loser) {
+  gameOver(player) {
+    if (player === this.player1Atributes) {
+      console.log(player);
+      console.log(this.player1Atributes);
+      this.winnerSound.play();
+      let loser = 1;
+      this.goToGameOver(loser);
+    }
+    if (player === this.player2Atributes) {
+      console.log(player);
+      console.log(this.player2Atributes);
+      this.winnerSound.play();
+      let loser = 2;
+      this.goToGameOver(loser);
+    } else {
+      console.log("NO FUNCIONA LA DERIVACIÓN A GAME OVER");
+      return false;
+    }
+  }
+
+  goToGameOver(loser) {
     console.log(`Jugador ${loser} ha perdido!`);
-    this.scene.start("GameOver", { player: loser }); // Game Over Scene
+    this.scene.launch("GameOver", { player: loser }); // Game Over Scene
     this.scene.pause("battleScene");
     this.scene.bringToTop("GameOver");
   }

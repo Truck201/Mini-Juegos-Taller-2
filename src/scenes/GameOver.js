@@ -25,7 +25,7 @@ export class GameOver extends BaseScene {
 
     this.add
       .image(width * 0.5, height * 0.5, "l-opacidad")
-      .setAlpha(0.3)
+      .setAlpha(0.2)
       .setDepth(41);
 
     this.createText(

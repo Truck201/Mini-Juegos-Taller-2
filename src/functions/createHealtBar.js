@@ -18,7 +18,9 @@ export class initializeHealthBars {
         delay: 1000, // Cada 1 segundo
         callback: () => {
           console.log("Reproduciendo sonido de latido del corazón");
-          const heartBeatSound = this.scene.sound.get("heartBeats", { volume: 0.2}); // Asegúrate de tener el sonido cargado en BattleScene
+          const heartBeatSound = this.scene.sound.get("heartBeats", {
+            volume: 0.2,
+          }); // Asegúrate de tener el sonido cargado en BattleScene
           if (heartBeatSound) {
             heartBeatSound.play();
           } else {
@@ -187,49 +189,55 @@ export class initializeHealthBars {
   }
 
   idleHeart(scene) {
-    scene.anims.create({
-      key: "Idle-Heart",
-      frames: scene.anims.generateFrameNumbers("AnimsHeart", {
-        start: 0,
-        end: 1,
-      }),
-      frameRate: 3.5,
-      repeat: -1, // La animación se repite indefinidamente
-    });
+    if (!scene.anims.exists("Idle-Heart")) {
+      scene.anims.create({
+        key: "Idle-Heart",
+        frames: scene.anims.generateFrameNumbers("AnimsHeart", {
+          start: 0,
+          end: 1,
+        }),
+        frameRate: 3.5,
+        repeat: -1, // La animación se repite indefinidamente
+      });
+    }
 
-    scene.anims.create({
-      key: "Idle-HeartDeath",
-      frames: scene.anims.generateFrameNumbers("AnimsHeartDeath", {
-        start: 0,
-        end: 1,
-      }),
-      frameRate: 4.5,
-      repeat: -1, // La animación se repite indefinidamente
-    });
+    if (!scene.anims.exists("Idle-HeartDeath")) {
+      scene.anims.create({
+        key: "Idle-HeartDeath",
+        frames: scene.anims.generateFrameNumbers("AnimsHeartDeath", {
+          start: 0,
+          end: 1,
+        }),
+        frameRate: 4.5,
+        repeat: -1, // La animación se repite indefinidamente
+      });
+    }
   }
 
   animsHealthBar(scene) {
-    scene.anims.create({
-      key: "healtAnims1",
-      frames: scene.anims.generateFrameNumbers("healthBarExtra1", {
-        start: 0,
-        end: 1,
-      }),
-      frameRate: 10,
-      repeat: -1,
-    });
-    console.log("creando animación");
+    if (!scene.anims.exists("healtAnims1")) {
+      scene.anims.create({
+        key: "healtAnims1",
+        frames: scene.anims.generateFrameNumbers("healthBarExtra1", {
+          start: 0,
+          end: 1,
+        }),
+        frameRate: 10,
+        repeat: -1,
+      });
+    }
 
-    scene.anims.create({
-      key: "healtAnims2",
-      frames: scene.anims.generateFrameNumbers("healthBarExtra2", {
-        start: 0,
-        end: 1,
-      }),
-      frameRate: 10,
-      repeat: -1,
-    });
-    console.log("creando animación 2");
+    if (!scene.anims.exists("healtAnims2")) {
+      scene.anims.create({
+        key: "healtAnims2",
+        frames: scene.anims.generateFrameNumbers("healthBarExtra2", {
+          start: 0,
+          end: 1,
+        }),
+        frameRate: 10,
+        repeat: -1,
+      });
+    }
 
     if (!scene.anims.exists("healtAnims3")) {
       scene.anims.create({
@@ -241,7 +249,6 @@ export class initializeHealthBars {
         frameRate: 10,
         repeat: -1,
       });
-      console.log("creando animación 3");
     }
 
     if (!scene.anims.exists("healtAnims4")) {
@@ -254,7 +261,6 @@ export class initializeHealthBars {
         frameRate: 10,
         repeat: -1,
       });
-      console.log("creando animación 4");
     }
 
     if (!scene.anims.exists("healtAnims5")) {
@@ -268,6 +274,5 @@ export class initializeHealthBars {
         repeat: -1,
       });
     }
-    console.log("creando animación 5");
   }
 }

@@ -47,7 +47,7 @@ export class LanguageScene extends BaseScene {
           this.BreakTicket.play();
         });
 
-        this.time.delayedCall(2400, () => {
+        this.time.delayedCall(1000, () => {
           ARGLanguage.anims.play("Idle-ARG", true);
           ARGLanguage.setScale(1.24);
           isPlayingAnimationARG = false;
@@ -99,7 +99,7 @@ export class LanguageScene extends BaseScene {
           this.BreakTicket.play();
         });
 
-        this.time.delayedCall(3000, () => {
+        this.time.delayedCall(1000, () => {
           USALanguage.anims.play("Idle-EEUU", true);
           USALanguage.setScale(1.24);
           isPlayingAnimationUSA = false; // Permitir que vuelva a reproducirse la animación

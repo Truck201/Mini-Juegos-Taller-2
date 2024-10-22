@@ -158,8 +158,9 @@ export class PopcornRaining {
         } else {
           this.showMissMensaje(sword);
         }
-        this.scene.player2HP = Math.floor(
-          this.scene.player2Atributes.getHitPoints()
+        this.scene.player2HP = Math.max(
+          0,
+          Math.floor(this.scene.player2Atributes.getHitPoints())
         );
         this.scene.player2HPText.setText(
           `${this.scene.player2HP.toString().padStart(2, "0")}`
@@ -192,8 +193,9 @@ export class PopcornRaining {
         } else {
           this.showMissMensaje(sword);
         }
-        this.scene.player1HP = Math.floor(
-          this.scene.player1Atributes.getHitPoints()
+        this.scene.player1HP = Math.max(
+          0,
+          Math.floor(this.scene.player1Atributes.getHitPoints())
         );
         this.scene.player1HPText.setText(
           `${this.scene.player1HP.toString().padStart(2, "0")}`
@@ -210,8 +212,9 @@ export class PopcornRaining {
       case 1:
         if (playerId === 1) {
           atributos.updateAttributes({ hitPoints: 1 });
-          this.player1HP = Math.floor(
-            this.scene.player1Atributes.getHitPoints()
+          this.player1HP = Math.max(
+            0,
+            Math.floor(this.scene.player1Atributes.getHitPoints())
           );
           // Actualizar solo si el nuevo HP es un entero
           if (Number.isInteger(this.player1HP)) {
@@ -223,8 +226,9 @@ export class PopcornRaining {
         }
         if (playerId === 2) {
           atributos.updateAttributes({ hitPoints: 1 });
-          this.player2HP = Math.floor(
-            this.scene.player2Atributes.getHitPoints()
+          this.player2HP = Math.max(
+            0,
+            Math.floor(this.scene.player2Atributes.getHitPoints())
           );
           // Actualizar solo si el nuevo HP es un entero
           if (Number.isInteger(this.player2HP)) {
@@ -239,7 +243,9 @@ export class PopcornRaining {
       case 2:
         if (playerId === 1) {
           atributos.updateAttributes({ damage: 0.3 });
-          this.player1Damage = Math.floor(this.scene.player1Atributes.getDamage());
+          this.player1Damage = Math.floor(
+            this.scene.player1Atributes.getDamage()
+          );
           if (Number.isInteger(this.player1Damage)) {
             this.scene.damageText1.setText(
               `${this.player1Damage.toString().padStart(2, "0")}`
@@ -248,7 +254,9 @@ export class PopcornRaining {
         }
         if (playerId === 2) {
           atributos.updateAttributes({ damage: 0.3 });
-          this.player2Damage = Math.floor(this.scene.player2Atributes.getDamage());
+          this.player2Damage = Math.floor(
+            this.scene.player2Atributes.getDamage()
+          );
           if (Number.isInteger(this.player2Damage)) {
             this.scene.damageText2.setText(
               `${this.player2Damage.toString().padStart(2, "0")}`
@@ -270,7 +278,7 @@ export class PopcornRaining {
         if (playerId === 2) {
           atributos.updateAttributes({ speed: 1 });
           this.speedP2 = Math.floor(this.scene.player2Atributes.getSpeed());
-          if (Number.isInteger(this.speedP2 )) {
+          if (Number.isInteger(this.speedP2)) {
             this.scene.speedText2.setText(
               `${this.speedP2.toString().padStart(2, "0")}`
             );
