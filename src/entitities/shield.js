@@ -118,12 +118,13 @@ export class Shielder {
     }
   }
 
-  respawn(player) {
+  respawn(scene, player) {
     if (this.sprite) {
       this.sprite.destroy(player); // Destruye el sprite anterior
       this.applyShield(player);
-
-      this.createShield(); // Crea un nuevo sprite en una posición aleatoria
+      scene.time.delayedCall(Phaser.Math.Between(2300, 4000), () => {
+        this.createShield(); // Crea un nuevo sprite en una posición aleatoria
+      });
     }
   }
 

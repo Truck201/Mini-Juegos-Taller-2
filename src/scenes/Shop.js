@@ -48,7 +48,7 @@ export class Shop extends Scene {
     this.itemDescriptions = this.cache.json.get(this.dialoguesPath);
     console.log("Charge Descriptions", this.itemDescriptions);
 
-    this.startShop = this.sound.add("starterSoundShop", { volume: 0.094 });
+    this.startShop = this.sound.add("starterSoundShop", { volume: 0.003 });
     this.urbanSound = this.sound.add("urbanSounds", { volume: 0.2 });
 
     this.startShop.play();

@@ -10,7 +10,7 @@ We're pochoclo Games, and we're thankful that you tried our game
 
 Gandini, Joaquín => Programmer;
 Rosso, Caroliina => Artist;
-Moreira, Sebastian => Co Programmer;
+Moreira, Sebastian => Designer;
 Andereggen, Lucas => Designer;
 
 We work to do all implementations of the arquitecture of Entities and Components in the code.

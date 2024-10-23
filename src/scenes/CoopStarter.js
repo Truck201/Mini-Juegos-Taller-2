@@ -15,6 +15,8 @@ export class StartCooperative extends Scene {
 
     this.add.image(width * 0.5, height * 0.5, "BackgroundCoop").setAlpha(0.5).setDepth(0);
 
+    this.add.image(width * 0.5, height * 0.82, "cinta").setAlpha(1).setDepth(1);
+
 
     this.input.keyboard.on("keydown-Q", () => {
       console.log("Start GameCoop");

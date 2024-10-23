@@ -86,9 +86,10 @@ export class BattleScene extends Scene {
     });
 
     this.television = new Television(this, false);
+    this.television.handleOnomatopoeias("battleScene", "start"); // Al inicio de la batalla
 
     let background = this.add.sprite(width * 0.5, height * 0.5, "escenario");
-    background.setDepth(1);
+    background.setDepth(2);
 
     const player1 = new Character(this, "mimbo", true);
     const player2 = new Character(this, "luho", false);
@@ -179,9 +180,13 @@ export class BattleScene extends Scene {
     let num = Phaser.Math.Between(0, 1);
     if (num >= 0.5) {
       this.critical1.play();
+      // Cuando un jugador golpea a otro:
+      this.television.handleOnomatopoeias("battleScene", "critical");
     }
     if (num < 0.5) {
       this.critical2.play();
+      // Cuando un jugador golpea a otro:
+      this.television.handleOnomatopoeias("battleScene", "critical");
     }
   }
 

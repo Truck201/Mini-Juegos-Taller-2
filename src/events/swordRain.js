@@ -49,6 +49,7 @@ export class SwordRain {
         ) {
           this.scene.cameras.main.shake(200, 0.015);
           const takeDamageSound = this.scene.takeDamageSound;
+          this.scene.television.handleOnomatopoeias("battleScene", "attack");
           takeDamageSound.play();
           const pickSword = this.scene.pickSword;
           pickSword.play();
@@ -85,6 +86,7 @@ export class SwordRain {
         ) {
           this.scene.cameras.main.shake(200, 0.015);
           const takeDamageSound = this.scene.takeDamageSound;
+          this.scene.television.handleOnomatopoeias("battleScene", "attack");
           takeDamageSound.play();
           const pickSword = this.scene.pickSword;
           pickSword.play();

@@ -82,31 +82,31 @@ export class initializeHealthBars {
         .setOrigin(0.5),
 
       this.scene.add
-        .sprite(this.positionX, this.positionY, "healthBar5") // 5 lifes
+        .sprite(this.positionX, this.positionY, "healthBar5") // 5 lifes index 5
         .setVisible(true)
         .setScale(1)
         .setDepth(2)
         .setOrigin(0.5),
       this.scene.add
-        .sprite(this.positionX, this.positionY, "healthBar4") // 4 lifes
+        .sprite(this.positionX, this.positionY, "healthBar4") // 4 lifes index 6
         .setVisible(false)
         .setScale(1)
         .setDepth(2)
         .setOrigin(0.5),
       this.scene.add
-        .sprite(this.positionX, this.positionY, "healthBar3") // 3 lifes
+        .sprite(this.positionX, this.positionY, "healthBar3") // 3 lifes index 7
         .setVisible(false)
         .setScale(1)
         .setDepth(2)
         .setOrigin(0.5),
       this.scene.add
-        .sprite(this.positionX, this.positionY, "healthBar2") // 2 lifes
+        .sprite(this.positionX, this.positionY, "healthBar2") // 2 lifes index 8
         .setVisible(false)
         .setScale(1)
         .setDepth(2)
         .setOrigin(0.5),
       this.scene.add
-        .sprite(this.positionX, this.positionY, "healthBar1") // 1 lifes
+        .sprite(this.positionX, this.positionY, "healthBar1") // 1 lifes index 9
         .setVisible(false)
         .setScale(1)
         .setDepth(2)
@@ -161,7 +161,6 @@ export class initializeHealthBars {
       // Mostrar y reproducir la animación correspondiente
       healthBars[HealthIndex].setVisible(true);
       healthBars[HealthIndex].play(animKey);
-      console.log(`Reproduciendo animación: ${animKey}`);
       this.createHeart(currentHP);
     }
     // Mostrar la barra correspondiente a los HP restantes
@@ -173,16 +172,15 @@ export class initializeHealthBars {
       healthBars[extraHealthIndex].setVisible(true);
       healthBars[extraHealthIndex].play(animKey);
 
-      console.log(`Reproduciendo animación: ${animKey}`);
       this.createHeart(currentHP);
     } else if (currentHP <= 5 && currentHP >= 0) {
-      // Mostrar la barra correspondiente a los HP restantes
+
       const visibleBarIndex = healthBars.length - currentHP - 1;
       healthBars[visibleBarIndex].setVisible(true);
       this.startHeartbeat();
-      // Detener cualquier animación que se esté reproduciendo
       healthBars[visibleBarIndex].stop();
       this.createHeart(currentHP);
+
     } else {
       return false;
     }

@@ -92,10 +92,13 @@ export class Heart {
     return this.sprite ? this.sprite.getBounds() : { width: 0, height: 0 };
   }
 
-  respawn(atributes) {
+  respawn(scene, atributes) {
     atributes.updateAttributes({ hitPoints: 1 });
     this.destroy();
-    this.createHeart();
+
+    scene.time.delayedCall(Phaser.Math.Between(2300, 4000), () => {
+      this.createHeart();
+    });
   }
 
   destroy() {

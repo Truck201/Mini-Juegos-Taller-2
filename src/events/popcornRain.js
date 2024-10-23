@@ -152,6 +152,7 @@ export class PopcornRaining {
         ) {
           this.scene.cameras.main.shake(200, 0.025);
           const takeDamageSound = this.scene.takeDamageSound;
+          this.scene.television.handleOnomatopoeias("battleScene", "attack");
           takeDamageSound.play();
           const pickSword = this.scene.pickSword;
           pickSword.play();
@@ -166,6 +167,7 @@ export class PopcornRaining {
         this.scene.player2HPText.setText(
           `${this.scene.player2HP.toString().padStart(2, "0")}`
         );
+        console.log(this.scene.player2HP)
         // // Actualizar la vida
         this.scene.createHealtBar2.updateHealthBar(this.scene.player2HP);
       }
@@ -188,6 +190,7 @@ export class PopcornRaining {
         ) {
           this.scene.cameras.main.shake(200, 0.025);
           const takeDamageSound = this.scene.takeDamageSound;
+          this.scene.television.handleOnomatopoeias("battleScene", "attack");
           takeDamageSound.play();
           const pickSword = this.scene.pickSword;
           pickSword.play();
@@ -200,8 +203,9 @@ export class PopcornRaining {
           Math.floor(this.scene.player1Atributes.getHitPoints())
         );
         this.scene.player1HPText.setText(
-          `${this.scene.player1HP.toString().padStart(2, "0")}`
+          `${this.player1HP.toString().padStart(2, "0")}`
         );
+        console.log(this.scene.player1HP)
         // // Actualizar la vida
         this.scene.createHealtBar1.updateHealthBar(this.scene.player1HP);
       }

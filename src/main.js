@@ -20,7 +20,7 @@ import { StartCooperative } from "./scenes/CoopStarter";
 import { GameCooperative } from "./scenes/GameCoOp";
 
 const config = {
-  type: Phaser.WEBGL,
+  type: Phaser.AUTO,
   width: 1920, // Ajusta el ancho al 90% del ancho de la ventana    window.innerWidth
   height: 1080, // Ajusta la altura al 90% de la altura de la ventana    window.innerHeight
   parent: "game-container",

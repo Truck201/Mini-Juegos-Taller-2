@@ -19,6 +19,28 @@ export class LanguageScene extends BaseScene {
 
     initAnimations(this);
 
+    this.saludo = this.add.image(width * 0.4, height * 0.3, 'hello').setDepth(4).setScale(0)
+
+    this.tweens.add({
+      targets: this.saludo,
+      scale: 0.086, // La escala final que hemos pasado como parámetro
+      ease: "Power2", // Tipo de animación (puedes cambiarla según prefieras)
+      duration: 700, // Duración de 1.2 segundos
+    });
+
+    // Desaparece la onomatopeya después de 4 segundos
+    this.time.delayedCall(2800, () => {
+      this.tweens.add({
+        targets: this.saludo,
+        scale: 0.008, // La escala final que hemos pasado como parámetro
+        ease: "Power2", // Tipo de animación (puedes cambiarla según prefieras)
+        duration: 200, // Duración de 1.2 segundos
+        onComplete: () => { 
+          this.saludo.destroy();
+        }
+      });
+    });
+
     const background = this.add.sprite(
       width * 0.5,
       height * 0.5,

@@ -57,7 +57,8 @@ export class MedievalEvent {
     ) {
       const isShelded = this.scene.isShelded;
       isShelded.play();
-      this.shield.respawn(this.scene.player1Atributes);
+      this.scene.television.handleOnomatopoeias("battleScene", "shield");
+      this.shield.respawn(this.scene, this.scene.player1Atributes);
       console.log("respawn shield pj 1");
     }
     if (
@@ -71,7 +72,7 @@ export class MedievalEvent {
       pickHeart.play();
 
       console.log("ATRIBUTOS 1 -- > " + this.scene.player1Atributes);
-      this.heart.respawn(this.scene.player1Atributes);
+      this.heart.respawn(this.scene, this.scene.player1Atributes);
       console.log("respawn heart pj 1");
 
       // // Actualizar la vida
@@ -95,8 +96,8 @@ export class MedievalEvent {
     ) {
       const isShelded = this.scene.isShelded;
       isShelded.play();
-
-      this.shield.respawn(this.scene.player2Atributes);
+      this.scene.television.handleOnomatopoeias("battleScene", "shield");
+      this.shield.respawn(this.scene, this.scene.player2Atributes);
 
       console.log("respawn shield pj 2");
     }
@@ -111,9 +112,7 @@ export class MedievalEvent {
       const pickHeart = this.scene.pickHeart;
       pickHeart.play();
 
-      console.log("ATRIBUTOS 2 -- > " + this.scene.player2Atributes);
-      this.heart.respawn(this.scene.player2Atributes);
-      console.log("respawn heart pj 2");
+      this.heart.respawn(this.scene, this.scene.player2Atributes);
 
       // // Actualizar la vida
       this.scene.player2HP = Math.max(
@@ -142,11 +141,12 @@ export class MedievalEvent {
             this.scene.player2EvadeChance,
             this.scene.player2HP,
             this.isShelded2,
-            'Medieval'
+            "Medieval"
           )
         ) {
           this.scene.cameras.main.shake(200, 0.025);
           this.destroyAndRespawn(sword);
+          this.scene.television.handleOnomatopoeias("battleScene", "attack");
           const takeDamageSound = this.scene.takeDamageSound;
           takeDamageSound.play();
           const pickSword = this.scene.pickSword;
@@ -179,11 +179,12 @@ export class MedievalEvent {
             this.scene.player1EvadeChance,
             this.scene.player1HP,
             this.isShelded1,
-            'Medieval'
+            "Medieval"
           )
         ) {
           this.scene.cameras.main.shake(200, 0.025);
           this.destroyAndRespawn(sword);
+          this.scene.television.handleOnomatopoeias("battleScene", "attack");
           const takeDamageSound = this.scene.takeDamageSound;
           takeDamageSound.play();
           const pickSword = this.scene.pickSword;

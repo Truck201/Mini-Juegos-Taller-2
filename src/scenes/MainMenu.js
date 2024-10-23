@@ -276,6 +276,7 @@ export class MainMenu extends BaseScene {
         language: this.language,
       }); //Ir a escena Main
     });
+    console.log(this.language)
   }
 
   transitionToCoperative() {

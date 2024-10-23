@@ -38,9 +38,9 @@ export function Sounds(scene) {
     { key: "heartBeats", path: "battle/SFX-heartbeat" },
     { key: "collisionSword", path: "battle/SFX-fallSword" },
 
-    { key: "winRainSwords", path: "battle/SFX-winRainSword" }, // AÑADIR
-    { key: "winRainPopcorn", path: "battle/SFX-winRainPopcorn" }, // AÑADIR
-    { key: "winMedieval", path: "battle/SFX-winMedieval" }, // AÑADIR
+    { key: "winRainSwords", path: "battle/SFX-winRainSword" },
+    { key: "winRainPopcorn", path: "battle/SFX-winRainPopcorn" },
+    { key: "winMedieval", path: "battle/SFX-winMedieval" },
 
     { key: "fallingBonus", path: "battle/medieval/SFX-fallingBonus" },
     { key: "fallShield", path: "battle/medieval/SFX-fallShield" },
@@ -74,7 +74,11 @@ export function Sounds(scene) {
     { key: "cryMimbo", path: "characters/SFX-cryMimbo" }, 
 
     { key: "dialoguesSound", path: "dialogues/SFX-voiceDialogue" },
+
+    { key: "MusicV1", path: "music/Musica-V1" },
+    { key: "MusicV2", path: "music/Musica-V2" },
   ];
+
 
   audioFiles.forEach(({ key, path }) => {
     // Carga en dos formatos para mayor compatibilidad

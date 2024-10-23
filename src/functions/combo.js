@@ -137,6 +137,9 @@ export class ComboPersonajes {
         this.scene.scene.get("Hud").update_points(1, this.scene.points1);
         this.scene.comboCount1 = 0; // Reiniciar el contador de combo
 
+        // Cuando un jugador logra un combo de 10:
+        this.scene.television.handleOnomatopoeias("recolectScene", "Combo10");
+
         // Animación del jugador 1 (victoria) y del enemigo (enojo)
         this.scene.player1.change_emotion("Mimbo", 2, this.scene.player1); // Mimbo: animación de victoria
         this.scene.player2.change_emotion("Luho", 3, this.scene.player2); // Luho: animación de daño
@@ -196,6 +199,9 @@ export class ComboPersonajes {
         this.scene.points2 += 5; // Añadir puntos extra por el combo
         this.scene.scene.get("Hud").update_points(2, this.scene.points2);
         this.scene.comboCount2 = 0; // Reiniciar el contador de combo
+
+        // Cuando un jugador logra un combo de 10:
+        this.scene.television.handleOnomatopoeias("recolectScene", "Combo10");
 
         // Animación del jugador 1 (victoria) y del enemigo (enojo)
         this.scene.player1.change_emotion("Mimbo", 3, this.scene.player1); // Mimbo: animación de victoria

@@ -105,6 +105,55 @@ export class Preloader extends Scene {
     // Televisión
     this.load.image("TeleImagen", "../public/assets/versus/menu/tv.png"); // Derrota
 
+    // Onomatopeyas
+    this.load.image("boom1", "../public/assets/versus/television/OYS-boom.png"); // Onomatopeyas
+    this.load.image(
+      "boom2",
+      "../public/assets/versus/television/OYS-boom2.png"
+    );
+    this.load.image(
+      "boom3",
+      "../public/assets/versus/television/OYS-boom3.png"
+    );
+    this.load.image(
+      "boom4",
+      "../public/assets/versus/television/OYS-boom4.png"
+    );
+    this.load.image(
+      "crash1",
+      "../public/assets/versus/television/OYS-crash.png"
+    );
+    this.load.image(
+      "crash2",
+      "../public/assets/versus/television/OYS-crash2.png"
+    );
+    this.load.image(
+      "ready1",
+      "../public/assets/versus/television/OYS-getReady.png"
+    );
+    this.load.image(
+      "ready2",
+      "../public/assets/versus/television/OYS-ready.png"
+    );
+    this.load.image(
+      "hello",
+      "../public/assets/versus/television/OYS-hello.png"
+    );
+    this.load.image(
+      "kaboom",
+      "../public/assets/versus/television/OYS-kaboom.png"
+    );
+    this.load.image("oh", "../public/assets/versus/television/OYS-oh.png");
+    this.load.image("ouch", "../public/assets/versus/television/OYS-ouch.png");
+    this.load.image(
+      "pfoom",
+      "../public/assets/versus/television/OYS-pfoom.png"
+    );
+    this.load.image(
+      "whack",
+      "../public/assets/versus/television/OYS-whack.png"
+    );
+
     // Barra Audio Master
     this.load.image(
       "sliderHandle",
@@ -198,15 +247,15 @@ export class Preloader extends Scene {
       }
     ); // NEUTRAL
 
-    //Globos de Texto
-    this.load.image(
-      "globoTextoL",
-      "../public/assets/versus/kid-korn/izquierda.png"
-    );
-    this.load.image(
-      "globoTextoR",
-      "../public/assets/versus/kid-korn/derecha.png"
-    );
+    // //Globos de Texto
+    // this.load.image(
+    //   "globoTextoL",
+    //   "../public/assets/versus/kid-korn/izquierda.png"
+    // );
+    // this.load.image(
+    //   "globoTextoR",
+    //   "../public/assets/versus/kid-korn/derecha.png"
+    // );
 
     // Kid Korn
     this.load.image(
@@ -224,6 +273,16 @@ export class Preloader extends Scene {
     this.load.image(
       "kid-kornR",
       "../public/assets/versus/kid-korn/kron-derecha.png"
+    );
+
+    // Anims
+    this.load.spritesheet(
+      "BigKorn",
+      "../public/assets/versus/kid-korn/BigKornAnims.png",
+      {
+        frameWidth: 1000,
+        frameHeight: 1000,
+      }
     );
 
     // Dialogues
@@ -728,14 +787,15 @@ export class Preloader extends Scene {
       }
     );
 
-    
-
     // Juego COPERATIVISMO SUNCHALE chunchale
     // Background
     this.load.image(
       "BackgroundCoop",
       "../public/assets/coop/escenarios/fondo.png"
     );
+
+    // Cinta de Movimiento
+    this.load.image("cinta", "../public/assets/coop/escenarios/cinta.png");
 
     // ANIMACIONES Bolsas
     this.load.spritesheet(
@@ -883,7 +943,7 @@ export class Preloader extends Scene {
 
     this.load.image(
       "bulletSprite",
-      "../public/assets/coop/tirachinas/bullet.png"
+      "../public/assets/coop/tirachinas/municion.png"
     );
 
     WebFont.load({

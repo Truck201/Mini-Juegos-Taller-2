@@ -10,6 +10,8 @@ import { KidKorn } from "../entitities/kidkorn";
 export class RecolectScene extends Scene {
   constructor() {
     super("recolectScene");
+    this.backgroundMusic = null; // Asegurarse de tener la referencia disponible
+    this.lastKeyPressTime = 0;
   }
 
   points1 = 0; // Puntos para el jugador 1
@@ -29,7 +31,7 @@ export class RecolectScene extends Scene {
     // Reset points
     this.points1 = data.points1 || 0; // Puntaje inicial jugador 1
     this.points2 = data.points2 || 0; // Puntaje inicial jugador 2
-    this.game_over_timeout = 25; // Tiempo límite de 30 segundos
+    this.game_over_timeout = 15; // Tiempo límite de 30 segundos
     this.dialogues = data.dialogues;
     this.language = data.language;
 
@@ -57,6 +59,7 @@ export class RecolectScene extends Scene {
             this.scene.stop("Hud");
             this.scene.stop("Game1vs1");
             this.scene.stop("recolectScene");
+            this.backgroundMusic.stop();
             this.scene.start("Shop", {
               points1: this.points1,
               points2: this.points2,
@@ -82,6 +85,15 @@ export class RecolectScene extends Scene {
     this.collectPopcorn = this.sound.add("collectPopcorn", { volume: 0.09 });
     // this.popcornBuff = this.sound.add("");
 
+    // Añade la música de fondo
+    this.backgroundMusic = this.sound.add("MusicV2", {
+      volume: 0.1,
+      loop: true, // Configura el loop aquí
+    });
+
+    // Iniciar la música de fondo
+    this.backgroundMusic.play();
+
     this.television = new Television(this, false);
 
     this.kidKorn = new KidKorn(this, this.dialogues);
@@ -90,7 +102,7 @@ export class RecolectScene extends Scene {
     this.kidKorn.startKidKornAppearance();
 
     let background = this.add.sprite(width * 0.5, height * 0.5, "escenario");
-    background.setDepth(1);
+    background.setDepth(2);
     background.setScale(1);
 
     let shadows = this.add.sprite(width * 0.5, height * 0.5, "shadowTotal");
@@ -192,6 +204,24 @@ export class RecolectScene extends Scene {
       null,
       this
     );
+
+    this.input.keyboard.on("keydown-ESC", () => {
+      const currentTime = this.time.now;
+      // Verificar si ha pasado suficiente tiempo desde la última pulsación
+      if (currentTime - this.lastKeyPressTime > 250) {
+        // 700 ms de delay
+        this.lastKeyPressTime = currentTime;
+        this.scene.pause("recolectScene");
+        // Pausar la música de la escena recolectScene
+        const recolectScene = this.scene.get("recolectScene");
+        if (recolectScene.backgroundMusic) {
+          recolectScene.backgroundMusic.pause();
+        }
+        console.log("Pause Game");
+        this.scene.launch("PauseMenu", { mainScene: this });
+        this.scene.bringToTop("PauseMenu");
+      }
+    });
 
     // Configurar las teclas para destruir recolectables
     this.spaceKey = this.input.keyboard.addKey(

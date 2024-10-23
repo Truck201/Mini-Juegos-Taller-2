@@ -8,9 +8,9 @@ export class KidKorn {
     this.appear = this.scene.sound.add("goInSound", { volume: 0.09 });
     this.goBack = this.scene.sound.add("goBackSound", { volume: 0.09 });
     this.dialogueSound = this.scene.sound.add("dialoguesSound", {
-      volume: 0.09,
+      volume: 0.1,
     });
-
+    
     // Cargar los diálogos
     this.dialogues = dialogues;
 
@@ -31,6 +31,8 @@ export class KidKorn {
 
     this.kidKornLeft.setVisible(false); // Ocultar al inicio
     this.kidKornRight.setVisible(false); // Ocultar al inicio
+
+    // this.AnimsKorns(this.scene)
   }
 
   showKidKornBig() {
@@ -40,6 +42,8 @@ export class KidKorn {
     // Hacer visible el sprite de KidKorn
     this.kidKornBig.setVisible(true);
     this.appear.play();
+
+    // this.kidKornBig.anims.play('idle-BigKorn', true)
 
     // Seleccionar una frase aleatoria
     const randomIndex = Phaser.Math.Between(
@@ -69,12 +73,13 @@ export class KidKorn {
       .setOrigin(0.5)
       .setDepth(23);
 
+    this.scene.television.handleOnomatopoeias("recolectScene", "BigKidKorn");
     this.dialogueSound.play();
 
     // Animar a KidKorn para que suba desde la parte inferior
     this.scene.tweens.add({
       targets: this.kidKornBig,
-      y: height * 0.57, // Subir hasta la mitad de la pantalla
+      y: height * 0.53, // Subir hasta la mitad de la pantalla
       duration: 2500, // Duración de la animación (2 segundos)
       ease: "Power2", // Tipo de easing
       onComplete: () => {
@@ -83,6 +88,7 @@ export class KidKorn {
         // Luego de 6 segundos, ocultar a KidKorn y detener la generación de pochoclos
         this.scene.time.delayedCall(5400, () => {
           this.hideKidKornBig();
+          // this.kidKornBig.anims.play('idle-BigKorn', false)
           text.destroy(); // Destruir el texto después de que KidKorn desaparezca
         });
       },
@@ -135,20 +141,20 @@ export class KidKorn {
     const randomDialogue = this.dialogues.Neutral[randomIndex];
 
     if (fromLeft) {
-      this.dialogueWidth = this.scene.scale.width * 0.235;
+      this.dialogueWidth = this.scene.scale.width * 0.20;
     } else if (!fromLeft) {
-      this.dialogueWidth = this.scene.scale.width * 0.75;
+      this.dialogueWidth = this.scene.scale.width * 0.80;
     }
 
     let fontSize;
     if (randomDialogue.length <= 18) {
       fontSize = "40px"; // Para palabras cortas
     } else if (randomDialogue.length <= 30) {
-      fontSize = "31.4px"; // Para palabras medianas
+      fontSize = "36px"; // Para palabras medianas
     } else if (randomDialogue.length <= 37) {
-      fontSize = "28px"; // Para palabras medianas
+      fontSize = "32px"; // Para palabras medianas
     } else {
-      fontSize = "22px"; // Para palabras largas
+      fontSize = "27px"; // Para palabras largas
     }
 
     this.dialogueSound.play();
@@ -220,4 +226,30 @@ export class KidKorn {
       },
     });
   }
+
+  // AnimsKorns(scene) {
+  //   if (!scene.anims.exists("idle-BigKorn")) {
+  //     scene.anims.create({
+  //       key: "idle-BigKorn",
+  //       frames: scene.anims.generateFrameNumbers("BigKorn", {
+  //         start: 0,
+  //         end: 3,
+  //       }),
+  //       frameRate: 8,
+  //       repeat: -1,
+  //     });
+  //   }
+
+  //   // if (!scene.anims.exists("healtAnims1")) {
+  //   //   scene.anims.create({
+  //   //     key: "healtAnims1",
+  //   //     frames: scene.anims.generateFrameNumbers("healthBarExtra1", {
+  //   //       start: 0,
+  //   //       end: 1,
+  //   //     }),
+  //   //     frameRate: 10,
+  //   //     repeat: -1,
+  //   //   });
+  //   // }
+  // }
 }
