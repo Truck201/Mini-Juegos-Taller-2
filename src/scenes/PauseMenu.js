@@ -11,6 +11,8 @@ export class PauseMenu extends Scene {
     let width = this.game.scale.width;
     let height = this.game.scale.height;
     this.mainScene = data.mainScene;
+    this.sceneShop = data.sceneShop;
+    this.sceneBattle = data.sceneBattle;
 
     // Fondo de pausa
     this.add
@@ -104,14 +106,34 @@ export class PauseMenu extends Scene {
       this.isPaused = false;
       if (currentTime - this.lastKeyPressTime > 250) {
         this.lastKeyPressTime = currentTime;
-        this.mainScene.scene.resume();
-        this.scene.resume("recolectScene");
-        // Reanudar la música
-        const recolectScene = this.mainScene.scene.get("recolectScene");
-        if (recolectScene.backgroundMusic) {
-          recolectScene.backgroundMusic.resume();
+
+        // Reanudar Recolect Scene
+        if (this.mainScene) {
+          const recolectScene = this.mainScene.scene.get("recolectScene");
+          this.mainScene.scene.resume();
+          if (recolectScene.backgroundMusic) {
+            recolectScene.backgroundMusic.resume();
+          }
         }
-        this.scene.resume("battleScene");
+
+        // Reanudar Shop Scene
+        if (this.sceneShop) {
+          const shopScene = this.sceneShop.scene.get("Shop");
+          this.sceneShop.scene.resume();
+          if (shopScene.music) {
+            shopScene.music.resume();
+          }
+        }
+
+        // Reanudar Battle Scene
+        if (this.sceneBattle) {
+          const battleScene = this.sceneBattle.scene.get("battleScene");
+          this.sceneBattle.scene.resume();
+          if (battleScene.music1) {
+            battleScene.music1.resume();
+          }
+        }
+
         this.scene.stop("PauseMenu");
         console.log("Reanude Game");
       }

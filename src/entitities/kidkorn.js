@@ -10,14 +10,14 @@ export class KidKorn {
     this.dialogueSound = this.scene.sound.add("dialoguesSound", {
       volume: 0.1,
     });
-    
+
     // Cargar los diálogos
     this.dialogues = dialogues;
 
     this.kidKornBig = this.scene.add
       .sprite(this.x / 2, this.y * 1.9, "kid-kornB")
       .setDepth(8)
-      .setScale(0.82);
+      .setScale(1.15);
     this.kidKornBig.setVisible(false); // Ocultar al inicio
 
     this.kidKornLeft = this.scene.add
@@ -32,7 +32,7 @@ export class KidKorn {
     this.kidKornLeft.setVisible(false); // Ocultar al inicio
     this.kidKornRight.setVisible(false); // Ocultar al inicio
 
-    // this.AnimsKorns(this.scene)
+    this.AnimsKorns(this.scene);
   }
 
   showKidKornBig() {
@@ -43,7 +43,8 @@ export class KidKorn {
     this.kidKornBig.setVisible(true);
     this.appear.play();
 
-    // this.kidKornBig.anims.play('idle-BigKorn', true)
+    // Siempre aplicar la animación idle de BigKidKorn
+    this.kidKornBig.anims.play("idle-BigKorn", true);
 
     // Seleccionar una frase aleatoria
     const randomIndex = Phaser.Math.Between(
@@ -79,7 +80,7 @@ export class KidKorn {
     // Animar a KidKorn para que suba desde la parte inferior
     this.scene.tweens.add({
       targets: this.kidKornBig,
-      y: height * 0.53, // Subir hasta la mitad de la pantalla
+      y: height * 0.5, // Subir hasta la mitad de la pantalla
       duration: 2500, // Duración de la animación (2 segundos)
       ease: "Power2", // Tipo de easing
       onComplete: () => {
@@ -88,7 +89,6 @@ export class KidKorn {
         // Luego de 6 segundos, ocultar a KidKorn y detener la generación de pochoclos
         this.scene.time.delayedCall(5400, () => {
           this.hideKidKornBig();
-          // this.kidKornBig.anims.play('idle-BigKorn', false)
           text.destroy(); // Destruir el texto después de que KidKorn desaparezca
         });
       },
@@ -140,28 +140,24 @@ export class KidKorn {
     );
     const randomDialogue = this.dialogues.Neutral[randomIndex];
 
-    if (fromLeft) {
-      this.dialogueWidth = this.scene.scale.width * 0.20;
-    } else if (!fromLeft) {
-      this.dialogueWidth = this.scene.scale.width * 0.80;
-    }
+    let dialogueWidth = fromLeft
+      ? this.scene.scale.width * 0.2
+      : this.scene.scale.width * 0.8;
 
-    let fontSize;
-    if (randomDialogue.length <= 18) {
-      fontSize = "40px"; // Para palabras cortas
-    } else if (randomDialogue.length <= 30) {
-      fontSize = "36px"; // Para palabras medianas
-    } else if (randomDialogue.length <= 37) {
-      fontSize = "32px"; // Para palabras medianas
-    } else {
-      fontSize = "27px"; // Para palabras largas
-    }
+    let fontSize =
+      randomDialogue.length <= 18
+        ? "40px"
+        : randomDialogue.length <= 30
+        ? "36px"
+        : randomDialogue.length <= 37
+        ? "32px"
+        : "27px";
 
     this.dialogueSound.play();
 
     // Mostrar la frase en el juego
     const text = this.scene.add
-      .text(this.dialogueWidth, this.y * 0.37, randomDialogue, {
+      .text(dialogueWidth, this.y * 0.37, randomDialogue, {
         fontSize: fontSize,
         fontFamily: "'Press Start 2P'",
         color: "#fff",
@@ -187,12 +183,22 @@ export class KidKorn {
       duration: 2000, // Duración de la animación (2 segundos)
       ease: "Power2",
       onComplete: () => {
-        // Generar pochoclos cuando llega al centro
+        // Explosión dos veces, luego cambiar a animación de Idle
+        const explodeKey = fromLeft
+          ? "KKLeftExplodeAnims"
+          : "KKRightExplodeAnims";
+        const idleKey = fromLeft ? "KKLeftIdleAnims" : "KKRightIdleAnims";
+        sprite.anims.play(explodeKey, true);
+
         this.scene.startGeneratingPopcorn(false);
-        // Desaparecer después de un tiempo aleatorio entre 1 y 2 segundos
-        this.scene.time.delayedCall(Phaser.Math.Between(1300, 2000), () => {
-          this.hideKidKornChild(sprite, fromLeft);
-          text.destroy(); // Destruir el texto después de que KidKorn desaparezca
+        // Reproducir la animación de explosión dos veces antes de cambiar a idle
+        this.scene.time.delayedCall(sprite.anims.duration * 2, () => {
+          sprite.anims.play(idleKey, true);
+
+          this.scene.time.delayedCall(Phaser.Math.Between(1300, 2000), () => {
+            this.hideKidKornChild(sprite, fromLeft);
+            text.destroy(); // Destruir el texto después de que KidKorn desaparezca
+          });
         });
       },
     });
@@ -227,29 +233,65 @@ export class KidKorn {
     });
   }
 
-  // AnimsKorns(scene) {
-  //   if (!scene.anims.exists("idle-BigKorn")) {
-  //     scene.anims.create({
-  //       key: "idle-BigKorn",
-  //       frames: scene.anims.generateFrameNumbers("BigKorn", {
-  //         start: 0,
-  //         end: 3,
-  //       }),
-  //       frameRate: 8,
-  //       repeat: -1,
-  //     });
-  //   }
+  AnimsKorns(scene) {
+    if (!scene.anims.exists("idle-BigKorn")) {
+      scene.anims.create({
+        key: "idle-BigKorn",
+        frames: scene.anims.generateFrameNumbers("BigKorn", {
+          start: 0,
+          end: 3,
+        }),
+        frameRate: 6,
+        repeat: -1,
+      });
+    }
 
-  //   // if (!scene.anims.exists("healtAnims1")) {
-  //   //   scene.anims.create({
-  //   //     key: "healtAnims1",
-  //   //     frames: scene.anims.generateFrameNumbers("healthBarExtra1", {
-  //   //       start: 0,
-  //   //       end: 1,
-  //   //     }),
-  //   //     frameRate: 10,
-  //   //     repeat: -1,
-  //   //   });
-  //   // }
-  // }
+    if (!scene.anims.exists("KKRightExplodeAnims")) {
+      scene.anims.create({
+        key: "KKRightExplodeAnims",
+        frames: scene.anims.generateFrameNumbers("KKExploteRightAnims", {
+          start: 0,
+          end: 1,
+        }),
+        frameRate: 7,
+        repeat: -1,
+      });
+    }
+
+    if (!scene.anims.exists("KKLeftExplodeAnims")) {
+      scene.anims.create({
+        key: "KKLeftExplodeAnims",
+        frames: scene.anims.generateFrameNumbers("KKExploteLeftAnims", {
+          start: 0,
+          end: 1,
+        }),
+        frameRate: 7,
+        repeat: -1,
+      });
+    }
+
+    if (!scene.anims.exists("KKRightIdleAnims")) {
+      scene.anims.create({
+        key: "KKRightIdleAnims",
+        frames: scene.anims.generateFrameNumbers("KidKornRightAnims", {
+          start: 0,
+          end: 1,
+        }),
+        frameRate: 7,
+        repeat: -1,
+      });
+    }
+
+    if (!scene.anims.exists("KKLeftIdleAnims")) {
+      scene.anims.create({
+        key: "KKLeftIdleAnims",
+        frames: scene.anims.generateFrameNumbers("KidKornLeftAnims", {
+          start: 0,
+          end: 1,
+        }),
+        frameRate: 7,
+        repeat: -1,
+      });
+    }
+  }
 }

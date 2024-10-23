@@ -276,12 +276,49 @@ export class Preloader extends Scene {
     );
 
     // Anims
+    // Explot Big KK
     this.load.spritesheet(
       "BigKorn",
       "../public/assets/versus/kid-korn/BigKornAnims.png",
       {
         frameWidth: 1000,
         frameHeight: 1000,
+      }
+    );
+    // idle KK
+    this.load.spritesheet(
+      "KidKornLeftAnims",
+      "../public/assets/versus/kid-korn/idle-korn-izq.png",
+      {
+        frameWidth: 660,
+        frameHeight: 796,
+      }
+    );
+
+    this.load.spritesheet(
+      "KidKornRightAnims",
+      "../public/assets/versus/kid-korn/idle-korn-der.png",
+      {
+        frameWidth: 660,
+        frameHeight: 796,
+      }
+    );
+    // Explo KK
+    this.load.spritesheet(
+      "KKExploteRightAnims",
+      "../public/assets/versus/kid-korn/exp-korn-der.png",
+      {
+        frameWidth: 660,
+        frameHeight: 796,
+      }
+    );
+
+    this.load.spritesheet(
+      "KKExploteLeftAnims",
+      "../public/assets/versus/kid-korn/exp-korn-izq.png",
+      {
+        frameWidth: 660,
+        frameHeight: 796,
       }
     );
 

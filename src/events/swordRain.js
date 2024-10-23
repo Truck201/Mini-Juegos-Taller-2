@@ -57,15 +57,15 @@ export class SwordRain {
         } else {
           this.showMissMensaje(sword);
         }
-        this.scene.player2HP = Math.max(
+        this.player2HP = Math.max(
           0,
           Math.floor(this.scene.player2Atributes.getHitPoints())
         );
         this.scene.player2HPText.setText(
-          `${this.scene.player2HP.toString().padStart(2, "0")}`
+          `${this.player2HP.toString().padStart(2, "0")}`
         );
         // // Actualizar la vida
-        this.scene.createHealtBar2.updateHealthBar(this.scene.player2HP);
+        this.scene.createHealtBar2.updateHealthBar(this.player2HP);
       }
 
       // Si se presiona enter, jugador 2 destruye un recolectable
@@ -95,15 +95,15 @@ export class SwordRain {
           this.showMissMensaje(sword);
         }
 
-        this.scene.player1HP = Math.max(
+        this.player1HP = Math.max(
           0, Math.floor(
           this.scene.player1Atributes.getHitPoints()
         ));
         this.scene.player1HPText.setText(
-          `${this.scene.player1HP.toString().padStart(2, "0")}`
+          `${this.player1HP.toString().padStart(2, "0")}`
         );
         // // Actualizar la vida
-        this.scene.createHealtBar1.updateHealthBar(this.scene.player1HP);
+        this.scene.createHealtBar1.updateHealthBar(this.player1HP);
       }
     });
   }

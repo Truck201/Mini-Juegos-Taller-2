@@ -77,6 +77,8 @@ export function Sounds(scene) {
 
     { key: "MusicV1", path: "music/Musica-V1" },
     { key: "MusicV2", path: "music/Musica-V2" },
+    { key: "MusicV3", path: "music/Musica-V3" },
+    { key: "MusicV4", path: "music/Musica-V4" },
   ];
 
 

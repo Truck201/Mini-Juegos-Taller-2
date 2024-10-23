@@ -144,7 +144,7 @@ export class initializeHealthBars {
 
   updateHealthBar(playerHp) {
     let healthBars = this.playerHealthBars;
-    let currentHP = Math.floor(playerHp);
+    let currentHP = playerHp
 
     if (!healthBars) {
       console.error("healthBars no está definido");
@@ -171,16 +171,14 @@ export class initializeHealthBars {
       // Mostrar y reproducir la animación correspondiente
       healthBars[extraHealthIndex].setVisible(true);
       healthBars[extraHealthIndex].play(animKey);
-
       this.createHeart(currentHP);
     } else if (currentHP <= 5 && currentHP >= 0) {
-
-      const visibleBarIndex = healthBars.length - currentHP - 1;
+      let visibleBarIndex = healthBars.length - currentHP - 1;
+      console.log(visibleBarIndex)
       healthBars[visibleBarIndex].setVisible(true);
-      this.startHeartbeat();
       healthBars[visibleBarIndex].stop();
+      this.startHeartbeat();
       this.createHeart(currentHP);
-
     } else {
       return false;
     }
