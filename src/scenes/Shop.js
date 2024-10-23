@@ -20,7 +20,7 @@ export class Shop extends Scene {
     this.points2 = data.points2 || 0; // Puntaje inicial jugador 2
     this.language = data.language || getLanguageConfig();
     console.log(this.language);
-    this.game_over_timeout = 5;
+    this.game_over_timeout = 20;
     this.lastKeyPressTime = 0;
     this.background;
 
@@ -39,7 +39,7 @@ export class Shop extends Scene {
 
     this.load.json(
       this.dialoguesPath,
-      `../public/data/itemsDescription_${this.language}.json`
+      `/data/itemsDescription_${this.language}.json`
     );
   }
 

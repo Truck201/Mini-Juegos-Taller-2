@@ -16,10 +16,10 @@ export class Game1v1 extends Scene {
   preload() {
     // Obtener el idioma
     if (this.language === "en-US") {
-      this.load.json("tutorials", "../public/data/dialogues_en.json");
+      this.load.json("tutorials", "/data/dialogues_en.json");
       this.textSkipper = "Skip, press Q";
     } else {
-      this.load.json("tutorials", "../public/data/dialogues_es.json");
+      this.load.json("tutorials", "/data/dialogues_es.json");
       this.textSkipper = "Saltar intro presiona Q";
     }
   }
@@ -46,8 +46,8 @@ export class Game1v1 extends Scene {
         color: "#fff",
         stroke: "black",
         strokeThickness: 4,
-        lineSpacing: 9, // Espaciado entre líneas
-        letterSpacing: 3, // Espaciado entre letras
+        lineSpacing: 9, 
+        letterSpacing: 3,
         maxLines: 4,
         shadow: {
           color: "#000000",
@@ -57,7 +57,7 @@ export class Game1v1 extends Scene {
         },
       })
       .setDepth(5)
-      .setOrigin(0.5); // Alinear a la izquierda
+      .setOrigin(0.5); 
 
     // Obtener los diálogos cargados
     this.tutorials = loadedTutorials.tutorial;
@@ -77,7 +77,7 @@ export class Game1v1 extends Scene {
 
     // Crear texto inicial en el centro de la pantalla
     let tutorialText = this.add
-      .text(width * 0.5, height * 0.43, paragraphs[this.currentParagraph], {
+      .text(width * 0.5, height * 0.485, paragraphs[this.currentParagraph], {
         fontSize: 40,
         fontFamily: "'Press Start 2P'",
         color: "#fff",

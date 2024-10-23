@@ -31,7 +31,7 @@ export class RecolectScene extends Scene {
     // Reset points
     this.points1 = data.points1 || 0; // Puntaje inicial jugador 1
     this.points2 = data.points2 || 0; // Puntaje inicial jugador 2
-    this.game_over_timeout = 15; // Tiempo límite de 30 segundos
+    this.game_over_timeout = 35; // Tiempo límite de 30 segundos
     this.dialogues = data.dialogues;
     this.language = data.language;
 
