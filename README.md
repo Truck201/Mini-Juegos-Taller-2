@@ -1,5 +1,10 @@
 We are Pochoclo Games, and we are studing in a University of Rafaela in Argentina. We are four integrants,
 
+Gandini, Joaquín => Programmer;
+Rosso, Caroliina => Artist;
+Moreira, Sebastian => Designer;
+Andereggen, Lucas => Designer;
+
 We propose one game 1vs1 and one game Co-Op
 The 1 vs 1 game is where both players have to compete in three different phases of play. Gathering, Shopping, and Combat.
 In cooperative play, players will deliver a certain amount of popcorn orders that are ordered to be delivered.
@@ -7,11 +12,6 @@ In cooperative play, players will deliver a certain amount of popcorn orders tha
 Both games are set in a small cinema, in a futuristic style but at the same time with retro content and elements. All in pixel art.
 
 We're pochoclo Games, and we're thankful that you tried our game
-
-Gandini, Joaquín => Programmer;
-Rosso, Caroliina => Artist;
-Moreira, Sebastian => Designer;
-Andereggen, Lucas => Designer;
 
 We work to do all implementations of the arquitecture of Entities and Components in the code.
 And we trying to includes the SOLID principies
@@ -42,19 +42,6 @@ ROJO ff004d
 AZUL 29adff
 
 const myColors = [0x5f574f, 0xfff1e8, 0x121213, 0x3ca370, 0xffe478]; // 0 GRIS , 1 BLANCO, 2 NEGRO , 3 VERDE, 4 AMARILLO
-
-ITEMS TAMAÑO X FRAME
-pororo
-w: 48
-h: 51
-
--- caramelo azul
-w: 60
-h: 72
-
--- zapi
-w: 72
-h: 69
 
 https://traducila.vercel.app/api/translations/PROJECT_ID/LANGUAGE_CODE
 
