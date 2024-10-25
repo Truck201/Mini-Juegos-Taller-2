@@ -1,20 +1,20 @@
-export class Bullets {
-    constructor(scene, x, y, speedY) {
-      this.scene = scene;
-  
-      // Crear la bala
-      this.bullet = this.scene.physics.add.sprite(x, y, "bulletSprite");
-      this.scene.physics.add.existing(this.bullet);
-      this.bullet.setCollideWorldBounds(false);
-      this.bullet.body.allowGravity = true;
-      this.bullet.body.setSize(40, 40);
-  
-      // Establecer velocidad hacia arriba, usando el tiempo de carga
-      this.bullet.setVelocityY(-speedY);
-    }
-  
-    destroy() {
-      this.bullet.destroy();
-    }
+export class Bullets extends Phaser.Physics.Arcade.Sprite {
+  constructor(scene, x, y) {
+    super(scene, x, y, "bulletSprite");
+    scene.add.existing(this);
+    scene.physics.add.existing(this);
+
+    this.setCollideWorldBounds(false);
+    this.body.setSize(40, 40);
+    this.body.allowGravity = false;
+    this.setDepth(10)
   }
-  
+
+  // Método para destruir la bala
+  destroyBullet() {
+    this.body.enable = false; // Desactiva el cuerpo físico
+    this.setActive(false); // Desactiva la bala
+    this.setVisible(false); // La hace invisible
+    this.destroy(); // Llama al método destroy de Phaser
+  }
+}

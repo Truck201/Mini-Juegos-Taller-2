@@ -13,6 +13,7 @@ export class PauseMenu extends Scene {
     this.mainScene = data.mainScene;
     this.sceneShop = data.sceneShop;
     this.sceneBattle = data.sceneBattle;
+    this.sceneCoop = data.cooperativeScene;
 
     // Fondo de pausa
     this.add
@@ -131,6 +132,15 @@ export class PauseMenu extends Scene {
           this.sceneBattle.scene.resume();
           if (battleScene.music1) {
             battleScene.music1.resume();
+          }
+        }
+
+        //Reanudar GameCoop
+        if (this.sceneCoop) {
+          const sceneCoop = this.sceneCoop.scene.get("GameCoop");
+          this.sceneCoop.scene.resume();
+          if (sceneCoop.backgroundMusic) {
+            sceneCoop.backgroundMusic.resume();
           }
         }
 

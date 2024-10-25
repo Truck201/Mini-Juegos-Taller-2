@@ -71,8 +71,11 @@ export class TargetsCoop {
       this.bag.body.setVelocityY(940);
       this.bag.body.setSize(70, 70);
       this.bag.body.setOffset(0, 0);
-      this.bag.setTexture(`Empty${color}`);
+      this.bag.setTexture(`Empty${this.color}`);
     });
+
+    // Destruir la bala después del impacto
+    bullet.destroy();
   }
 
   moveColliderDuringAnimation(bag) {

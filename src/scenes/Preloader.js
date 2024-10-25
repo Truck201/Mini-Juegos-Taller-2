@@ -832,7 +832,25 @@ export class Preloader extends Scene {
     );
 
     // Cinta de Movimiento
-    this.load.image("cinta", "../public/assets/coop/escenarios/cinta.png");
+    this.load.image("cinta", "../public/assets/coop/escenarios/cinta-1.png");
+
+    this.load.spritesheet(
+      "cintaIzq",
+      "../public/assets/coop/escenarios/cinta-izq.png",
+      {
+        frameWidth: 856,
+        frameHeight: 128,
+      }
+    );
+
+    this.load.spritesheet(
+      "cintaDer",
+      "../public/assets/coop/escenarios/cinta-der.png",
+      {
+        frameWidth: 856,
+        frameHeight: 128,
+      }
+    );
 
     // ANIMACIONES Bolsas
     this.load.spritesheet(
@@ -932,6 +950,35 @@ export class Preloader extends Scene {
       "../public/assets/coop/bolsitas-vacias/empty-verde.png"
     );
 
+    // Puente  bridgeSprite   bridgeSprite
+    this.load.image(
+      "bridgeRight",
+      "../public/assets/coop/bridge/bridge-static-der.png"
+    );
+
+    this.load.image(
+      "bridgeLeft",
+      "../public/assets/coop/bridge/bridge-static-izq.png"
+    );
+
+    this.load.spritesheet(
+      "AnimsBridgeRight",
+      "../public/assets/coop/bridge/bridge-der.png",
+      {
+        frameWidth: 124,
+        frameHeight: 128,
+      }
+    );
+
+    this.load.spritesheet(
+      "AnimsBridgeLeft",
+      "../public/assets/coop/bridge/bridge-izq.png",
+      {
+        frameWidth: 124,
+        frameHeight: 128,
+      }
+    );
+
     // Diana
     this.load.image(
       "StaticTarget",
@@ -966,6 +1013,11 @@ export class Preloader extends Scene {
         frameHeight: 275,
       }
     );
+
+    // SAL AZUCA
+    this.load.image("sugar", "../public/assets/coop/ingrediente/azucar.png");
+
+    this.load.image("salt", "../public/assets/coop/ingrediente/popcorn-2.png");
 
     // Tirachinas
     this.load.image(

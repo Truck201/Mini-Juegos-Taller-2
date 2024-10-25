@@ -13,14 +13,17 @@ import { Shop } from "./scenes/Shop";
 import { BattleScene } from "./scenes/BattleScene";
 import { GameOver } from "./scenes/GameOver";
 import { BaseScene } from "./lib/FontsBase";
+import { HudCoop } from "./scenes/HudCoop";
 
+import TVStaticFx from "./lib/TVScanEffect";
+import TVDistortionFx from "./lib/TVDistortion";
 import CRTPostFx from "./lib/CRTPostFx";
 import { LanguageScene } from "./scenes/LanguageChoose";
 import { StartCooperative } from "./scenes/CoopStarter";
 import { GameCooperative } from "./scenes/GameCoOp";
 
 const config = {
-  type: Phaser.AUTO,
+  type: Phaser.WEBGL,
   width: 1920, // Ajusta el ancho al 90% del ancho de la ventana    window.innerWidth
   height: 1080, // Ajusta la altura al 90% de la altura de la ventana    window.innerHeight
   parent: "game-container",
@@ -33,8 +36,8 @@ const config = {
   physics: {
     default: "arcade",
     arcade: {
-      gravity: { y: 360 },
-      debug: false,
+      gravity: { y: 500 },
+      debug: true,
     },
   },
   scene: [
@@ -53,10 +56,13 @@ const config = {
     BattleScene,
     BaseScene,
     StartCooperative,
-    GameCooperative
+    GameCooperative,
+    HudCoop,
   ],
   pipeline: {
     CRTPostFx: CRTPostFx,
+    TVDistortionFx: TVDistortionFx,
+    TVStaticFx: TVStaticFx,
   },
 };
 
