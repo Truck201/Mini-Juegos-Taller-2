@@ -18,6 +18,9 @@ export class GameCooperative extends Scene {
     // Variables para rastrear si los elementos correctos fueron entregados
     this.pochocloEntregado = false;
     this.condimentoEntregado = false;
+
+    this.delivered = [];
+    this.discarted = [];
   }
 
   init(data) {
@@ -220,54 +223,65 @@ export class GameCooperative extends Scene {
     const currentPedido = this.pedidoManager.getCurrentPedido();
     let pochoclo = this.pedidoManager.getSpriteName(currentPedido.pochoclo);
     let condimento = this.pedidoManager.getSpriteName(currentPedido.condimento);
-    console.log(" objeto -> " + fallingObject.texture.key);
-    console.log(" pochoclo -> " + pochoclo);
-    console.log(" condimento -> " + condimento);
-    console.log(" bridge -> " + bridge);
-    // Si el objeto es el pedido correcto
-    if (fallingObject.texture.key === pochoclo && !this.pochocloEntregado) {
-      this.update_points(10); // Sumar 10 puntos
-      this.addTime(5); // Añadir 5 segundos al tiempo
-      this.pedidoManager.removePedidoItem("pochoclo");
-      this.pochocloEntregado = true; // Marcar que el pochoclo ha sido entregado
-      console.log("Pedido correcto! POCHOCLO");
-    } else if (
-      fallingObject.texture.key === condimento &&
-      !this.condimentoEntregado
-    ) {
-      this.update_points(10); // Sumar 10 puntos
-      this.addTime(5); // Añadir 5 segundos al tiempo
-      this.pedidoManager.removePedidoItem("condimento");
-      this.condimentoEntregado = true; // Marcar que el condimento ha sido entregado
-      console.log("Pedido correcto! CONDIMENTO");
-    } else {
-      this.update_points(-5); // Restar 5 puntos
+    console.log("current pedido ->" + currentPedido);
+    console.log("pochoclo ->" + pochoclo);
+    console.log("condimento ->" + condimento);
+    console.log("textura objeto caido ->" + fallingObject.texture.key);
 
-      // Verifica cuál puente colisionó y aplica la animación correspondiente
-      if (bridge === this.bridgeLeft) {
-        this.bridgeLeft.anims.play("OpBridgeLeft", true); // Abre el puente a la izquierda
-        this.bridgeLeft.once("animationcomplete", () => {
-          this.bridgeLeft.setTexture(`bridgeLeft`);
-        });
-      } else if (bridge === this.bridgeRight) {
-        this.bridgeRight.anims.play("OpBridgeRight", true); // Abre el puente a la derecha
-        this.bridgeRight.once("animationcomplete", () => {
-          this.bridgeRight.setTexture(`bridgeRight`);
-        });
-      }
+    // Verificar si el objeto coincide con los elementos del pedido
+    if (fallingObject.texture.key === pochoclo && this.pochocloEntregado) {
+      console.log("same product pochoclo")
+      this.update_points(10);
+      this.discarted.push(fallingObject);
+      this.discarted.forEach((obj) => obj.destroy());
+
+    } else if (fallingObject.texture.key === condimento && this.condimentoEntregado) {
+      console.log("same product condiment")
+      this.update_points(10);
+      this.discarted.push(fallingObject);
+      this.discarted.forEach((obj) => obj.destroy());
+
+    } else if (fallingObject.texture.key === pochoclo && !this.pochocloEntregado) {
+      fallingObject.setVelocityY(0)
+      this.delivered.push(fallingObject); // Agregar a la lista de delivered
+      this.pochocloEntregado = true;
+      console.log("correcto 1 pochoclo");
+
+    } else if (
+      fallingObject.texture.key === condimento && !this.condimentoEntregado) {
+      fallingObject.setVelocityY(0)
+      this.delivered.push(fallingObject); // Agregar a la lista de delivered
+      this.condimentoEntregado = true;
+      console.log("correcto 2 condimento");
+
+    } else {
+      // Si el elemento es incorrecto, restar puntos y limpiar la lista de delivered
+      this.discarted.push(fallingObject);
+      this.update_points(-5);
+      console.log("negativo !!");
+      this.discarted.forEach((obj) => obj.destroy());
+      this.discarted = [];
     }
 
-    fallingObject.destroy(); // Destruir el objeto caído
-
-    // Si ambos, pochoclo y condimento, han sido entregados
+    // Si ambos elementos del pedido están presentes en la lista
     if (this.pochocloEntregado && this.condimentoEntregado) {
-      this.update_points(100); // Sumar 100 puntos por completar el pedido
-      this.addTime(10); // Añadir 10 segundos al tiempo
-      console.log("Pedido completo! +100 puntos, +10 segundos");
+      const validado = this.pedidoManager.validatePedido(this.delivered);
+      if (validado) {
+        this.update_points(50); // Sumar puntos si el pedido es correcto
+        this.addTime(10); // Añadir tiempo
+        console.log("correcto !!");
+      } else {
+        this.update_points(-5); // Restar puntos por pedido incorrecto
+        console.log("malchequeo");
+      }
 
-      // Reiniciar los marcadores de entrega
+      // Limpiar lista de delivered y reiniciar el pedido
+      this.delivered.forEach((obj) => obj.destroy());
+      this.delivered = [];
       this.pochocloEntregado = false;
       this.condimentoEntregado = false;
+      this.pedidoManager.generateNewPedido();
+      console.log("eliminar...");
     }
   }
 
@@ -281,10 +295,6 @@ export class GameCooperative extends Scene {
   update(time, delta) {
     // Mover miras
     this.handleMiraMovement();
-
-    // Revisar los elementos sobre el puente
-    this.bridgeManagerLeft.checkItems();
-    this.bridgeManagerRight.checkItems();
 
     // Actualizar las balas
     this.bullets.children.each((bullet) => {
@@ -308,32 +318,33 @@ export class GameCooperative extends Scene {
   }
 
   handleMiraMovement() {
+    const speed = 8;
     // Jugador 1: Mover con WASD
     if (this.keys.W.isDown) {
-      this.miras[0].y -= 5;
+      this.miras[0].y -= speed;
     }
     if (this.keys.S.isDown) {
-      this.miras[0].y += 5;
+      this.miras[0].y += speed;
     }
     if (this.keys.A.isDown) {
-      this.miras[0].x -= 5;
+      this.miras[0].x -= speed;
     }
     if (this.keys.D.isDown) {
-      this.miras[0].x += 5;
+      this.miras[0].x += speed;
     }
 
     // Jugador 2: Mover con flechas
     if (this.keys.UP.isDown) {
-      this.miras[1].y -= 5;
+      this.miras[1].y -= speed;
     }
     if (this.keys.DOWN.isDown) {
-      this.miras[1].y += 5;
+      this.miras[1].y += speed;
     }
     if (this.keys.LEFT.isDown) {
-      this.miras[1].x -= 5;
+      this.miras[1].x -= speed;
     }
     if (this.keys.RIGHT.isDown) {
-      this.miras[1].x += 5;
+      this.miras[1].x += speed;
     }
   }
 

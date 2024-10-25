@@ -8,30 +8,20 @@ export class BridgeManager {
     this.scene.physics.add.existing(this.bridge); // Agrega física al sprite
     this.bridge.body.allowGravity = false;
     this.bridge.body.setImmovable(true);
-
-    this.itemsOnBridge = [];
-
-    this.scene.physics.add.overlap(
-      this.scene.physics.world.bounds,
-      this.bridge,
-      this.collectItem,
-      null,
-      this
-    );
   }
 
-  collectItem(item) {
-    if (item && item.type) {
-      this.itemsOnBridge.push(item.type);
-    }
-  }
-
-  checkItems() {
-    if (this.itemsOnBridge.length >= 2) {
-      const item1 = this.itemsOnBridge[0];
-      const item2 = this.itemsOnBridge[1];
-      this.scene.pedidoManager.validatePedido(item1, item2);
-      this.itemsOnBridge = []; // Reiniciar después de validar
-    }
+  openBridge() {
+    // Lógica para abrir el puente
+    this.scene.tweens.add({
+      targets: this.bridge,
+      angle: 90,
+      duration: 500,
+      ease: "Power2",
+      onComplete: () => {
+        // Restablecer el ángulo después de abrir
+        this.bridge.setAngle(0);
+        this.clearBridge(); // Limpiar el puente después de abrirlo
+      },
+    });
   }
 }

@@ -852,6 +852,10 @@ export class Preloader extends Scene {
       }
     );
 
+    // Bolsas
+    //    EmptyBlue EmptyOrange EmptyRose EmptyGreen   WithSalt WithSugar WithSpicy 
+
+
     // ANIMACIONES Bolsas
     this.load.spritesheet(
       "AnimsBlueBag",
@@ -1015,9 +1019,9 @@ export class Preloader extends Scene {
     );
 
     // SAL AZUCA
-    this.load.image("sugar", "../public/assets/coop/ingrediente/azucar.png");
-
-    this.load.image("salt", "../public/assets/coop/ingrediente/popcorn-2.png");
+    this.load.image("sugar", "../public/assets/coop/ingrediente/popcorn-1.png");
+    this.load.image("spicy", "../public/assets/coop/ingrediente/popcorn-2.png");
+    this.load.image("salt", "../public/assets/coop/ingrediente/popcorn-3.png");
 
     // Tirachinas
     this.load.image(

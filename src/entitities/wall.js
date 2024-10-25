@@ -46,6 +46,7 @@ export class WallBrick extends Phaser.GameObjects.Group {
       orange: 0xff8000,
       salt: 0xfff1e8,
       sugar: 0xfff1e8,
+      spicy: 0xfff1e8,
     };
 
     for (let i = 0; i < filas; i++) {
@@ -65,6 +66,7 @@ export class WallBrick extends Phaser.GameObjects.Group {
           "orange",
           "salt",
           "sugar",
+          "spicy",
         ]);
         const color = brickColors[randomType];
 
@@ -172,6 +174,7 @@ export class WallBrick extends Phaser.GameObjects.Group {
       orange: 0xff8000,
       salt: 0xfff1e8,
       sugar: 0xfff1e8,
+      spicy: 0xfff1e8,
     };
     const randomType = this.getType();
     return brickColors[randomType];
@@ -185,6 +188,7 @@ export class WallBrick extends Phaser.GameObjects.Group {
       "orange",
       "salt",
       "sugar",
+      "spicy",
     ]);
     return randomType;
   }

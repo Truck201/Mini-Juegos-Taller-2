@@ -66,6 +66,8 @@ export class Brick extends Phaser.GameObjects.Rectangle {
         return "salt";
       case "sugar":
         return "sugar";
+      case "spicy":
+        return "spicy";
       default:
         console.log("default");
         return "defaultSprite"; // Sprite por defecto si no coincide
@@ -107,8 +109,9 @@ export class Brick extends Phaser.GameObjects.Rectangle {
         fallingObject = this.scene.createFallingObject(this.x, this.y, "salt");
       } else if (this.type === "sugar") {
         fallingObject = this.scene.createFallingObject(this.x, this.y, "sugar");
+      } else if (this.type === "spicy") {
+        fallingObject = this.scene.createFallingObject(this.x, this.y, "spicy");
       }
-
       this.body.enable = false; // Deshabilitar el cuerpo de físicas
       this.destroy();
     }

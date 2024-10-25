@@ -5,7 +5,7 @@ export class PedidoManager {
     this.nextPedido = null;
     this.timeRemaining = 8; // Tiempo límite de 8 segundos por pedido
     this.pedidoTypes = ["blue", "red", "green", "orange"]; // Colores de pochoclos
-    this.azucarSalTypes = ["salt", "sugar"]; // white1: sal, white2: azúcar
+    this.azucarSalTypes = ["salt", "sugar", "spicy"]; // white1: sal, white2: azúcar
     this.points = 0;
     this.timerEvent = null;
 
@@ -28,6 +28,57 @@ export class PedidoManager {
     const pochoclo = Phaser.Math.RND.pick(this.pedidoTypes);
     const condimento = Phaser.Math.RND.pick(this.azucarSalTypes);
     return { pochoclo, condimento };
+  }
+
+  validatePedido(entregados) {
+    const item1 = entregados[0].texture.key;
+    const item2 = entregados[1].texture.key;
+    const pochoclo = this.getSpriteName(this.currentPedido.pochoclo)
+    const condimento = this.getSpriteName(this.currentPedido.condimento)
+
+    const isCorrectPedido =
+      (item1 === pochoclo &&
+        item2 === condimento) ||
+      (item2 === pochoclo &&
+        item1 === condimento);
+
+    console.log("CURRENT ->" + pochoclo);
+    console.log("CURRENT ->" + condimento);
+    console.log("ITEM 1 ->" + item1);
+    console.log("ITEM 2 ->" + item2);
+    console.log("ES REAL? ->" + isCorrectPedido);
+
+    if (isCorrectPedido) {
+      // Crear un nuevo sprite basado en el pedido correcto
+      const completedSprite = this.scene.add.sprite(
+        this.scene.scale.width / 2,
+        this.scene.scale.height * 0.75,
+        this.getCompletedSpriteName(pochoclo)
+      );
+
+      // EmptyRoseWithSalt or EmptyRoseWithSugar
+      this.scene.add.tween({
+        targets: completedSprite,
+        y: this.scene.scale.height + 100,
+        duration: 1000,
+        ease: "Power2",
+        onComplete: () => completedSprite.destroy(),
+      });
+
+      // Incrementar puntos y avanzar al siguiente pedido
+      this.points += 10;
+      this.scene.bridgeManagerLeft.openBridge();
+      this.scene.bridgeManagerRight.openBridge();
+      this.generateNewPedido();
+    }
+
+    return true;
+  }
+  // Empty${color}Whit${condiment}
+  getCompletedSpriteName(pedido) {
+    if (pedido.condimento === "salt") return pedido.pochoclo + "WithSalt";
+    if (pedido.condimento === "sugar") return pedido.pochoclo + "WithSugar";
+    if (pedido.condimento === "spicy") return pedido.pochoclo + "WithSpicy";
   }
 
   showPedido() {
@@ -94,6 +145,7 @@ export class PedidoManager {
     if (type === "orange") return "EmptyOrange";
     if (type === "salt") return "salt";
     if (type === "sugar") return "sugar";
+    if (type === "spicy") return "spicy";
   }
 
   startPedidoTimer() {
