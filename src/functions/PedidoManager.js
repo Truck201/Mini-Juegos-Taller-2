@@ -5,7 +5,7 @@ export class PedidoManager {
     this.nextPedido = null;
     this.timeRemaining = 8; // Tiempo límite de 8 segundos por pedido
     this.pedidoTypes = ["blue", "red", "green", "orange"]; // Colores de pochoclos
-    this.azucarSalTypes = ["salt", "sugar"]; // white1: sal, white2: azúcar
+    this.azucarSalTypes = ["salt", "sugar", "spicy"]; // white1: sal, white2: azúcar
     this.points = 0;
     this.timerEvent = null;
 
@@ -28,6 +28,78 @@ export class PedidoManager {
     const pochoclo = Phaser.Math.RND.pick(this.pedidoTypes);
     const condimento = Phaser.Math.RND.pick(this.azucarSalTypes);
     return { pochoclo, condimento };
+  }
+
+  validatePedido(entregados) {
+    const item1 = entregados[0].texture.key;
+    const item2 = entregados[1].texture.key;
+
+    const isCorrectPedido =
+      (item1 === this.getSpriteName(this.currentPedido.pochoclo) &&
+        item2 === this.currentPedido.condimento) ||
+      (item2 === this.getSpriteName(this.currentPedido.pochoclo) &&
+        item1 === this.currentPedido.condimento);
+
+    console.log(
+      "CURRENT P->" + this.getSpriteName(this.currentPedido.pochoclo)
+    );
+    console.log("CURRENT C->" + this.currentPedido.condimento);
+    console.log("ITEM 1 ->" + item1);
+    console.log("ITEM 2 ->" + item2);
+    console.log("ES REAL? ->" + isCorrectPedido);
+
+    if (isCorrectPedido) {
+      // Crear un nuevo sprite basado en el pedido correcto
+      const completedSprite = this.scene.add.sprite(
+        this.scene.scale.width / 2,
+        this.scene.scale.height * 0.72,
+        this.getCompletedSpriteName(this.currentPedido)
+      );
+      console.log(
+        "SPRITE NAME -- >  " + this.getCompletedSpriteName(this.currentPedido)
+      );
+
+      // EmptyRoseWithSalt or EmptyRoseWithSugar
+      this.scene.add.tween({
+        targets: completedSprite,
+        y: this.scene.scale.height * 0.72,
+        scale: { from: 2, to: 1.86 }, // Agrandar el texto
+        duration: 1000, // Duración de la animación (1 segundo)
+        ease: "Power2",
+        onComplete: () => {
+          // EmptyRoseWithSalt or EmptyRoseWithSugar
+          this.scene.add.tween({
+            targets: completedSprite,
+            y: this.scene.scale.height * 0.72,
+            scale: { from: 2, to: 0 }, // Agrandar el texto
+            alpha: { from: 1, to: 0 }, // Desaparecer el texto
+            duration: 900, // Duración de la animación (1 segundo)
+            ease: "Power2",
+            onComplete: () => {
+              completedSprite.destroy();
+            },
+          });
+        },
+      });
+
+      // Incrementar puntos y avanzar al siguiente pedido
+      this.scene.bridgeManagerLeft.openBridge();
+      this.scene.bridgeManagerRight.openBridge();
+      if (this.timeRemaining > 0) {
+        this.timeRemaining = 0;
+      }
+    }
+
+    return true;
+  }
+  // Empty${color}Whit${condiment}
+  getCompletedSpriteName(pedido) {
+    if (pedido.condimento === "salt")
+      return this.getSpriteName(pedido.pochoclo) + "WithSalt";
+    if (pedido.condimento === "sugar")
+      return this.getSpriteName(pedido.pochoclo) + "WithSugar";
+    if (pedido.condimento === "spicy")
+      return this.getSpriteName(pedido.pochoclo) + "WithSpicy";
   }
 
   showPedido() {
@@ -88,12 +160,13 @@ export class PedidoManager {
 
   getSpriteName(type) {
     // Método para obtener el nombre del sprite según el tipo
-    if (type === "blue") return "EmptyBlue";
-    if (type === "red") return "EmptyRose";
-    if (type === "green") return "EmptyGreen";
-    if (type === "orange") return "EmptyOrange";
+    if (type === "blue" || type === "EmptyBlue") return "EmptyBlue";
+    if (type === "red" || type === "EmptyRose") return "EmptyRose";
+    if (type === "green" || type === "EmptyGreen") return "EmptyGreen";
+    if (type === "orange" || type === "EmptyOrange") return "EmptyOrange";
     if (type === "salt") return "salt";
     if (type === "sugar") return "sugar";
+    if (type === "spicy") return "spicy";
   }
 
   startPedidoTimer() {
@@ -111,8 +184,15 @@ export class PedidoManager {
 
   timeExpired() {
     this.generateNewPedido();
+
+    // Limpiar lista de delivered y reiniciar el pedido
+    this.scene.delivered.forEach((obj) => obj.destroy());
+    this.scene.delivered = [];
+    this.scene.waiterPopcorn = [];
+    this.scene.waiterCondimento = [];
     this.scene.pochocloEntregado = false;
     this.scene.condimentoEntregado = false;
+    console.log("Pedido expirado y limpiado");
   }
 
   // Avanza al siguiente pedido
@@ -130,7 +210,7 @@ export class PedidoManager {
     // Cambiar el pedido actual por el siguiente
     this.currentPedido = this.nextPedido;
     this.nextPedido = this.generatePedido();
-    this.timeRemaining = 8; // Reiniciar el tiempo
+    this.timeRemaining = 10; // Reiniciar el tiempo
 
     this.updatePedidoDisplay();
   }

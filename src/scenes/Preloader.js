@@ -852,6 +852,7 @@ export class Preloader extends Scene {
       }
     );
 
+    // Bolsas
     // ANIMACIONES Bolsas
     this.load.spritesheet(
       "AnimsBlueBag",
@@ -900,39 +901,71 @@ export class Preloader extends Scene {
 
     // Pedidos de Misión
     this.load.image(
-      "PedidosAzul",
-      "../public/assets/coop/bolsas-pedidos/pedido-azul.png"
+      "EmptyBlueWithSugar",
+      "../public/assets/coop/bolsas-pedidos/EmptyBlueSugar.png"
     );
 
     this.load.image(
-      "PedidosMorado",
-      "../public/assets/coop/bolsas-pedidos/pedido-morada.png"
+      "EmptyBlueWithSpicy",
+      "../public/assets/coop/bolsas-pedidos/EmptyBlueSpicy.png"
     );
 
     this.load.image(
-      "PedidosNaranja",
-      "../public/assets/coop/bolsas-pedidos/pedido-naranja.png"
+      "EmptyBlueWithSalt",
+      "../public/assets/coop/bolsas-pedidos/EmptyBlueSalt.png"
     );
 
     this.load.image(
-      "PedidosRosa",
-      "../public/assets/coop/bolsas-pedidos/pedido-rosa.png"
+      "EmptyRoseWithSugar",
+      "../public/assets/coop/bolsas-pedidos/EmptyRoseSugar.png"
     );
 
     this.load.image(
-      "PedidosVerde",
-      "../public/assets/coop/bolsas-pedidos/pedido-verde.png"
+      "EmptyRoseWithSpicy",
+      "../public/assets/coop/bolsas-pedidos/EmptyRoseSpicy.png"
     );
+
+    this.load.image(
+      "EmptyRoseWithSalt",
+      "../public/assets/coop/bolsas-pedidos/EmptyRoseSalt.png"
+    );
+
+    this.load.image(
+      "EmptyGreenWithSugar",
+      "../public/assets/coop/bolsas-pedidos/EmptyGreenSugar.png"
+    );
+
+    this.load.image(
+      "EmptyGreenWithSpicy",
+      "../public/assets/coop/bolsas-pedidos/EmptyGreenSpicy.png"
+    );
+
+    this.load.image(
+      "EmptyGreenWithSalt",
+      "../public/assets/coop/bolsas-pedidos/EmptyGreenSalt.png"
+    );
+
+    this.load.image(
+      "EmptyOrangeWithSugar",
+      "../public/assets/coop/bolsas-pedidos/EmptyOrangeSugar.png"
+    );
+
+    this.load.image(
+      "EmptyOrangeWithSpicy",
+      "../public/assets/coop/bolsas-pedidos/EmptyOrangeSpicy.png"
+    );
+
+    this.load.image(
+      "EmptyOrangeWithSalt",
+      "../public/assets/coop/bolsas-pedidos/EmptyOrangeSalt.png"
+    );
+
+
 
     // Bolsitas Vacias
     this.load.image(
       "EmptyBlue",
       "../public/assets/coop/bolsitas-vacias/empty-azul.png"
-    );
-
-    this.load.image(
-      "EmptyPurple",
-      "../public/assets/coop/bolsitas-vacias/empty-morada.png"
     );
 
     this.load.image(
@@ -979,17 +1012,6 @@ export class Preloader extends Scene {
       }
     );
 
-    // Diana
-    this.load.image(
-      "StaticTarget",
-      "../public/assets/coop/diana/static-diana.png"
-    );
-
-    this.load.spritesheet("Diana", "../public/assets/coop/diana/diana.png", {
-      frameWidth: 112,
-      frameHeight: 132,
-    });
-
     // Resorteras
     this.load.image(
       "StaticResortera",
@@ -1015,9 +1037,13 @@ export class Preloader extends Scene {
     );
 
     // SAL AZUCA
-    this.load.image("sugar", "../public/assets/coop/ingrediente/azucar.png");
+    this.load.image("sugar", "../public/assets/coop/ingrediente/popcorn-1.png");
+    this.load.image("spicy", "../public/assets/coop/ingrediente/popcorn-2.png");
+    this.load.image("salt", "../public/assets/coop/ingrediente/popcorn-3.png");
 
-    this.load.image("salt", "../public/assets/coop/ingrediente/popcorn-2.png");
+    // Miras
+    this.load.image("miraPlayerOne", "../public/assets/coop/tirachinas/static-mira-red.png");
+    this.load.image("miraPlayerTwo", "../public/assets/coop/tirachinas/static-mira-blue.png");
 
     // Tirachinas
     this.load.image(
