@@ -20,7 +20,7 @@ export class BridgeManager {
       onComplete: () => {
         // Restablecer el ángulo después de abrir
         this.bridge.setAngle(0);
-        this.clearBridge(); // Limpiar el puente después de abrirlo
+       
       },
     });
   }

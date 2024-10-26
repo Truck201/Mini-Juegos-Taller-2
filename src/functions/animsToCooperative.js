@@ -6,7 +6,7 @@ export function initialAnims(scene) {
         start: 0,
         end: 3,
       }),
-      frameRate: 7,
+      frameRate: 12,
       repeat: -1,
     });
   }
@@ -18,7 +18,7 @@ export function initialAnims(scene) {
         start: 0,
         end: 3,
       }),
-      frameRate: 7,
+      frameRate: 12,
       repeat: -1,
     });
   }

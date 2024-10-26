@@ -16,28 +16,27 @@ export class WallBrick extends Phaser.GameObjects.Group {
     const sceneWidth = Number(this.scene.sys.game.config.width);
     const sceneHeight = Number(this.scene.sys.game.config.height);
 
-    const leftMargin = sceneWidth * 0.1;
-    const rightMargin = sceneWidth * 0.1;
+    const margin = sceneWidth * 0.06; // Margen de 6% en los bordes
+    const gapBetweenSides = sceneWidth * 0.2; // Espacio central del 20%
+    const brickAreaWidth = (sceneWidth - (2 * margin + gapBetweenSides)) / 2; // Ancho para cada grupo de ladrillos (izq y der)
+    const spacingX = 60; // Separación horizontal mínima entre ladrillos
+    const spacingY = sceneHeight * 0.2; // Separación vertical mínima entre ladrillos
 
-    const totalWidth = sceneWidth - leftMargin - rightMargin; // Total width minus margins
+    const widthBrick = (brickAreaWidth - spacingX * (columnas - 1)) / columnas; // Ancho de cada ladrillo
+    const heightBrick = (sceneHeight * 0.3 - spacingY * (filas - 1)) / filas; // Alto de cada ladrillo
 
-    const totalHeightForBricks = sceneHeight * 0.2; // El 30% del alto de la pantalla para los ladrillos
-    const heightBrick = totalHeightForBricks / filas; // Altura de cada ladrillo (distribuidos equitativamente)
-    const minBrickWidth = 10;
-
-    // Calcular el ancho de los ladrillos basado en el totalWidth disponible
-    let widthBrick = (totalWidth / columnas) * 0.8; // Reducir el ancho del ladrillo en un 30% para ajuste
-    if (widthBrick < minBrickWidth) {
-      widthBrick = minBrickWidth; // Asegurar que el ancho mínimo se respete
-    }
-
-    this.collisionWidth = widthBrick - 80; // Ancho de colisión igual al ancho del brick
-    this.collisionHeight = heightBrick; // Alto de colisión igual al alto del brick
-
-    const spacingX = 60; // Espaciado de 10 px entre los ladrillos
-    const spacingY = 70;
-    const offsetX = leftMargin; // Desplazamiento en X desde el margen izquierdo
+    const leftOffsetX = margin; // Inicio del primer grupo de ladrillos (izquierda)
+    const rightOffsetX = margin + brickAreaWidth + gapBetweenSides; // Inicio del segundo grupo de ladrillos (derecha)
     const offsetY = sceneHeight * 0.2; // Ajuste en Y para centrar verticalmente los ladrillos
+
+    this.collisionWidth = widthBrick - 30; // Ancho de colisión igual al ancho del brick
+    this.collisionHeight = heightBrick + 130; // Alto de colisión igual al alto del brick
+    console.log("height Bricks -->" + heightBrick);
+    console.log("Result --> " + this.collisionHeight);
+    // const spacingX = 60; // Espaciado de 10 px entre los ladrillos
+    // const spacingY = 70;
+    // const offsetX = leftMargin; // Desplazamiento en X desde el margen izquierdo
+    // const offsetY = sceneHeight * 0.2; // Ajuste en Y para centrar verticalmente los ladrillos
 
     const brickColors = {
       blue: 0x0000ff,
@@ -49,117 +48,123 @@ export class WallBrick extends Phaser.GameObjects.Group {
       spicy: 0xfff1e8,
     };
 
-    for (let i = 0; i < filas; i++) {
-      this.brickPositions[i] = [];
-      for (let j = 0; j < columnas; j++) {
-        const x = offsetX + j * (widthBrick + spacingX) + widthBrick / 2;
-        const y = offsetY + i * (heightBrick + spacingY) + heightBrick / 2;
+    // Función para crear un grupo de ladrillos en una posición X de inicio
+    const createBrickGroup = (startX) => {
+      for (let i = 0; i < filas; i++) {
+        this.brickPositions[i] = [];
+        for (let j = 0; j < columnas; j++) {
+          const x = startX + j * (widthBrick + spacingX) + widthBrick / 2;
+          const y = offsetY + i * (heightBrick + spacingY) + heightBrick / 2;
 
-        // Guarda la posición calculada
-        this.brickPositions[i][j] = { x, y };
+          // Guarda la posición calculada
+          this.brickPositions[i][j] = { x, y };
 
-        // Asignar aleatoriamente un tipo de ladrillo
-        const randomType = Phaser.Math.RND.pick([
-          "blue",
-          "red",
-          "green",
-          "orange",
-          "salt",
-          "sugar",
-          "spicy",
-        ]);
-        const color = brickColors[randomType];
+          // Asignar aleatoriamente un tipo de ladrillo
+          const randomType = Phaser.Math.RND.pick([
+            "blue",
+            "red",
+            "green",
+            "orange",
+            "salt",
+            "sugar",
+            "spicy",
+          ]);
+          const color = brickColors[randomType];
 
-        let brick = new Brick(
-          this.scene,
-          x,
-          y,
-          widthBrick,
-          heightBrick,
-          color,
-          0.09,
-          randomType,
-          this.collisionWidth, // Pasar el tamaño de colisión
-          this.collisionHeight // Pasar el tamaño de colisión
-        );
+          let brick = new Brick(
+            this.scene,
+            x,
+            y,
+            widthBrick,
+            heightBrick,
+            color,
+            0.09,
+            randomType,
+            this.collisionWidth, // Pasar el tamaño de colisión
+            this.collisionHeight // Pasar el tamaño de colisión
+          );
 
-        this.add(brick);
-        brick.setRowIndex(i);
-        brick.setColIndex(j);
+          this.add(brick);
+          brick.setRowIndex(i);
+          brick.setColIndex(j);
+        }
       }
-    }
+    };
+    // Crear grupo de ladrillos en el lado izquierdo
+    createBrickGroup(leftOffsetX);
+
+    // Crear grupo de ladrillos en el lado derecho
+    createBrickGroup(rightOffsetX);
   }
 
   // Método para verificar y regenerar filas y columnas vacías
   checkAndRegenerateWall() {
-    let rowsEmpty = Array(this.filas).fill(true);
-    let colsEmpty = Array(this.columnas).fill(true);
+    let rowsEmptyLeft = Array(this.filas).fill(true);
+    let colsEmptyLeft = Array(this.columnas).fill(true);
+    let rowsEmptyRight = Array(this.filas).fill(true);
+    let colsEmptyRight = Array(this.columnas).fill(true);
 
     this.getChildren().forEach((brick) => {
       const row = brick.getRowIndex();
       const col = brick.getColIndex();
 
+      // Verifica si el ladrillo pertenece al lado izquierdo o derecho
       if (brick.active) {
-        rowsEmpty[row] = false;
-        colsEmpty[col] = false;
+        if (brick.x < this.scene.sys.game.config.width / 2) {
+          rowsEmptyLeft[row] = false;
+          colsEmptyLeft[col] = false;
+        } else {
+          rowsEmptyRight[row] = false;
+          colsEmptyRight[col] = false;
+        }
       }
     });
 
-    rowsEmpty.forEach((isEmpty, row) => {
+    // Regenera columnas vacías para el lado izquierdo
+    colsEmptyLeft.forEach((isEmpty, col) => {
       if (isEmpty) {
-        this.regenerateRow(row);
+        this.regenerateColumn(col, true); // true para el lado izquierdo
       }
     });
 
-    colsEmpty.forEach((isEmpty, col) => {
+    // Regenera columnas vacías para el lado derecho
+    colsEmptyRight.forEach((isEmpty, col) => {
       if (isEmpty) {
-        this.regenerateColumn(col);
+        this.regenerateColumn(col, false); // false para el lado derecho
       }
     });
   }
 
-  regenerateRow(row) {
-    for (let col = 0; col < this.columnas; col++) {
-      const { x, y } = this.brickPositions[row][col];
-      const color = this.getRandomBrickColor();
-      const randomType = this.getType();
+  regenerateColumn(col, isLeftSide) {
+    const offsetX = isLeftSide
+      ? this.scene.sys.game.config.width * 0.06
+      : this.scene.sys.game.config.width * 0.06 +
+        (this.scene.sys.game.config.width * 0.1 +
+          (this.scene.sys.game.config.width -
+            2 * this.scene.sys.game.config.width * 0.06) /
+            2);
 
-      const brick = new Brick(
-        this.scene,
-        x,
-        y,
-        60,
-        20,
-        color,
-        0.09,
-        randomType,
-        this.collisionWidth, // Pasar el tamaño de colisión
-        this.collisionHeight // Pasar el tamaño de colisión
-      );
-      this.add(brick);
-      brick.setRowIndex(row);
-      brick.setColIndex(col);
-    }
-  }
-
-  regenerateColumn(col) {
     for (let row = 0; row < this.filas; row++) {
-      const { x, y } = this.brickPositions[row][col];
+      const { y } = this.brickPositions[row][col];
       const color = this.getRandomBrickColor();
       const randomType = this.getType();
+      const newOffset = isLeftSide ? 98 : 100
+      const x =
+        offsetX + col * (this.collisionWidth + newOffset) + this.collisionWidth / 2; // Ajusta el cálculo de X aquí
 
       const brick = new Brick(
         this.scene,
-        x,
+        x, // Asegúrate de ajustar la posición X aquí
         y,
-        60,
-        20,
+        this.collisionWidth,
+        this.collisionHeight,
         color,
         0.09,
         randomType,
-        this.collisionWidth, // Pasar el tamaño de colisión
-        this.collisionHeight // Pasar el tamaño de colisión
+        this.collisionWidth,
+        this.collisionHeight
       );
+
       this.add(brick);
       brick.setRowIndex(row);
       brick.setColIndex(col);

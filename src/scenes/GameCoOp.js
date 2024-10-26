@@ -20,6 +20,8 @@ export class GameCooperative extends Scene {
     this.condimentoEntregado = false;
 
     this.delivered = [];
+    this.waiterPopcorn = [];
+    this.waiterCondimento = [];
     this.discarted = [];
   }
 
@@ -69,11 +71,11 @@ export class GameCooperative extends Scene {
 
     // Crear el puente
     this.bridgeLeft = this.add
-      .sprite(this.scale.width * 0.465, this.scale.height * 0.86, "bridgeLeft")
+      .sprite(this.scale.width * 0.465, this.scale.height * 0.88, "bridgeLeft")
       .setOrigin(0.5);
 
     this.bridgeRight = this.add
-      .sprite(this.scale.width * 0.535, this.scale.height * 0.86, "bridgeRight")
+      .sprite(this.scale.width * 0.535, this.scale.height * 0.88, "bridgeRight")
       .setOrigin(0.5);
 
     // Inicializar PedidoManager y BridgeManager
@@ -119,10 +121,10 @@ export class GameCooperative extends Scene {
     this.cintaMovimientoDerecha.anims.play("MovCintaRight", true);
 
     // Crear la mira para ambos jugadores
-    this.miras.push(this.createMira(width * 0.25, height * 0.5)); // Jugador 1
-    this.miras.push(this.createMira(width * 0.75, height * 0.5)); // Jugador 2
+    this.miras.push(this.createMira(width * 0.25, height * 0.5, true)); // Jugador 1
+    this.miras.push(this.createMira(width * 0.75, height * 0.5, false)); // Jugador 2
 
-    this.wall = new WallBrick(this, 3, 6);
+    this.wall = new WallBrick(this, 3, 4);
 
     // Crear grupo para las balas
     this.bullets = this.physics.add.group({
@@ -131,7 +133,8 @@ export class GameCooperative extends Scene {
       runChildUpdate: true,
       velocityX: 0,
       allowGravity: false,
-      collideWorldBounds: false,
+      collideWorldBounds: true,
+      bounceX: true,
     });
 
     this.fallingObjects = this.physics.add.group({
@@ -230,64 +233,83 @@ export class GameCooperative extends Scene {
 
     // Verificar si el objeto coincide con los elementos del pedido
     if (fallingObject.texture.key === pochoclo && this.pochocloEntregado) {
-      console.log("same product pochoclo")
-      this.update_points(10);
-      this.discarted.push(fallingObject);
-      this.discarted.forEach((obj) => obj.destroy());
+      console.log("mismo producto Pochoclo");
+      this.waiterPopcorn.push(fallingObject);
+      this.waiterPopcorn.forEach((obj) => obj.destroy());
 
-    } else if (fallingObject.texture.key === condimento && this.condimentoEntregado) {
-      console.log("same product condiment")
-      this.update_points(10);
-      this.discarted.push(fallingObject);
-      this.discarted.forEach((obj) => obj.destroy());
+    } else if (
+      fallingObject.texture.key === condimento &&
+      this.condimentoEntregado
+    ) {
+      console.log("mismo producto Condiment");
+      this.waiterCondimento.push(fallingObject);
+      this.waiterCondimento.forEach((obj) => obj.destroy());
 
-    } else if (fallingObject.texture.key === pochoclo && !this.pochocloEntregado) {
-      fallingObject.setVelocityY(0)
+    } else if (
+      fallingObject.texture.key === pochoclo &&
+      !this.pochocloEntregado
+    ) {
+      fallingObject.setVelocityY(0);
       this.delivered.push(fallingObject); // Agregar a la lista de delivered
       this.pochocloEntregado = true;
       console.log("correcto 1 pochoclo");
-
     } else if (
-      fallingObject.texture.key === condimento && !this.condimentoEntregado) {
-      fallingObject.setVelocityY(0)
+      fallingObject.texture.key === condimento &&
+      !this.condimentoEntregado
+    ) {
+      fallingObject.setVelocityY(0);
       this.delivered.push(fallingObject); // Agregar a la lista de delivered
       this.condimentoEntregado = true;
       console.log("correcto 2 condimento");
-
     } else {
       // Si el elemento es incorrecto, restar puntos y limpiar la lista de delivered
       this.discarted.push(fallingObject);
       this.update_points(-5);
-      console.log("negativo !!");
+
       this.discarted.forEach((obj) => obj.destroy());
       this.discarted = [];
+      console.log("negativo !!");
     }
+
+    // // Verificar si ambos elementos están en delivered o en waiters
+    // if (
+    //   (this.pochocloEntregado && this.waiterPopcorn.length > 0) ||
+    //   (this.condimentoEntregado && this.waiterCondimento.length > 0)
+    // ) {
+    //   // Mover elementos de waiter a delivered
+    //   if (this.waiterPopcorn.length > 0 && !this.pochocloEntregado) {
+    //     this.delivered.push(this.waiterPopcorn.pop());
+    //     this.pochocloEntregado = true;
+    //   }
+    //   if (this.waiterCondimento.length > 0 && !this.condimentoEntregado) {
+    //     this.delivered.push(this.waiterCondimento.pop());
+    //     this.condimentoEntregado = true;
+    //   }
+    // }
 
     // Si ambos elementos del pedido están presentes en la lista
     if (this.pochocloEntregado && this.condimentoEntregado) {
       const validado = this.pedidoManager.validatePedido(this.delivered);
       if (validado) {
         this.update_points(50); // Sumar puntos si el pedido es correcto
-        this.addTime(10); // Añadir tiempo
+        this.addTime(5); // Añadir tiempo
         console.log("correcto !!");
       } else {
-        this.update_points(-5); // Restar puntos por pedido incorrecto
+        this.update_points(-10); // Restar puntos por pedido incorrecto
         console.log("malchequeo");
       }
-
-      // Limpiar lista de delivered y reiniciar el pedido
-      this.delivered.forEach((obj) => obj.destroy());
-      this.delivered = [];
-      this.pochocloEntregado = false;
-      this.condimentoEntregado = false;
-      this.pedidoManager.generateNewPedido();
-      console.log("eliminar...");
     }
   }
 
   // Método para crear la mira de un jugador
-  createMira(x, y) {
-    const mira = this.add.sprite(x, y, "bulletSprite").setDepth(10); // Asigna un sprite para la mira
+  createMira(x, y, isPlayerOne) {
+    let spriteName;
+    if (isPlayerOne) {
+      spriteName = "miraPlayerOne";
+    } else {
+      spriteName = "miraPlayerTwo";
+    }
+    const mira = this.add.sprite(x, y, spriteName).setDepth(10); // Asigna un sprite para la mira
     mira.setInteractive();
     return mira;
   }
@@ -319,32 +341,59 @@ export class GameCooperative extends Scene {
 
   handleMiraMovement() {
     const speed = 8;
+    const width = this.game.scale.width; // Ancho de la pantalla
+    const height = this.game.scale.height; // Alto de la pantalla
+    let offset = 50;
+    // Jugador 1: Límite en la mitad izquierda de la pantalla
+    const leftBoundary = offset;
+    const rightBoundaryPlayer1 = width / 2 - offset;
+
+    // Jugador 2: Límite en la mitad derecha de la pantalla
+    const leftBoundaryPlayer2 = width / 2 + offset;
+    const rightBoundary = width - offset;
+
     // Jugador 1: Mover con WASD
     if (this.keys.W.isDown) {
-      this.miras[0].y -= speed;
+      this.miras[0].y = Phaser.Math.Clamp(this.miras[0].y - speed, 0, height);
     }
     if (this.keys.S.isDown) {
-      this.miras[0].y += speed;
+      this.miras[0].y = Phaser.Math.Clamp(this.miras[0].y + speed, 0, height);
     }
     if (this.keys.A.isDown) {
-      this.miras[0].x -= speed;
+      this.miras[0].x = Phaser.Math.Clamp(
+        this.miras[0].x - speed,
+        leftBoundary,
+        rightBoundaryPlayer1
+      );
     }
     if (this.keys.D.isDown) {
-      this.miras[0].x += speed;
+      this.miras[0].x = Phaser.Math.Clamp(
+        this.miras[0].x + speed,
+        leftBoundary,
+        rightBoundaryPlayer1
+      );
     }
 
-    // Jugador 2: Mover con flechas
+    // Jugador 2: Mover con flechas direccionales
     if (this.keys.UP.isDown) {
-      this.miras[1].y -= speed;
+      this.miras[1].y = Phaser.Math.Clamp(this.miras[1].y - speed, 0, height);
     }
     if (this.keys.DOWN.isDown) {
-      this.miras[1].y += speed;
+      this.miras[1].y = Phaser.Math.Clamp(this.miras[1].y + speed, 0, height);
     }
     if (this.keys.LEFT.isDown) {
-      this.miras[1].x -= speed;
+      this.miras[1].x = Phaser.Math.Clamp(
+        this.miras[1].x - speed,
+        leftBoundaryPlayer2,
+        rightBoundary
+      );
     }
     if (this.keys.RIGHT.isDown) {
-      this.miras[1].x += speed;
+      this.miras[1].x = Phaser.Math.Clamp(
+        this.miras[1].x + speed,
+        leftBoundaryPlayer2,
+        rightBoundary
+      );
     }
   }
 
@@ -385,14 +434,14 @@ export class GameCooperative extends Scene {
     fallingObject.setVelocityX(0); // Asegurarse de que la velocidad inicial sea 0
 
     this.fallingObjects.add(fallingObject); // Añadir el objeto al grupo
-
+    const cintaSpeed = 270;
     // Colisión con la cinta de movimiento derecha
     this.physics.add.collider(
       fallingObject,
       this.cintaMovimientoDerecha,
       () => {
         fallingObject.isOnCinta = true; // Marcar como en contacto con la cinta
-        fallingObject.setVelocityX(-320); // Aumentar velocidad a la derecha
+        fallingObject.setVelocityX(-cintaSpeed); // Aumentar velocidad a la derecha
       },
       null,
       this
@@ -404,7 +453,7 @@ export class GameCooperative extends Scene {
       this.cintaMovimientoIzquierda,
       () => {
         fallingObject.isOnCinta = true; // Marcar como en contacto con la cinta
-        fallingObject.setVelocityX(320); // Aumentar velocidad a la izquierda
+        fallingObject.setVelocityX(cintaSpeed); // Aumentar velocidad a la izquierda
       },
       null,
       this
