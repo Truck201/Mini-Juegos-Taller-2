@@ -76,7 +76,6 @@ export class StartCooperative extends Scene {
       this.tutorials.paragraph1,
       this.tutorials.paragraph2,
       this.tutorials.paragraph3,
-      this.tutorials.paragraph4,
     ];
 
     // Saltar el tutorial con la tecla Q

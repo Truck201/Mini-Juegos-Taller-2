@@ -12,6 +12,7 @@ export class RecolectScene extends Scene {
     super("recolectScene");
     this.backgroundMusic = null; // Asegurarse de tener la referencia disponible
     this.lastKeyPressTime = 0;
+    this.lastKidKornTime = 0; // Añadir esta variable
   }
 
   points1 = 0; // Puntos para el jugador 1
@@ -103,15 +104,15 @@ export class RecolectScene extends Scene {
 
     let background = this.add.sprite(width * 0.5, height * 0.5, "escenario");
     background.setDepth(2);
-    background.setScale(1);
+    background.setScale(1.15);
 
     let shadows = this.add.sprite(width * 0.5, height * 0.5, "shadowTotal");
     shadows.setDepth(3);
-    shadows.setScale(1);
+    shadows.setScale(1.15);
 
     // Crear la barra principal
     let barraX = width / 2; // Posición Barra en X
-    let barraY = (height * 4.3) / 5; // Posición de alto en las barras Y
+    let barraY = (height * 4) / 5; // Posición de alto en las barras Y
 
     this.imagenBar = this.add
       .sprite(barraX, barraY, "imagen-barra")
@@ -125,7 +126,7 @@ export class RecolectScene extends Scene {
 
     for (let i = 0; i < 28; i++) {
       let keysX = width / 5.83 + i * border;
-      let barraY = (height * 4.3) / 5;
+      let barraY = (height * 4) / 5;
       let n = Phaser.Math.Between(0, 11);
 
       if (n > 9) {

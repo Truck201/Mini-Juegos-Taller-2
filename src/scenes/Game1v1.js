@@ -65,10 +65,6 @@ export class Game1v1 extends Scene {
       this.tutorials.paragraph1,
       this.tutorials.paragraph2,
       this.tutorials.paragraph3,
-      this.tutorials.paragraph4,
-      this.tutorials.paragraph5,
-      this.tutorials.paragraph6,
-      this.tutorials.paragraph7,
     ];
 
     // Crear texto inicial en el centro de la pantalla

@@ -67,7 +67,7 @@ export class GameCooperative extends Scene {
             this.scene.launch("GameOverCoop", {
               point: this.points,
             });
-
+            this.winnerSound.play();
             this.backgroundMusic.stop();
             this.lastSeconds.stop();
             this.scene.bringToTop("GameOverCoop");
@@ -580,7 +580,7 @@ export class GameCooperative extends Scene {
     const height = this.game.scale.height;
 
     const adderTimer = this.add
-    .text(width * 0.5, height * 0.6, `${this.addingTimer.toString()}`, {
+    .text(width * 0.5, height * 0.6, `${this.addingTimer.toString()}s`, {
       fontSize: "35px",
       color: "#fff",
       fontFamily: "'Press Start 2P'",

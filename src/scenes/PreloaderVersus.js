@@ -116,8 +116,8 @@ export class PreloaderVersus extends Scene {
       "BigKorn",
       "../public/assets/versus/kid-korn/BigKornAnims.png",
       {
-        frameWidth: 1000,
-        frameHeight: 1000,
+        frameWidth: 780,
+        frameHeight: 1164,
       }
     );
     // idle KK

@@ -18,11 +18,11 @@ export class AtributeText extends BaseScene {
     const width1 = width * 0.115;
     const width2 = width * 0.885;
 
-    const height1 = height * 0.4;
-    const height2 = height * 0.48;
-    const height3 = height * 0.56;
-    const height4 = height * 0.64;
-    const height5 = height * 0.72;
+    const height1 = height * 0.34;
+    const height2 = height * 0.42;
+    const height3 = height * 0.50;
+    const height4 = height * 0.58;
+    const height5 = height * 0.66;
 
     // Textos De Atributos 1
     this.scene.player1HPText = this.createTextToScene(

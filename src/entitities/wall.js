@@ -69,7 +69,7 @@ export class WallBrick extends Phaser.GameObjects.Group {
             widthBrick,
             heightBrick,
             color,
-            0.09,
+            0.001,
             randomType,
             this.collisionWidth, // Pasar el tamaño de colisión
             this.collisionHeight // Pasar el tamaño de colisión
@@ -146,7 +146,7 @@ export class WallBrick extends Phaser.GameObjects.Group {
         this.collisionWidth,
         this.collisionHeight,
         color,
-        0.09,
+        0.001,
         randomType,
         this.collisionWidth,
         this.collisionHeight

@@ -25,7 +25,6 @@ export class GameOverCooperative extends BaseScene {
     // Si el puntaje actual es mayor que el récord, actualizarlo
     if (this.point > recordData.score) {
       let playerName = prompt(`${getPhrase("IngreseNombre")}`);
-      this.scene.winnerSound.play();
       if (playerName) {
         // Guardar el nuevo récord en localStorage
         recordData.name = playerName;

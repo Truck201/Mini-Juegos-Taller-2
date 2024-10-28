@@ -5,7 +5,7 @@ export class Attack {
   constructor(scene) {
     this.scene = scene;
 
-    this.y = (this.scene.scale.height * 4.3) / 5;
+    this.y = (this.scene.scale.height * 4) / 5;
     this.x = this.scene.scale.width / 2;
 
     //Animaciones
@@ -86,7 +86,7 @@ export class Attack {
     const fallSword = this.scene.fallingBonus;
     fallSword.play();
 
-    let endY = this.y * 0.4;
+    let endY = this.y * 0.385;
 
     this.scene.tweens.add({
       targets: this.sprite,

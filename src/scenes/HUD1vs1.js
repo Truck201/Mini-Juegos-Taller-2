@@ -25,13 +25,13 @@ export class Hud extends BaseScene {
   create() {
     this.points_text1 = this.createText(
       this.scale.width * 0.075,
-      this.scale.height * 0.275,
+      this.scale.height * 0.29,
       `${getPhrase('Puntos')} ${this.points1.toString().padStart(2, "0")}`
     ).setOrigin(0.5);
 
     this.points_text2 = this.createText(
       this.scale.width * 0.935,
-      this.scale.height * 0.275,
+      this.scale.height * 0.29,
       `${getPhrase('Puntos')} ${this.points2.toString().padStart(2, "0")}`
     ).setOrigin(0.5);
 
@@ -39,7 +39,7 @@ export class Hud extends BaseScene {
       this.scale.width / 2,
       this.scale.height * 0.415,
       `${this.remaining_time.toString().padStart(2, "0")}`
-    ).setOrigin(0.5);
+    ).setOrigin(0.5).setScale(2.2);
   }
 
   update_points(player, points) {
@@ -56,6 +56,7 @@ export class Hud extends BaseScene {
         this.remaining_time_text.destroy();
       } else {
         this.remaining_time_text.setText(`${timeout.toString().padStart(2, "0")}`);
+        this.remaining_time_text.setScale(2.2)
   
         if (timeout === 5 || timeout === 4  || (timeout <= 3 && timeout >= 0)) {
           this.remaining_time_text.setScale(0.05); // Escala grande
@@ -97,7 +98,7 @@ export class Hud extends BaseScene {
             }
           });
         } else {
-          this.remaining_time_text.setScale(1); // Escala normal
+          this.remaining_time_text.setScale(2.2); // Escala normal
         }
       }
     } else {
