@@ -94,8 +94,8 @@ export class BattleScene extends Scene {
     let background = this.add.sprite(width * 0.5, height * 0.5, "escenario");
     background.setDepth(2);
 
-    const player1 = new Character(this, "mimbo", true);
-    const player2 = new Character(this, "luho", false);
+    const player1 = new Character(this, "mimbo", true, false);
+    const player2 = new Character(this, "luho", false, false);
 
     player1.change_emotion("Mimbo", 0, player1);
     player2.change_emotion("Luho", 0, player2);

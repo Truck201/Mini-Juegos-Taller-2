@@ -289,7 +289,9 @@ export class MainMenu extends BaseScene {
     this.mainMenuMusic.stop();
     // Esperar un poco antes de iniciar la siguiente escena
     this.time.delayedCall(1500, () => {
-      this.scene.start("startCoop"); //Ir a escena Main
+      this.scene.start("startCoop", {
+        language: this.language
+      }); //Ir a escena Main
     });
   }
 }

@@ -1,14 +1,26 @@
 export class Character {
-  constructor(scene, sprite, isPlayerOne) {
+  constructor(scene, sprite, isPlayerOne, isInCoop) {
     this.scene = scene;
     this.sprite = sprite;
     this.isPlayerOne = isPlayerOne;
-    this.y = this.scene.scale.height * 0.15;
+    this.isInCoop = isInCoop
 
-    if (this.isPlayerOne) {
+    if (this.isPlayerOne && !isInCoop) {
       this.x = this.scene.game.config.width * 0.0667;
-    } else {
+      this.y = this.scene.scale.height * 0.15;
+      this.scale = 1.2
+    } else if ((!this.isPlayerOne && !isInCoop)){
       this.x = this.scene.game.config.width * 0.934;
+      this.y = this.scene.scale.height * 0.15;
+      this.scale = 1.2
+    } else if((this.isPlayerOne && isInCoop)) {
+      this.x = this.scene.game.config.width * 0.0667;
+      this.y = this.scene.scale.height * 0.86;
+      this.scale = 1
+    } else if((!this.isPlayerOne && isInCoop)) {
+      this.x = this.scene.game.config.width * 0.934;
+      this.y = this.scene.scale.height * 0.86;
+      this.scale = 1
     }
 
     this.characterSprite = this.scene.physics.add.sprite(
@@ -20,7 +32,7 @@ export class Character {
     this.characterSprite.setImmovable;
     this.characterSprite.body.allowGravity = false;
     this.characterSprite.setDepth(8);
-    this.characterSprite.setScale(1.2);
+    this.characterSprite.setScale(this.scale);
 
     this.initAnimations();
 

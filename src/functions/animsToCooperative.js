@@ -23,25 +23,27 @@ export function initialAnims(scene) {
     });
   }
 
-  if (!scene.anims.exists("OpBridgeLeft")) {
+  if (!scene.anims.exists("CashFlying")) {
     scene.anims.create({
-      key: "OpBridgeLeft",
-      frames: scene.anims.generateFrameNumbers("AnimsBridgeLeft", {
+      key: "CashFlying",
+      frames: scene.anims.generateFrameNumbers("FlyingCash", {
         start: 0,
-        end: 5,
+        end: 1,
       }),
       frameRate: 7,
+      repeat: -1
     });
   }
 
-  if (!scene.anims.exists("OpBridgeRight")) {
+  if (!scene.anims.exists("arrows-idle")) {
     scene.anims.create({
-      key: "OpBridgeRight",
-      frames: scene.anims.generateFrameNumbers("AnimsBridgeRight", {
+      key: "arrows-idle",
+      frames: scene.anims.generateFrameNumbers("ArrowsDelivers", {
         start: 0,
-        end: 5,
+        end: 1,
       }),
       frameRate: 7,
+      repeat: -1
     });
   }
 }

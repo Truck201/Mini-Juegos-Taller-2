@@ -6,6 +6,8 @@ import { Brick } from "../entitities/bricks";
 import { PedidoManager } from "../functions/PedidoManager";
 import { BridgeManager } from "../functions/BridgeManager";
 import { initialAnims } from "../functions/animsToCooperative";
+import { getLanguageConfig} from "../services/translations";
+import { Character } from "../entitities/character";
 
 export class GameCooperative extends Scene {
   constructor() {
@@ -14,6 +16,10 @@ export class GameCooperative extends Scene {
     this.miras = []; // Agregar array para las miras de ambos jugadores
     this.keys = {}; // Inicializa el objeto keys aquí
     this.lastKeyPressTime = 0;
+
+    this.lastFireTimePlayer1 = 0;
+    this.lastFireTimePlayer2 = 0;
+    this.fireDelay = 500; // 500 ms de retraso entre disparos
 
     // Variables para rastrear si los elementos correctos fueron entregados
     this.pochocloEntregado = false;
@@ -26,15 +32,15 @@ export class GameCooperative extends Scene {
   }
 
   init(data) {
-    this.points = data.points1 || 0; // Puntaje inicial
+    this.points = data.points || 0; // Puntaje inicial
     this.game_over_timeout = 35; // Tiempo límite de 30 segundos
+    this.language = data.language || getLanguageConfig();
 
     initialAnims(this);
 
     this.scene.launch("hudCoop", {
       remaining_time: this.game_over_timeout,
-      points1: this.points1,
-      points2: this.points2,
+      points: this.points,
     });
 
     // Temporizador
@@ -52,13 +58,13 @@ export class GameCooperative extends Scene {
         if (this.game_over_timeout < 0) {
           setTimeout(() => {
             this.scene.stop("hudCoop");
-            this.scene.stop("Game1vs1");
+            this.scene.pause("GameCoop");
 
-            // this.scene.start("GameOverCoop", {
-            //   points1: this.points1,
-            //   points2: this.points2,
-            //   language: this.language,
-            // });
+            this.scene.launch("GameOverCoop", {
+              points: this.points,
+            });
+
+            this.scene.bringToTop("GameOverCoop");
           }, 980);
         }
       },
@@ -69,23 +75,65 @@ export class GameCooperative extends Scene {
     const width = this.game.scale.width;
     const height = this.game.scale.height;
 
-    // Crear el puente
-    this.bridgeLeft = this.add
-      .sprite(this.scale.width * 0.465, this.scale.height * 0.88, "bridgeLeft")
-      .setOrigin(0.5);
+    // Añadimos el fondo
+    this.background = this.add.image(
+      width * 0.5,
+      height * 0.5,
+      "BackgroundCoop"
+    );
+    this.background.setDepth(1);
 
-    this.bridgeRight = this.add
-      .sprite(this.scale.width * 0.535, this.scale.height * 0.88, "bridgeRight")
-      .setOrigin(0.5);
+    this.player1 = new Character(this, "mimbo", true, true);
+    this.player2 = new Character(this, "luho", false, true);
+
+    this.player1.change_emotion("Mimbo", 0, this.scene.player1);
+    this.player2.change_emotion("Luho", 0, this.scene.player2);
+
+    // Añadimos fondo de pedidos
+    this.boxDelivers = this.add.image(
+      width * 0.5,
+      height * 0.335,
+      "CurrentDelivers"
+    );
+    this.boxDelivers.setDepth(2);
+
+    this.anims.create({
+      key: "mothman_idle",
+      frames: this.anims.generateFrameNumbers("mothman", {
+        start: 0,
+        end: 1,
+      }),
+      frameRate: 2,
+      repeat: -1, // La animación se repite indefinidamente
+    });
+
+    this.mothman = this.add
+      .sprite(width * 0.5, height * 0.68, "mothman")
+      .setDepth(4);
+    this.physics.add.existing(this.mothman);
+    this.mothman.setImmovable;
+    this.mothman.body.allowGravity = false;
+    this.mothman.play("mothman_idle", true);
+
+    // Añadimos Flechas
+    this.arrowsDelivers = this.add.sprite(width * 0.5, height * 0.4, "");
+    this.arrowsDelivers.setDepth(2);
+    this.arrowsDelivers.setVisible(true);
+    this.arrowsDelivers.anims.play("arrows-idle", true);
+
+    // Crear el puente
+    this.bridgeSprite = this.add
+      .sprite(this.scale.width * 0.5, this.scale.height * 0.775, "BridgeSprite")
+      .setOrigin(0.5)
+      .setScale(1.12);
 
     // Inicializar PedidoManager y BridgeManager
     this.pedidoManager = new PedidoManager(this);
-    this.bridgeManagerLeft = new BridgeManager(this, this.bridgeLeft);
-    this.bridgeManagerRight = new BridgeManager(this, this.bridgeRight);
+    this.bridgeManager = new BridgeManager(this, this.bridgeSprite);
 
     // Cinta de movimiento derecha
     this.cintaMovimientoDerecha = this.add
-      .sprite(width * 0.8, height * 0.82, "cinta")
+      .sprite(width * 0.8, height * 0.695, "cinta")
       .setAlpha(1)
       .setOrigin(0.5)
       .setDepth(3);
@@ -95,14 +143,14 @@ export class GameCooperative extends Scene {
 
     // Establecer el tamaño del cuerpo de colisión basado en el tamaño del sprite
     this.cintaMovimientoDerecha.body.setSize(
-      this.cintaMovimientoDerecha.width,
+      this.cintaMovimientoDerecha.width - 40,
       this.cintaMovimientoDerecha.height
     );
-    this.cintaMovimientoDerecha.body.setOffset(0, 0);
+    this.cintaMovimientoDerecha.body.setOffset(0, 30);
 
     // Cinta de movimiento izquierda
     this.cintaMovimientoIzquierda = this.add
-      .sprite(width * 0.2, height * 0.82, "cinta")
+      .sprite(width * 0.2, height * 0.695, "cinta")
       .setAlpha(1)
       .setOrigin(0.5)
       .setDepth(3);
@@ -113,9 +161,9 @@ export class GameCooperative extends Scene {
     // Establecer el tamaño del cuerpo de colisión basado en el tamaño del sprite
     this.cintaMovimientoIzquierda.body.setSize(
       this.cintaMovimientoIzquierda.width,
-      this.cintaMovimientoIzquierda.height
+      this.cintaMovimientoIzquierda.height - 40
     );
-    this.cintaMovimientoIzquierda.body.setOffset(0, 0);
+    this.cintaMovimientoIzquierda.body.setOffset(0, 30);
 
     this.cintaMovimientoIzquierda.anims.play("MovCintaLeft", true);
     this.cintaMovimientoDerecha.anims.play("MovCintaRight", true);
@@ -124,7 +172,7 @@ export class GameCooperative extends Scene {
     this.miras.push(this.createMira(width * 0.25, height * 0.5, true)); // Jugador 1
     this.miras.push(this.createMira(width * 0.75, height * 0.5, false)); // Jugador 2
 
-    this.wall = new WallBrick(this, 3, 4);
+    this.wall = new WallBrick(this, 4, 4);
 
     // Crear grupo para las balas
     this.bullets = this.physics.add.group({
@@ -145,15 +193,7 @@ export class GameCooperative extends Scene {
 
     this.physics.add.overlap(
       this.fallingObjects,
-      this.bridgeManagerLeft.bridge,
-      this.handleFallingObjectCollision,
-      null,
-      this
-    );
-
-    this.physics.add.overlap(
-      this.fallingObjects,
-      this.bridgeManagerRight.bridge,
+      this.bridgeManager.bridge,
       this.handleFallingObjectCollision,
       null,
       this
@@ -217,8 +257,8 @@ export class GameCooperative extends Scene {
     });
 
     // Crear los tirachinas
-    this.slingShot1 = new SlingShot(this, width * 0.25, height * 0.9, true); // Tirachinas para Jugador 1
-    this.slingShot2 = new SlingShot(this, width * 0.75, height * 0.9, false); // Tirachinas para Jugador 2
+    this.slingShot1 = new SlingShot(this, width * 0.25, height * 0.9, false); // Tirachinas para Jugador 1
+    this.slingShot2 = new SlingShot(this, width * 0.75, height * 0.9, true); // Tirachinas para Jugador 2
   }
 
   // Método para manejar la colisión entre un fallingObject y el puente
@@ -236,7 +276,6 @@ export class GameCooperative extends Scene {
       console.log("mismo producto Pochoclo");
       this.waiterPopcorn.push(fallingObject);
       this.waiterPopcorn.forEach((obj) => obj.destroy());
-
     } else if (
       fallingObject.texture.key === condimento &&
       this.condimentoEntregado
@@ -244,7 +283,6 @@ export class GameCooperative extends Scene {
       console.log("mismo producto Condiment");
       this.waiterCondimento.push(fallingObject);
       this.waiterCondimento.forEach((obj) => obj.destroy());
-
     } else if (
       fallingObject.texture.key === pochoclo &&
       !this.pochocloEntregado
@@ -264,35 +302,19 @@ export class GameCooperative extends Scene {
     } else {
       // Si el elemento es incorrecto, restar puntos y limpiar la lista de delivered
       this.discarted.push(fallingObject);
-      this.update_points(-5);
-
+      this.addTime(-5);
+      this.pedidoManager.emotionCharacters("negative");
       this.discarted.forEach((obj) => obj.destroy());
       this.discarted = [];
       console.log("negativo !!");
     }
-
-    // // Verificar si ambos elementos están en delivered o en waiters
-    // if (
-    //   (this.pochocloEntregado && this.waiterPopcorn.length > 0) ||
-    //   (this.condimentoEntregado && this.waiterCondimento.length > 0)
-    // ) {
-    //   // Mover elementos de waiter a delivered
-    //   if (this.waiterPopcorn.length > 0 && !this.pochocloEntregado) {
-    //     this.delivered.push(this.waiterPopcorn.pop());
-    //     this.pochocloEntregado = true;
-    //   }
-    //   if (this.waiterCondimento.length > 0 && !this.condimentoEntregado) {
-    //     this.delivered.push(this.waiterCondimento.pop());
-    //     this.condimentoEntregado = true;
-    //   }
-    // }
 
     // Si ambos elementos del pedido están presentes en la lista
     if (this.pochocloEntregado && this.condimentoEntregado) {
       const validado = this.pedidoManager.validatePedido(this.delivered);
       if (validado) {
         this.update_points(50); // Sumar puntos si el pedido es correcto
-        this.addTime(5); // Añadir tiempo
+        this.addTime(10); // Añadir tiempo
         console.log("correcto !!");
       } else {
         this.update_points(-10); // Restar puntos por pedido incorrecto
@@ -326,14 +348,20 @@ export class GameCooperative extends Scene {
       }
     });
 
-    // Disparar para Jugador 1
+    // Disparar para Jugador 1 si ha pasado el tiempo de espera
     if (Phaser.Input.Keyboard.JustDown(this.keys.SPACE)) {
-      this.fireBullet(this.miras[0], this.slingShot1);
+      if (time > this.lastFireTimePlayer1 + this.fireDelay) {
+        this.fireBullet(this.miras[0], this.slingShot1);
+        this.lastFireTimePlayer1 = time; // Actualizar el tiempo del último disparo
+      }
     }
 
-    // Disparar para Jugador 2
+    // Disparar para Jugador 2 si ha pasado el tiempo de espera
     if (Phaser.Input.Keyboard.JustDown(this.keys.ENTER)) {
-      this.fireBullet(this.miras[1], this.slingShot2);
+      if (time > this.lastFireTimePlayer2 + this.fireDelay) {
+        this.fireBullet(this.miras[1], this.slingShot2);
+        this.lastFireTimePlayer2 = time; // Actualizar el tiempo del último disparo
+      }
     }
 
     this.wall.checkAndRegenerateWall();
@@ -429,6 +457,7 @@ export class GameCooperative extends Scene {
     fallingObject.setCollideWorldBounds(true);
     fallingObject.body.allowGravity = true;
     fallingObject.body.gravity.y = 300;
+    fallingObject.setDepth(8);
 
     // Inicializar velocidad
     fallingObject.setVelocityX(0); // Asegurarse de que la velocidad inicial sea 0

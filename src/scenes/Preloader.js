@@ -828,7 +828,7 @@ export class Preloader extends Scene {
     // Background
     this.load.image(
       "BackgroundCoop",
-      "../public/assets/coop/escenarios/fondo.png"
+      "../public/assets/coop/escenarios/background.png"
     );
 
     // Cinta de Movimiento
@@ -960,7 +960,31 @@ export class Preloader extends Scene {
       "../public/assets/coop/bolsas-pedidos/EmptyOrangeSalt.png"
     );
 
+    // Slot de color Objects Brick
+    this.load.image(
+      "slotRed",
+      "../public/assets/coop/bolsas-pedidos/slotRed.png"
+    );
 
+    this.load.image(
+      "slotBlue",
+      "../public/assets/coop/bolsas-pedidos/slotBlue.png"
+    );
+
+    // Pedido Actual
+    this.load.image(
+      "CurrentDelivers",
+      "../public/assets/coop/bolsas-pedidos/box.png"
+    );
+
+    this.load.spritesheet(
+      "ArrowsDelivers",
+      "../public/assets/coop/bolsas-pedidos/arrowDelivers.png",
+      {
+        frameWidth: 360,
+        frameHeight: 52,
+      }
+    );
 
     // Bolsitas Vacias
     this.load.image(
@@ -983,33 +1007,10 @@ export class Preloader extends Scene {
       "../public/assets/coop/bolsitas-vacias/empty-verde.png"
     );
 
-    // Puente  bridgeSprite   bridgeSprite
+    // Puente
     this.load.image(
-      "bridgeRight",
-      "../public/assets/coop/bridge/bridge-static-der.png"
-    );
-
-    this.load.image(
-      "bridgeLeft",
-      "../public/assets/coop/bridge/bridge-static-izq.png"
-    );
-
-    this.load.spritesheet(
-      "AnimsBridgeRight",
-      "../public/assets/coop/bridge/bridge-der.png",
-      {
-        frameWidth: 124,
-        frameHeight: 128,
-      }
-    );
-
-    this.load.spritesheet(
-      "AnimsBridgeLeft",
-      "../public/assets/coop/bridge/bridge-izq.png",
-      {
-        frameWidth: 124,
-        frameHeight: 128,
-      }
+      "BridgeSprite",
+      "../public/assets/coop/box/bridgeStatic.png"
     );
 
     // Resorteras
@@ -1036,14 +1037,32 @@ export class Preloader extends Scene {
       }
     );
 
+    // Money
+    this.load.image("Cash", "../public/assets/coop/cash/static-cash.png");
+
+    this.load.spritesheet(
+      "FlyingCash",
+      "../public/assets/coop/cash/move-cash.png",
+      {
+        frameWidth: 140,
+        frameHeight: 72,
+      }
+    );
+
     // SAL AZUCA
     this.load.image("sugar", "../public/assets/coop/ingrediente/popcorn-1.png");
     this.load.image("spicy", "../public/assets/coop/ingrediente/popcorn-2.png");
     this.load.image("salt", "../public/assets/coop/ingrediente/popcorn-3.png");
 
     // Miras
-    this.load.image("miraPlayerOne", "../public/assets/coop/tirachinas/static-mira-red.png");
-    this.load.image("miraPlayerTwo", "../public/assets/coop/tirachinas/static-mira-blue.png");
+    this.load.image(
+      "miraPlayerOne",
+      "../public/assets/coop/tirachinas/static-mira-red.png"
+    );
+    this.load.image(
+      "miraPlayerTwo",
+      "../public/assets/coop/tirachinas/static-mira-blue.png"
+    );
 
     // Tirachinas
     this.load.image(

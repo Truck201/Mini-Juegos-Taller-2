@@ -14,6 +14,7 @@ import { BattleScene } from "./scenes/BattleScene";
 import { GameOver } from "./scenes/GameOver";
 import { BaseScene } from "./lib/FontsBase";
 import { HudCoop } from "./scenes/HudCoop";
+import { GameOverCooperative } from "./scenes/GameOverCoop";
 
 import TVStaticFx from "./lib/TVScanEffect";
 import TVDistortionFx from "./lib/TVDistortion";
@@ -57,6 +58,7 @@ const config = {
     BaseScene,
     StartCooperative,
     GameCooperative,
+    GameOverCooperative,
     HudCoop,
   ],
   pipeline: {
