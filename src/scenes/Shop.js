@@ -163,7 +163,7 @@ export class Shop extends Scene {
     const selected1Player = this.itemsCase.player1Atributes;
     const selected2Player = this.itemsCase.player2Atributes;
     this.stopBarking();
-    this.scene.start("battleScene", {
+    this.scene.start("PreloadBattle", {
       purchasedItems: selectedItems,
       selectedItemsPlayer1: selected1Player,
       selectedItemsPlayer2: selected2Player,

@@ -10,6 +10,7 @@ export class KidKorn {
     this.dialogueSound = this.scene.sound.add("dialoguesSound", {
       volume: 0.1,
     });
+    this.screamCartoon = this.scene.sound.add("screamCartoon", { volume: 0.21});
 
     // Cargar los diálogos
     this.dialogues = dialogues;
@@ -42,6 +43,7 @@ export class KidKorn {
     // Hacer visible el sprite de KidKorn
     this.kidKornBig.setVisible(true);
     this.appear.play();
+    this.screamCartoon.play();
 
     // Siempre aplicar la animación idle de BigKidKorn
     this.kidKornBig.anims.play("idle-BigKorn", true);
@@ -110,6 +112,7 @@ export class KidKorn {
   hideKidKornBig() {
     let height = this.scene.game.scale.height;
     this.goBack.play();
+    this.screamCartoon.stop()
     // Hacer que KidKorn baje y luego desaparecerlo
     this.scene.tweens.add({
       targets: this.kidKornBig,

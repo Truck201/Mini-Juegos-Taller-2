@@ -14,6 +14,8 @@ export function Sounds(scene) {
 
     { key: "appearPopcorn1", path: "recolect/SFX-appearPochoclo1" },
     { key: "appearPopcorn2", path: "recolect/SFX-appearPochoclo2" },
+    { key: "screamCartoon", path: "recolect/SFX-cartoonScream" }, // add
+    { key: "eagleScream", path: "recolect/SFX-eagleSound" }, // add
     { key: "collectPopcorn", path: "recolect/SFX-collectPopcorn" },
     { key: "looseCombo", path: "recolect/SFX-loseCombo" },
     { key: "winCombo", path: "recolect/SFX-winCombo" },

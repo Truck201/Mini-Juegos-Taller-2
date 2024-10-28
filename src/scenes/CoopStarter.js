@@ -31,6 +31,16 @@ export class StartCooperative extends Scene {
     const width = this.game.scale.width;
     const height = this.game.scale.height;
 
+    // Añadimos sonidos
+    this.cooperativeMusic = this.sound.add("music-v4", {
+      volume: 0.09,
+      loop: true,
+    });
+
+    this.select1 = this.sound.add("select", { volume: 0.09 });
+
+    this.cooperativeMusic.play();
+
     // Verificar si los diálogos se cargaron correctamente
     const loadedTutorials = this.cache.json.get("tutorials");
     if (!loadedTutorials) {
@@ -126,12 +136,14 @@ export class StartCooperative extends Scene {
   nextParagraph() {
     // Función para avanzar al siguiente párrafo
     this.currentParagraph++;
+    this.select1.play();
     if (this.currentParagraph < this.tutorialParagraphs.length) {
       this.tutorialText.setText(this.tutorialParagraphs[this.currentParagraph]);
     } else {
       this.cameras.main.zoomTo(0.89, 1000);
       this.cameras.main.fadeOut(1000, 0, 0, 0);
       this.time.delayedCall(1000, () => {
+
         this.startGame();
       });
     }
@@ -139,6 +151,7 @@ export class StartCooperative extends Scene {
 
   startGame() {
     // Iniciar el juego o la siguiente escena
+    this.cooperativeMusic.stop();
     this.scene.start("GameCoop", { language: this.language }); // Cambia 'MainGameScene' al nombre real de tu escena de juego
   }
 }

@@ -56,7 +56,6 @@ export class HudCoop extends BaseScene {
 
         if (timeout === 5 || timeout === 4 || (timeout <= 3 && timeout >= 0)) {
           this.remaining_time_text.setScale(0.05); // Escala grande
-
           // Temblor
           this.tweens.add({
             targets: this.remaining_time_text,

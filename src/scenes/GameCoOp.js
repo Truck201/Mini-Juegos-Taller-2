@@ -6,8 +6,9 @@ import { Brick } from "../entitities/bricks";
 import { PedidoManager } from "../functions/PedidoManager";
 import { BridgeManager } from "../functions/BridgeManager";
 import { initialAnims } from "../functions/animsToCooperative";
-import { getLanguageConfig} from "../services/translations";
+import { getLanguageConfig } from "../services/translations";
 import { Character } from "../entitities/character";
+import { addSoundsCooperative } from "../functions/addSoundsCooperative";
 
 export class GameCooperative extends Scene {
   constructor() {
@@ -33,7 +34,7 @@ export class GameCooperative extends Scene {
 
   init(data) {
     this.points = data.points || 0; // Puntaje inicial
-    this.game_over_timeout = 35; // Tiempo límite de 30 segundos
+    this.game_over_timeout = 40; // Tiempo límite de 30 segundos
     this.language = data.language || getLanguageConfig();
 
     initialAnims(this);
@@ -54,6 +55,9 @@ export class GameCooperative extends Scene {
           // Actualizar el tiempo en la escena del HUD
           this.scene.get("hudCoop").update_timeout(this.game_over_timeout);
         }
+        if (this.game_over_timeout <= 10) {
+          this.lastSeconds.play();
+        }
         // Comprobar si el tiempo ha terminado
         if (this.game_over_timeout < 0) {
           setTimeout(() => {
@@ -61,9 +65,11 @@ export class GameCooperative extends Scene {
             this.scene.pause("GameCoop");
 
             this.scene.launch("GameOverCoop", {
-              points: this.points,
+              point: this.points,
             });
 
+            this.backgroundMusic.stop();
+            this.lastSeconds.stop();
             this.scene.bringToTop("GameOverCoop");
           }, 980);
         }
@@ -74,6 +80,19 @@ export class GameCooperative extends Scene {
   create() {
     const width = this.game.scale.width;
     const height = this.game.scale.height;
+
+    this.sadLuho = this.sound.add("sadLuhoSound", { volume: 0.09 });
+    this.embarassLuho = this.sound.add("embarassLuho", { volume: 0.09 }); // añadir
+    this.angryLuho = this.sound.add("angryLuho", { volume: 0.09 }); // añadir
+    this.happyLuho = this.sound.add("happyLuho", { volume: 0.09 }); // añadir
+
+    this.cryMimbo = this.sound.add("cryMimbo", { volume: 0.09 }); // añadir
+    this.angryMimbo = this.sound.add("angryMimbo", { volume: 0.09 }); // añadir
+    this.happyMimbo1 = this.sound.add("happyMimbo1", { volume: 0.09 }); // añadir
+    this.happyMimbo2 = this.sound.add("happyMimbo2", { volume: 0.09 }); // añadir
+
+    addSoundsCooperative(this);
+    this.backgroundMusic.play();
 
     // Añadimos el fondo
     this.background = this.add.image(
@@ -249,6 +268,7 @@ export class GameCooperative extends Scene {
         const cooperativeScene = this.scene.get("GameCoop");
         if (cooperativeScene.backgroundMusic) {
           cooperativeScene.backgroundMusic.pause();
+          cooperativeScene.lastSeconds.pause();
         }
         console.log("Pause Game");
         this.scene.launch("PauseMenu", { cooperativeScene: this });
@@ -290,6 +310,7 @@ export class GameCooperative extends Scene {
       fallingObject.setVelocityY(0);
       this.delivered.push(fallingObject); // Agregar a la lista de delivered
       this.pochocloEntregado = true;
+      this.deliveredSound.play();
       console.log("correcto 1 pochoclo");
     } else if (
       fallingObject.texture.key === condimento &&
@@ -298,11 +319,17 @@ export class GameCooperative extends Scene {
       fallingObject.setVelocityY(0);
       this.delivered.push(fallingObject); // Agregar a la lista de delivered
       this.condimentoEntregado = true;
+      this.deliveredSound.play();
       console.log("correcto 2 condimento");
     } else {
       // Si el elemento es incorrecto, restar puntos y limpiar la lista de delivered
       this.discarted.push(fallingObject);
       this.addTime(-5);
+      this.showTimerAdder(5, false)
+      this.looseChance.play();
+      this.loosePoints.play();
+      this.sadLuho.play();
+      this.angryMimbo.play();
       this.pedidoManager.emotionCharacters("negative");
       this.discarted.forEach((obj) => obj.destroy());
       this.discarted = [];
@@ -313,8 +340,14 @@ export class GameCooperative extends Scene {
     if (this.pochocloEntregado && this.condimentoEntregado) {
       const validado = this.pedidoManager.validatePedido(this.delivered);
       if (validado) {
+        this.winnerSound.play();
+        let num = Phaser.Math.Between(0,1)
+        num === 1 ? this.happyMimbo1.play() : this.happyMimbo2.play();
+        this.happyLuho.play();
         this.update_points(50); // Sumar puntos si el pedido es correcto
-        this.addTime(10); // Añadir tiempo
+        this.winTimer.play();
+        this.addTime(15); // Añadir tiempo
+        this.showTimerAdder(15, true)
         console.log("correcto !!");
       } else {
         this.update_points(-10); // Restar puntos por pedido incorrecto
@@ -428,6 +461,8 @@ export class GameCooperative extends Scene {
   // Método para disparar balas desde el tirachinas
   fireBullet(mira, slingshot) {
     const bullet = this.bullets.get(slingshot.x, slingshot.y); // Obtener una bala del grupo
+    this.chargeSlingshot.play();
+    this.shoot.play();
 
     if (bullet) {
       bullet.setActive(true);
@@ -510,6 +545,9 @@ export class GameCooperative extends Scene {
   onBulletHitBrick(bullet, brick) {
     if (brick instanceof Brick) {
       brick.hit(); // Cambia el color del ladrillo o lo destruye
+      let num = Phaser.Math.Between(0, 1);
+      num === 1 ? this.bagFall1.play() : this.bagFall2.play();
+      this.hit.play();
       bullet.destroyBullet(); // Llama al método de la clase Bullets
       console.log("Bala destruida al chocar con un ladrillo");
       return true;
@@ -527,5 +565,45 @@ export class GameCooperative extends Scene {
   addTime(seconds) {
     this.game_over_timeout += seconds;
     this.scene.get("hudCoop").update_timeout(this.game_over_timeout);
+    if (this.game_over_timeout > 10) {
+      this.lastSeconds.stop();
+    }
+  }
+
+  showTimerAdder(time, isPositive) {
+    if (isPositive) {
+      this.addingTimer = `+ ${time}`
+    } else {
+      this.addingTimer = `- ${time}`
+    }
+    const width = this.game.scale.width;
+    const height = this.game.scale.height;
+
+    const adderTimer = this.add
+    .text(width * 0.5, height * 0.6, `${this.addingTimer.toString()}`, {
+      fontSize: "35px",
+      color: "#fff",
+      fontFamily: "'Press Start 2P'",
+      fontWeight: "bold",
+      shadow: {
+        color: "#000000",
+        fill: true,
+        offsetX: 3,
+        offsetY: 3,
+      },
+    })
+    .setOrigin(0.5)
+    .setDepth(15);
+
+  this.tweens.add({
+    targets: adderTimer,
+    scale: { from: 2.5, to: 4.2 }, // Agrandar el texto
+    alpha: { from: 1, to: 0 }, // Desaparecer el texto
+    duration: 1800, // Duración de la animación (1 segundo)
+    ease: "Power2",
+    onComplete: () => {
+      adderTimer.destroy(); // Eliminar el texto después de la animación
+    },
+  });
   }
 }

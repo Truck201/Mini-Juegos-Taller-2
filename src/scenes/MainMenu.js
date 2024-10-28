@@ -266,7 +266,7 @@ export class MainMenu extends BaseScene {
 
   toOptionsScene() {
     this.mainMenuMusic.stop();
-    this.scene.start("opcionesScene"); //Ir a escena Opciones
+    this.scene.start("opcionesScene", {language: this.language,}); //Ir a escena Opciones
   }
 
   transitionToVersus() {
@@ -276,7 +276,7 @@ export class MainMenu extends BaseScene {
     // Esperar un poco antes de iniciar la siguiente escena
     this.time.delayedCall(1500, () => {
       this.mainMenuMusic.stop();
-      this.scene.start("Game1vs1", {
+      this.scene.start("PreloadVersus", {
         dialogues: this.dialogues,
         language: this.language,
       }); //Ir a escena Main
@@ -289,7 +289,7 @@ export class MainMenu extends BaseScene {
     this.mainMenuMusic.stop();
     // Esperar un poco antes de iniciar la siguiente escena
     this.time.delayedCall(1500, () => {
-      this.scene.start("startCoop", {
+      this.scene.start("PreloadCoop", {
         language: this.language
       }); //Ir a escena Main
     });

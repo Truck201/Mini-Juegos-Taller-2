@@ -1,3 +1,6 @@
+import { getPhrase } from "../services/translations";
+
+
 export class Attack {
   constructor(scene) {
     this.scene = scene;
@@ -76,7 +79,7 @@ export class Attack {
     );
 
     this.sprite = this.scene.add.sprite(randomX, this.y - 900, "static-sword");
-    this.sprite.setDepth(14).setScale(1.33);
+    this.sprite.setDepth(14).setScale(1.5);
     this.sprite.anims.play("idle", true);
     console.log("Sprite creado:", this.sprite);
 
@@ -153,7 +156,7 @@ export class Attack {
 
   showMissMessage() {
     const missText = this.scene.add
-      .text(this.sprite.x, this.sprite.y - 5, "MISS", {
+      .text(this.sprite.x, this.sprite.y - 5, `${getPhrase("Fallo")}`, {
         fontSize: "35px",
         color: "#fff",
         fontFamily: "'Press Start 2P'",

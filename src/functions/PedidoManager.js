@@ -372,7 +372,7 @@ export class PedidoManager {
     }
     if (emotion === "negative") {
       // Enojados
-      this.scene.player1.change_emotion("Mimbo", 3, this.player1); // Mimbo: animación de Enojado
+      this.scene.player1.change_emotion("Mimbo", 1, this.player1); // Mimbo: animación de Enojado
       this.scene.player2.change_emotion("Luho", 3, this.player2); // Luho: animación de Enojado
     }
 

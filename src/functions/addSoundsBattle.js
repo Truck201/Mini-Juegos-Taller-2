@@ -8,10 +8,10 @@ export function BattleSounds(scene) {
   scene.takeDamageSound = scene.sound.add("takeDamage", { volume: 0.079 });
   scene.collisionSword = scene.sound.add("collisionSword", { volume: 0.09 });
 
-  scene.winnerSound = scene.sound.add("winnerSound", { volume: 0.09 });
-  scene.winnerPopcornRain = scene.sound.add("winRainPopcorn", { volume: 0.09 });
-  scene.winnerSwordRain = scene.sound.add("winRainSwords", { volume: 0.09 });
-  scene.winnerMedieval = scene.sound.add("winMedieval", { volume: 0.09 });
+  scene.winnerSound = scene.sound.add("winnerSound", { volume: 0.14 });
+  scene.winnerPopcornRain = scene.sound.add("winRainPopcorn", { volume: 0.14 });
+  scene.winnerSwordRain = scene.sound.add("winRainSwords", { volume: 0.14 });
+  scene.winnerMedieval = scene.sound.add("winMedieval", { volume: 0.14 });
 
   scene.fallingBonus = scene.sound.add("fallingBonus", { volume: 0.09 });
 

@@ -15,6 +15,9 @@ import { GameOver } from "./scenes/GameOver";
 import { BaseScene } from "./lib/FontsBase";
 import { HudCoop } from "./scenes/HudCoop";
 import { GameOverCooperative } from "./scenes/GameOverCoop";
+import { PreloaderBattle } from "./scenes/PreloaderBattle";
+import { PreloaderCooperative } from "./scenes/PreloaderCoop";
+import { PreloaderVersus } from "./scenes/PreloaderVersus";
 
 import TVStaticFx from "./lib/TVScanEffect";
 import TVDistortionFx from "./lib/TVDistortion";
@@ -38,7 +41,7 @@ const config = {
     default: "arcade",
     arcade: {
       gravity: { y: 500 },
-      debug: true,
+      debug: false,
     },
   },
   scene: [
@@ -60,6 +63,9 @@ const config = {
     GameCooperative,
     GameOverCooperative,
     HudCoop,
+    PreloaderBattle,
+    PreloaderCooperative,
+    PreloaderVersus
   ],
   pipeline: {
     CRTPostFx: CRTPostFx,

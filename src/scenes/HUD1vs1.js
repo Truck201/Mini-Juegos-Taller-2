@@ -25,13 +25,13 @@ export class Hud extends BaseScene {
   create() {
     this.points_text1 = this.createText(
       this.scale.width * 0.075,
-      this.scale.height * 0.255,
+      this.scale.height * 0.275,
       `${getPhrase('Puntos')} ${this.points1.toString().padStart(2, "0")}`
     ).setOrigin(0.5);
 
     this.points_text2 = this.createText(
       this.scale.width * 0.935,
-      this.scale.height * 0.255,
+      this.scale.height * 0.275,
       `${getPhrase('Puntos')} ${this.points2.toString().padStart(2, "0")}`
     ).setOrigin(0.5);
 

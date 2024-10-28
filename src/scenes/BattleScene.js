@@ -32,7 +32,7 @@ export class BattleScene extends Scene {
   create() {
     BattleSounds(this);
 
-    this.music1.play()
+    this.music1.play();
 
     this.width = this.game.scale.width;
     this.height = this.game.scale.height;
@@ -59,13 +59,13 @@ export class BattleScene extends Scene {
 
     this.createHealtBar1 = new initializeHealthBars(
       this,
-      this.width * 0.045,
+      this.width * 0.035,
       this.height * 0.55,
       this.player1HP
     );
     this.createHealtBar2 = new initializeHealthBars(
       this,
-      this.width * 0.95,
+      this.width * 0.965,
       this.height * 0.55,
       this.player2HP
     );
@@ -212,15 +212,14 @@ export class BattleScene extends Scene {
       let loser = 2;
       this.goToGameOver(loser);
     } else {
-      console.log("NO FUNCIONA LA DERIVACIÓN A GAME OVER");
       return false;
     }
   }
 
   goToGameOver(loser) {
-    console.log(`Jugador ${loser} ha perdido!`);
     this.scene.launch("GameOver", { player: loser }); // Game Over Scene
     this.scene.pause("battleScene");
+    this.music1.stop()
     this.scene.bringToTop("GameOver");
   }
 }
