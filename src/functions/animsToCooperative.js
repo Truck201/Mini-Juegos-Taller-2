@@ -55,8 +55,31 @@ export function initialAnims(scene) {
         start: 0,
         end: 3,
       }),
+      frameRate: 2,
+      repeat: -1
+    });
+  }
+
+  if (!scene.anims.exists("resortera-idle")) {
+    scene.anims.create({
+      key: "resortera-idle",
+      frames: scene.anims.generateFrameNumbers("resorteraIdle", {
+        start: 0,
+        end: 1,
+      }),
       frameRate: 5,
       repeat: -1
+    });
+  }
+
+  if (!scene.anims.exists("resortera-shoot")) {
+    scene.anims.create({
+      key: "resortera-shoot",
+      frames: scene.anims.generateFrameNumbers("resorteraShoot", {
+        start: 0,
+        end: 1,
+      }),
+      frameRate: 8,
     });
   }
 }

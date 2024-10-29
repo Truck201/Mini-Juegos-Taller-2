@@ -23,10 +23,11 @@ export class HudCoop extends BaseScene {
     this.points_text = this.createText(
       this.scale.width * 0.5,
       this.scale.height * 0.11,
-      `$ ${this.points.toString().padStart(2, "0")}`
+      `$:    ${this.points.toString().padStart(4, "0")}`
     )
       .setOrigin(0.5)
-      .setDepth(10);
+      .setDepth(10)
+      .setScale(1.2);
 
     this.remaining_time_text = this.createText(
       this.scale.width / 2,
@@ -40,7 +41,7 @@ export class HudCoop extends BaseScene {
   }
 
   update_points(points) {
-    this.points_text.setText(`$ ${points.toString().padStart(2, "0")}`);
+    this.points_text.setText(`$:    ${points.toString().padStart(4, "0")}`);
   }
 
   update_timeout(timeout) {

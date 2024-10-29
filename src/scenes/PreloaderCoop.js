@@ -302,12 +302,12 @@ export class PreloaderCooperative extends Scene {
 
     // Resorteras
     this.load.image(
-      "StaticResortera",
+      "resortera-static",
       "/assets/coop/resortera/static-resortera.png"
     );
 
     this.load.spritesheet(
-      "MiraResortera",
+      "resorteraIdle",
       "/assets/coop/resortera/resortera-idle.png",
       {
         frameWidth: 140,
@@ -316,7 +316,7 @@ export class PreloaderCooperative extends Scene {
     );
 
     this.load.spritesheet(
-      "MiraResortera",
+      "resorteraShoot",
       "/assets/coop/resortera/resortera-shooting.png",
       {
         frameWidth: 140,

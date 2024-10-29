@@ -9,6 +9,7 @@ export class MainMenu extends BaseScene {
     super("MainMenu");
     this.movingIcon = null;
     this.allicons = null;
+    this.opacityLayer = null;
   }
 
   init(data) {
@@ -21,20 +22,17 @@ export class MainMenu extends BaseScene {
     let width = this.scale.width; //Definir la mitad del Ancho
     let height = this.scale.height; //Definir la mitad del Alto
 
-    this.randomSprite = [
-      "logo1",
-      "logo2",
-      "logo3",
-      "logo4",
-      "logo5"
-    ]
+    this.randomSprite = ["logo1", "logo2", "logo3", "logo4", "logo5"];
 
     // Añadimos los sonidos
     this.HooverSelect1 = this.sound.add("hooverSelection1", { volume: 0.08 });
     this.HooverSelect2 = this.sound.add("hooverSelection2", { volume: 0.08 });
     this.HooverSelect3 = this.sound.add("hooverSelection3", { volume: 0.08 });
 
-    this.mainMenuMusic = this.sound.add("MusicV3", { volume: 0.08, loop: true });
+    this.mainMenuMusic = this.sound.add("MusicV3", {
+      volume: 0.08,
+      loop: true,
+    });
     this.mainMenuMusic.play();
 
     this.selected = this.sound.add("select");
@@ -75,6 +73,12 @@ export class MainMenu extends BaseScene {
       .sprite(width * 0.48, height * 0.65, "menu-background")
       .setScale(2.9)
       .setDepth(3);
+
+    // Agregar una capa semi-transparente en lugar de modificar la cámara
+    this.opacityLayer = this.add
+      .rectangle(width / 2, height / 2, width, height, 0x000000, 0.3)
+      .setDepth(2)
+      .setVisible(false); // Mantenerlo invisible inicialmente
 
     //Button Versus
     const playVersusButton = this.createText(
@@ -230,7 +234,8 @@ export class MainMenu extends BaseScene {
       this.allicons = []; // Vaciar el array después de destruir los objetos
     }
 
-    this.cameras.main.setAlpha(1); // Restaurar la opacidad normal
+    // Hacer invisible la capa de opacidad en lugar de ajustar la cámara
+    this.opacityLayer.setVisible(false);
 
     // Reiniciar el temporizador de inactividad
     this.inactivityTimer.reset({
@@ -245,7 +250,7 @@ export class MainMenu extends BaseScene {
     let width = this.scale.width;
     let height = this.scale.height;
 
-    let index = Phaser.Math.Between(0, 4)
+    let index = Phaser.Math.Between(0, 4);
     const logoSpritePick = this.randomSprite[index];
 
     // Crear el ícono que se moverá
@@ -255,13 +260,14 @@ export class MainMenu extends BaseScene {
         Phaser.Math.Between(0, height), // Posición inicial Y aleatoria
         logoSpritePick
       )
-      .setScale(0.5);
+      .setDepth(1)
+      .setScale(0.97);
 
     // Movimiento del ícono por la pantalla con posiciones y duraciones aleatorias
     this.tweens.add({
       targets: this.movingIcon,
-      x: Phaser.Math.Between(0, width), // Posición final X aleatoria
-      y: Phaser.Math.Between(0, height), // Posición final Y aleatoria
+      x: Phaser.Math.Between(width * 0.11, width * 0.89), // Posición final X aleatoria
+      y: Phaser.Math.Between(height * 0.107, height * 0.107), // Posición final Y aleatoria
       duration: Phaser.Math.Between(2000, 6000), // Duración aleatoria del movimiento
       repeat: -1,
       yoyo: true,
@@ -271,13 +277,16 @@ export class MainMenu extends BaseScene {
     // Guardar el ícono en el array
     this.allicons.push(this.movingIcon);
 
-    // Agregar opacidad a la pantalla
-    this.cameras.main.setAlpha(0.5);
+    // // Agregar opacidad a la pantalla
+    // this.cameras.main.setAlpha(0.7);
+    
+    // Mostrar la capa de opacidad al activar la pantalla de íconos
+    this.opacityLayer.setVisible(true);
   }
 
   toOptionsScene() {
     this.mainMenuMusic.stop();
-    this.scene.start("opcionesScene", {language: this.language,}); //Ir a escena Opciones
+    this.scene.start("opcionesScene", { language: this.language }); //Ir a escena Opciones
   }
 
   transitionToVersus() {
@@ -301,7 +310,7 @@ export class MainMenu extends BaseScene {
     // Esperar un poco antes de iniciar la siguiente escena
     this.time.delayedCall(1500, () => {
       this.scene.start("PreloadCoop", {
-        language: this.language
+        language: this.language,
       }); //Ir a escena Main
     });
   }

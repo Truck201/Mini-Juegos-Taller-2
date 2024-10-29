@@ -101,7 +101,7 @@ export class GameCooperative extends Scene {
       "BackgroundCoop"
     );
     this.background.setDepth(1);
-    this.background.anims.play("background-idle", true)
+    this.background.anims.play("background-idle", true);
 
     this.player1 = new Character(this, "mimbo", true, true);
     this.player2 = new Character(this, "luho", false, true);
@@ -135,7 +135,7 @@ export class GameCooperative extends Scene {
 
     // Cinta de movimiento derecha
     this.cintaMovimientoDerecha = this.add
-      .sprite(width * 0.799, height * 0.69, "cinta")
+      .sprite(width * 0.79, height * 0.685, "cinta")
       .setAlpha(1)
       .setOrigin(0.5)
       .setDepth(3);
@@ -152,7 +152,7 @@ export class GameCooperative extends Scene {
 
     // Cinta de movimiento izquierda
     this.cintaMovimientoIzquierda = this.add
-      .sprite(width * 0.201, height * 0.69, "cinta")
+      .sprite(width * 0.21, height * 0.685, "cinta")
       .setAlpha(1)
       .setOrigin(0.5)
       .setDepth(3);
@@ -260,8 +260,11 @@ export class GameCooperative extends Scene {
     });
 
     // Crear los tirachinas
-    this.slingShot1 = new SlingShot(this, width * 0.25, height * 0.9, false); // Tirachinas para Jugador 1
-    this.slingShot2 = new SlingShot(this, width * 0.75, height * 0.9, true); // Tirachinas para Jugador 2
+    this.slingShot1 = new SlingShot(this, width * 0.2, height * 0.93, false); // Tirachinas para Jugador 1
+    this.slingShot2 = new SlingShot(this, width * 0.8, height * 0.93, true); // Tirachinas para Jugador 2
+
+    this.slingShot1.resortera.anims.play("resortera-idle", true);
+    this.slingShot2.resortera.anims.play("resortera-idle", true);
   }
 
   // Método para manejar la colisión entre un fallingObject y el puente
@@ -308,7 +311,7 @@ export class GameCooperative extends Scene {
       // Si el elemento es incorrecto, restar puntos y limpiar la lista de delivered
       this.discarted.push(fallingObject);
       this.addTime(-5);
-      this.showTimerAdder(5, false)
+      this.showTimerAdder(5, false);
       this.looseChance.play();
       this.loosePoints.play();
       this.sadLuho.play();
@@ -324,13 +327,13 @@ export class GameCooperative extends Scene {
       const validado = this.pedidoManager.validatePedido(this.delivered);
       if (validado) {
         this.winnerSound.play();
-        let num = Phaser.Math.Between(0,1)
+        let num = Phaser.Math.Between(0, 1);
         num === 1 ? this.happyMimbo1.play() : this.happyMimbo2.play();
         this.happyLuho.play();
         this.update_points(50); // Sumar puntos si el pedido es correcto
         this.winTimer.play();
         this.addTime(15); // Añadir tiempo
-        this.showTimerAdder(15, true)
+        this.showTimerAdder(15, true);
         console.log("correcto !!");
       } else {
         this.update_points(-10); // Restar puntos por pedido incorrecto
@@ -443,9 +446,13 @@ export class GameCooperative extends Scene {
 
   // Método para disparar balas desde el tirachinas
   fireBullet(mira, slingshot) {
-    const bullet = this.bullets.get(slingshot.x, slingshot.y); // Obtener una bala del grupo
+    const bullet = this.bullets.get(slingshot.x, slingshot.y - 120); // Obtener una bala del grupo
     this.chargeSlingshot.play();
     this.shoot.play();
+
+    slingshot === this.slingShot1
+      ? this.slingShot1.resortera.anims.play("resortera-shoot", true)
+      : this.slingShot2.resortera.anims.play("resortera-shoot", true);
 
     if (bullet) {
       bullet.setActive(true);
@@ -466,6 +473,12 @@ export class GameCooperative extends Scene {
       // Aplicar la velocidad a la bala
       bullet.setVelocity(velocityX, velocityY);
     }
+
+    this.time.delayedCall(400, () => {
+      slingshot === this.slingShot1
+        ? this.slingShot1.resortera.anims.play("resortera-idle", true)
+        : this.slingShot2.resortera.anims.play("resortera-idle", true);
+    });
   }
 
   createFallingObject(x, y, type) {
@@ -555,38 +568,38 @@ export class GameCooperative extends Scene {
 
   showTimerAdder(time, isPositive) {
     if (isPositive) {
-      this.addingTimer = `+ ${time}`
+      this.addingTimer = `+ ${time}`;
     } else {
-      this.addingTimer = `- ${time}`
+      this.addingTimer = `- ${time}`;
     }
     const width = this.game.scale.width;
     const height = this.game.scale.height;
 
     const adderTimer = this.add
-    .text(width * 0.5, height * 0.6, `${this.addingTimer.toString()}s`, {
-      fontSize: "35px",
-      color: "#fff",
-      fontFamily: "'Press Start 2P'",
-      fontWeight: "bold",
-      shadow: {
-        color: "#000000",
-        fill: true,
-        offsetX: 3,
-        offsetY: 3,
-      },
-    })
-    .setOrigin(0.5)
-    .setDepth(15);
+      .text(width * 0.5, height * 0.6, `${this.addingTimer.toString()}s`, {
+        fontSize: "35px",
+        color: "#fff",
+        fontFamily: "'Press Start 2P'",
+        fontWeight: "bold",
+        shadow: {
+          color: "#000000",
+          fill: true,
+          offsetX: 3,
+          offsetY: 3,
+        },
+      })
+      .setOrigin(0.5)
+      .setDepth(15);
 
-  this.tweens.add({
-    targets: adderTimer,
-    scale: { from: 2.5, to: 4.2 }, // Agrandar el texto
-    alpha: { from: 1, to: 0 }, // Desaparecer el texto
-    duration: 1800, // Duración de la animación (1 segundo)
-    ease: "Power2",
-    onComplete: () => {
-      adderTimer.destroy(); // Eliminar el texto después de la animación
-    },
-  });
+    this.tweens.add({
+      targets: adderTimer,
+      scale: { from: 2.5, to: 4.2 }, // Agrandar el texto
+      alpha: { from: 1, to: 0 }, // Desaparecer el texto
+      duration: 1800, // Duración de la animación (1 segundo)
+      ease: "Power2",
+      onComplete: () => {
+        adderTimer.destroy(); // Eliminar el texto después de la animación
+      },
+    });
   }
 }

@@ -21,10 +21,11 @@ export class MenuOpciones extends BaseScene {
     // Agregar un botón para volver al menú principal
     const mainMenuButton = this.createText(
       width * 0.5,
-      height * 0.5,
+      height * 0.3,
       getPhrase("VolverAlMenu")
     )
       .setOrigin(0.5)
+      .setScale(1.5)
       .setInteractive()
       .setDepth(3)
       .on("pointerdown", () => {
@@ -34,37 +35,31 @@ export class MenuOpciones extends BaseScene {
 
     mainMenuButton.on("pointerover", () => {
       // Cambia el tamaño de la imagen al pasar el mouse
-      mainMenuButton.setScale(1.07);
+      mainMenuButton.setScale(1.53);
     });
 
     mainMenuButton.on("pointerout", () => {
       // Cambia el tamaño de la imagen al pasar el mouse
-      mainMenuButton.setScale(1);
+      mainMenuButton.setScale(1.5);
     });
 
     const volumeText = this.createText(
       width * 0.5,
-      height * 0.6,
+      height * 0.45,
       getPhrase("CambiarVolumen")
     )
       .setOrigin(0.5)
-      .setDepth(3);
-
-    const volumeText2 = this.createText(
-      width * 0.5,
-      height * 0.65,
-      getPhrase("Volumen")
-    )
-      .setOrigin(0.5)
+      .setScale(1.2)
       .setDepth(3);
 
     // Crear la barra
     this.sliderBar = this.add
-      .image(width / 2, height * 0.65, "sliderBar")
+      .image(width / 2, height * 0.5, "sliderBar")
       .setDepth(2);
     this.sliderHandle = this.add
-      .image(width / 2, height * 0.65, "sliderHandle")
+      .image(width / 2, height * 0.5, "sliderHandle")
       .setInteractive()
+      .setScale(0.496)
       .setDepth(3);
 
     // Hacer que el control deslizante sea arrastrable

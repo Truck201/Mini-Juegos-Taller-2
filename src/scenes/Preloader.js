@@ -183,6 +183,32 @@ export class Preloader extends Scene {
     //   Opacidad
     this.load.image("l-opacidad", "/assets/versus/opacidad.png");
 
+    // Bolsas
+    this.load.image(
+      "logo1",
+      "/assets/versus/menu/logo1.png"
+    );
+
+    this.load.image(
+      "logo2",
+      "/assets/versus/menu/logo2.png"
+    );
+
+    this.load.image(
+      "logo3",
+      "/assets/versus/menu/logo3.png"
+    );
+
+    this.load.image(
+      "logo4",
+      "/assets/versus/menu/logo4.png"
+    );
+
+    this.load.image(
+      "logo5",
+      "/assets/versus/menu/logo5.png"
+    );
+
 
     WebFont.load({
       google: {

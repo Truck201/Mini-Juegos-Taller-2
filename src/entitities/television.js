@@ -19,7 +19,7 @@ export class Television {
         .setDepth(1);
       this.television.setImmovable;
       this.television.body.allowGravity = false;
-      this.television.setDepth(0);
+      this.television.setDepth(1);
 
       // Shader
       this.television.setPostPipeline("TVStaticFx");
