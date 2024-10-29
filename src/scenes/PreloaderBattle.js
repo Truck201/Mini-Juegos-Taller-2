@@ -14,25 +14,25 @@ export class PreloaderBattle extends Scene {
   preload() {
     // Battle
     // Stats
-    this.load.image("IcoDam", "../public/assets/versus/battle/damage.png");
+    this.load.image("IcoDam", "/assets/versus/battle/damage.png");
 
-    this.load.image("IcoDef", "../public/assets/versus/battle/defense.png");
+    this.load.image("IcoDef", "/assets/versus/battle/defense.png");
 
-    this.load.image("IcoCrt", "../public/assets/versus/battle/critical.png");
+    this.load.image("IcoCrt", "/assets/versus/battle/critical.png");
 
-    this.load.image("IcoHp", "../public/assets/versus/battle/life.png");
+    this.load.image("IcoHp", "/assets/versus/battle/life.png");
 
-    this.load.image("IcoSp", "../public/assets/versus/battle/speed.png");
+    this.load.image("IcoSp", "/assets/versus/battle/speed.png");
 
     // Sword
     this.load.image(
       "static-sword",
-      "../public/assets/versus/battle/events/static-sword.png"
+      "/assets/versus/battle/events/static-sword.png"
     );
 
     this.load.spritesheet(
       "b-sword",
-      "../public/assets/versus/battle/events/idle-brkn-sword.png",
+      "/assets/versus/battle/events/idle-brkn-sword.png",
       {
         frameWidth: 52,
         frameHeight: 168,
@@ -41,7 +41,7 @@ export class PreloaderBattle extends Scene {
 
     this.load.spritesheet(
       "idle-sword",
-      "../public/assets/versus/battle/events/idle-sword.png",
+      "/assets/versus/battle/events/idle-sword.png",
       {
         frameWidth: 52,
         frameHeight: 168,
@@ -50,7 +50,7 @@ export class PreloaderBattle extends Scene {
 
     this.load.spritesheet(
       "r-sword",
-      "../public/assets/versus/battle/events/rotate-sword.png",
+      "/assets/versus/battle/events/rotate-sword.png",
       {
         frameWidth: 52,
         frameHeight: 168,
@@ -60,12 +60,12 @@ export class PreloaderBattle extends Scene {
     // Heart
     this.load.image(
       "static-heart",
-      "../public/assets/versus/battle/events/static-heart.png"
+      "/assets/versus/battle/events/static-heart.png"
     );
 
     this.load.spritesheet(
       "idle-heart",
-      "../public/assets/versus/battle/events/idle-heart.png",
+      "/assets/versus/battle/events/idle-heart.png",
       {
         frameWidth: 104,
         frameHeight: 84,
@@ -74,7 +74,7 @@ export class PreloaderBattle extends Scene {
 
     this.load.spritesheet(
       "flying-heart",
-      "../public/assets/versus/battle/events/flying-heart.png",
+      "/assets/versus/battle/events/flying-heart.png",
       {
         frameWidth: 104,
         frameHeight: 84,
@@ -84,12 +84,12 @@ export class PreloaderBattle extends Scene {
     // Shield
     this.load.image(
       "static-shield",
-      "../public/assets/versus/battle/events/static-shield.png"
+      "/assets/versus/battle/events/static-shield.png"
     );
 
     this.load.spritesheet(
       "idle-shield",
-      "../public/assets/versus/battle/events/idle-shield.png",
+      "/assets/versus/battle/events/idle-shield.png",
       {
         frameWidth: 80,
         frameHeight: 100,
@@ -98,7 +98,7 @@ export class PreloaderBattle extends Scene {
 
     this.load.spritesheet(
       "r-shield",
-      "../public/assets/versus/battle/events/rotate-shield.png",
+      "/assets/versus/battle/events/rotate-shield.png",
       {
         frameWidth: 80,
         frameHeight: 100,
@@ -106,14 +106,14 @@ export class PreloaderBattle extends Scene {
     );
 
     // Popcorn Event Rain
-    this.load.image("popcorn1", "../public/assets/versus/anims/popcorn.png");
-    this.load.image("popcorn2", "../public/assets/versus/anims/popcorn.png");
-    this.load.image("popcorn3", "../public/assets/versus/anims/popcorn.png");
+    this.load.image("popcorn1", "/assets/versus/anims/popcorn.png");
+    this.load.image("popcorn2", "/assets/versus/anims/popcorn.png");
+    this.load.image("popcorn3", "/assets/versus/anims/popcorn.png");
 
     // Animación Evento Rain[Popcorn]
     this.load.spritesheet(
       "popcorn1Sprites",
-      "../public/assets/versus/battle/events/pochoclo-clasico.png",
+      "/assets/versus/battle/events/pochoclo-clasico.png",
       {
         frameWidth: 92,
         frameHeight: 80,
@@ -122,7 +122,7 @@ export class PreloaderBattle extends Scene {
 
     this.load.spritesheet(
       "popcorn2Sprites",
-      "../public/assets/versus/battle/events/pochoclo-morado.png",
+      "/assets/versus/battle/events/pochoclo-morado.png",
       {
         frameWidth: 92,
         frameHeight: 80,
@@ -131,7 +131,7 @@ export class PreloaderBattle extends Scene {
 
     this.load.spritesheet(
       "popcorn3Sprites",
-      "../public/assets/versus/battle/events/pochoclo-naranja.png",
+      "/assets/versus/battle/events/pochoclo-naranja.png",
       {
         frameWidth: 92,
         frameHeight: 80,
@@ -141,17 +141,17 @@ export class PreloaderBattle extends Scene {
     // Sprite Health Static
     this.load.image(
       "healthStatic",
-      "../public/assets/versus/battle/vida/hearth.png"
+      "/assets/versus/battle/vida/hearth.png"
     );
     this.load.image(
       "healthStaticDeath",
-      "../public/assets/versus/battle/vida/dead-hearth.png"
+      "/assets/versus/battle/vida/dead-hearth.png"
     );
 
     // SpriteSheet Hearth
     this.load.spritesheet(
       "healthBarIdle",
-      "../public/assets/versus/battle/vida/idle-hearth.png",
+      "/assets/versus/battle/vida/idle-hearth.png",
       {
         frameWidth: 80,
         frameHeight: 92,
@@ -161,7 +161,7 @@ export class PreloaderBattle extends Scene {
     // Anims HealthBar
     this.load.spritesheet(
       "healthBarExtra1",
-      "../public/assets/versus/battle/vida/xtra-vida1.png",
+      "/assets/versus/battle/vida/xtra-vida1.png",
       {
         frameWidth: 88,
         frameHeight: 328,
@@ -170,7 +170,7 @@ export class PreloaderBattle extends Scene {
 
     this.load.spritesheet(
       "healthBarExtra2",
-      "../public/assets/versus/battle/vida/xtra-vida2.png",
+      "/assets/versus/battle/vida/xtra-vida2.png",
       {
         frameWidth: 88,
         frameHeight: 328,
@@ -179,7 +179,7 @@ export class PreloaderBattle extends Scene {
 
     this.load.spritesheet(
       "healthBarExtra3",
-      "../public/assets/versus/battle/vida/xtra-vida3.png",
+      "/assets/versus/battle/vida/xtra-vida3.png",
       {
         frameWidth: 88,
         frameHeight: 328,
@@ -188,7 +188,7 @@ export class PreloaderBattle extends Scene {
 
     this.load.spritesheet(
       "healthBarExtra4",
-      "../public/assets/versus/battle/vida/xtra-vida4.png",
+      "/assets/versus/battle/vida/xtra-vida4.png",
       {
         frameWidth: 88,
         frameHeight: 328,
@@ -197,7 +197,7 @@ export class PreloaderBattle extends Scene {
 
     this.load.spritesheet(
       "healthBarExtra5",
-      "../public/assets/versus/battle/vida/xtra-vida5.png",
+      "/assets/versus/battle/vida/xtra-vida5.png",
       {
         frameWidth: 88,
         frameHeight: 328,
@@ -207,43 +207,43 @@ export class PreloaderBattle extends Scene {
     // Barra de vida
     this.load.image(
       "healthBar5",
-      "../public/assets/versus/battle/vida/vida5.png"
+      "/assets/versus/battle/vida/vida5.png"
     );
     this.load.image(
       "healthBar4",
-      "../public/assets/versus/battle/vida/vida4.png"
+      "/assets/versus/battle/vida/vida4.png"
     );
     this.load.image(
       "healthBar3",
-      "../public/assets/versus/battle/vida/vida3.png"
+      "/assets/versus/battle/vida/vida3.png"
     );
     this.load.image(
       "healthBar2",
-      "../public/assets/versus/battle/vida/vida2.png"
+      "/assets/versus/battle/vida/vida2.png"
     );
     this.load.image(
       "healthBar1",
-      "../public/assets/versus/battle/vida/vida1.png"
+      "/assets/versus/battle/vida/vida1.png"
     );
     this.load.image(
       "healthBarNo",
-      "../public/assets/versus/battle/vida/vida0.png"
+      "/assets/versus/battle/vida/vida0.png"
     );
 
     // Hearts on top Bar
     this.load.image(
       "HeartLive",
-      "../public/assets/versus/battle/vida/hearth.png"
+      "/assets/versus/battle/vida/hearth.png"
     );
 
     this.load.image(
       "HeartDeath",
-      "../public/assets/versus/battle/vida/dead-hearth.png"
+      "/assets/versus/battle/vida/dead-hearth.png"
     );
 
     this.load.spritesheet(
       "AnimsHeart",
-      "../public/assets/versus/battle/vida/idle-hearth.png",
+      "/assets/versus/battle/vida/idle-hearth.png",
       {
         frameWidth: 80,
         frameHeight: 92,
@@ -252,7 +252,7 @@ export class PreloaderBattle extends Scene {
 
     this.load.spritesheet(
       "AnimsHeartDeath",
-      "../public/assets/versus/battle/vida/dead-hearth-sheet.png",
+      "/assets/versus/battle/vida/dead-hearth-sheet.png",
       {
         frameWidth: 80,
         frameHeight: 92,

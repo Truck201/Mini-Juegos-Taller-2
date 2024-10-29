@@ -16,10 +16,10 @@ export class Game1v1 extends Scene {
   preload() {
     // Obtener el idioma
     if (this.language === "en-US") {
-      this.load.json("tutorials", "../public/data/dialogues_en.json");
+      this.load.json("tutorials", "/data/dialogues_en.json"); // ../public
       this.textSkipper = "Skip, press Q";
     } else {
-      this.load.json("tutorials", "../public/data/dialogues_es.json");
+      this.load.json("tutorials", "/data/dialogues_es.json"); // ../public
       this.textSkipper = "Saltar intro presiona Q";
     }
   }
