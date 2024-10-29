@@ -22,7 +22,7 @@ export class HudCoop extends BaseScene {
   create() {
     this.points_text = this.createText(
       this.scale.width * 0.5,
-      this.scale.height * 0.155,
+      this.scale.height * 0.135,
       `$ ${this.points.toString().padStart(2, "0")}`
     )
       .setOrigin(0.5)
