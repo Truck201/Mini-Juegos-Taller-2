@@ -62,7 +62,7 @@ export class MainMenu extends BaseScene {
 
     this.load.json(
       dialoguesPath,
-      `/data/kidKornDialogues_${this.language}.json`
+      `../public/data/kidKornDialogues_${this.language}.json`
     );
     this.load.once("complete", () => {
       this.dialogues = this.cache.json.get(dialoguesPath);

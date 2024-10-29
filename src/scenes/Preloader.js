@@ -44,7 +44,7 @@ export class Preloader extends Scene {
     // ChooseLanguage
     this.load.spritesheet(
       "boleteriaBackground",
-      "/assets/versus/boleteria/lenguaje.png",
+      "../public/assets/versus/boleteria/lenguaje.png",
       {
         frameWidth: 1920,
         frameHeight: 1080,
@@ -53,16 +53,16 @@ export class Preloader extends Scene {
 
     this.load.image(
       "Argentina",
-      "/assets/versus/boleteria/flag-arg-simple.png"
+      "../public/assets/versus/boleteria/flag-arg-simple.png"
     );
     this.load.image(
       "EstadosUnidos",
-      "/assets/versus/boleteria/flag-eeuu-simple.png"
+      "../public/assets/versus/boleteria/flag-eeuu-simple.png"
     );
 
     this.load.spritesheet(
       "CUT-ARG",
-      "/assets/versus/boleteria/flag-arg.png",
+      "../public/assets/versus/boleteria/flag-arg.png",
       {
         frameWidth: 228,
         frameHeight: 92,
@@ -71,7 +71,7 @@ export class Preloader extends Scene {
 
     this.load.spritesheet(
       "CUT-EEUU",
-      "/assets/versus/boleteria/flag-eeuu.png",
+      "../public/assets/versus/boleteria/flag-eeuu.png",
       {
         frameWidth: 228,
         frameHeight: 92,
@@ -80,7 +80,7 @@ export class Preloader extends Scene {
 
     this.load.spritesheet(
       "IDLE-ARG",
-      "/assets/versus/boleteria/flag-arg-simple.png",
+      "../public/assets/versus/boleteria/flag-arg-simple.png",
       {
         frameWidth: 212,
         frameHeight: 92,
@@ -89,7 +89,7 @@ export class Preloader extends Scene {
 
     this.load.spritesheet(
       "IDLE-EEUU",
-      "/assets/versus/boleteria/flag-eeuu-simple.png",
+      "../public/assets/versus/boleteria/flag-eeuu-simple.png",
       {
         frameWidth: 212,
         frameHeight: 92,
@@ -98,90 +98,90 @@ export class Preloader extends Scene {
 
     //  Main Menu
     // LOGO
-    this.load.image("logo", "/assets/versus/menu/logo.png");
+    this.load.image("logo", "../public/assets/versus/menu/logo.png");
     this.load.image(
       "menu-background",
-      "/assets/versus/escenario/principal.png"
-    ); // /public/assets/versus/escenario/principal.png   image.png
+      "../public/assets/versus/escenario/principal.png"
+    ); // /public../public/assets/versus/escenario/principal.png   image.png
 
     // Televisión
-    this.load.image("TeleImagen", "/assets/versus/menu/tv.png"); // Derrota
+    this.load.image("TeleImagen", "../public/assets/versus/menu/tv.png"); // Derrota
 
     // Onomatopeyas
-    this.load.image("boom1", "/assets/versus/television/OYS-boom.png"); // Onomatopeyas
+    this.load.image("boom1", "../public/assets/versus/television/OYS-boom.png"); // Onomatopeyas
     this.load.image(
       "boom2",
-      "/assets/versus/television/OYS-boom2.png"
+      "../public/assets/versus/television/OYS-boom2.png"
     );
     this.load.image(
       "boom3",
-      "/assets/versus/television/OYS-boom3.png"
+      "../public/assets/versus/television/OYS-boom3.png"
     );
     this.load.image(
       "boom4",
-      "/assets/versus/television/OYS-boom4.png"
+      "../public/assets/versus/television/OYS-boom4.png"
     );
     this.load.image(
       "crash1",
-      "/assets/versus/television/OYS-crash.png"
+      "../public/assets/versus/television/OYS-crash.png"
     );
     this.load.image(
       "crash2",
-      "/assets/versus/television/OYS-crash2.png"
+      "../public/assets/versus/television/OYS-crash2.png"
     );
     this.load.image(
       "ready1",
-      "/assets/versus/television/OYS-getReady.png"
+      "../public/assets/versus/television/OYS-getReady.png"
     );
     this.load.image(
       "ready2",
-      "/assets/versus/television/OYS-ready.png"
+      "../public/assets/versus/television/OYS-ready.png"
     );
     this.load.image(
       "hello",
-      "/assets/versus/television/OYS-hello.png"
+      "../public/assets/versus/television/OYS-hello.png"
     );
     this.load.image(
       "kaboom",
-      "/assets/versus/television/OYS-kaboom.png"
+      "../public/assets/versus/television/OYS-kaboom.png"
     );
-    this.load.image("oh", "/assets/versus/television/OYS-oh.png");
-    this.load.image("ouch", "/assets/versus/television/OYS-ouch.png");
+    this.load.image("oh", "../public/assets/versus/television/OYS-oh.png");
+    this.load.image("ouch", "../public/assets/versus/television/OYS-ouch.png");
     this.load.image(
       "pfoom",
-      "/assets/versus/television/OYS-pfoom.png"
+      "../public/assets/versus/television/OYS-pfoom.png"
     );
     this.load.image(
       "whack",
-      "/assets/versus/television/OYS-whack.png"
+      "../public/assets/versus/television/OYS-whack.png"
     );
 
     // Barra Audio Master
     this.load.image(
       "sliderHandle",
-      "/assets/versus/menu/anillo_volumen.png"
+      "../public/assets/versus/menu/anillo_volumen.png"
     ); // Derrota
     this.load.image(
       "sliderBar",
-      "/assets/versus/menu/barra_volumen.png"
+      "../public/assets/versus/menu/barra_volumen.png"
     ); // Daño
    
     // Dialogues
     this.load.json(
       "kidKornDialogues_en-US.json",
-      "/data/kidKornDialogues_en-US.json"
+      "../public/data/kidKornDialogues_en-US.json"
     );
     this.load.json(
       "kidKornDialogues_es-AR.json",
-      "/data/kidKornDialogues_es-AR.json"
+      "../public/data/kidKornDialogues_es-AR.json"
     );
     this.load.json(
       "kidKornDialogues_fr-FR.json",
-      "/data/kidKornDialogues_fr-FR.json"
+      "../public/data/kidKornDialogues_fr-FR.json"
     );
 
     //   Opacidad
-    this.load.image("l-opacidad", "/assets/versus/opacidad.png");
+    this.load.image("l-opacidad", "../public/assets/versus/opacidad.png");
 
 
     WebFont.load({

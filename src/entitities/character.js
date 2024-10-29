@@ -14,13 +14,13 @@ export class Character {
       this.y = this.scene.scale.height * 0.15;
       this.scale = 1.2
     } else if((this.isPlayerOne && isInCoop)) {
-      this.x = this.scene.game.config.width * 0.1;
-      this.y = this.scene.scale.height * 0.865;
-      this.scale = 1
+      this.x = this.scene.game.config.width * 0.097;
+      this.y = this.scene.scale.height * 0.863;
+      this.scale = 1.08
     } else if((!this.isPlayerOne && isInCoop)) {
-      this.x = this.scene.game.config.width * 0.9;
-      this.y = this.scene.scale.height * 0.865;
-      this.scale = 1
+      this.x = this.scene.game.config.width * 0.903;
+      this.y = this.scene.scale.height * 0.863;
+      this.scale = 1.08
     }
 
     this.characterSprite = this.scene.physics.add.sprite(

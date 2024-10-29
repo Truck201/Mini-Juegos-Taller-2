@@ -16,11 +16,11 @@ export class StartCooperative extends Scene {
   preload() {
     // Obtener el idioma
     if (this.language === "en-US") {
-      this.load.json("tutorials", "/data/cooperativeTutorial_en.json");
+      this.load.json("tutorials", "../public/data/cooperativeTutorial_en.json");
       this.textSkipper = "Skip, press Q";
       console.log("tuto ing");
     } else if (this.language === "es-AR") {
-      this.load.json("tutorials", "/data/cooperativeTutorial_es.json");
+      this.load.json("tutorials", "../public/data/cooperativeTutorial_es.json");
       this.textSkipper = "Saltar intro presiona Q";
       console.log("tuto esp");
     }

@@ -135,7 +135,7 @@ export class GameCooperative extends Scene {
 
     // Cinta de movimiento derecha
     this.cintaMovimientoDerecha = this.add
-      .sprite(width * 0.785, height * 0.695, "cinta")
+      .sprite(width * 0.795, height * 0.69, "cinta")
       .setAlpha(1)
       .setOrigin(0.5)
       .setDepth(3);
@@ -152,7 +152,7 @@ export class GameCooperative extends Scene {
 
     // Cinta de movimiento izquierda
     this.cintaMovimientoIzquierda = this.add
-      .sprite(width * 0.215, height * 0.695, "cinta")
+      .sprite(width * 0.205, height * 0.69, "cinta")
       .setAlpha(1)
       .setOrigin(0.5)
       .setDepth(3);

@@ -39,7 +39,7 @@ export class Shop extends Scene {
 
     this.load.json(
       this.dialoguesPath,
-      `/data/itemsDescription_${this.language}.json`
+      `../public/data/itemsDescription_${this.language}.json`
     );
   }
 

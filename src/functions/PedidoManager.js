@@ -1,3 +1,4 @@
+import { getPhrase } from "../services/translations";
 export class PedidoManager {
   constructor(scene) {
     this.scene = scene;
@@ -21,7 +22,7 @@ export class PedidoManager {
       .text(
         this.scene.scale.width / 2,
         this.scene.scale.height * 0.85,
-        `${this.timeRemaining}`,
+        `${getPhrase("TiempoPedido")} ${this.timeRemaining}s`,
         {
           fontSize: 40,
           fontFamily: "'Press Start 2P'",
@@ -82,7 +83,7 @@ export class PedidoManager {
 
     if (isCorrectPedido) {
       this.pedidoValidated = true; // Marcar como validado
-      this.emotionCharacters("correct")
+      this.emotionCharacters("correct");
       // Crear un nuevo sprite basado en el pedido correcto
       const completedSprite = this.scene.add
         .sprite(
@@ -137,20 +138,20 @@ export class PedidoManager {
 
       this.scene.add.tween({
         targets: moneySprite,
-        y: randomY - 50,
-        scale: { from: 1.7, to: 1.55 }, // Agrandar el texto
-        duration: 1000, // Duración de la animación (1 segundo)
+        y: randomY - 60,
+        scale: { from: 1.8, to: 1.55 }, // Agrandar el texto
+        duration: 1100, // Duración de la animación (1 segundo)
         ease: "Power2",
         onComplete: () => {
           moneySprite.anims.play("CashFlying", true);
 
           this.scene.add.tween({
             targets: moneySprite,
-            y: this.scene.scale.height * 0.2,
+            y: this.scene.scale.height * 0.13,
             x: this.scene.scale.width * 0.5,
             alpha: { from: 1, to: 0 }, // Desvanecer
             scale: { from: 1.55, to: 0 }, // Reducir tamaño
-            duration: 1200, // Duración de la animación (1 segundo)
+            duration: 1300, // Duración de la animación (1 segundo)
             ease: "Power2",
             onComplete: () => {
               moneySprite.destroy();
@@ -162,7 +163,7 @@ export class PedidoManager {
       // Incrementar puntos y avanzar al siguiente pedido
       // this.scene.bridgeManager.openBridge();
       if (this.timeRemaining > 0) {
-        this.timeRemaining = 1;
+        this.timeRemaining = 0;
       }
     }
 
@@ -238,8 +239,12 @@ export class PedidoManager {
       callback: () => {
         this.timeRemaining--;
 
-        // Actualizar el texto del temporizador
-        this.timeText.setText(`${this.timeRemaining}`);
+        if (this.timeRemaining >= 0) {
+          // Actualizar el texto del temporizador
+          this.timeText.setText(
+            `${getPhrase("TiempoPedido")} ${this.timeRemaining}s`
+          );
+        }
 
         if (this.timeRemaining <= 0) {
           this.timeExpired();

@@ -14,20 +14,20 @@ export class PreloaderVersus extends Scene {
     //  Game
     this.load.image(
       "escenario",
-      "/assets/versus/escenario/principal.png"
+      "../public/assets/versus/escenario/principal.png"
     );
 
     this.load.image(
       "shadowTotal",
-      "/assets/versus/escenario/sombras.png"
+      "../public/assets/versus/escenario/sombras.png"
     );
     //  Personajes
-    this.load.image("mimbo", "/assets/versus/mimbo/mimbo.png"); // Neutral
-    this.load.image("luho", "/assets/versus/luho/luho.png"); // Neutral
+    this.load.image("mimbo", "../public/assets/versus/mimbo/mimbo.png"); // Neutral
+    this.load.image("luho", "../public/assets/versus/luho/luho.png"); // Neutral
 
     this.load.spritesheet(
       "Damage-Mimbo",
-      "/assets/versus/mimbo/mimbo-dano.png",
+      "../public/assets/versus/mimbo/mimbo-dano.png",
       {
         frameWidth: 232, // 90
         frameHeight: 216, // 114
@@ -35,7 +35,7 @@ export class PreloaderVersus extends Scene {
     ); // DAÑO
     this.load.spritesheet(
       "Damage-Luho",
-      "/assets/versus/luho/luho-dano.png",
+      "../public/assets/versus/luho/luho-dano.png",
       {
         frameWidth: 232, // 90
         frameHeight: 216, // 114
@@ -44,7 +44,7 @@ export class PreloaderVersus extends Scene {
 
     this.load.spritesheet(
       "Defeat-Mimbo",
-      "/assets/versus/mimbo/mimbo-derrota.png",
+      "../public/assets/versus/mimbo/mimbo-derrota.png",
       {
         frameWidth: 232, // 90
         frameHeight: 216, // 114
@@ -52,7 +52,7 @@ export class PreloaderVersus extends Scene {
     ); // DERROTA
     this.load.spritesheet(
       "Defeat-Luho",
-      "/assets/versus/luho/luho-derrota.png",
+      "../public/assets/versus/luho/luho-derrota.png",
       {
         frameWidth: 232, // 90
         frameHeight: 216, // 114
@@ -61,7 +61,7 @@ export class PreloaderVersus extends Scene {
 
     this.load.spritesheet(
       "Victory-Mimbo",
-      "/assets/versus/mimbo/mimbo-victoria.png",
+      "../public/assets/versus/mimbo/mimbo-victoria.png",
       {
         frameWidth: 232, // 90
         frameHeight: 216, // 114
@@ -69,7 +69,7 @@ export class PreloaderVersus extends Scene {
     ); // VICTORIA
     this.load.spritesheet(
       "Victory-Luho",
-      "/assets/versus/luho/luho-victoria.png",
+      "../public/assets/versus/luho/luho-victoria.png",
       {
         frameWidth: 232, // 90
         frameHeight: 216, // 114
@@ -78,7 +78,7 @@ export class PreloaderVersus extends Scene {
 
     this.load.spritesheet(
       "Neutral-Mimbo",
-      "/assets/versus/mimbo/mimbo-neutral.png",
+      "../public/assets/versus/mimbo/mimbo-neutral.png",
       {
         frameWidth: 232, // 90
         frameHeight: 216, // 114
@@ -86,7 +86,7 @@ export class PreloaderVersus extends Scene {
     ); // NEUTRAL
     this.load.spritesheet(
       "Neutral-Luho",
-      "/assets/versus/luho/luho-neutral.png",
+      "../public/assets/versus/luho/luho-neutral.png",
       {
         frameWidth: 232, // 90
         frameHeight: 216, // 114
@@ -95,26 +95,26 @@ export class PreloaderVersus extends Scene {
     // Kid Korn
     this.load.image(
       "kid-kornS",
-      "/assets/versus/kid-korn/korn-defrente.png"
+      "../public/assets/versus/kid-korn/korn-defrente.png"
     );
     this.load.image(
       "kid-kornB",
-      "/assets/versus/kid-korn/korn-frente.png"
+      "../public/assets/versus/kid-korn/korn-frente.png"
     );
     this.load.image(
       "kid-kornL",
-      "/assets/versus/kid-korn/korn-izq.png"
+      "../public/assets/versus/kid-korn/korn-izq.png"
     );
     this.load.image(
       "kid-kornR",
-      "/assets/versus/kid-korn/kron-derecha.png"
+      "../public/assets/versus/kid-korn/kron-derecha.png"
     );
 
     // Anims
     // Explot Big KK
     this.load.spritesheet(
       "BigKorn",
-      "/assets/versus/kid-korn/BigKornAnims.png",
+      "../public/assets/versus/kid-korn/BigKornAnims.png",
       {
         frameWidth: 780,
         frameHeight: 1164,
@@ -123,7 +123,7 @@ export class PreloaderVersus extends Scene {
     // idle KK
     this.load.spritesheet(
       "KidKornLeftAnims",
-      "/assets/versus/kid-korn/idle-korn-izq.png",
+      "../public/assets/versus/kid-korn/idle-korn-izq.png",
       {
         frameWidth: 660,
         frameHeight: 796,
@@ -132,7 +132,7 @@ export class PreloaderVersus extends Scene {
 
     this.load.spritesheet(
       "KidKornRightAnims",
-      "/assets/versus/kid-korn/idle-korn-der.png",
+      "../public/assets/versus/kid-korn/idle-korn-der.png",
       {
         frameWidth: 660,
         frameHeight: 796,
@@ -141,7 +141,7 @@ export class PreloaderVersus extends Scene {
     // Explo KK
     this.load.spritesheet(
       "KKExploteRightAnims",
-      "/assets/versus/kid-korn/exp-korn-der.png",
+      "../public/assets/versus/kid-korn/exp-korn-der.png",
       {
         frameWidth: 660,
         frameHeight: 796,
@@ -150,7 +150,7 @@ export class PreloaderVersus extends Scene {
 
     this.load.spritesheet(
       "KKExploteLeftAnims",
-      "/assets/versus/kid-korn/exp-korn-izq.png",
+      "../public/assets/versus/kid-korn/exp-korn-izq.png",
       {
         frameWidth: 660,
         frameHeight: 796,
@@ -160,17 +160,17 @@ export class PreloaderVersus extends Scene {
     //   Pochoclos
     this.load.image(
       "pochoclo",
-      "/assets/versus/barra/static-pororo1.png"
+      "../public/assets/versus/barra/static-pororo1.png"
     );
     this.load.image(
       "pochoclo2",
-      "/assets/versus/barra/static-pororo.png"
+      "../public/assets/versus/barra/static-pororo.png"
     );
 
     //   Anims
     this.load.spritesheet(
       "pochoclo-anims",
-      "/assets/versus/anims/plop-pororo1.png",
+      "../public/assets/versus/anims/plop-pororo1.png",
       {
         frameWidth: 92, // 90
         frameHeight: 80, // 114
@@ -180,43 +180,43 @@ export class PreloaderVersus extends Scene {
     //   Main Barra Sprite
     this.load.image(
       "imagen-barra",
-      "/assets/versus/barra/barra-1v1.png"
+      "../public/assets/versus/barra/barra-1v1.png"
     );
     this.load.image(
       "anilla-azul",
-      "/assets/versus/barra/barra-azul.png"
+      "../public/assets/versus/barra/barra-azul.png"
     );
     this.load.image(
       "anilla-roja",
-      "/assets/versus/barra/barra-roja.png"
+      "../public/assets/versus/barra/barra-roja.png"
     );
 
     //  Tienda
-    this.load.image("low-points", "/assets/versus/tienda/poco.png");
+    this.load.image("low-points", "../public/assets/versus/tienda/poco.png");
     this.load.image(
       "medium-points",
-      "/assets/versus/tienda/medio.png"
+      "../public/assets/versus/tienda/medio.png"
     );
     this.load.image(
       "high-points",
-      "/assets/versus/tienda/rebalsa.png"
+      "../public/assets/versus/tienda/rebalsa.png"
     );
 
     this.load.spritesheet(
       "polilla",
-      "/assets/versus/tienda/pollilla.png",
+      "../public/assets/versus/tienda/pollilla.png",
       {
         frameWidth: 16,
         frameHeight: 16,
       }
     );
-    this.load.spritesheet("toby", "/assets/versus/tienda/toby.png", {
+    this.load.spritesheet("toby", "../public/assets/versus/tienda/toby.png", {
       frameWidth: 148,
       frameHeight: 72,
     });
     this.load.spritesheet(
       "mothman",
-      "/assets/versus/tienda/mothman.png",
+      "../public/assets/versus/tienda/mothman.png",
       {
         frameWidth: 160,
         frameHeight: 188,
@@ -224,7 +224,7 @@ export class PreloaderVersus extends Scene {
     );
     this.load.spritesheet(
       "alcantarilla",
-      "/assets/versus/tienda/alcantarilla.png",
+      "../public/assets/versus/tienda/alcantarilla.png",
       {
         frameWidth: 20,
         frameHeight: 4,
@@ -233,14 +233,14 @@ export class PreloaderVersus extends Scene {
 
     this.load.image(
       "backgroundShop",
-      "/assets/versus/tienda/shop-background.png"
+      "../public/assets/versus/tienda/shop-background.png"
     );
 
     // ITEMS DE LA TIENDA
     // Popcorn (7% EC)
     this.load.spritesheet(
       "popcorn",
-      "/assets/versus/tienda/idle-pororo.png",
+      "../public/assets/versus/tienda/idle-pororo.png",
       {
         frameWidth: 65,
         frameHeight: 64,
@@ -250,7 +250,7 @@ export class PreloaderVersus extends Scene {
     // Lentes (++ Anchor)
     this.load.spritesheet(
       "glasses",
-      "/assets/versus/tienda/lentes1.png",
+      "../public/assets/versus/tienda/lentes1.png",
       {
         frameWidth: 80,
         frameHeight: 96,
@@ -260,7 +260,7 @@ export class PreloaderVersus extends Scene {
     // Caramelos  (+1 HP) (+5 VEL) (Medio)
     this.load.spritesheet(
       "candy1",
-      "/assets/versus/tienda/caramelo1.png",
+      "../public/assets/versus/tienda/caramelo1.png",
       {
         frameWidth: 80,
         frameHeight: 96,
@@ -269,7 +269,7 @@ export class PreloaderVersus extends Scene {
 
     this.load.spritesheet(
       "candy2",
-      "/assets/versus/tienda/caramelo2.png",
+      "../public/assets/versus/tienda/caramelo2.png",
       {
         frameWidth: 80,
         frameHeight: 96,
@@ -278,7 +278,7 @@ export class PreloaderVersus extends Scene {
 
     this.load.spritesheet(
       "candy3",
-      "/assets/versus/tienda/caramelo3.png",
+      "../public/assets/versus/tienda/caramelo3.png",
       {
         frameWidth: 80,
         frameHeight: 96,
@@ -288,7 +288,7 @@ export class PreloaderVersus extends Scene {
     // Helados  (+15% EC)
     this.load.spritesheet(
       "icecream1",
-      "/assets/versus/tienda/heladoA.png",
+      "../public/assets/versus/tienda/heladoA.png",
       {
         frameWidth: 80,
         frameHeight: 96,
@@ -297,7 +297,7 @@ export class PreloaderVersus extends Scene {
 
     this.load.spritesheet(
       "icecream2",
-      "/assets/versus/tienda/heladoB.png",
+      "../public/assets/versus/tienda/heladoB.png",
       {
         frameWidth: 80,
         frameHeight: 96,
@@ -306,7 +306,7 @@ export class PreloaderVersus extends Scene {
 
     this.load.spritesheet(
       "icecream3",
-      "/assets/versus/tienda/heladoC.png",
+      "../public/assets/versus/tienda/heladoC.png",
       {
         frameWidth: 80,
         frameHeight: 96,
@@ -316,7 +316,7 @@ export class PreloaderVersus extends Scene {
     // Energizante (+10 VEL)
     this.load.spritesheet(
       "energizing",
-      "/assets/versus/tienda/lata2.png",
+      "../public/assets/versus/tienda/lata2.png",
       {
         frameWidth: 80,
         frameHeight: 96,
@@ -326,7 +326,7 @@ export class PreloaderVersus extends Scene {
     // Ojo de cuthulu (15% CRT)
     this.load.spritesheet(
       "cuthulu",
-      "/assets/versus/tienda/ojo1.png",
+      "../public/assets/versus/tienda/ojo1.png",
       {
         frameWidth: 80,
         frameHeight: 96,
@@ -334,7 +334,7 @@ export class PreloaderVersus extends Scene {
     );
 
     // Hacha (+2 DMG CARO)
-    this.load.spritesheet("axe", "/assets/versus/tienda/hacha1.png", {
+    this.load.spritesheet("axe", "../public/assets/versus/tienda/hacha1.png", {
       frameWidth: 80,
       frameHeight: 96,
     });
@@ -342,7 +342,7 @@ export class PreloaderVersus extends Scene {
     // Paleta  (+5 VEL) (+1 DMG)
     this.load.spritesheet(
       "palete",
-      "/assets/versus/tienda/chupetin2.png",
+      "../public/assets/versus/tienda/chupetin2.png",
       {
         frameWidth: 80,
         frameHeight: 96,
@@ -352,7 +352,7 @@ export class PreloaderVersus extends Scene {
     // Hamburgesa (+3 HP)  (CARO)
     this.load.spritesheet(
       "burger",
-      "/assets/versus/tienda/hamburguesa.png",
+      "../public/assets/versus/tienda/hamburguesa.png",
       {
         frameWidth: 80,
         frameHeight: 96,
@@ -362,7 +362,7 @@ export class PreloaderVersus extends Scene {
     // Chocolate (+4 VEL) (+7% EC)
     this.load.spritesheet(
       "chocolate",
-      "/assets/versus/tienda/chocolate.png",
+      "../public/assets/versus/tienda/chocolate.png",
       {
         frameWidth: 80,
         frameHeight: 96,
@@ -370,20 +370,20 @@ export class PreloaderVersus extends Scene {
     );
 
     // Pizza (+1 DMG) (+1 HP)
-    this.load.spritesheet("pizza", "/assets/versus/tienda/pizza.png", {
+    this.load.spritesheet("pizza", "../public/assets/versus/tienda/pizza.png", {
       frameWidth: 80,
       frameHeight: 96,
     });
 
     // Partículas
-    this.load.image("flare", "/assets/versus/particles/particles.png");
+    this.load.image("flare", "../public/assets/versus/particles/particles.png");
     this.load.image(
       "flare2",
-      "/assets/versus/particles/particles2.png"
+      "../public/assets/versus/particles/particles2.png"
     );
     this.load.image(
       "flare3",
-      "/assets/versus/particles/particles3.png"
+      "../public/assets/versus/particles/particles3.png"
     );
 
     this.load.on("complete", () => {
