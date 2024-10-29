@@ -46,4 +46,17 @@ export function initialAnims(scene) {
       repeat: -1
     });
   }
+
+  // Background
+  if (!scene.anims.exists("background-idle")) {
+    scene.anims.create({
+      key: "background-idle",
+      frames: scene.anims.generateFrameNumbers("backgroundAnims", {
+        start: 0,
+        end: 3,
+      }),
+      frameRate: 5,
+      repeat: -1
+    });
+  }
 }

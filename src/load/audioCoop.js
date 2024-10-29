@@ -22,7 +22,7 @@ export function SoundsCoop(scene) {
   
     audioFiles.forEach(({ key, path }) => {
       // Carga en dos formatos para mayor compatibilidad
-      scene.load.audio(key, [`../public/assets/audio/${path}.ogg`]);
+      scene.load.audio(key, [`/assets/audio/${path}.ogg`]);
     });
   
     // Manejo de errores de carga de audio

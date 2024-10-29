@@ -95,12 +95,13 @@ export class GameCooperative extends Scene {
     this.backgroundMusic.play();
 
     // Añadimos el fondo
-    this.background = this.add.image(
+    this.background = this.add.sprite(
       width * 0.5,
       height * 0.5,
       "BackgroundCoop"
     );
     this.background.setDepth(1);
+    this.background.anims.play("background-idle", true)
 
     this.player1 = new Character(this, "mimbo", true, true);
     this.player2 = new Character(this, "luho", false, true);

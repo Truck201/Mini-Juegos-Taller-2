@@ -93,10 +93,22 @@ export class StartCooperative extends Scene {
     // Configurar el evento de clic para avanzar entre párrafos
     this.input.on("pointerdown", this.nextParagraph, this);
 
-    this.add
-      .image(width * 0.5, height * 0.5, "BackgroundCoop")
+    this.anims.create({
+      key: "back-idle",
+      frames: this.anims.generateFrameNumbers("backgroundAnimsTutorial", {
+        start: 0,
+        end: 3,
+      }),
+      frameRate: 5,
+      repeat: -1,
+    });
+
+    this.backgroundTutorial = this.add
+      .sprite(width * 0.5, height * 0.5, "BackgroundCoop")
       .setAlpha(0.5)
       .setDepth(0);
+
+    this.backgroundTutorial.anims.play("back-idle", true);
   }
 
   showTutorialParagraph() {
@@ -142,7 +154,6 @@ export class StartCooperative extends Scene {
       this.cameras.main.zoomTo(0.89, 1000);
       this.cameras.main.fadeOut(1000, 0, 0, 0);
       this.time.delayedCall(1000, () => {
-
         this.startGame();
       });
     }
