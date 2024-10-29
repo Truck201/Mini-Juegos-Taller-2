@@ -16,11 +16,11 @@ export class Character {
     } else if((this.isPlayerOne && isInCoop)) {
       this.x = this.scene.game.config.width * 0.097;
       this.y = this.scene.scale.height * 0.863;
-      this.scale = 1.08
+      this.scale = 1
     } else if((!this.isPlayerOne && isInCoop)) {
       this.x = this.scene.game.config.width * 0.903;
       this.y = this.scene.scale.height * 0.863;
-      this.scale = 1.08
+      this.scale = 1
     }
 
     this.characterSprite = this.scene.physics.add.sprite(
