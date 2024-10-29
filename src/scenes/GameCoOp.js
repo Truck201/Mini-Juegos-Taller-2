@@ -117,24 +117,6 @@ export class GameCooperative extends Scene {
     );
     this.boxDelivers.setDepth(2);
 
-    this.anims.create({
-      key: "mothman_idle",
-      frames: this.anims.generateFrameNumbers("mothman", {
-        start: 0,
-        end: 1,
-      }),
-      frameRate: 2,
-      repeat: -1, // La animación se repite indefinidamente
-    });
-
-    this.mothman = this.add
-      .sprite(width * 0.5, height * 0.68, "mothman")
-      .setDepth(4);
-    this.physics.add.existing(this.mothman);
-    this.mothman.setImmovable;
-    this.mothman.body.allowGravity = false;
-    this.mothman.play("mothman_idle", true);
-
     // Añadimos Flechas
     this.arrowsDelivers = this.add.sprite(width * 0.5, height * 0.4, "");
     this.arrowsDelivers.setDepth(2);
@@ -153,7 +135,7 @@ export class GameCooperative extends Scene {
 
     // Cinta de movimiento derecha
     this.cintaMovimientoDerecha = this.add
-      .sprite(width * 0.8, height * 0.695, "cinta")
+      .sprite(width * 0.785, height * 0.695, "cinta")
       .setAlpha(1)
       .setOrigin(0.5)
       .setDepth(3);
@@ -170,7 +152,7 @@ export class GameCooperative extends Scene {
 
     // Cinta de movimiento izquierda
     this.cintaMovimientoIzquierda = this.add
-      .sprite(width * 0.2, height * 0.695, "cinta")
+      .sprite(width * 0.215, height * 0.695, "cinta")
       .setAlpha(1)
       .setOrigin(0.5)
       .setDepth(3);

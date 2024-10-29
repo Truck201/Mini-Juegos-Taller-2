@@ -21,6 +21,14 @@ export class MainMenu extends BaseScene {
     let width = this.scale.width; //Definir la mitad del Ancho
     let height = this.scale.height; //Definir la mitad del Alto
 
+    this.randomSprite = [
+      "logo1",
+      "logo2",
+      "logo3",
+      "logo4",
+      "logo5"
+    ]
+
     // Añadimos los sonidos
     this.HooverSelect1 = this.sound.add("hooverSelection1", { volume: 0.08 });
     this.HooverSelect2 = this.sound.add("hooverSelection2", { volume: 0.08 });
@@ -237,12 +245,15 @@ export class MainMenu extends BaseScene {
     let width = this.scale.width;
     let height = this.scale.height;
 
+    let index = Phaser.Math.Between(0, 4)
+    const logoSpritePick = this.randomSprite[index];
+
     // Crear el ícono que se moverá
     this.movingIcon = this.add
       .image(
         Phaser.Math.Between(0, width), // Posición inicial X aleatoria
         Phaser.Math.Between(0, height), // Posición inicial Y aleatoria
-        "logo"
+        logoSpritePick
       )
       .setScale(0.5);
 
