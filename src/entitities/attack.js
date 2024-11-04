@@ -1,6 +1,5 @@
 import { getPhrase } from "../services/translations";
 
-
 export class Attack {
   constructor(scene) {
     this.scene = scene;

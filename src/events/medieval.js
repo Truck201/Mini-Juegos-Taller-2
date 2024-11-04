@@ -2,7 +2,6 @@ import { Attack } from "../entitities/attack";
 import { Heart } from "../entitities/heart";
 import { Shielder } from "../entitities/shield";
 import { takeDamage } from "../functions/takeDamage";
-
 export class MedievalEvent {
   constructor(scene) {
     this.scene = scene;
@@ -20,6 +19,18 @@ export class MedievalEvent {
   }
 
   create() {
+    // Thunderbolt importar
+    this.thunderboltLeft = this.scene.add
+      .sprite(this.width * 0.09, this.height * 0.15, "thunderbolt")
+      .setScale(1.2)
+      .setDepth(10)
+      .setVisible(false);
+
+    this.thunderboltRight = this.scene.add
+      .sprite(this.width * 0.93, this.height * 0.15, "thunderbolt")
+      .setScale(1.2)
+      .setDepth(10);
+
     this.spaceKey = this.spaceKey = this.scene.input.keyboard.addKey(
       Phaser.Input.Keyboard.KeyCodes.SPACE
     ); // Jugador 1
@@ -146,8 +157,14 @@ export class MedievalEvent {
         ) {
           this.scene.cameras.main.shake(200, 0.025);
 
-          this.scene.player2.change_emotion("Luho", 1, this.scene.player2); // daño
-          this.scene.player1.change_emotion("Mimbo", 2, this.scene.player1); // win
+          this.scene.player2.change_emotion("Luho", 1); // daño
+          this.scene.player1.change_emotion("Mimbo", 2); // win
+
+          this.thunderboltRight.setVisible(true)
+          this.thunderboltRight.anims.play("Thunderbolt-Light");
+          this.thunderboltRight.on("animationcomplete", () => {
+            this.thunderboltRight.setVisible(false); // Cambiar a la imagen estática
+          });
 
           this.scene.sadLuho.play();
           let num = Phaser.Math.Between(1, 2);
@@ -197,8 +214,15 @@ export class MedievalEvent {
           )
         ) {
           this.scene.cameras.main.shake(200, 0.025);
-          this.scene.player2.change_emotion("Luho", 2, this.scene.player2); // Win
-          this.scene.player1.change_emotion("Mimbo", 1, this.scene.player1); // daño
+          this.scene.player2.change_emotion("Luho", 2); // Win
+          this.scene.player1.change_emotion("Mimbo", 1); // daño
+
+          this.thunderboltLeft.setVisible(true);
+          this.thunderboltLeft.anims.play("Thunderbolt-Light");
+          this.thunderboltLeft.on("animationcomplete", () => {
+            this.thunderboltLeft.setVisible(false); // Cambiar a la imagen estática
+          });
+
           this.scene.happyLuho.play();
           this.scene.angryMimbo.play();
 

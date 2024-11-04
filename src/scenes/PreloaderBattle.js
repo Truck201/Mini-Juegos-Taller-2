@@ -147,6 +147,16 @@ export class PreloaderBattle extends Scene {
       }
     );
 
+    // Spritesheet Thunder
+    this.load.spritesheet(
+      "thunderbolt",
+      "/assets/versus/battle/thunder.png",
+      {
+        frameWidth: 68,
+        frameHeight: 240,
+      }
+    );
+
     // Anims HealthBar
     this.load.spritesheet(
       "healthBarExtra1",

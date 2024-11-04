@@ -9,7 +9,9 @@ import { initializeHealthBars } from "../functions/createHealtBar";
 import { AtributeText } from "../functions/atributeTexts";
 import { criticalVisual } from "../functions/criticalVisuals";
 import { BattleSounds } from "../functions/addSoundsBattle";
+import { initialAnimsBattle } from "../functions/animsToBattle";
 import { Scene } from "phaser";
+
 export class BattleScene extends Scene {
   constructor() {
     super("battleScene");
@@ -31,7 +33,8 @@ export class BattleScene extends Scene {
 
   create() {
     BattleSounds(this);
-
+    initialAnimsBattle(this)
+    
     this.music1.play();
 
     this.width = this.game.scale.width;
