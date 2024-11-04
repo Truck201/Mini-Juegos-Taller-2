@@ -44,10 +44,24 @@ export class SwordRain {
             this.scene.player2EvadeChance,
             this.scene.player2HP,
             this.isShelded2,
-            'SwordRain'
+            "SwordRain"
           )
         ) {
           this.scene.cameras.main.shake(200, 0.015);
+
+          this.scene.player2.change_emotion("Luho", 1);
+          this.scene.player1.change_emotion("Mimbo", 2);
+
+          this.scene.sadLuho.play();
+          let num = Phaser.Math.Between(1, 2);
+          num === 1
+            ? this.scene.happyMimbo1.play()
+            : this.scene.happyMimbo2.play();
+
+          if (this.scene.player2HP) {
+            this.idleCharacters();
+          }
+
           const takeDamageSound = this.scene.takeDamageSound;
           this.scene.television.handleOnomatopoeias("battleScene", "attack");
           takeDamageSound.play();
@@ -81,10 +95,21 @@ export class SwordRain {
             this.scene.player1EvadeChance,
             this.scene.player1HP,
             this.isShelded1,
-            'SwordRain'
+            "SwordRain"
           )
         ) {
           this.scene.cameras.main.shake(200, 0.015);
+
+          this.scene.player2.change_emotion("Luho", 2);
+          this.scene.player1.change_emotion("Mimbo", 1);
+
+          this.scene.happyLuho.play();
+          this.scene.angryMimbo.play();
+
+          if (this.scene.player1HP) {
+            this.idleCharacters();
+          }
+
           const takeDamageSound = this.scene.takeDamageSound;
           this.scene.television.handleOnomatopoeias("battleScene", "attack");
           takeDamageSound.play();
@@ -96,9 +121,9 @@ export class SwordRain {
         }
 
         this.player1HP = Math.max(
-          0, Math.floor(
-          this.scene.player1Atributes.getHitPoints()
-        ));
+          0,
+          Math.floor(this.scene.player1Atributes.getHitPoints())
+        );
         this.scene.player1HPText.setText(
           `${this.player1HP.toString().padStart(2, "0")}`
         );
@@ -176,6 +201,13 @@ export class SwordRain {
 
   visualCritical() {
     this.scene.visualCritical();
+  }
+
+  idleCharacters() {
+    this.scene.time.delayedCall(1200, () => {
+      this.scene.player1.change_emotion("Mimbo", 0); // Mimbo: IDLE
+      this.scene.player2.change_emotion("Luho", 0); // Luho: IDLE
+    });
   }
 
   gameOver(player, event) {

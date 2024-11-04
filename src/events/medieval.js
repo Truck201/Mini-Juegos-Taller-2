@@ -145,6 +145,20 @@ export class MedievalEvent {
           )
         ) {
           this.scene.cameras.main.shake(200, 0.025);
+
+          this.scene.player2.change_emotion("Luho", 1, this.scene.player2); // daño
+          this.scene.player1.change_emotion("Mimbo", 2, this.scene.player1); // win
+
+          this.scene.sadLuho.play();
+          let num = Phaser.Math.Between(1, 2);
+          num === 1
+            ? this.scene.happyMimbo1.play()
+            : this.scene.happyMimbo2.play();
+
+          if (this.scene.player2HP > 0) {
+            this.idleCharacters();
+          }
+
           this.destroyAndRespawn(sword);
           this.scene.television.handleOnomatopoeias("battleScene", "attack");
           const takeDamageSound = this.scene.takeDamageSound;
@@ -183,6 +197,15 @@ export class MedievalEvent {
           )
         ) {
           this.scene.cameras.main.shake(200, 0.025);
+          this.scene.player2.change_emotion("Luho", 2, this.scene.player2); // Win
+          this.scene.player1.change_emotion("Mimbo", 1, this.scene.player1); // daño
+          this.scene.happyLuho.play();
+          this.scene.angryMimbo.play();
+
+          if (this.scene.player1HP > 0) {
+            this.idleCharacters();
+          }
+
           this.destroyAndRespawn(sword);
           this.scene.television.handleOnomatopoeias("battleScene", "attack");
           const takeDamageSound = this.scene.takeDamageSound;
@@ -214,7 +237,7 @@ export class MedievalEvent {
       this.scene.time.delayedCall(Phaser.Math.Between(1500, 3500), () => {
         if (typeof this.respawn === "function") {
           let num = Phaser.Math.Between(0, 1);
-          num === 1 ? this.addNewSword(1) : this.addNewSword(2);
+          num === 1 ? this.addNewSword(1) : this.addNewSword(1);
         } else if (typeof this.spawnSwordIfNeeded === "function") {
           this.scene.attackBar.spawnSwordIfNeeded();
         }
@@ -351,6 +374,13 @@ export class MedievalEvent {
 
   visualCritical() {
     this.scene.visualCritical();
+  }
+
+  idleCharacters() {
+    this.scene.time.delayedCall(1200, () => {
+      this.scene.player1.change_emotion("Mimbo", 0, this.scene.player1); // Mimbo: IDLE
+      this.scene.player2.change_emotion("Luho", 0, this.scene.player2); // Luho: IDLE
+    });
   }
 
   gameOver(player, event) {

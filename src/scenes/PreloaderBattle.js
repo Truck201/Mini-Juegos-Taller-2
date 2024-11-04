@@ -13,17 +13,6 @@ export class PreloaderBattle extends Scene {
 
   preload() {
     // Battle
-    // Stats
-    this.load.image("IcoDam", "/assets/versus/battle/damage.png");
-
-    this.load.image("IcoDef", "/assets/versus/battle/defense.png");
-
-    this.load.image("IcoCrt", "/assets/versus/battle/critical.png");
-
-    this.load.image("IcoHp", "/assets/versus/battle/life.png");
-
-    this.load.image("IcoSp", "/assets/versus/battle/speed.png");
-
     // Sword
     this.load.image(
       "static-sword",

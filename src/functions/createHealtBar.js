@@ -49,72 +49,72 @@ export class initializeHealthBars {
       this.scene.add
         .sprite(this.positionX, this.positionY, "healthBar5") // EXT 6 HP index 0    this.y * 0.55  this.x * 0.045
         .setVisible(false)
-        .setScale(1.18)
+        .setScale(1.195)
         .setDepth(5)
         .setOrigin(0.5),
 
       this.scene.add
         .sprite(this.positionX, this.positionY, "healthBar5") // EXT 7 HP index 1
         .setVisible(false)
-        .setScale(1.18)
+        .setScale(1.195)
         .setDepth(5)
         .setOrigin(0.5),
 
       this.scene.add
         .sprite(this.positionX, this.positionY, "healthBar5") // EXT 8 HP index 2
         .setVisible(false)
-        .setScale(1.18)
+        .setScale(1.195)
         .setDepth(5)
         .setOrigin(0.5),
 
       this.scene.add
         .sprite(this.positionX, this.positionY, "healthBar5") // EXT 9 HP index 3
         .setVisible(false)
-        .setScale(1.18)
+        .setScale(1.195)
         .setDepth(5)
         .setOrigin(0.5),
 
       this.scene.add
         .sprite(this.positionX, this.positionY, "healthBar5") // EXT 10 HP index 4
         .setVisible(false)
-        .setScale(1.18)
+        .setScale(1.195)
         .setDepth(5)
         .setOrigin(0.5),
 
       this.scene.add
         .sprite(this.positionX, this.positionY, "healthBar5") // 5 lifes index 5
         .setVisible(false)
-        .setScale(1.18)
+        .setScale(1.195)
         .setDepth(5)
         .setOrigin(0.5),
       this.scene.add
         .sprite(this.positionX, this.positionY, "healthBar4") // 4 lifes index 6
         .setVisible(false)
-        .setScale(1.18)
+        .setScale(1.195)
         .setDepth(5)
         .setOrigin(0.5),
       this.scene.add
         .sprite(this.positionX, this.positionY, "healthBar3") // 3 lifes index 7
         .setVisible(false)
-        .setScale(1.18)
+        .setScale(1.195)
         .setDepth(5)
         .setOrigin(0.5),
       this.scene.add
         .sprite(this.positionX, this.positionY, "healthBar2") // 2 lifes index 8
         .setVisible(false)
-        .setScale(1.18)
+        .setScale(1.195)
         .setDepth(5)
         .setOrigin(0.5),
       this.scene.add
         .sprite(this.positionX, this.positionY, "healthBar1") // 1 lifes index 9
         .setVisible(false)
-        .setScale(1.18)
+        .setScale(1.195)
         .setDepth(5)
         .setOrigin(0.5),
       this.scene.add
         .sprite(this.positionX, this.positionY, "healthBarNo") // 0 lifes index 6
         .setVisible(false)
-        .setScale(1.18)
+        .setScale(1.195)
         .setDepth(5)
         .setOrigin(0.5),
     ];

@@ -48,7 +48,6 @@ export class ItemsCase {
     // Descripción del ítem para jugador 1 y jugador 2
     this.descriptionItemPlayer1 = this.scene.add
       .text(this.width * 0.154, this.height * 0.764, "", {
-        // 0.715
         fontSize: "22px",
         fontFamily: "'Press Start 2P', sans-serif",
         color: "#fff",
@@ -114,6 +113,15 @@ export class ItemsCase {
     initAnimations(this.scene);
 
     this.createItems();
+
+    this.attributeIcons = {
+      HP: "hp_icon",
+      Speed: "speed_icon",
+      Evade: "evade_icon",
+      CRT: "crt_icon",
+      Damage: "damage_icon",
+      Anchor: "anchor_icon",
+    };
 
     // Crear los cuadros que indican la posición de cada jugador
     this.player1Indicator = this.scene.add.rectangle(0, 0, 76, 76).setDepth(2);
@@ -395,26 +403,62 @@ export class ItemsCase {
         item.row === playerPosition.row && item.col === playerPosition.col
     );
 
-    // Verificar si el item existe y si item.texture.key está definido
     if (item && item.texture && item.texture.key) {
       const itemType = item.texture.key;
-
-      // Acceder a la descripción y valor del ítem desde el JSON
       const itemData = this.itemDescriptions[itemType];
 
-      if (!this.itemDescriptions) {
-        console.error("itemDescriptions no está definido");
-        return;
-      }
-
       if (itemData) {
-        const description = itemData[0]; // Descripción del ítem
-        const price = itemData[1]; // Precio del ítem
+        let description = itemData[0];
+        const price = itemData[1];
+
+        // Asegúrate de que iconSprites e iconSprites2 estén inicializados como arrays
+        this.iconSprites = this.iconSprites || [];
+        this.iconSprites2 = this.iconSprites2 || [];
+
+        // Destruir iconos anteriores
+        if (descriptionText.x < this.width * 0.5) {
+          this.iconSprites.forEach((icon) => icon.destroy());
+          this.iconSprites = [];
+        } else {
+          this.iconSprites2.forEach((icon) => icon.destroy());
+          this.iconSprites2 = [];
+        }
+
+        for (const [attribute, icon] of Object.entries(this.attributeIcons)) {
+          const attributeRegex = new RegExp(`\\b${attribute}\\b`, "g");
+          if (attributeRegex.test(description)) {
+            const iconSprite = this.scene.add
+              .sprite(
+                descriptionText.x -
+                  this.width * 0.02 +
+                  (descriptionText.x < this.width * 0.5
+                    ? this.width * 0.085 * this.iconSprites.length
+                    : this.width * 0.085 * this.iconSprites2.length),
+                descriptionText.y,
+                icon
+              )
+              .setDepth(30)
+              .setOrigin(0.5)
+              .setScale(0.9);
+
+            if (descriptionText.x < this.width * 0.5) {
+              this.iconSprites.push(iconSprite);
+            } else {
+              this.iconSprites2.push(iconSprite);
+            }
+
+            description = description.replace(attributeRegex, `  `);
+            console.log(attributeRegex);
+            console.log(description);
+          }
+        }
 
         descriptionText
-          .setText(`${description}\n\n${getPhrase("Valor")} ${price}P`)
-          .setDepth(2)
+          .setText(`${description}\n ${getPhrase("Valor")} ${price}P`)
+          .setDepth(10)
           .setOrigin(0.5);
+
+        descriptionText.setLineSpacing(28); // Ajusta el valor según el espacio que desees
       } else {
         descriptionText.setText("Descripción no disponible");
       }

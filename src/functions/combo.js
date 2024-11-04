@@ -142,7 +142,7 @@ export class ComboPersonajes {
 
         // Animación del jugador 1 (victoria) y del enemigo (enojo)
         this.scene.player1.change_emotion("Mimbo", 2, this.scene.player1); // Mimbo: animación de victoria
-        this.scene.player2.change_emotion("Luho", 3, this.scene.player2); // Luho: animación de daño
+        this.scene.player2.change_emotion("Luho", 3, this.scene.player2); // Luho: animación de enojo
 
         this.happyMimbo2.play();
 
@@ -204,8 +204,8 @@ export class ComboPersonajes {
         this.scene.television.handleOnomatopoeias("recolectScene", "Combo10");
 
         // Animación del jugador 1 (victoria) y del enemigo (enojo)
-        this.scene.player1.change_emotion("Mimbo", 3, this.scene.player1); // Mimbo: animación de victoria
-        this.scene.player2.change_emotion("Luho", 2, this.scene.player2); // Luho: animación de daño
+        this.scene.player1.change_emotion("Mimbo", 3, this.scene.player1); // Mimbo: animación de  daño
+        this.scene.player2.change_emotion("Luho", 2, this.scene.player2); // Luho: animación de victoria
 
         this.cryMimbo.play();
         this.happyLuho.play();

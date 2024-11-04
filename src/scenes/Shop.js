@@ -48,6 +48,9 @@ export class Shop extends Scene {
     this.itemDescriptions = this.cache.json.get(this.dialoguesPath);
     console.log("Charge Descriptions", this.itemDescriptions);
 
+    this.createBackground();
+    this.Monsters = new MonsterShop(this);
+    
     this.music = this.sound.add("MusicV3", { volume: 0.1, loop: true });
 
     this.startShop = this.sound.add("starterSoundShop", { volume: 0.003 });
@@ -84,9 +87,9 @@ export class Shop extends Scene {
     });
 
     this.timerForSecond();
-    this.createBackground();
+    
 
-    this.Monsters = new MonsterShop(this);
+    
     this.startBarking();
   }
 

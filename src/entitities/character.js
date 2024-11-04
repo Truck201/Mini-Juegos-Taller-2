@@ -64,16 +64,16 @@ export class Character {
     }
 
     if (num === 0) {
-      this.characterSprite.anims.play(`Idle-${player}`, true);
+      this.characterSprite.anims.play(`Idle-${player}`, true); // idle
     }
     if (num === 1) {
-      this.characterSprite.anims.play(`Dam-${player}`, true);
+      this.characterSprite.anims.play(`Dam-${player}`, true); // damage
     }
     if (num === 2) {
-      this.characterSprite.anims.play(`Win-${player}`, true);
+      this.characterSprite.anims.play(`Win-${player}`, true); // win
     }
     if (num === 3) {
-      this.characterSprite.anims.play(`Def-${player}`, true);
+      this.characterSprite.anims.play(`Def-${player}`, true); // defeat
     }
   }
 

@@ -60,13 +60,13 @@ export class BattleScene extends Scene {
     this.createHealtBar1 = new initializeHealthBars(
       this,
       this.width * 0.035,
-      this.height * 0.48,
+      this.height * 0.484,
       this.player1HP
     );
     this.createHealtBar2 = new initializeHealthBars(
       this,
       this.width * 0.965,
-      this.height * 0.48,
+      this.height * 0.484,
       this.player2HP
     );
 
@@ -81,7 +81,7 @@ export class BattleScene extends Scene {
       if (currentTime - this.lastKeyPressTime > 250) {
         this.lastKeyPressTime = currentTime;
         this.scene.pause("battleScene");
-        this.music1.pause()
+        this.music1.pause();
         console.log("Pause Game");
         this.scene.launch("PauseMenu", { sceneBattle: this });
         this.scene.bringToTop("PauseMenu");
@@ -92,14 +92,14 @@ export class BattleScene extends Scene {
     this.television.handleOnomatopoeias("battleScene", "start"); // Al inicio de la batalla
 
     let background = this.add.sprite(width * 0.5, height * 0.465, "escenario");
-    background.setScale(1.15)
+    background.setScale(1.15);
     background.setDepth(2);
 
-    const player1 = new Character(this, "mimbo", true, false);
-    const player2 = new Character(this, "luho", false, false);
+    this.player1 = new Character(this, "mimbo", true, false);
+    this.player2 = new Character(this, "luho", false, false);
 
-    player1.change_emotion("Mimbo", 0, player1);
-    player2.change_emotion("Luho", 0, player2);
+    this.player1.change_emotion("Mimbo", 0, this.player1);
+    this.player2.change_emotion("Luho", 0, this.player2);
 
     let barraX = width / 2; // Posición Barra en X
     let barraY = (height * 4) / 5; // Posición de alto en las barras Y
@@ -207,11 +207,30 @@ export class BattleScene extends Scene {
 
     if (player === this.player1Atributes) {
       let loser = 1;
-      this.goToGameOver(loser);
+
+      this.player1.change_emotion("Mimbo", 0); // Cry
+      this.player2.change_emotion("Luho", 0); // Risa
+
+      this.happyLuho.play();
+      this.cryMimbo.play();
+
+      this.time.delayedCall(120, () => {
+        this.goToGameOver(loser);
+      });
     }
     if (player === this.player2Atributes) {
       let loser = 2;
-      this.goToGameOver(loser);
+
+      this.player1.change_emotion("Mimbo", 0); // Risa
+      this.player2.change_emotion("Luho", 0); // Enojado
+
+      this.angryLuho.play();
+      let num = Phaser.Math.Between(1, 2);
+      num === 1 ? this.happyMimbo1.play() : this.happyMimbo2.play();
+
+      this.time.delayedCall(120, () => {
+        this.goToGameOver(loser);
+      });
     } else {
       return false;
     }
@@ -220,7 +239,7 @@ export class BattleScene extends Scene {
   goToGameOver(loser) {
     this.scene.launch("GameOver", { player: loser }); // Game Over Scene
     this.scene.pause("battleScene");
-    this.music1.stop()
+    this.music1.stop();
     this.scene.bringToTop("GameOver");
   }
 }

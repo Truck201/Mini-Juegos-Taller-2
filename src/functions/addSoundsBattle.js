@@ -15,6 +15,17 @@ export function BattleSounds(scene) {
 
   scene.fallingBonus = scene.sound.add("fallingBonus", { volume: 0.09 });
 
+  // Characters
+  scene.angryLuho = scene.sound.add("angryLuho", { volume: 0.2 }); // añadir
+  scene.happyLuho = scene.sound.add("happyLuho", { volume: 0.2 }); // añadir
+  scene.sadLuho = scene.sound.add("sadLuhoSound", { volume: 0.2 });
+
+
+  scene.cryMimbo = scene.sound.add("cryMimbo", { volume: 0.12 }); // añadir
+  scene.angryMimbo = scene.sound.add("angryMimbo", { volume: 0.12 }); // añadir
+  scene.happyMimbo1 = scene.sound.add("happyMimbo1", { volume: 0.12 }); // añadir
+  scene.happyMimbo2 = scene.sound.add("happyMimbo2", { volume: 0.12 }); // añadir
+
   // Popcorn Rain
   scene.popcorn1Sound = scene.sound.add("popcorn1Sound", {
     volume: 0.13,
