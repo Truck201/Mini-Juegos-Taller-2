@@ -208,9 +208,6 @@ export class BattleScene extends Scene {
     if (player === this.player1Atributes) {
       let loser = 1;
 
-      this.player1.change_emotion("Mimbo", 0); // Cry
-      this.player2.change_emotion("Luho", 0); // Risa
-
       this.happyLuho.play();
       this.cryMimbo.play();
 
@@ -220,9 +217,6 @@ export class BattleScene extends Scene {
     }
     if (player === this.player2Atributes) {
       let loser = 2;
-
-      this.player1.change_emotion("Mimbo", 0); // Risa
-      this.player2.change_emotion("Luho", 0); // Enojado
 
       this.angryLuho.play();
       let num = Phaser.Math.Between(1, 2);

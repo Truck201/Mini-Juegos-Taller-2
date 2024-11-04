@@ -8,23 +8,23 @@ export function BattleSounds(scene) {
   scene.takeDamageSound = scene.sound.add("takeDamage", { volume: 0.079 });
   scene.collisionSword = scene.sound.add("collisionSword", { volume: 0.09 });
 
-  scene.winnerSound = scene.sound.add("winnerSound", { volume: 0.14 });
-  scene.winnerPopcornRain = scene.sound.add("winRainPopcorn", { volume: 0.14 });
-  scene.winnerSwordRain = scene.sound.add("winRainSwords", { volume: 0.14 });
-  scene.winnerMedieval = scene.sound.add("winMedieval", { volume: 0.14 });
+  scene.winnerSound = scene.sound.add("winnerSound", { volume: 0.18 });
+  scene.winnerPopcornRain = scene.sound.add("winRainPopcorn", { volume: 0.18 });
+  scene.winnerSwordRain = scene.sound.add("winRainSwords", { volume: 0.18 });
+  scene.winnerMedieval = scene.sound.add("winMedieval", { volume: 0.18 });
 
   scene.fallingBonus = scene.sound.add("fallingBonus", { volume: 0.09 });
 
   // Characters
-  scene.angryLuho = scene.sound.add("angryLuho", { volume: 0.2 }); // añadir
-  scene.happyLuho = scene.sound.add("happyLuho", { volume: 0.2 }); // añadir
-  scene.sadLuho = scene.sound.add("sadLuhoSound", { volume: 0.2 });
+  scene.angryLuho = scene.sound.add("angryLuho", { volume: 0.18 }); // añadir
+  scene.happyLuho = scene.sound.add("happyLuho", { volume: 0.18 }); // añadir
+  scene.sadLuho = scene.sound.add("sadLuhoSound", { volume: 0.18 });
 
 
-  scene.cryMimbo = scene.sound.add("cryMimbo", { volume: 0.12 }); // añadir
-  scene.angryMimbo = scene.sound.add("angryMimbo", { volume: 0.12 }); // añadir
-  scene.happyMimbo1 = scene.sound.add("happyMimbo1", { volume: 0.12 }); // añadir
-  scene.happyMimbo2 = scene.sound.add("happyMimbo2", { volume: 0.12 }); // añadir
+  scene.cryMimbo = scene.sound.add("cryMimbo", { volume: 0.11 }); // añadir
+  scene.angryMimbo = scene.sound.add("angryMimbo", { volume: 0.11 }); // añadir
+  scene.happyMimbo1 = scene.sound.add("happyMimbo1", { volume: 0.11 }); // añadir
+  scene.happyMimbo2 = scene.sound.add("happyMimbo2", { volume: 0.11 }); // añadir
 
   // Popcorn Rain
   scene.popcorn1Sound = scene.sound.add("popcorn1Sound", {
