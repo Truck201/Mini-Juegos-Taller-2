@@ -96,7 +96,12 @@ export class Preloader extends Scene {
       }
     );
 
+    
+
     //  Main Menu
+    // Logojuego
+    this.load.image("logoJuego", "/assets/versus/menu/logojuego.png")
+
     // LOGO
     this.load.image("logo", "/assets/versus/menu/logo.png");
     this.load.image(

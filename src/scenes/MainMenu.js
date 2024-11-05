@@ -24,6 +24,32 @@ export class MainMenu extends BaseScene {
 
     this.randomSprite = ["logo1", "logo2", "logo3", "logo4", "logo5"];
 
+    this.logojuego = this.add
+      .sprite(width * 0.5, height * 0.47, "logoJuego")
+      .setDepth(140).setOrigin(0.5);
+
+    // Primer tween: Expande el logo de 1.2 a 1.6 en 2 segundos
+    this.tweens.add({
+      targets: this.logojuego,
+      scale: { from: 0.6, to: 0.76 },
+      duration: 800,
+      ease: "Sine.easeInOut",
+      onComplete: () => {
+        // Segundo tween: Reduce el logo hasta desaparecer
+        this.tweens.add({
+          targets: this.logojuego,
+          scale: 0.23,
+          alpha: { from: 1, to: 0.9 },
+          y: height * 0.7,
+          duration: 400, // Duración de la desaparición (1 segundo)
+          ease: "Sine.easeIn",
+          // onComplete: () => {
+          //   this.logojuego.destroy(); // Eliminar el texto después de la animación
+          // },
+        });
+      },
+    });
+
     // Añadimos los sonidos
     this.HooverSelect1 = this.sound.add("hooverSelection1", { volume: 0.08 });
     this.HooverSelect2 = this.sound.add("hooverSelection2", { volume: 0.08 });
@@ -279,7 +305,7 @@ export class MainMenu extends BaseScene {
 
     // // Agregar opacidad a la pantalla
     // this.cameras.main.setAlpha(0.7);
-    
+
     // Mostrar la capa de opacidad al activar la pantalla de íconos
     this.opacityLayer.setVisible(true);
   }
