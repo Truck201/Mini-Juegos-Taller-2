@@ -59,7 +59,7 @@ export class KidKorn {
 
     // Mostrar la frase en el juego
     const text = this.scene.add
-      .text(this.x / 2, this.y * 0.42, randomDialogue, {
+      .text(this.x / 2, this.y * 0.6, randomDialogue, {
         fontSize: 50,
         fontFamily: "'Press Start 2P'",
         color: "#fff",
@@ -146,7 +146,7 @@ export class KidKorn {
     const randomDialogue = this.dialogues.Neutral[randomIndex];
 
     let dialogueWidth = fromLeft
-      ? this.scene.scale.width * 0.25
+      ? this.scene.scale.width * 0.255
       : this.scene.scale.width * 0.75;
 
     let fontSize =
@@ -162,7 +162,7 @@ export class KidKorn {
 
     // Mostrar la frase en el juego
     const text = this.scene.add
-      .text(dialogueWidth, this.y * 0.62, randomDialogue, {
+      .text(dialogueWidth, this.y * 0.585, randomDialogue, {
         fontSize: fontSize,
         fontFamily: "'Press Start 2P'",
         color: "#fff",
@@ -200,7 +200,7 @@ export class KidKorn {
         this.scene.time.delayedCall(sprite.anims.duration * 4, () => {
           sprite.anims.play(idleKey, true);
 
-          this.scene.time.delayedCall(Phaser.Math.Between(1800, 2000), () => {
+          this.scene.time.delayedCall(Phaser.Math.Between(1500, 1800), () => {
             this.hideKidKornChild(sprite, fromLeft);
             text.destroy(); // Destruir el texto después de que KidKorn desaparezca
           });
@@ -227,7 +227,7 @@ export class KidKorn {
 
   startKidKornAppearance() {
     this.scene.time.addEvent({
-      delay: Phaser.Math.Between(5500, 6000),
+      delay: Phaser.Math.Between(5500, 5800),
       loop: true,
       callback: () => {
         const currentTime = this.scene.time.now;

@@ -13,7 +13,23 @@ export class AtributeText extends BaseScene {
     let width = this.positionX;
     let height = this.positionY;
 
-    console.log("CREANDO EL FUCKING HUD");
+    this.createTextToScene(
+      this.scene,
+      width * 0.18,
+      height * 0.078,
+      " A D\nSpace"
+    )
+      .setOrigin(0.5)
+      .setDepth(3);
+
+    this.createTextToScene(
+      this.scene,
+      width * 0.82,
+      height * 0.078,
+      " \u2190 \u2192\nIntro"
+    )
+      .setOrigin(0.5)
+      .setDepth(3);
 
     const width1 = width * 0.115;
     const width2 = width * 0.885;
@@ -22,7 +38,7 @@ export class AtributeText extends BaseScene {
     const height2 = height * 0.39;
     const height3 = height * 0.46;
     const height4 = height * 0.53;
-    const height5 = height * 0.60;
+    const height5 = height * 0.6;
     const height6 = height * 0.67;
 
     // Textos De Atributos 1
@@ -148,7 +164,7 @@ export class AtributeText extends BaseScene {
 
     this.createTextWithIcon(width2, height5, "crt_icon", false);
 
-    this.scene.anchorText2 =  this.createTextToScene(
+    this.scene.anchorText2 = this.createTextToScene(
       this.scene,
       width2,
       height6,

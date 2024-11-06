@@ -46,6 +46,18 @@ export class HudShop extends BaseScene {
       height * 0.6493,
       `${getPhrase('TiempoRestante')} ${this.remaining_time.toString().padStart(2, "0")}s`
     ).setOrigin(0.5).setDepth(10);
+
+    this.createText(
+      this.scale.width * 0.14,
+      height * 0.6493,
+      "A W S D Space"
+    ).setOrigin(0.5);
+
+    this.createText(
+      this.scale.width * 0.86,
+      height * 0.6493,
+      "\u2190 \u2191 \u2193 \u2192 Intro"
+    ).setOrigin(0.5);
   }
 
   update(){

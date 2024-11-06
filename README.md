@@ -1,9 +1,9 @@
 We are Pochoclo Games, and we are studing in a University of Rafaela in Argentina. We are four integrants,
 
-Gandini, Joaquín => Programmer;
-Rosso, Caroliina => Artist;
-Moreira, Sebastian => Designer;
-Andereggen, Lucas => Designer;
+Gandini, Joaquín => Programmer & Designer;
+Rosso, Caroliina => Artist & Designer;
+Moreira, Sebastian => Sound Designer;
+Andereggen, Lucas => Orchestra  & Designer;
 
 We propose one game 1vs1 and one game Co-Op
 The 1 vs 1 game is where both players have to compete in three different phases of play. Gathering, Shopping, and Combat.
@@ -51,7 +51,4 @@ Nueva URL para el endpoint de la API (recuerden reemplazar PROJECT_ID y LANGUAGE
 
 Códigos de idioma disponibles:
 Inglés: en-US
-Portugués: pt-BR
-Francés: fr-FR
-Alemán: de-DE
 Español: es-AR

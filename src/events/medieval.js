@@ -29,7 +29,8 @@ export class MedievalEvent {
     this.thunderboltRight = this.scene.add
       .sprite(this.width * 0.93, this.height * 0.15, "thunderbolt")
       .setScale(1.2)
-      .setDepth(10);
+      .setDepth(10)
+      .setVisible(false);
 
     this.spaceKey = this.spaceKey = this.scene.input.keyboard.addKey(
       Phaser.Input.Keyboard.KeyCodes.SPACE

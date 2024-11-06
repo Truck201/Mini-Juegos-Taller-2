@@ -16,7 +16,6 @@ export class HudCoop extends BaseScene {
     this.cameras.main.fadeIn(1200, 0, 0, 0); // Cuando se apreta la Q
     this.remaining_time = data.remaining_time || 30;
     this.points = data.points || 0; // Puntaje inicial de los jugadores
-
   }
 
   create() {
@@ -28,6 +27,28 @@ export class HudCoop extends BaseScene {
       .setOrigin(0.5)
       .setDepth(10)
       .setScale(1.2);
+
+    this.createText(
+      this.scale.width * 0.1,
+      this.scale.height * 0.7489,
+      "A W S D Space",
+      {
+        color: "#000",
+      }
+    )
+      .setOrigin(0.5)
+      .setDepth(10);
+
+    this.createText(
+      this.scale.width * 0.9,
+      this.scale.height * 0.7489,
+      "\u2190 \u2191 \u2193 \u2192 Intro",
+      {
+        color: "#000",
+      }
+    )
+      .setOrigin(0.5)
+      .setDepth(10);
 
     this.remaining_time_text = this.createText(
       this.scale.width / 2,
