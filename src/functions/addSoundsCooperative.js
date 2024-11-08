@@ -14,6 +14,17 @@ export function addSoundsCooperative(scene) {
     scene.winnerSound = scene.sound.add("winnerSound", { volume: 0.09 });
     scene.winTimer = scene.sound.add("winTimer", { volume: 0.09 });
 
+    // Personajes
+    scene.sadLuho = scene.sound.add("sadLuhoSound", { volume: 0.12 });
+    scene.embarassLuho = scene.sound.add("embarassLuho", { volume: 0.12 }); 
+    scene.angryLuho = scene.sound.add("angryLuho", { volume: 0.07 }); 
+    scene.happyLuho = scene.sound.add("happyLuho", { volume: 0.15 }); 
+
+    scene.cryMimbo = scene.sound.add("cryMimbo", { volume: 0.09 }); 
+    scene.angryMimbo = scene.sound.add("angryMimbo", { volume: 0.09 }); 
+    scene.happyMimbo1 = scene.sound.add("happyMimbo1", { volume: 0.15 }); 
+    scene.happyMimbo2 = scene.sound.add("happyMimbo2", { volume: 0.15 }); 
+
     // Music
     scene.backgroundMusic = scene.sound.add("music-v5", { volume: 0.09, loop: true,});
 

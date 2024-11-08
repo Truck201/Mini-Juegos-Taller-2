@@ -13,16 +13,14 @@ import { addSoundsCooperative } from "../functions/addSoundsCooperative";
 export class GameCooperative extends Scene {
   constructor() {
     super("GameCoop");
-
-    this.miras = []; // Agregar array para las miras de ambos jugadores
-    this.keys = {}; // Inicializa el objeto keys aquí
+    this.miras = [];
+    this.keys = {};
     this.lastKeyPressTime = 0;
 
     this.lastFireTimePlayer1 = 0;
     this.lastFireTimePlayer2 = 0;
-    this.fireDelay = 500; // 500 ms de retraso entre disparos
+    this.fireDelay = 500;
 
-    // Variables para rastrear si los elementos correctos fueron entregados
     this.pochocloEntregado = false;
     this.condimentoEntregado = false;
 
@@ -33,8 +31,8 @@ export class GameCooperative extends Scene {
   }
 
   init(data) {
-    this.points = data.points || 0; // Puntaje inicial
-    this.game_over_timeout = 40; // Tiempo límite de 30 segundos
+    this.points = data.points || 0;
+    this.game_over_timeout = 40;
     this.language = data.language || getLanguageConfig();
 
     initialAnims(this);
@@ -44,21 +42,17 @@ export class GameCooperative extends Scene {
       points: this.points,
     });
 
-    // Temporizador
     this.timer_event = this.time.addEvent({
       delay: 1000, // Ejecutar cada segundo
       loop: true,
       callback: () => {
         if (this.game_over_timeout >= 0) {
           this.game_over_timeout--;
-
-          // Actualizar el tiempo en la escena del HUD
           this.scene.get("hudCoop").update_timeout(this.game_over_timeout);
         }
         if (this.game_over_timeout <= 10) {
           this.lastSeconds.play();
         }
-        // Comprobar si el tiempo ha terminado
         if (this.game_over_timeout < 0) {
           setTimeout(() => {
             this.scene.stop("hudCoop");
@@ -76,25 +70,12 @@ export class GameCooperative extends Scene {
       },
     });
   }
-
   create() {
     const width = this.game.scale.width;
     const height = this.game.scale.height;
-
-    this.sadLuho = this.sound.add("sadLuhoSound", { volume: 0.09 });
-    this.embarassLuho = this.sound.add("embarassLuho", { volume: 0.09 }); // añadir
-    this.angryLuho = this.sound.add("angryLuho", { volume: 0.09 }); // añadir
-    this.happyLuho = this.sound.add("happyLuho", { volume: 0.09 }); // añadir
-
-    this.cryMimbo = this.sound.add("cryMimbo", { volume: 0.09 }); // añadir
-    this.angryMimbo = this.sound.add("angryMimbo", { volume: 0.09 }); // añadir
-    this.happyMimbo1 = this.sound.add("happyMimbo1", { volume: 0.09 }); // añadir
-    this.happyMimbo2 = this.sound.add("happyMimbo2", { volume: 0.09 }); // añadir
-
     addSoundsCooperative(this);
-    this.backgroundMusic.play();
 
-    // Añadimos el fondo
+    this.backgroundMusic.play();
     this.background = this.add.sprite(
       width * 0.5,
       height * 0.5,
@@ -109,7 +90,6 @@ export class GameCooperative extends Scene {
     this.player1.change_emotion("Mimbo", 0, this.scene.player1);
     this.player2.change_emotion("Luho", 0, this.scene.player2);
 
-    // Añadimos fondo de pedidos
     this.boxDelivers = this.add.image(
       width * 0.5,
       height * 0.335,
@@ -117,29 +97,25 @@ export class GameCooperative extends Scene {
     );
     this.boxDelivers.setDepth(2);
 
-    // Añadimos Flechas
     this.arrowsDelivers = this.add.sprite(width * 0.5, height * 0.4, "");
     this.arrowsDelivers.setDepth(2);
     this.arrowsDelivers.setVisible(true);
     this.arrowsDelivers.anims.play("arrows-idle", true);
 
-    // Crear el puente
     this.bridgeSprite = this.add
       .sprite(this.scale.width * 0.5, this.scale.height * 0.775, "BridgeSprite")
       .setOrigin(0.5)
       .setScale(1.12);
 
-    // Inicializar PedidoManager y BridgeManager
     this.pedidoManager = new PedidoManager(this);
     this.bridgeManager = new BridgeManager(this, this.bridgeSprite);
 
-    // Cinta de movimiento derecha
     this.cintaMovimientoDerecha = this.add
       .sprite(width * 0.79, height * 0.685, "cinta")
       .setAlpha(1)
       .setOrigin(0.5)
       .setDepth(3);
-    this.physics.add.existing(this.cintaMovimientoDerecha); // Agrega física al sprite
+    this.physics.add.existing(this.cintaMovimientoDerecha);
     this.cintaMovimientoDerecha.body.allowGravity = false;
     this.cintaMovimientoDerecha.body.setImmovable(true);
 
@@ -150,7 +126,6 @@ export class GameCooperative extends Scene {
     );
     this.cintaMovimientoDerecha.body.setOffset(0, 30);
 
-    // Cinta de movimiento izquierda
     this.cintaMovimientoIzquierda = this.add
       .sprite(width * 0.21, height * 0.685, "cinta")
       .setAlpha(1)
@@ -169,10 +144,6 @@ export class GameCooperative extends Scene {
 
     this.cintaMovimientoIzquierda.anims.play("MovCintaLeft", true);
     this.cintaMovimientoDerecha.anims.play("MovCintaRight", true);
-
-    // Crear la mira para ambos jugadores
-    this.miras.push(this.createMira(width * 0.25, height * 0.5, true)); // Jugador 1
-    this.miras.push(this.createMira(width * 0.75, height * 0.5, false)); // Jugador 2
 
     this.wall = new WallBrick(this, 4, 4);
 
@@ -253,16 +224,16 @@ export class GameCooperative extends Scene {
           cooperativeScene.backgroundMusic.pause();
           cooperativeScene.lastSeconds.pause();
         }
-        console.log("Pause Game");
         this.scene.launch("PauseMenu", { cooperativeScene: this });
         this.scene.bringToTop("PauseMenu");
       }
     });
 
-    // Crear los tirachinas
+    this.miras.push(this.createMira(width * 0.25, height * 0.5, true)); // Jugador 1
+    this.miras.push(this.createMira(width * 0.75, height * 0.5, false)); // Jugador 2
+
     this.slingShot1 = new SlingShot(this, width * 0.2, height * 0.93, false); // Tirachinas para Jugador 1
     this.slingShot2 = new SlingShot(this, width * 0.8, height * 0.93, true); // Tirachinas para Jugador 2
-
     this.slingShot1.resortera.anims.play("resortera-idle", true);
     this.slingShot2.resortera.anims.play("resortera-idle", true);
   }
@@ -272,21 +243,15 @@ export class GameCooperative extends Scene {
     const currentPedido = this.pedidoManager.getCurrentPedido();
     let pochoclo = this.pedidoManager.getSpriteName(currentPedido.pochoclo);
     let condimento = this.pedidoManager.getSpriteName(currentPedido.condimento);
-    console.log("current pedido ->" + currentPedido);
-    console.log("pochoclo ->" + pochoclo);
-    console.log("condimento ->" + condimento);
-    console.log("textura objeto caido ->" + fallingObject.texture.key);
 
     // Verificar si el objeto coincide con los elementos del pedido
     if (fallingObject.texture.key === pochoclo && this.pochocloEntregado) {
-      console.log("mismo producto Pochoclo");
       this.waiterPopcorn.push(fallingObject);
       this.waiterPopcorn.forEach((obj) => obj.destroy());
     } else if (
       fallingObject.texture.key === condimento &&
       this.condimentoEntregado
     ) {
-      console.log("mismo producto Condiment");
       this.waiterCondimento.push(fallingObject);
       this.waiterCondimento.forEach((obj) => obj.destroy());
     } else if (
@@ -297,7 +262,6 @@ export class GameCooperative extends Scene {
       this.delivered.push(fallingObject); // Agregar a la lista de delivered
       this.pochocloEntregado = true;
       this.deliveredSound.play();
-      console.log("correcto 1 pochoclo");
     } else if (
       fallingObject.texture.key === condimento &&
       !this.condimentoEntregado
@@ -306,7 +270,6 @@ export class GameCooperative extends Scene {
       this.delivered.push(fallingObject); // Agregar a la lista de delivered
       this.condimentoEntregado = true;
       this.deliveredSound.play();
-      console.log("correcto 2 condimento");
     } else {
       // Si el elemento es incorrecto, restar puntos y limpiar la lista de delivered
       this.discarted.push(fallingObject);
@@ -314,16 +277,19 @@ export class GameCooperative extends Scene {
       this.showTimerAdder(5, false);
       this.looseChance.play();
       this.loosePoints.play();
-      this.sadLuho.play();
+      this.angryLuho.play();
       this.angryMimbo.play();
       this.pedidoManager.emotionCharacters("negative");
       this.discarted.forEach((obj) => obj.destroy());
       this.discarted = [];
-      console.log("negativo !!");
     }
 
     // Si ambos elementos del pedido están presentes en la lista
-    if (this.pochocloEntregado && this.condimentoEntregado) {
+    if (
+      this.pochocloEntregado &&
+      this.condimentoEntregado &&
+      this.game_over_timeout > 0
+    ) {
       const validado = this.pedidoManager.validatePedido(this.delivered);
       if (validado) {
         this.winnerSound.play();
@@ -334,15 +300,12 @@ export class GameCooperative extends Scene {
         this.winTimer.play();
         this.addTime(15); // Añadir tiempo
         this.showTimerAdder(15, true);
-        console.log("correcto !!");
       } else {
         this.update_points(-10); // Restar puntos por pedido incorrecto
-        console.log("malchequeo");
       }
     }
   }
 
-  // Método para crear la mira de un jugador
   createMira(x, y, isPlayerOne) {
     let spriteName;
     if (isPlayerOne) {
@@ -356,46 +319,37 @@ export class GameCooperative extends Scene {
   }
 
   update(time, delta) {
-    // Mover miras
     this.handleMiraMovement();
-
-    // Actualizar las balas
     this.bullets.children.each((bullet) => {
       if (bullet.active && bullet.y < 25) {
         bullet.body.enable = false;
-        bullet.destroy(); // Destruir balas que salgan de la pantalla
+        bullet.destroy();
       }
     });
-
-    // Disparar para Jugador 1 si ha pasado el tiempo de espera
     if (Phaser.Input.Keyboard.JustDown(this.keys.SPACE)) {
       if (time > this.lastFireTimePlayer1 + this.fireDelay) {
         this.fireBullet(this.miras[0], this.slingShot1);
-        this.lastFireTimePlayer1 = time; // Actualizar el tiempo del último disparo
+        this.lastFireTimePlayer1 = time;
       }
     }
-
-    // Disparar para Jugador 2 si ha pasado el tiempo de espera
     if (Phaser.Input.Keyboard.JustDown(this.keys.ENTER)) {
       if (time > this.lastFireTimePlayer2 + this.fireDelay) {
         this.fireBullet(this.miras[1], this.slingShot2);
         this.lastFireTimePlayer2 = time; // Actualizar el tiempo del último disparo
       }
     }
-
     this.wall.checkAndRegenerateWall();
   }
 
   handleMiraMovement() {
     const speed = 8;
-    const width = this.game.scale.width; // Ancho de la pantalla
-    const height = this.game.scale.height; // Alto de la pantalla
+    const width = this.game.scale.width;
+    const height = this.game.scale.height;
     let offset = 50;
-    // Jugador 1: Límite en la mitad izquierda de la pantalla
+
     const leftBoundary = offset;
     const rightBoundaryPlayer1 = width / 2 - offset;
 
-    // Jugador 2: Límite en la mitad derecha de la pantalla
     const leftBoundaryPlayer2 = width / 2 + offset;
     const rightBoundary = width - offset;
 
@@ -545,7 +499,6 @@ export class GameCooperative extends Scene {
       num === 1 ? this.bagFall1.play() : this.bagFall2.play();
       this.hit.play();
       bullet.destroyBullet(); // Llama al método de la clase Bullets
-      console.log("Bala destruida al chocar con un ladrillo");
       return true;
     } else {
       console.warn("El objeto no es una instancia de Brick:", brick);

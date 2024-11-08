@@ -139,8 +139,6 @@ export class MainMenu extends BaseScene {
       optionsButton.destroy();
       playVersusButton.destroy();
       playCooperativeButton.destroy();
-      playVersusButton.setScale(1.3); // Vuelve al tamaño original
-      // this.add.image(width / 2, height / 2, '').setScale(0.37); //Explosión
       this.time.addEvent({
         delay: 900, // demora 1 segundo en iniciar
         loop: true,
@@ -177,15 +175,13 @@ export class MainMenu extends BaseScene {
     });
 
     playCooperativeButton.on("pointerdown", () => {
-      playCooperativeButton.setScale(1.3); // Vuelve al tamaño original
-      // this.add.image(width / 2, height / 2, '').setScale(0.37); //Explosión
+      optionsButton.destroy();
+      playVersusButton.destroy();
+      playCooperativeButton.destroy();
       this.time.addEvent({
         delay: 900, // demora 1 segundo en iniciar
         loop: true,
         callback: () => {
-          optionsButton.setText("");
-          playVersusButton.setText("");
-          playCooperativeButton.setText("");
           this.transitionToCoperative(); //Llama la escena Coop
         },
       });
@@ -232,7 +228,9 @@ export class MainMenu extends BaseScene {
     });
 
     optionsButton.on("pointerdown", () => {
-      optionsButton.setScale(0.9); // Vuelve al tamaño original
+      optionsButton.destroy();
+      playVersusButton.destroy();
+      playCooperativeButton.destroy();
       this.cameras.main.zoomTo(1.8, 1200);
       this.cameras.main.fadeOut(1200, 0, 0, 0);
       // this.add.image(width / 2, height / 2, '').setScale(0.37); //Explosión
@@ -240,9 +238,6 @@ export class MainMenu extends BaseScene {
         delay: 1200, // demora 1 segundo en iniciar
         loop: true,
         callback: () => {
-          optionsButton.setText("");
-          playVersusButton.setText("");
-          playCooperativeButton.setText("");
           this.toOptionsScene(); //Llama la escena Main
         },
       });
