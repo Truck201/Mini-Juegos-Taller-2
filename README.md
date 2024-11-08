@@ -40,7 +40,9 @@ We are dedicated to:
 - LanguageChoose
 - MainMenu
 - PauseMenu
-- Versus Scenes
+  
+##Versus Scenes
+
   - PreloaderVersus
   - Game1v1
   - RecolectScene
@@ -51,7 +53,7 @@ We are dedicated to:
   - BattleScene
   - GameOver
 
-### Cooperative Scenes
+## Cooperative Scenes
 
 - PreloaderCoop
 - GameCoOp
