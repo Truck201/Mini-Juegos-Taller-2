@@ -182,9 +182,6 @@ export class MainMenu extends BaseScene {
         delay: 900, // demora 1 segundo en iniciar
         loop: true,
         callback: () => {
-          optionsButton.setText("");
-          playVersusButton.setText("");
-          playCooperativeButton.setText("");
           this.transitionToCoperative(); //Llama la escena Coop
         },
       });
@@ -241,9 +238,6 @@ export class MainMenu extends BaseScene {
         delay: 1200, // demora 1 segundo en iniciar
         loop: true,
         callback: () => {
-          optionsButton.setText("");
-          playVersusButton.setText("");
-          playCooperativeButton.setText("");
           this.toOptionsScene(); //Llama la escena Main
         },
       });
