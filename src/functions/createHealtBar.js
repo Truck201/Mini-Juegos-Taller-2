@@ -49,79 +49,79 @@ export class initializeHealthBars {
       this.scene.add
         .sprite(this.positionX, this.positionY, "healthBar5") // EXT 6 HP index 0    this.y * 0.55  this.x * 0.045
         .setVisible(false)
-        .setScale(1)
+        .setScale(1.195)
         .setDepth(5)
         .setOrigin(0.5),
 
       this.scene.add
         .sprite(this.positionX, this.positionY, "healthBar5") // EXT 7 HP index 1
         .setVisible(false)
-        .setScale(1)
+        .setScale(1.195)
         .setDepth(5)
         .setOrigin(0.5),
 
       this.scene.add
         .sprite(this.positionX, this.positionY, "healthBar5") // EXT 8 HP index 2
         .setVisible(false)
-        .setScale(1)
+        .setScale(1.195)
         .setDepth(5)
         .setOrigin(0.5),
 
       this.scene.add
         .sprite(this.positionX, this.positionY, "healthBar5") // EXT 9 HP index 3
         .setVisible(false)
-        .setScale(1)
+        .setScale(1.195)
         .setDepth(5)
         .setOrigin(0.5),
 
       this.scene.add
         .sprite(this.positionX, this.positionY, "healthBar5") // EXT 10 HP index 4
         .setVisible(false)
-        .setScale(1)
+        .setScale(1.195)
         .setDepth(5)
         .setOrigin(0.5),
 
       this.scene.add
         .sprite(this.positionX, this.positionY, "healthBar5") // 5 lifes index 5
-        .setVisible(true)
-        .setScale(1)
-        .setDepth(2)
+        .setVisible(false)
+        .setScale(1.195)
+        .setDepth(5)
         .setOrigin(0.5),
       this.scene.add
         .sprite(this.positionX, this.positionY, "healthBar4") // 4 lifes index 6
         .setVisible(false)
-        .setScale(1)
-        .setDepth(2)
+        .setScale(1.195)
+        .setDepth(5)
         .setOrigin(0.5),
       this.scene.add
         .sprite(this.positionX, this.positionY, "healthBar3") // 3 lifes index 7
         .setVisible(false)
-        .setScale(1)
-        .setDepth(2)
+        .setScale(1.195)
+        .setDepth(5)
         .setOrigin(0.5),
       this.scene.add
         .sprite(this.positionX, this.positionY, "healthBar2") // 2 lifes index 8
         .setVisible(false)
-        .setScale(1)
-        .setDepth(2)
+        .setScale(1.195)
+        .setDepth(5)
         .setOrigin(0.5),
       this.scene.add
         .sprite(this.positionX, this.positionY, "healthBar1") // 1 lifes index 9
         .setVisible(false)
-        .setScale(1)
-        .setDepth(2)
+        .setScale(1.195)
+        .setDepth(5)
         .setOrigin(0.5),
       this.scene.add
-        .sprite(this.x * 0.035, this.positionY, "healthBarNo") // 0 lifes index 6
+        .sprite(this.positionX, this.positionY, "healthBarNo") // 0 lifes index 6
         .setVisible(false)
-        .setScale(1)
-        .setDepth(2)
+        .setScale(1.195)
+        .setDepth(5)
         .setOrigin(0.5),
     ];
 
     this.currentHeart = this.scene.add
-      .sprite(this.positionX, this.positionY - 160, "HeartLive")
-      .setScale(1.12)
+      .sprite(this.positionX, this.positionY * 0.7, "HeartLive")
+      .setScale(1.2)
       .setDepth(6)
       .setOrigin(0.5);
 
@@ -143,6 +143,7 @@ export class initializeHealthBars {
   }
 
   updateHealthBar(playerHp) {
+
     let healthBars = this.playerHealthBars;
     let currentHP = playerHp
 
@@ -160,7 +161,7 @@ export class initializeHealthBars {
       this.stopHeartbeat();
       // Mostrar y reproducir la animación correspondiente
       healthBars[HealthIndex].setVisible(true);
-      healthBars[HealthIndex].play(animKey);
+      healthBars[HealthIndex].play(animKey, true);
       this.createHeart(currentHP);
     }
     // Mostrar la barra correspondiente a los HP restantes
@@ -170,13 +171,13 @@ export class initializeHealthBars {
       this.stopHeartbeat();
       // Mostrar y reproducir la animación correspondiente
       healthBars[extraHealthIndex].setVisible(true);
-      healthBars[extraHealthIndex].play(animKey);
+      healthBars[extraHealthIndex].play(animKey, true);
       this.createHeart(currentHP);
     } else if (currentHP <= 5 && currentHP >= 0) {
       let visibleBarIndex = healthBars.length - currentHP - 1;
+      healthBars[visibleBarIndex].stop();
       console.log(visibleBarIndex)
       healthBars[visibleBarIndex].setVisible(true);
-      healthBars[visibleBarIndex].stop();
       this.startHeartbeat();
       this.createHeart(currentHP);
     } else {

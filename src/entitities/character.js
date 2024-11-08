@@ -1,14 +1,26 @@
 export class Character {
-  constructor(scene, sprite, isPlayerOne) {
+  constructor(scene, sprite, isPlayerOne, isInCoop) {
     this.scene = scene;
     this.sprite = sprite;
     this.isPlayerOne = isPlayerOne;
-    this.y = this.scene.scale.height * 0.15;
+    this.isInCoop = isInCoop
 
-    if (this.isPlayerOne) {
+    if (this.isPlayerOne && !isInCoop) {
       this.x = this.scene.game.config.width * 0.0667;
-    } else {
+      this.y = this.scene.scale.height * 0.15;
+      this.scale = 1.2
+    } else if ((!this.isPlayerOne && !isInCoop)){
       this.x = this.scene.game.config.width * 0.934;
+      this.y = this.scene.scale.height * 0.15;
+      this.scale = 1.2
+    } else if((this.isPlayerOne && isInCoop)) {
+      this.x = this.scene.game.config.width * 0.097;
+      this.y = this.scene.scale.height * 0.863;
+      this.scale = 1
+    } else if((!this.isPlayerOne && isInCoop)) {
+      this.x = this.scene.game.config.width * 0.903;
+      this.y = this.scene.scale.height * 0.863;
+      this.scale = 1
     }
 
     this.characterSprite = this.scene.physics.add.sprite(
@@ -20,7 +32,7 @@ export class Character {
     this.characterSprite.setImmovable;
     this.characterSprite.body.allowGravity = false;
     this.characterSprite.setDepth(8);
-    this.characterSprite.setScale(1.2);
+    this.characterSprite.setScale(this.scale);
 
     this.initAnimations();
 
@@ -52,16 +64,16 @@ export class Character {
     }
 
     if (num === 0) {
-      this.characterSprite.anims.play(`Idle-${player}`, true);
+      this.characterSprite.anims.play(`Idle-${player}`, true); // idle
     }
     if (num === 1) {
-      this.characterSprite.anims.play(`Dam-${player}`, true);
+      this.characterSprite.anims.play(`Dam-${player}`, true); // damage
     }
     if (num === 2) {
-      this.characterSprite.anims.play(`Win-${player}`, true);
+      this.characterSprite.anims.play(`Win-${player}`, true); // win
     }
     if (num === 3) {
-      this.characterSprite.anims.play(`Def-${player}`, true);
+      this.characterSprite.anims.play(`Def-${player}`, true); // defeat
     }
   }
 

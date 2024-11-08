@@ -10,7 +10,6 @@ export class Bullets extends Phaser.Physics.Arcade.Sprite {
     this.setDepth(10)
   }
 
-  // Método para destruir la bala
   destroyBullet() {
     this.body.enable = false; // Desactiva el cuerpo físico
     this.setActive(false); // Desactiva la bala

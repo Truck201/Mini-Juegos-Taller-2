@@ -20,7 +20,7 @@ export class Shop extends Scene {
     this.points2 = data.points2 || 0; // Puntaje inicial jugador 2
     this.language = data.language || getLanguageConfig();
     console.log(this.language);
-    this.game_over_timeout = 20;
+    this.game_over_timeout = 40;
     this.lastKeyPressTime = 0;
     this.background;
 
@@ -39,7 +39,7 @@ export class Shop extends Scene {
 
     this.load.json(
       this.dialoguesPath,
-      `/data/itemsDescription_${this.language}.json`
+      `/data/itemsDescription_${this.language}.json` // ../public
     );
   }
 
@@ -48,6 +48,9 @@ export class Shop extends Scene {
     this.itemDescriptions = this.cache.json.get(this.dialoguesPath);
     console.log("Charge Descriptions", this.itemDescriptions);
 
+    this.createBackground();
+    this.Monsters = new MonsterShop(this);
+    
     this.music = this.sound.add("MusicV3", { volume: 0.1, loop: true });
 
     this.startShop = this.sound.add("starterSoundShop", { volume: 0.003 });
@@ -84,9 +87,9 @@ export class Shop extends Scene {
     });
 
     this.timerForSecond();
-    this.createBackground();
+    
 
-    this.Monsters = new MonsterShop(this);
+    
     this.startBarking();
   }
 
@@ -163,7 +166,7 @@ export class Shop extends Scene {
     const selected1Player = this.itemsCase.player1Atributes;
     const selected2Player = this.itemsCase.player2Atributes;
     this.stopBarking();
-    this.scene.start("battleScene", {
+    this.scene.start("PreloadBattle", {
       purchasedItems: selectedItems,
       selectedItemsPlayer1: selected1Player,
       selectedItemsPlayer2: selected2Player,

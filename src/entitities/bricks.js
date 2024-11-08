@@ -36,7 +36,9 @@ export class Brick extends Phaser.GameObjects.Rectangle {
     // Agregar el sprite representando el objeto
     this.itemSprite = this.scene.add
       .sprite(this.x, this.y, this.getItemSprite(type))
-      .setOrigin(0.5);
+      .setOrigin(0.5)
+      .setScale(0.88)
+      .setDepth(0);
     this.scene.physics.add.existing(this.itemSprite);
     this.itemSprite.body.immovable = true; // El sprite no se moverá por la física
     this.itemSprite.body.allowGravity = false; // No se afecta por la gravedad
@@ -56,7 +58,7 @@ export class Brick extends Phaser.GameObjects.Rectangle {
     switch (type) {
       case "blue":
         return "EmptyBlue";
-      case "red":
+      case "rose":
         return "EmptyRose";
       case "green":
         return "EmptyGreen";
@@ -87,7 +89,7 @@ export class Brick extends Phaser.GameObjects.Rectangle {
           this.y,
           "EmptyBlue"
         );
-      } else if (this.type === "red") {
+      } else if (this.type === "rose") {
         fallingObject = this.scene.createFallingObject(
           this.x,
           this.y,

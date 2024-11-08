@@ -28,9 +28,20 @@ export class GameOver extends BaseScene {
       .setAlpha(0.2)
       .setDepth(41);
 
+    this.add
+      .rectangle(
+        width * 0.5,
+        height * 0.41,
+        width * 0.2,
+        height * 0.12,
+        0x272736,
+        0.8
+      )
+      .setDepth(18);
+
     this.createText(
       width * 0.5,
-      height * 0.5,
+      height * 0.4,
       `${getPhrase("Ganador")} ${this.winner}`
     )
       .setOrigin(0.5)
@@ -41,6 +52,7 @@ export class GameOver extends BaseScene {
       this.scene.stop("GameCo-Op");
       this.scene.stop("battleScene");
       this.scene.start("Boot");
+      location.reload();
     });
   }
 }

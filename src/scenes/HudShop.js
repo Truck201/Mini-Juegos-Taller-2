@@ -27,25 +27,37 @@ export class HudShop extends BaseScene {
 
     this.points_text1 = this.createText(
       width * 0.165,
-      height * 0.89,
+      height * 0.894,
       `${this.points1.toString().padStart(2, "0")}`,
       {
         backgroundColor: "#ffffff",
       }
-    ).setOrigin(0.5).setDepth(10);
+    ).setOrigin(0.5).setDepth(10).setScale(1);
 
     this.points_text2 = this.createText(
       // 0.855
       width * 0.835,
-      height * 0.89,
+      height * 0.894,
       `${this.points2.toString().padStart(2, "0")}`
-    ).setOrigin(0.5).setDepth(10);
+    ).setOrigin(0.5).setDepth(10).setScale(1);
 
     this.remaining_time_text = this.createText(
       width / 2,
       height * 0.6493,
       `${getPhrase('TiempoRestante')} ${this.remaining_time.toString().padStart(2, "0")}s`
     ).setOrigin(0.5).setDepth(10);
+
+    this.createText(
+      this.scale.width * 0.14,
+      height * 0.6493,
+      "A W S D Space"
+    ).setOrigin(0.5);
+
+    this.createText(
+      this.scale.width * 0.86,
+      height * 0.6493,
+      "\u2190 \u2191 \u2193 \u2192 Intro"
+    ).setOrigin(0.5);
   }
 
   update(){
@@ -69,8 +81,8 @@ export class HudShop extends BaseScene {
     if (this.sprite1) this.sprite1.destroy();
     if (this.sprite2) this.sprite2.destroy();
 
-    this.sprite1 = this.add.sprite(width * 0.218, height * 0.875, this.get_sprite_key(this.points1)).setScale(2.8).setDepth(7);
-    this.sprite2 = this.add.sprite(width * 0.782, height * 0.875, this.get_sprite_key(this.points2)).setScale(2.9).setDepth(7);
+    this.sprite1 = this.add.sprite(width * 0.218, height * 0.882, this.get_sprite_key(this.points1)).setScale(2.2).setDepth(7);
+    this.sprite2 = this.add.sprite(width * 0.782, height * 0.882, this.get_sprite_key(this.points2)).setScale(2.2).setDepth(7);
   }
 
   get_sprite_key(points) {

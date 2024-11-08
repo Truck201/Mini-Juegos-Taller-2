@@ -1,57 +1,116 @@
-We are Pochoclo Games, and we are studing in a University of Rafaela in Argentina. We are four integrants,
+# Pochoclo Games
 
-Gandini, Joaquín => Programmer;
-Rosso, Caroliina => Artist;
-Moreira, Sebastian => Designer;
-Andereggen, Lucas => Designer;
+We are **Pochoclo Games**, and we are studying at the University of Rafaela in Argentina. Our team consists of four members:
 
-We propose one game 1vs1 and one game Co-Op
-The 1 vs 1 game is where both players have to compete in three different phases of play. Gathering, Shopping, and Combat.
-In cooperative play, players will deliver a certain amount of popcorn orders that are ordered to be delivered.
+- **Gandini, Joaquín**: Programmer & Designer
+- **Rosso, Carolina**: Artist & Designer
+- **Moreira, Sebastian**: Sound Designer
+- **Andereggen, Lucas**: Orchestra & Designer
 
-Both games are set in a small cinema, in a futuristic style but at the same time with retro content and elements. All in pixel art.
+## Game Proposals
 
-We're pochoclo Games, and we're thankful that you tried our game
+We propose two games: one 1vs1 and one Co-Op.
 
-We work to do all implementations of the arquitecture of Entities and Components in the code.
-And we trying to includes the SOLID principies
+### 1vs1 Game
 
-Scenes : Minigame 1 -> HUD1v1 GAME1V1 SHOP CREATOR1V1 // Minigame 2 -> HUDCO-OP GAMECO-OP CREATORCO-OP  
-Entities : Tvsion Pjes GameBar KidKorn1 // Crossbow1 Crossbow2 Centers KidKorn2
+In this game, both players compete in three different phases:
 
-Comandos para consola e iniciar el servidor vite del package.json
---> cd (nombre del archivo) (para el comando, hay que estar dentro de la carpeta del package.json)
---> npm run dev
+1. Gathering
+2. Shopping
+3. Combat
 
-Allways keep in mind to do:
-SOLID for proggraming Sounds and FX (thinks) Documents - GDD - PPTX
+### Co-Op Game
 
-b0305c ROJO smbra
-ff004d ROJO
-4b5bab AZUL
-272736 NEGRO
-3ca370 VERDE
-ffe478 AMARILLO
-ffffeb BLANCO
-000000 NEGRO
-111d35 AZUL OSCURISIMO
-1d2b53 AZUL OSCURO
-065ab5 AZUL
+In cooperative play, players will deliver a certain number of popcorn orders.
 
-ROJO ff004d
-AZUL 29adff
+Both games are set in a small cinema, featuring a futuristic style with retro elements, all depicted in pixel art.
 
-const myColors = [0x5f574f, 0xfff1e8, 0x121213, 0x3ca370, 0xffe478]; // 0 GRIS , 1 BLANCO, 2 NEGRO , 3 VERDE, 4 AMARILLO
+## Team Philosophy
 
-https://traducila.vercel.app/api/translations/PROJECT_ID/LANGUAGE_CODE
+We are dedicated to:
 
-Nueva URL del panel de administración: https://traducila.vercel.app
+- Implementing an architecture of Entities and Components in our code.
+- Including SOLID principles in our programming.
+- Programming sounds and FX, creating documents (GDD, PPTX).
 
-Nueva URL para el endpoint de la API (recuerden reemplazar PROJECT_ID y LANGUAGE_CODE): https://traducila.vercel.app/api/translations/PROJECT_ID/LANGUAGE_CODE
+## Scenes
 
-Códigos de idioma disponibles:
-Inglés: en-US
-Portugués: pt-BR
-Francés: fr-FR
-Alemán: de-DE
-Español: es-AR
+### Preloader
+
+- LanguageChoose
+- MainMenu
+- PauseMenu
+- Versus Scenes
+  - PreloaderVersus
+  - Game1v1
+  - RecolectScene
+  - HUD1v1
+  - Shop
+  - HudShop
+  - PreloaderBattle
+  - BattleScene
+  - GameOver
+
+### Cooperative Scenes
+
+- PreloaderCoop
+- GameCoOp
+- CoopStarter
+- GameCoOp
+- HudCoop
+- GameOverCoop
+
+## Entities
+
+### Global Entities
+
+- character
+- television
+
+### Versus Entities
+
+- attack
+- heart
+- kidKorn
+- monsters
+- movebar
+- shield
+- popcorn
+
+### Coop Entities
+
+- brick
+- wall
+- bullets
+- slingshot
+
+## Color Palette
+
+| Color Code | Color Name |
+|------------|------------|
+| `#b0305c`  | Crimson    |
+| `#ff004d`  | Red        |
+| `#4b5bab`  | Skyblue    |
+| `#272736`  | Black      |
+| `#3ca370`  | Green      |
+| `#ffe478`  | Yellow     |
+| `#ffffeb`  | White      |
+| `#000000`  | Black      |
+| `#065ab5`  | Blue       |
+
+## API
+
+### Language Translations
+- "TraduciLa" by **Federico Deggiovanni** @fdegiovanni: [TraduciLa API](https://example.com)
+
+### Available Language Codes
+- **English**: `en-US`
+- **Spanish**: `es-AR`
+    
+## Installation
+```bash 
+    git clone https://github.com/Truck201/Mini-Juegos-Taller-2.git
+    cd Mini-Juegos-Taller-2
+    npm install latest
+    npm install vite@latest
+    npm run dev

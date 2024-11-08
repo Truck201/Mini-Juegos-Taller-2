@@ -16,27 +16,21 @@ export class WallBrick extends Phaser.GameObjects.Group {
     const sceneWidth = Number(this.scene.sys.game.config.width);
     const sceneHeight = Number(this.scene.sys.game.config.height);
 
-    const margin = sceneWidth * 0.06; // Margen de 6% en los bordes
-    const gapBetweenSides = sceneWidth * 0.2; // Espacio central del 20%
+    const margin = sceneWidth * 0.051; // Margen de 6% en los bordes
+    const gapBetweenSides = sceneWidth * 0.31; // Espacio central del 20%
     const brickAreaWidth = (sceneWidth - (2 * margin + gapBetweenSides)) / 2; // Ancho para cada grupo de ladrillos (izq y der)
     const spacingX = 60; // Separación horizontal mínima entre ladrillos
-    const spacingY = sceneHeight * 0.2; // Separación vertical mínima entre ladrillos
+    const spacingY = sceneHeight * 0.23; // Separación vertical mínima entre ladrillos
 
     const widthBrick = (brickAreaWidth - spacingX * (columnas - 1)) / columnas; // Ancho de cada ladrillo
-    const heightBrick = (sceneHeight * 0.3 - spacingY * (filas - 1)) / filas; // Alto de cada ladrillo
+    const heightBrick = (sceneHeight * 0.18 - spacingY * (filas - 1)) / filas; // Alto de cada ladrillo
 
     const leftOffsetX = margin; // Inicio del primer grupo de ladrillos (izquierda)
     const rightOffsetX = margin + brickAreaWidth + gapBetweenSides; // Inicio del segundo grupo de ladrillos (derecha)
     const offsetY = sceneHeight * 0.2; // Ajuste en Y para centrar verticalmente los ladrillos
 
-    this.collisionWidth = widthBrick - 30; // Ancho de colisión igual al ancho del brick
-    this.collisionHeight = heightBrick + 130; // Alto de colisión igual al alto del brick
-    console.log("height Bricks -->" + heightBrick);
-    console.log("Result --> " + this.collisionHeight);
-    // const spacingX = 60; // Espaciado de 10 px entre los ladrillos
-    // const spacingY = 70;
-    // const offsetX = leftMargin; // Desplazamiento en X desde el margen izquierdo
-    // const offsetY = sceneHeight * 0.2; // Ajuste en Y para centrar verticalmente los ladrillos
+    this.collisionWidth = 60; // Ancho de colisión igual al ancho del brick
+    this.collisionHeight = 60; // Alto de colisión igual al alto del brick
 
     const brickColors = {
       blue: 0x0000ff,
@@ -48,7 +42,6 @@ export class WallBrick extends Phaser.GameObjects.Group {
       spicy: 0xfff1e8,
     };
 
-    // Función para crear un grupo de ladrillos en una posición X de inicio
     const createBrickGroup = (startX) => {
       for (let i = 0; i < filas; i++) {
         this.brickPositions[i] = [];
@@ -56,13 +49,11 @@ export class WallBrick extends Phaser.GameObjects.Group {
           const x = startX + j * (widthBrick + spacingX) + widthBrick / 2;
           const y = offsetY + i * (heightBrick + spacingY) + heightBrick / 2;
 
-          // Guarda la posición calculada
           this.brickPositions[i][j] = { x, y };
 
-          // Asignar aleatoriamente un tipo de ladrillo
           const randomType = Phaser.Math.RND.pick([
             "blue",
-            "red",
+            "rose",
             "green",
             "orange",
             "salt",
@@ -78,7 +69,7 @@ export class WallBrick extends Phaser.GameObjects.Group {
             widthBrick,
             heightBrick,
             color,
-            0.09,
+            0.001,
             randomType,
             this.collisionWidth, // Pasar el tamaño de colisión
             this.collisionHeight // Pasar el tamaño de colisión
@@ -90,14 +81,10 @@ export class WallBrick extends Phaser.GameObjects.Group {
         }
       }
     };
-    // Crear grupo de ladrillos en el lado izquierdo
     createBrickGroup(leftOffsetX);
-
-    // Crear grupo de ladrillos en el lado derecho
     createBrickGroup(rightOffsetX);
   }
-
-  // Método para verificar y regenerar filas y columnas vacías
+  
   checkAndRegenerateWall() {
     let rowsEmptyLeft = Array(this.filas).fill(true);
     let colsEmptyLeft = Array(this.columnas).fill(true);
@@ -139,7 +126,7 @@ export class WallBrick extends Phaser.GameObjects.Group {
     const offsetX = isLeftSide
       ? this.scene.sys.game.config.width * 0.06
       : this.scene.sys.game.config.width * 0.06 +
-        (this.scene.sys.game.config.width * 0.1 +
+        (this.scene.sys.game.config.width * 0.165 +
           (this.scene.sys.game.config.width -
             2 * this.scene.sys.game.config.width * 0.06) /
             2);
@@ -148,7 +135,7 @@ export class WallBrick extends Phaser.GameObjects.Group {
       const { y } = this.brickPositions[row][col];
       const color = this.getRandomBrickColor();
       const randomType = this.getType();
-      const newOffset = isLeftSide ? 98 : 100
+      const newOffset = isLeftSide ? 98 : 94
       const x =
         offsetX + col * (this.collisionWidth + newOffset) + this.collisionWidth / 2; // Ajusta el cálculo de X aquí
 
@@ -159,7 +146,7 @@ export class WallBrick extends Phaser.GameObjects.Group {
         this.collisionWidth,
         this.collisionHeight,
         color,
-        0.09,
+        0.001,
         randomType,
         this.collisionWidth,
         this.collisionHeight
@@ -188,7 +175,7 @@ export class WallBrick extends Phaser.GameObjects.Group {
   getType() {
     const randomType = Phaser.Math.RND.pick([
       "blue",
-      "red",
+      "rose",
       "green",
       "orange",
       "salt",

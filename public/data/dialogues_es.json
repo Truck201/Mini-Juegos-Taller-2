@@ -1,15 +1,7 @@
 {
   "tutorial": {
-    "paragraph1": "Bienvenido al\njuego 1 vs. 1,\ncompite contra\notro jugador.",
-    "paragraph2": "   Juega como\n   Mimbo o Luho,\nelige tu personaje\n    preferido.",
-    "paragraph3": "      Fase 1:\n Recolecta pororós\nen la barra dinámica.",
-    "paragraph4": "Te mueves con A-D\no con las flechas,\n boton de accion\n Enter o espacio",
-    "paragraph5": " Intercepta pororós\n   con precisión\npara obtener puntos.",
-    "paragraph6": "      Fase 2:\n   Gasta pororós en\nla tienda por objetos.",
-    "paragraph7": "Compra hasta\ntres objetos\npara mejorar\ntu desempeño.",
-    "paragraph8": "      Fase 3:\n  Combate utilizando\nhabilidades adquiridas\n    en la tienda.",
-    "paragraph9": "  Lanza dagas para\ndañar a tu oponente.",
-    "paragraph10": "Eventos aleatorios\n  pueden cambiar\n  el curso de\n   la batalla.",
-    "paragraph11": "Gana eliminando\n  al oponente"
+    "paragraph1": "    Recolecta\n la mayor cantidad\n   de pochoclos\n    que puedas",
+    "paragraph2": "  Ve a la tienda\n  a intercambiar\n    pororoes\n  por atributos",
+    "paragraph3": "Preparate para la\n   batalla final"
   }
 }

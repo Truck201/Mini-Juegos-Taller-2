@@ -23,15 +23,15 @@ export class ComboPersonajes {
     this.combo4Sound = this.scene.sound.add("combo4", { volume: 0.09 });
     this.combo5Sound = this.scene.sound.add("combo5", { volume: 0.09 });
 
-    this.sadLuho = this.scene.sound.add("sadLuhoSound", { volume: 0.09 });
-    this.embarassLuho = this.scene.sound.add("embarassLuho", { volume: 0.09 }); // añadir
-    this.angryLuho = this.scene.sound.add("angryLuho", { volume: 0.09 }); // añadir
-    this.happyLuho = this.scene.sound.add("happyLuho", { volume: 0.09 }); // añadir
+    this.sadLuho = this.scene.sound.add("sadLuhoSound", { volume: 0.15 });
+    this.embarassLuho = this.scene.sound.add("embarassLuho", { volume: 0.15 }); // añadir
+    this.angryLuho = this.scene.sound.add("angryLuho", { volume: 0.15 }); // añadir
+    this.happyLuho = this.scene.sound.add("happyLuho", { volume: 0.23 }); // añadir
 
-    this.cryMimbo = this.scene.sound.add("cryMimbo", { volume: 0.09 }); // añadir
+    this.cryMimbo = this.scene.sound.add("cryMimbo", { volume: 0.1 }); // añadir
     this.angryMimbo = this.scene.sound.add("angryMimbo", { volume: 0.09 }); // añadir
-    this.happyMimbo1 = this.scene.sound.add("happyMimbo1", { volume: 0.09 }); // añadir
-    this.happyMimbo2 = this.scene.sound.add("happyMimbo2", { volume: 0.09 }); // añadir
+    this.happyMimbo1 = this.scene.sound.add("happyMimbo1", { volume: 0.12 }); // añadir
+    this.happyMimbo2 = this.scene.sound.add("happyMimbo2", { volume: 0.12 }); // añadir
 
     // Texto de los combos
     this.comboText1 = this.scene.add
@@ -142,7 +142,7 @@ export class ComboPersonajes {
 
         // Animación del jugador 1 (victoria) y del enemigo (enojo)
         this.scene.player1.change_emotion("Mimbo", 2, this.scene.player1); // Mimbo: animación de victoria
-        this.scene.player2.change_emotion("Luho", 3, this.scene.player2); // Luho: animación de daño
+        this.scene.player2.change_emotion("Luho", 3, this.scene.player2); // Luho: animación de enojo
 
         this.happyMimbo2.play();
 
@@ -204,8 +204,8 @@ export class ComboPersonajes {
         this.scene.television.handleOnomatopoeias("recolectScene", "Combo10");
 
         // Animación del jugador 1 (victoria) y del enemigo (enojo)
-        this.scene.player1.change_emotion("Mimbo", 3, this.scene.player1); // Mimbo: animación de victoria
-        this.scene.player2.change_emotion("Luho", 2, this.scene.player2); // Luho: animación de daño
+        this.scene.player1.change_emotion("Mimbo", 3, this.scene.player1); // Mimbo: animación de  daño
+        this.scene.player2.change_emotion("Luho", 2, this.scene.player2); // Luho: animación de victoria
 
         this.cryMimbo.play();
         this.happyLuho.play();

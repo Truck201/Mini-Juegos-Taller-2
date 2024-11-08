@@ -10,6 +10,9 @@ export class KidKorn {
     this.dialogueSound = this.scene.sound.add("dialoguesSound", {
       volume: 0.1,
     });
+    this.screamCartoon = this.scene.sound.add("screamCartoon", {
+      volume: 0.21,
+    });
 
     // Cargar los diálogos
     this.dialogues = dialogues;
@@ -17,17 +20,17 @@ export class KidKorn {
     this.kidKornBig = this.scene.add
       .sprite(this.x / 2, this.y * 1.9, "kid-kornB")
       .setDepth(8)
-      .setScale(1.15);
+      .setScale(1.32);
     this.kidKornBig.setVisible(false); // Ocultar al inicio
 
     this.kidKornLeft = this.scene.add
-      .sprite(-250, this.y * 0.72, "kid-kornL")
+      .sprite(-250, this.y * 0.59, "kid-kornL")
       .setDepth(4)
-      .setScale(0.76);
+      .setScale(0.98);
     this.kidKornRight = this.scene.add
-      .sprite(this.x + 250, this.y * 0.72, "kid-kornR")
+      .sprite(this.x + 250, this.y * 0.59, "kid-kornR")
       .setDepth(4)
-      .setScale(0.76);
+      .setScale(0.98);
 
     this.kidKornLeft.setVisible(false); // Ocultar al inicio
     this.kidKornRight.setVisible(false); // Ocultar al inicio
@@ -42,6 +45,7 @@ export class KidKorn {
     // Hacer visible el sprite de KidKorn
     this.kidKornBig.setVisible(true);
     this.appear.play();
+    this.screamCartoon.play();
 
     // Siempre aplicar la animación idle de BigKidKorn
     this.kidKornBig.anims.play("idle-BigKorn", true);
@@ -80,7 +84,7 @@ export class KidKorn {
     // Animar a KidKorn para que suba desde la parte inferior
     this.scene.tweens.add({
       targets: this.kidKornBig,
-      y: height * 0.5, // Subir hasta la mitad de la pantalla
+      y: height * 0.425, // Subir hasta la mitad de la pantalla
       duration: 2500, // Duración de la animación (2 segundos)
       ease: "Power2", // Tipo de easing
       onComplete: () => {
@@ -110,6 +114,7 @@ export class KidKorn {
   hideKidKornBig() {
     let height = this.scene.game.scale.height;
     this.goBack.play();
+    this.screamCartoon.stop();
     // Hacer que KidKorn baje y luego desaparecerlo
     this.scene.tweens.add({
       targets: this.kidKornBig,
@@ -126,7 +131,7 @@ export class KidKorn {
     // Elegir aleatoriamente si aparece por la izquierda o la derecha
     const fromLeft = Phaser.Math.Between(0, 1) === 0;
     let sprite = fromLeft ? this.kidKornLeft : this.kidKornRight;
-    let startX = fromLeft ? -175 : this.scene.scale.width + 175;
+    let startX = fromLeft ? -185 : this.scene.scale.width + 185;
     let endX = fromLeft ? this.x * 0.02 : this.x * 0.98;
 
     sprite.setVisible(true);
@@ -141,23 +146,23 @@ export class KidKorn {
     const randomDialogue = this.dialogues.Neutral[randomIndex];
 
     let dialogueWidth = fromLeft
-      ? this.scene.scale.width * 0.2
-      : this.scene.scale.width * 0.8;
+      ? this.scene.scale.width * 0.255
+      : this.scene.scale.width * 0.75;
 
     let fontSize =
       randomDialogue.length <= 18
         ? "40px"
         : randomDialogue.length <= 30
-        ? "36px"
+        ? "38px"
         : randomDialogue.length <= 37
-        ? "32px"
-        : "27px";
+        ? "36px"
+        : "29px";
 
     this.dialogueSound.play();
 
     // Mostrar la frase en el juego
     const text = this.scene.add
-      .text(dialogueWidth, this.y * 0.37, randomDialogue, {
+      .text(dialogueWidth, this.y * 0.585, randomDialogue, {
         fontSize: fontSize,
         fontFamily: "'Press Start 2P'",
         color: "#fff",
@@ -180,7 +185,7 @@ export class KidKorn {
     this.scene.tweens.add({
       targets: sprite,
       x: endX,
-      duration: 2000, // Duración de la animación (2 segundos)
+      duration: 900, // Duración de la animación (2 segundos)
       ease: "Power2",
       onComplete: () => {
         // Explosión dos veces, luego cambiar a animación de Idle
@@ -192,10 +197,10 @@ export class KidKorn {
 
         this.scene.startGeneratingPopcorn(false);
         // Reproducir la animación de explosión dos veces antes de cambiar a idle
-        this.scene.time.delayedCall(sprite.anims.duration * 2, () => {
+        this.scene.time.delayedCall(sprite.anims.duration * 4, () => {
           sprite.anims.play(idleKey, true);
 
-          this.scene.time.delayedCall(Phaser.Math.Between(1300, 2000), () => {
+          this.scene.time.delayedCall(Phaser.Math.Between(1500, 1800), () => {
             this.hideKidKornChild(sprite, fromLeft);
             text.destroy(); // Destruir el texto después de que KidKorn desaparezca
           });
@@ -212,7 +217,7 @@ export class KidKorn {
     this.scene.tweens.add({
       targets: sprite,
       x: endX,
-      duration: 1200, // Duración de la animación (2 segundos)
+      duration: 900, // Duración de la animación (2 segundos)
       ease: "Power2",
       onComplete: () => {
         sprite.setVisible(false); // Ocultar después de la animación
@@ -221,13 +226,19 @@ export class KidKorn {
   }
 
   startKidKornAppearance() {
-    // Temporizador para aparecer KidKorn en intervalos aleatorios de 4 a 9 segundos
     this.scene.time.addEvent({
-      delay: Phaser.Math.Between(5000, 7000),
+      delay: Phaser.Math.Between(5500, 5800),
       loop: true,
       callback: () => {
-        if (this.scene.game_over_timeout > 13) {
-          this.showKidKorn(); // Mostrar KidKorn de forma aleatoria
+        const currentTime = this.scene.time.now;
+        const minInterval = 5500; // Intervalo mínimo de 5 segundos entre apariciones
+
+        if (
+          this.scene.game_over_timeout > 13 &&
+          currentTime - this.scene.lastKidKornTime >= minInterval
+        ) {
+          this.showKidKorn();
+          this.scene.lastKidKornTime = currentTime; // Actualizar el último tiempo de aparición
         }
       },
     });
@@ -241,7 +252,7 @@ export class KidKorn {
           start: 0,
           end: 3,
         }),
-        frameRate: 6,
+        frameRate: 8.2,
         repeat: -1,
       });
     }
@@ -253,7 +264,7 @@ export class KidKorn {
           start: 0,
           end: 1,
         }),
-        frameRate: 7,
+        frameRate: 6,
         repeat: -1,
       });
     }
@@ -265,7 +276,7 @@ export class KidKorn {
           start: 0,
           end: 1,
         }),
-        frameRate: 7,
+        frameRate: 4,
         repeat: -1,
       });
     }
@@ -277,7 +288,7 @@ export class KidKorn {
           start: 0,
           end: 1,
         }),
-        frameRate: 7,
+        frameRate: 4,
         repeat: -1,
       });
     }
@@ -289,7 +300,7 @@ export class KidKorn {
           start: 0,
           end: 1,
         }),
-        frameRate: 7,
+        frameRate: 4,
         repeat: -1,
       });
     }

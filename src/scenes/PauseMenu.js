@@ -66,11 +66,23 @@ export class PauseMenu extends Scene {
       .setDepth(101)
       .setInteractive()
       .on("pointerdown", () => {
-        this.mainScene.scene.stop("recolectScene");
-        this.mainScene.scene.stop("Hud");
-        this.mainScene.scene.stop("hudShop");
-        this.mainScene.scene.stop();
-        this.mainScene.scene.start("MainMenu");
+        if (this.mainScene) {
+          this.mainScene.scene.stop();
+          this.mainScene.scene.stop("Hud");
+        }
+        if (this.sceneShop) {
+          this.sceneShop.scene.stop();
+          this.sceneShop.scene.stop("hudShop")
+        }
+        if (this.sceneBattle) {
+          this.sceneBattle.scene.stop();
+        }
+        if (this.sceneCoop) {
+          this.sceneCoop.scene.stop();
+          this.sceneCoop.scene.stop("hudCoop")
+        }
+
+        this.scene.start("MainMenu");
         this.scene.stop();
       });
 
@@ -141,6 +153,7 @@ export class PauseMenu extends Scene {
           this.sceneCoop.scene.resume();
           if (sceneCoop.backgroundMusic) {
             sceneCoop.backgroundMusic.resume();
+            sceneCoop.lastSeconds.resume();
           }
         }
 

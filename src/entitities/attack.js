@@ -1,8 +1,10 @@
+import { getPhrase } from "../services/translations";
+
 export class Attack {
   constructor(scene) {
     this.scene = scene;
 
-    this.y = (this.scene.scale.height * 4.3) / 5;
+    this.y = (this.scene.scale.height * 4) / 5;
     this.x = this.scene.scale.width / 2;
 
     //Animaciones
@@ -76,14 +78,14 @@ export class Attack {
     );
 
     this.sprite = this.scene.add.sprite(randomX, this.y - 900, "static-sword");
-    this.sprite.setDepth(14).setScale(1.33);
+    this.sprite.setDepth(14).setScale(1.5);
     this.sprite.anims.play("idle", true);
     console.log("Sprite creado:", this.sprite);
 
     const fallSword = this.scene.fallingBonus;
     fallSword.play();
 
-    let endY = this.y * 0.4;
+    let endY = this.y * 0.385;
 
     this.scene.tweens.add({
       targets: this.sprite,
@@ -153,7 +155,7 @@ export class Attack {
 
   showMissMessage() {
     const missText = this.scene.add
-      .text(this.sprite.x, this.sprite.y - 5, "MISS", {
+      .text(this.sprite.x, this.sprite.y - 5, `${getPhrase("Fallo")}`, {
         fontSize: "35px",
         color: "#fff",
         fontFamily: "'Press Start 2P'",

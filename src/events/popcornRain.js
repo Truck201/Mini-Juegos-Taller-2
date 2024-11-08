@@ -1,18 +1,34 @@
 import { initAnimationsPopcorn } from "../anims/RainPopcorn";
 import { Attack } from "../entitities/attack";
 import { takeDamage } from "../functions/takeDamage";
+
 export class PopcornRaining {
   constructor(scene) {
     this.scene = scene;
     this.swords = [];
 
+    this.height = this.scene.game.scale.height;
+    this.width = this.scene.game.scale.width;
+
     this.isShelded1 = false;
     this.isShelded2 = false;
-
     this.create();
   }
 
   create() {
+    // Thunderbolt anims
+    this.thunderboltLeft = this.scene.add
+      .sprite(this.width * 0.09, this.height * 0.15, "thunderbolt")
+      .setScale(1.2)
+      .setDepth(10)
+      .setVisible(false);
+
+    this.thunderboltRight = this.scene.add
+      .sprite(this.width * 0.93, this.height * 0.15, "thunderbolt")
+      .setScale(1.2)
+      .setDepth(10)
+      .setVisible(false);
+
     // Añadimos Animaciones
     initAnimationsPopcorn(this.scene);
 
@@ -147,10 +163,30 @@ export class PopcornRaining {
             this.scene.player2EvadeChance,
             this.scene.player2HP,
             this.isShelded2,
-            'PopcornRain'
+            "PopcornRain"
           )
         ) {
           this.scene.cameras.main.shake(200, 0.025);
+
+          this.scene.player2.change_emotion("Luho", 1);
+          this.scene.player1.change_emotion("Mimbo", 2);
+
+          this.thunderboltRight.setVisible(true)
+          this.thunderboltRight.anims.play("Thunderbolt-Light");
+          this.thunderboltRight.on("animationcomplete", () => {
+            this.thunderboltRight.setVisible(false) // Cambiar a la imagen estática
+          });
+
+          this.scene.sadLuho.play();
+          let num = Phaser.Math.Between(1, 2);
+          num === 1
+            ? this.scene.happyMimbo1.play()
+            : this.scene.happyMimbo2.play();
+
+          if (this.scene.player2HP > 0) {
+            this.idleCharacters();
+          }
+
           const takeDamageSound = this.scene.takeDamageSound;
           this.scene.television.handleOnomatopoeias("battleScene", "attack");
           takeDamageSound.play();
@@ -167,7 +203,7 @@ export class PopcornRaining {
         this.scene.player2HPText.setText(
           `${this.player2HP.toString().padStart(2, "0")}`
         );
-        console.log(this.scene.player2HP)
+        console.log(this.scene.player2HP);
         // // Actualizar la vida
         this.scene.createHealtBar2.updateHealthBar(this.player2HP);
       }
@@ -185,10 +221,27 @@ export class PopcornRaining {
             this.scene.player1EvadeChance,
             this.scene.player1HP,
             this.isShelded1,
-            'PopcornRain'
+            "PopcornRain"
           )
         ) {
           this.scene.cameras.main.shake(200, 0.025);
+
+          this.scene.player2.change_emotion("Luho", 2);
+          this.scene.player1.change_emotion("Mimbo", 1);
+
+          this.thunderboltLeft.setVisible(true);
+          this.thunderboltLeft.anims.play("Thunderbolt-Light");
+          this.thunderboltLeft.on("animationcomplete", () => {
+            this.thunderboltLeft.setVisible(false); // Cambiar a la imagen estática
+          });
+
+          this.scene.happyLuho.play();
+          this.scene.angryMimbo.play();
+
+          if (this.scene.player1HP > 0) {
+            this.idleCharacters();
+          }
+
           const takeDamageSound = this.scene.takeDamageSound;
           this.scene.television.handleOnomatopoeias("battleScene", "attack");
           takeDamageSound.play();
@@ -205,7 +258,7 @@ export class PopcornRaining {
         this.scene.player1HPText.setText(
           `${this.player1HP.toString().padStart(2, "0")}`
         );
-        console.log(this.scene.player1HP)
+        console.log(this.scene.player1HP);
         // // Actualizar la vida
         this.scene.createHealtBar1.updateHealthBar(this.player1HP);
       }
@@ -349,6 +402,13 @@ export class PopcornRaining {
 
   visualCritical() {
     this.scene.visualCritical();
+  }
+
+  idleCharacters() {
+    this.scene.time.delayedCall(1200, () => {
+      this.scene.player1.change_emotion("Mimbo", 0); // Mimbo: IDLE
+      this.scene.player2.change_emotion("Luho", 0); // Luho: IDLE
+    });
   }
 
   gameOver(player, event) {

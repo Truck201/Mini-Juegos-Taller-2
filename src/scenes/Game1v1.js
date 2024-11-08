@@ -16,10 +16,10 @@ export class Game1v1 extends Scene {
   preload() {
     // Obtener el idioma
     if (this.language === "en-US") {
-      this.load.json("tutorials", "/data/dialogues_en.json");
+      this.load.json("tutorials", "/data/dialogues_en.json"); // ../public
       this.textSkipper = "Skip, press Q";
     } else {
-      this.load.json("tutorials", "/data/dialogues_es.json");
+      this.load.json("tutorials", "/data/dialogues_es.json"); // ../public
       this.textSkipper = "Saltar intro presiona Q";
     }
   }
@@ -65,14 +65,6 @@ export class Game1v1 extends Scene {
       this.tutorials.paragraph1,
       this.tutorials.paragraph2,
       this.tutorials.paragraph3,
-      this.tutorials.paragraph4,
-      this.tutorials.paragraph5,
-      this.tutorials.paragraph6,
-      this.tutorials.paragraph7,
-      this.tutorials.paragraph8,
-      this.tutorials.paragraph9,
-      this.tutorials.paragraph10,
-      this.tutorials.paragraph11,
     ];
 
     // Crear texto inicial en el centro de la pantalla
