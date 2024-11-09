@@ -62,7 +62,6 @@ export class GameCooperative extends Scene {
               point: this.points,
             });
             this.winnerSound.play();
-            this.backgroundMusic.stop();
             this.lastSeconds.stop();
             this.scene.bringToTop("GameOverCoop");
           }, 980);
@@ -75,7 +74,6 @@ export class GameCooperative extends Scene {
     const height = this.game.scale.height;
     addSoundsCooperative(this);
 
-    this.backgroundMusic.play();
     this.background = this.add.sprite(
       width * 0.5,
       height * 0.5,

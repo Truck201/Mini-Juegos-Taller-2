@@ -76,11 +76,6 @@ export function Sounds(scene) {
     { key: "cryMimbo", path: "characters/SFX-cryMimbo" }, 
 
     { key: "dialoguesSound", path: "dialogues/SFX-voiceDialogue" },
-
-    { key: "MusicV1", path: "music/Musica-V" },
-    { key: "MusicV2", path: "music/Musica-V" },
-    { key: "MusicV3", path: "music/Musica-V" },
-    { key: "MusicV4", path: "music/Musica-V" },
   ];
 
 

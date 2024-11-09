@@ -51,13 +51,10 @@ export class Shop extends Scene {
     this.createBackground();
     this.Monsters = new MonsterShop(this);
     
-    this.music = this.sound.add("MusicV3", { volume: 0.1, loop: true });
-
     this.startShop = this.sound.add("starterSoundShop", { volume: 0.003 });
     this.urbanSound = this.sound.add("urbanSounds", { volume: 0.2 });
 
     this.startShop.play();
-    this.music.play();
 
     // Asegúrate de que itemDescriptions no sea nulo o indefinido
     if (!this.itemDescriptions) {
@@ -79,7 +76,6 @@ export class Shop extends Scene {
         // 700 ms de delay
         this.lastKeyPressTime = currentTime;
         this.scene.pause("Shop");
-        this.music.pause();
         console.log("Pause Game");
         this.scene.launch("PauseMenu", { sceneShop: this });
         this.scene.bringToTop("PauseMenu");
@@ -161,7 +157,6 @@ export class Shop extends Scene {
 
   // Método para pasar ítems seleccionados a BattleScene
   startBattleScene = () => {
-    this.music.stop();
     const selectedItems = this.itemsCase.selectedItems; // Obtén los ítems seleccionados
     const selected1Player = this.itemsCase.player1Atributes;
     const selected2Player = this.itemsCase.player2Atributes;

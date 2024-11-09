@@ -24,10 +24,5 @@ export function addSoundsCooperative(scene) {
     scene.angryMimbo = scene.sound.add("angryMimbo", { volume: 0.09 }); 
     scene.happyMimbo1 = scene.sound.add("happyMimbo1", { volume: 0.15 }); 
     scene.happyMimbo2 = scene.sound.add("happyMimbo2", { volume: 0.15 }); 
-
-    // Music
-    scene.backgroundMusic = scene.sound.add("music-v5", { volume: 0.09, loop: true,});
-
-
   }
   

@@ -14,9 +14,6 @@ export function SoundsCoop(scene) {
       { key: "shoot", path: "playCoop/SFX-shoot" },
       { key: "winnerSound", path: "playCoop/SFX-winnerSound" },
       { key: "winTimer", path: "playCoop/SFX-winTime" },
-
-      { key: "music-v4", path: "music/Musica-V" },
-      { key: "music-v5", path: "music/Musica-V" },
     ];
   
   

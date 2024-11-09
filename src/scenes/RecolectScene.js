@@ -60,7 +60,6 @@ export class RecolectScene extends Scene {
             this.scene.stop("Hud");
             this.scene.stop("Game1vs1");
             this.scene.stop("recolectScene");
-            this.backgroundMusic.stop();
             this.scene.start("Shop", {
               points1: this.points1,
               points2: this.points2,
@@ -85,15 +84,6 @@ export class RecolectScene extends Scene {
     this.appearPopcorn2 = this.sound.add("appearPopcorn2", { volume: 0.09 });
     this.collectPopcorn = this.sound.add("collectPopcorn", { volume: 0.09 });
     // this.popcornBuff = this.sound.add("");
-
-    // Añade la música de fondo
-    this.backgroundMusic = this.sound.add("MusicV2", {
-      volume: 0.1,
-      loop: true, // Configura el loop aquí
-    });
-
-    // Iniciar la música de fondo
-    this.backgroundMusic.play();
 
     this.television = new Television(this, false);
 

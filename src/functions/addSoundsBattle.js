@@ -49,6 +49,4 @@ export function BattleSounds(scene) {
   scene.isShelded = scene.sound.add("isShelded", { volume: 0.08 });
   scene.pickHeart = scene.sound.add("pickHeart", { volume: 0.08 });
   scene.inmune = scene.sound.add("setInmune", { volume: 0.007 });
-
-  scene.music1 = scene.sound.add("MusicV4", { volume: 0.1, loop: true });
 }

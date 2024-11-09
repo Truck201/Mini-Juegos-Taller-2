@@ -34,8 +34,7 @@ export class BattleScene extends Scene {
   create() {
     BattleSounds(this);
     initialAnimsBattle(this)
-    
-    this.music1.play();
+
 
     this.width = this.game.scale.width;
     this.height = this.game.scale.height;
@@ -84,7 +83,6 @@ export class BattleScene extends Scene {
       if (currentTime - this.lastKeyPressTime > 250) {
         this.lastKeyPressTime = currentTime;
         this.scene.pause("battleScene");
-        this.music1.pause();
         console.log("Pause Game");
         this.scene.launch("PauseMenu", { sceneBattle: this });
         this.scene.bringToTop("PauseMenu");
@@ -236,7 +234,6 @@ export class BattleScene extends Scene {
   goToGameOver(loser) {
     this.scene.launch("GameOver", { player: loser }); // Game Over Scene
     this.scene.pause("battleScene");
-    this.music1.stop();
     this.scene.bringToTop("GameOver");
   }
 }

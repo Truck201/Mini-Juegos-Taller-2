@@ -55,12 +55,6 @@ export class MainMenu extends BaseScene {
     this.HooverSelect2 = this.sound.add("hooverSelection2", { volume: 0.08 });
     this.HooverSelect3 = this.sound.add("hooverSelection3", { volume: 0.08 });
 
-    this.mainMenuMusic = this.sound.add("MusicV3", {
-      volume: 0.08,
-      loop: true,
-    });
-    this.mainMenuMusic.play();
-
     this.selected = this.sound.add("select");
 
     // Añadir los efectos shader a la cámara
@@ -306,7 +300,6 @@ export class MainMenu extends BaseScene {
   }
 
   toOptionsScene() {
-    this.mainMenuMusic.stop();
     this.scene.start("opcionesScene", { language: this.language }); //Ir a escena Opciones
   }
 
@@ -316,7 +309,6 @@ export class MainMenu extends BaseScene {
 
     // Esperar un poco antes de iniciar la siguiente escena
     this.time.delayedCall(1500, () => {
-      this.mainMenuMusic.stop();
       this.scene.start("PreloadVersus", {
         dialogues: this.dialogues,
         language: this.language,
@@ -327,7 +319,6 @@ export class MainMenu extends BaseScene {
 
   transitionToCoperative() {
     this.cameras.main.zoomTo(1.4179, 1300);
-    this.mainMenuMusic.stop();
     // Esperar un poco antes de iniciar la siguiente escena
     this.time.delayedCall(1500, () => {
       this.scene.start("PreloadCoop", {
