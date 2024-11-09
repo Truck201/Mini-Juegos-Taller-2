@@ -27,7 +27,5 @@ export function addSoundsCooperative(scene) {
 
     // Music
     scene.backgroundMusic = scene.sound.add("music-v5", { volume: 0.09, loop: true,});
-
-
   }
   
