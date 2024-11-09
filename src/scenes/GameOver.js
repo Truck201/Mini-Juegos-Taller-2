@@ -27,33 +27,44 @@ export class GameOver extends BaseScene {
     let height = this.game.scale.height;
 
     this.add
-      .image(width * 0.5, height * 0.5, "l-opacidad")
-      .setAlpha(0.2)
-      .setDepth(41);
+      .image(width * 0.5, height * 0.5, "l-opacidad2")
+      .setAlpha(0.47)
+      .setScale(1.6)
+      .setDepth(40);
 
     this.backgroundPoints = this.add
-      .sprite(width * 0.5, - height, this.spriteName)
-      .setScale(0.83)
-      .setDepth(18);
+      .sprite(width * 0.51, -height, this.spriteName)
+      .setDepth(42);
 
     // Animación
     this.tweens.add({
       targets: this.backgroundPoints,
-      y: height * 0.34, // Nueva posición Y
+      y: height * 0.33, // Nueva posición Y
       duration: 900,
       ease: "Bounce.easeOut",
       onComplete: () => {
         this.text1.setVisible(true);
+        this.text2.setVisible(true);
       },
     });
 
     this.text1 = this.createText(
-      width * 0.5,
-      height * 0.45,
+      width * 0.51,
+      height * 0.38,
       `${getPhrase("Ganador")} ${this.winner}`
     )
       .setOrigin(0.5)
       .setScale(1.37)
+      .setVisible(false)
+      .setDepth(45);
+
+    this.text2 = this.createText(
+      width * 0.51,
+      height * 0.54,
+      `${getPhrase("VolverAlMenu")}`
+    )
+      .setOrigin(0.5)
+      .setScale(1.1)
       .setVisible(false)
       .setDepth(45);
 

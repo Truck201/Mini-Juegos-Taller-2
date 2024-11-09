@@ -34,13 +34,14 @@ export class GameOverCooperative extends BaseScene {
     }
 
     this.add
-      .image(width * 0.5, height * 0.5, "l-opacidad")
-      .setAlpha(0.2)
-      .setDepth(41);
+      .image(width * 0.5, height * 0.5, "l-opacidad2")
+      .setAlpha(0.47)
+      .setScale(1.6)
+      .setDepth(27);
 
     this.backgroundPoints = this.add
       .sprite(width * 0.5, - height, "fondoPuntajeAmarillo")
-      .setDepth(17);
+      .setDepth(30);
       
     // Animación
     this.tweens.add({

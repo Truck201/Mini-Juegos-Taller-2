@@ -187,6 +187,7 @@ export class Preloader extends Scene {
 
     //   Opacidad
     this.load.image("l-opacidad", "/assets/versus/opacidad.png");
+    this.load.image("l-opacidad2", "/assets/versus/opacidad2.png");
 
     // Bolsas
     this.load.image(
