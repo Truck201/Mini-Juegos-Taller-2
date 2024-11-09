@@ -6,9 +6,9 @@ export class AtributesPlayers {
     const initialAttributes = {
       hitPoints: 10,
       speed: 10,
-      evadeChance: 10,
+      evadeChance: 0,
       damage: 1,
-      critical: 5,
+      critical: 0,
       anchor: 1.2,
     };
 

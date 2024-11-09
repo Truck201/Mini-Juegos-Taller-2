@@ -77,10 +77,10 @@ export function Sounds(scene) {
 
     { key: "dialoguesSound", path: "dialogues/SFX-voiceDialogue" },
 
-    { key: "MusicV1", path: "music/Musica-V1" },
-    { key: "MusicV2", path: "music/Musica-V2" },
-    { key: "MusicV3", path: "music/Musica-V3" },
-    { key: "MusicV4", path: "music/Musica-V4" },
+    { key: "MusicV1", path: "music/Musica-V" },
+    { key: "MusicV2", path: "music/Musica-V" },
+    { key: "MusicV3", path: "music/Musica-V" },
+    { key: "MusicV4", path: "music/Musica-V" },
   ];
 
 
