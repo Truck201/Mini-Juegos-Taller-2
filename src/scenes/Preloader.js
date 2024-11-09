@@ -191,7 +191,7 @@ export class Preloader extends Scene {
 
     let apiSuccess = false;
 
-    const timeoutEvent = this.time.delayedCall(5000, () => {
+    const timeoutEvent = this.time.delayedCall(2400, () => {
       if (!apiSuccess) {
         console.warn(
           "API no respondió, cargando con idioma predeterminado es-AR."

@@ -10,6 +10,8 @@ export class MainMenu extends BaseScene {
     this.movingIcon = null;
     this.allicons = null;
     this.opacityLayer = null;
+    this.playMusic = true;
+    this.musicStarted = false; // Controla si la música ya ha iniciado
   }
 
   init(data) {
@@ -26,7 +28,8 @@ export class MainMenu extends BaseScene {
 
     this.logojuego = this.add
       .sprite(width * 0.5, height * 0.47, "logoJuego")
-      .setDepth(140).setOrigin(0.5);
+      .setDepth(140)
+      .setOrigin(0.5);
 
     // Primer tween: Expande el logo de 1.2 a 1.6 en 2 segundos
     this.tweens.add({
@@ -59,7 +62,13 @@ export class MainMenu extends BaseScene {
       volume: 0.08,
       loop: true,
     });
-    this.mainMenuMusic.play();
+
+    this.startMusic();
+
+    document.addEventListener(
+      "visibilitychange",
+      this.handleVisibilityChange.bind(this)
+    );
 
     this.selected = this.sound.add("select");
 
@@ -305,6 +314,39 @@ export class MainMenu extends BaseScene {
     this.opacityLayer.setVisible(true);
   }
 
+  startMusic() {
+    if (!this.musicStarted) {
+      this.musicStarted = true;
+    }
+  }
+
+  stopMusic() {
+    if (this.musicStarted && this.mainMenuMusic.isPlaying) {
+      this.mainMenuMusic.pause();
+    }
+  }
+
+  resumeMusic() {
+    if (this.musicStarted && !this.mainMenuMusic.isPlaying) {
+      this.mainMenuMusic.resume();
+    }
+  }
+
+  handleVisibilityChange() {
+    if (document.visibilityState === "visible") {
+      this.resumeMusic();
+    } else {
+
+    }
+  }
+
+  shutdown() {
+    document.removeEventListener(
+      "visibilitychange",
+      this.handleVisibilityChange.bind(this)
+    );
+  }
+
   toOptionsScene() {
     this.mainMenuMusic.stop();
     this.scene.start("opcionesScene", { language: this.language }); //Ir a escena Opciones
@@ -313,7 +355,6 @@ export class MainMenu extends BaseScene {
   transitionToVersus() {
     // Crear el efecto de zoom out
     this.cameras.main.zoomTo(0.6, 1300); // Reducir el zoom en 1 segundo (1000 ms)   0.4179
-
     // Esperar un poco antes de iniciar la siguiente escena
     this.time.delayedCall(1500, () => {
       this.mainMenuMusic.stop();
