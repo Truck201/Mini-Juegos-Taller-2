@@ -23,14 +23,10 @@ export class PreloaderCooperative extends Scene {
         frameHeight: 216, // 114
       }
     ); // DAÑO
-    this.load.spritesheet(
-      "Damage-Luho",
-      "/assets/versus/luho/luho-dano.png",
-      {
-        frameWidth: 232, // 90
-        frameHeight: 216, // 114
-      }
-    ); // DAÑO
+    this.load.spritesheet("Damage-Luho", "/assets/versus/luho/luho-dano.png", {
+      frameWidth: 232, // 90
+      frameHeight: 216, // 114
+    }); // DAÑO
 
     this.load.spritesheet(
       "Defeat-Mimbo",
@@ -84,9 +80,12 @@ export class PreloaderCooperative extends Scene {
     ); // NEUTRAL
 
     // Background
+    this.load.image("BackgroundCoop", "/assets/coop/escenarios/background.png");
+
+    // Game Over
     this.load.image(
-      "BackgroundCoop",
-      "/assets/coop/escenarios/background.png"
+      "fondoPuntajeAmarillo",
+      "/assets/versus/escenario/puntajes-amarillo.png"
     );
 
     // Background Spritesheet
@@ -111,33 +110,21 @@ export class PreloaderCooperative extends Scene {
     // Cinta de Movimiento
     this.load.image("cinta", "/assets/coop/escenarios/cinta-1.png");
 
-    this.load.spritesheet(
-      "cintaIzq",
-      "/assets/coop/escenarios/cinta-izq.png",
-      {
-        frameWidth: 856,
-        frameHeight: 128,
-      }
-    );
+    this.load.spritesheet("cintaIzq", "/assets/coop/escenarios/cinta-izq.png", {
+      frameWidth: 856,
+      frameHeight: 128,
+    });
 
-    this.load.spritesheet(
-      "cintaDer",
-      "/assets/coop/escenarios/cinta-der.png",
-      {
-        frameWidth: 856,
-        frameHeight: 128,
-      }
-    );
+    this.load.spritesheet("cintaDer", "/assets/coop/escenarios/cinta-der.png", {
+      frameWidth: 856,
+      frameHeight: 128,
+    });
 
     // character
-    this.load.spritesheet(
-      "mothman",
-      "/assets/versus/tienda/mothman.png",
-      {
-        frameWidth: 160,
-        frameHeight: 188,
-      }
-    );
+    this.load.spritesheet("mothman", "/assets/versus/tienda/mothman.png", {
+      frameWidth: 160,
+      frameHeight: 188,
+    });
 
     // Bolsas
     // ANIMACIONES Bolsas
@@ -248,21 +235,12 @@ export class PreloaderCooperative extends Scene {
     );
 
     // Slot de color Objects Brick
-    this.load.image(
-      "slotRed",
-      "/assets/coop/bolsas-pedidos/slotRed.png"
-    );
+    this.load.image("slotRed", "/assets/coop/bolsas-pedidos/slotRed.png");
 
-    this.load.image(
-      "slotBlue",
-      "/assets/coop/bolsas-pedidos/slotBlue.png"
-    );
+    this.load.image("slotBlue", "/assets/coop/bolsas-pedidos/slotBlue.png");
 
     // Pedido Actual
-    this.load.image(
-      "CurrentDelivers",
-      "/assets/coop/bolsas-pedidos/box.png"
-    );
+    this.load.image("CurrentDelivers", "/assets/coop/bolsas-pedidos/box.png");
 
     this.load.spritesheet(
       "ArrowsDelivers",
@@ -274,20 +252,14 @@ export class PreloaderCooperative extends Scene {
     );
 
     // Bolsitas Vacias
-    this.load.image(
-      "EmptyBlue",
-      "/assets/coop/bolsitas-vacias/empty-azul.png"
-    );
+    this.load.image("EmptyBlue", "/assets/coop/bolsitas-vacias/empty-azul.png");
 
     this.load.image(
       "EmptyOrange",
       "/assets/coop/bolsitas-vacias/empty-naranja.png"
     );
 
-    this.load.image(
-      "EmptyRose",
-      "/assets/coop/bolsitas-vacias/empty-rosa.png"
-    );
+    this.load.image("EmptyRose", "/assets/coop/bolsitas-vacias/empty-rosa.png");
 
     this.load.image(
       "EmptyGreen",
@@ -295,10 +267,7 @@ export class PreloaderCooperative extends Scene {
     );
 
     // Puente
-    this.load.image(
-      "BridgeSprite",
-      "/assets/coop/box/bridgeStatic.png"
-    );
+    this.load.image("BridgeSprite", "/assets/coop/box/bridgeStatic.png");
 
     // Resorteras
     this.load.image(
@@ -327,14 +296,10 @@ export class PreloaderCooperative extends Scene {
     // Money
     this.load.image("Cash", "/assets/coop/cash/static-cash.png");
 
-    this.load.spritesheet(
-      "FlyingCash",
-      "/assets/coop/cash/move-cash.png",
-      {
-        frameWidth: 140,
-        frameHeight: 72,
-      }
-    );
+    this.load.spritesheet("FlyingCash", "/assets/coop/cash/move-cash.png", {
+      frameWidth: 140,
+      frameHeight: 72,
+    });
 
     // SAL AZUCA
     this.load.image("sugar", "/assets/coop/ingrediente/popcorn-1.png");
@@ -362,10 +327,7 @@ export class PreloaderCooperative extends Scene {
       "/assets/coop/tirachinas/gomera-roja.png"
     );
 
-    this.load.image(
-      "bulletSprite",
-      "/assets/coop/tirachinas/municion.png"
-    );
+    this.load.image("bulletSprite", "/assets/coop/tirachinas/municion.png");
 
     this.load.on("complete", () => {
       this.scene.start("startCoop", {

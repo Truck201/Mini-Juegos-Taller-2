@@ -38,30 +38,58 @@ export class GameOverCooperative extends BaseScene {
       .setAlpha(0.2)
       .setDepth(41);
 
-    this.add.rectangle(width * 0.5, height * 0.5, width * 0.35, height * 0.4, 0x272736, 0.8).setDepth(17)
+    this.backgroundPoints = this.add
+      .sprite(width * 0.5, - height, "fondoPuntajeAmarillo")
+      .setDepth(17);
+      
+    // Animación
+    this.tweens.add({
+      targets: this.backgroundPoints,
+      y: height * 0.35, // Nueva posición Y
+      duration: 1000,
+      ease: "Bounce.easeOut",
+      onComplete: () => {
+        this.text1.setVisible(true)
+        this.text2.setVisible(true)
+        this.text3.setVisible(true)
+        this.text4.setVisible(true)
+      },
+    });
 
-    this.createText(width * 0.5, height * 0.38, `${getPhrase("Jugador")}: ${recordData.name}`, {
-      fontsize: 90
-    })
+    this.text1 = this.createText(
+      width * 0.5,
+      height * 0.35,
+      `${getPhrase("Jugador")}: ${recordData.name}`
+    )
       .setOrigin(0.5)
+      .setScale(1.2)
+      .setVisible(false)
       .setDepth(45);
 
-    this.createText(width * 0.5, height * 0.43, `${getPhrase("HighScore")}: ${recordData.score}`, {
-      fontsize: 90
-    })
+    this.text2 = this.createText(
+      width * 0.5,
+      height * 0.4,
+      `${getPhrase("HighScore")}: ${recordData.score}`
+    )
       .setOrigin(0.5)
+      .setScale(1.2)
+      .setVisible(false)
       .setDepth(45);
 
-    this.createText(width * 0.5, height * 0.6, `${getPhrase("Record")}:`, {
-      fontsize: 90
-    })
+    this.text3 = this.createText(
+      width * 0.5,
+      height * 0.52,
+      `${getPhrase("Record")}:`
+    )
       .setOrigin(0.5)
+      .setScale(1.23)
+      .setVisible(false)
       .setDepth(45);
 
-    this.createText(width * 0.5, height * 0.65, `$$ ${this.point}`, {
-      fontsize: 90
-    })
+    this.text4 = this.createText(width * 0.5, height * 0.6, `$$ ${this.point}`)
       .setOrigin(0.5)
+      .setScale(1.1)
+      .setVisible(false)
       .setDepth(45);
 
     this.input.once("pointerdown", () => {

@@ -14,6 +14,16 @@ export class PreloaderVersus extends Scene {
     //  Game
     this.load.image("escenario", "/assets/versus/escenario/principal.png");
 
+    // Game Over
+    this.load.image(
+      "fondoPuntajeAzul",
+      "/assets/versus/escenario/puntajes-azul.png"
+    );
+    this.load.image(
+      "fondoPuntajeRojo",
+      "/assets/versus/escenario/puntajes-rojo.png"
+    );
+
     this.load.image("shadowTotal", "/assets/versus/escenario/sombras.png");
     //  Personajes
     this.load.image("mimbo", "/assets/versus/mimbo/mimbo.png"); // Neutral
