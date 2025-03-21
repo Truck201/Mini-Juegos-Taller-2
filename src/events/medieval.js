@@ -254,7 +254,7 @@ export class MedievalEvent {
     if (typeof this.destroy === "function") {
       this.destroy(sword); // Destruir la attackBar
 
-      this.scene.time.delayedCall(Phaser.Math.Between(1500, 3500), () => {
+      this.scene.time.delayedCall(Phaser.Math.Between(840, 1900), () => {
         if (typeof this.respawn === "function") {
           let num = Phaser.Math.Between(0, 1);
           num === 1 ? this.addNewSword(1) : this.addNewSword(1);

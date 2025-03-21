@@ -124,7 +124,7 @@ export class Shielder {
       this.sprite.destroy(); // Destruye el sprite anterior
       this.sprite = null;
       this.applyShield(player);
-      scene.time.delayedCall(Phaser.Math.Between(3500, 6500), () => {
+      scene.time.delayedCall(Phaser.Math.Between(4000, 9000), () => {
         this.createShield(); // Crea un nuevo sprite en una posición aleatoria
       });
     }
