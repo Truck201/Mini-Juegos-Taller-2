@@ -56,7 +56,6 @@ export class Attack {
       });
     }
   }
-  
 
   // Crear la attackBar en una posición aleatoria
   createAttackBar() {
@@ -80,7 +79,6 @@ export class Attack {
     this.sprite = this.scene.add.sprite(randomX, this.y - 900, "static-sword");
     this.sprite.setDepth(14).setScale(1.5);
     this.sprite.anims.play("idle", true);
-    console.log("Sprite creado:", this.sprite);
 
     const fallSword = this.scene.fallingBonus;
     fallSword.play();
@@ -147,7 +145,6 @@ export class Attack {
 
   destroy() {
     if (this.sprite) {
-      console.log("Destruyendo sprite:", this.sprite);
       this.sprite.destroy();
       this.sprite = null; // Asegúrate de limpiar la referencia
     }

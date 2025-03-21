@@ -91,7 +91,7 @@ export class KidKorn {
         // Una vez que llega a la mitad, comenzar a generar pochoclos
         this.scene.startGeneratingPopcorn(true);
         // Luego de 6 segundos, ocultar a KidKorn y detener la generación de pochoclos
-        this.scene.time.delayedCall(5400, () => {
+        this.scene.time.delayedCall(4100, () => {
           this.hideKidKornBig();
           text.destroy(); // Destruir el texto después de que KidKorn desaparezca
         });

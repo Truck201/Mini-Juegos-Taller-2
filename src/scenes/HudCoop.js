@@ -53,11 +53,12 @@ export class HudCoop extends BaseScene {
     this.remaining_time_text = this.createText(
       this.scale.width / 2,
       this.scale.height * 0.9,
-      `${getPhrase("TiempoRestante")} ${this.remaining_time
+      `${getPhrase("Tiempo restante")} ${this.remaining_time // key = TiempoRestante
         .toString()
-        .padStart(2, "0")}`
+        .padStart(2, "0")} seg`
     )
       .setOrigin(0.5)
+      .setScale(2)
       .setDepth(10);
   }
 
@@ -70,11 +71,13 @@ export class HudCoop extends BaseScene {
       if (timeout < 0) {
         this.remaining_time_text.destroy();
       } else {
-        this.remaining_time_text.setText(
-          `${getPhrase("TiempoRestante")} ${timeout
-            .toString()
-            .padStart(2, "0")}`
-        );
+        this.remaining_time_text
+          .setText(
+            `${getPhrase("Tiempo restante")} ${timeout
+              .toString()
+              .padStart(2, "0")} seg`
+          )
+          .setScale(2);
 
         if (timeout === 5 || timeout === 4 || (timeout <= 3 && timeout >= 0)) {
           this.remaining_time_text.setScale(0.05); // Escala grande
@@ -103,7 +106,7 @@ export class HudCoop extends BaseScene {
             ease: "Power1",
           });
         } else {
-          this.remaining_time_text.setScale(1); // Escala normal
+          this.remaining_time_text.setScale(2); // Escala normal
         }
       }
     } else {

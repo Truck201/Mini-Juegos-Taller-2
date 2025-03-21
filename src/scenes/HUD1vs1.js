@@ -24,31 +24,31 @@ export class Hud extends BaseScene {
 
   create() {
     this.createText(
-      this.scale.width * 0.18,
+      this.scale.width * 0.22,
       this.scale.height * 0.078,
       " A D\nSpace"
     ).setOrigin(0.5);
 
     this.createText(
-      this.scale.width * 0.82,
+      this.scale.width * 0.78,
       this.scale.height * 0.078,
       " \u2190 \u2192\nIntro"
     ).setOrigin(0.5);
 
     this.points_text1 = this.createText(
-      this.scale.width * 0.075,
+      this.scale.width * 0.1,
       this.scale.height * 0.29,
       `${getPhrase("Puntos")} ${this.points1.toString().padStart(2, "0")}`
     ).setOrigin(0.5);
 
     this.points_text2 = this.createText(
-      this.scale.width * 0.935,
+      this.scale.width * 0.9,
       this.scale.height * 0.29,
       `${getPhrase("Puntos")} ${this.points2.toString().padStart(2, "0")}`
     ).setOrigin(0.5);
 
     this.remaining_time_text = this.createText(
-      this.scale.width / 2,
+      this.scale.width / 2 + 17,
       this.scale.height * 0.415,
       `${this.remaining_time.toString().padStart(2, "0")}`
     )
@@ -78,8 +78,8 @@ export class Hud extends BaseScene {
         );
         this.remaining_time_text.setScale(2.2);
 
-        if (timeout === 5 || timeout === 4 || (timeout <= 3 && timeout >= 0)) {
-          this.remaining_time_text.setScale(0.05); // Escala grande
+        if (timeout <= 3 && timeout >= 0) {
+          this.remaining_time_text.setScale(0.05).setDepth(20); // Escala grande
 
           // Temblor
           this.tweens.add({
@@ -105,8 +105,8 @@ export class Hud extends BaseScene {
             duration: 900,
             ease: "Power1",
           });
-        } else if (timeout <= 10 && timeout > 5) {
-          this.remaining_time_text.setScale(3); // Escala intermedia
+        } else if (timeout <= 10 && timeout > 3) {
+          this.remaining_time_text.setScale(0); // Escala intermedia
 
           // Temblor
           this.tweens.add({

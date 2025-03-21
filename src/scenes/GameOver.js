@@ -61,7 +61,7 @@ export class GameOver extends BaseScene {
     this.text2 = this.createText(
       width * 0.51,
       height * 0.54,
-      `${getPhrase("VolverAlMenu")}`
+      `${getPhrase("Volver al Menú")}` // key = VolverAlMenu
     )
       .setOrigin(0.5)
       .setScale(1.1)

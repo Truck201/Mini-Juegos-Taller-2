@@ -22,9 +22,9 @@ export class PedidoManager {
       .text(
         this.scene.scale.width / 2,
         this.scene.scale.height * 0.85,
-        `${getPhrase("TiempoPedido")} ${this.timeRemaining}s`,
+        `${getPhrase("Siguiente pedido")} ${this.timeRemaining} seg`, // key = TiempoPedido
         {
-          fontSize: 40,
+          fontSize: 35,
           fontFamily: "'Press Start 2P'",
           color: "#fff",
           stroke: "black",
@@ -242,7 +242,7 @@ export class PedidoManager {
         if (this.timeRemaining >= 0) {
           // Actualizar el texto del temporizador
           this.timeText.setText(
-            `${getPhrase("TiempoPedido")} ${this.timeRemaining}s`
+            `${getPhrase("Siguiente pedido")} ${this.timeRemaining} seg`
           );
         }
 

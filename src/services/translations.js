@@ -35,31 +35,31 @@ export async function getTranslations(lang, callback) {
 
   language = lang;
 
-  // if (language === ES_AR) {
-  //   return callback ? callback() : false;
-  // }
-
-  try {
-    const response = await fetch(
-      `https://traducila.vercel.app/api/translations/${PROJECT_ID}/${language}`
-    );
-
-    if (!response.ok) {
-      throw new Error("Network response was not ok");
-    }
-
-    const data = await response.json();
-
-    localStorage.setItem("translations", JSON.stringify(data));
-    localStorage.setItem("translations-timestamp", Date.now()); // Almacena el tiempo de la última actualización
-    localStorage.setItem("language", lang); // Almacena el idioma seleccionado
-    console.log("Traducciones Locales");
-
-    translations = data;
-    if (callback) callback();
-  } catch (error) {
-    console.error(error);
+  if (language === ES_AR) {
+    return callback ? callback() : false;
   }
+
+  // try {
+  //   const response = await fetch(
+  //     `https://traducila.vercel.app/api/translations/${PROJECT_ID}/${language}`
+  //   );
+
+  //   if (!response.ok) {
+  //     throw new Error("Network response was not ok");
+  //   }
+
+  //   const data = await response.json();
+
+  //   localStorage.setItem("translations", JSON.stringify(data));
+  //   localStorage.setItem("translations-timestamp", Date.now()); // Almacena el tiempo de la última actualización
+  //   localStorage.setItem("language", lang); // Almacena el idioma seleccionado
+  //   console.log("Traducciones Locales");
+
+  //   translations = data;
+  //   if (callback) callback();
+  // } catch (error) {
+  //   console.error(error);
+  // }
 }
 
 export function getPhrase(key) {

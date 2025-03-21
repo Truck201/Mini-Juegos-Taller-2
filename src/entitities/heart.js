@@ -93,18 +93,17 @@ export class Heart {
   }
 
   respawn(scene, atributes) {
-    atributes.updateAttributes({ hitPoints: 1 });
+    if (atributes.getHitPoints() < 10) {
+      atributes.updateAttributes({ hitPoints: 1 });
+    }
     this.destroy();
-
-    scene.time.delayedCall(Phaser.Math.Between(2300, 4000), () => {
+    scene.time.delayedCall(Phaser.Math.Between(3000, 5000), () => {
       this.createHeart();
     });
   }
 
   destroy() {
-    console.log("va o no va? ");
     if (this.sprite) {
-      console.log("aquí estoy? ");
       this.sprite.destroy();
       this.sprite = null;
     }

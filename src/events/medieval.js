@@ -71,7 +71,6 @@ export class MedievalEvent {
       isShelded.play();
       this.scene.television.handleOnomatopoeias("battleScene", "shield");
       this.shield.respawn(this.scene, this.scene.player1Atributes);
-      console.log("respawn shield pj 1");
     }
     if (
       this.checkCollision(
@@ -83,9 +82,7 @@ export class MedievalEvent {
       const pickHeart = this.scene.pickHeart;
       pickHeart.play();
 
-      console.log("ATRIBUTOS 1 -- > " + this.scene.player1Atributes);
       this.heart.respawn(this.scene, this.scene.player1Atributes);
-      console.log("respawn heart pj 1");
 
       // // Actualizar la vida
       this.scene.player1HP = Math.max(
@@ -110,8 +107,6 @@ export class MedievalEvent {
       isShelded.play();
       this.scene.television.handleOnomatopoeias("battleScene", "shield");
       this.shield.respawn(this.scene, this.scene.player2Atributes);
-
-      console.log("respawn shield pj 2");
     }
 
     if (
@@ -161,7 +156,7 @@ export class MedievalEvent {
           this.scene.player2.change_emotion("Luho", 1); // daño
           this.scene.player1.change_emotion("Mimbo", 2); // win
 
-          this.thunderboltRight.setVisible(true)
+          this.thunderboltRight.setVisible(true);
           this.thunderboltRight.anims.play("Thunderbolt-Light");
           this.thunderboltRight.on("animationcomplete", () => {
             this.thunderboltRight.setVisible(false); // Cambiar a la imagen estática
@@ -302,12 +297,10 @@ export class MedievalEvent {
     const index = this.swords.indexOf(sword);
     if (index > -1) {
       this.swords.splice(index, 1);
-      console.log("Destruye");
     }
   }
 
   isShelded(player) {
-    console.log("PLAYER ES -- >" + player);
     if (player === this.scene.player1Atributes) {
       this.isShelded1 = true;
       console.log("Player 1 is now shielded!");

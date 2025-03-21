@@ -26,20 +26,19 @@ export class LanguageScene extends BaseScene {
     );
     background.anims.play("Idle-Boleteria", true);
 
-    let isPlayingAnimationARG = false; // Flag para controlar animación
-
-    // Añadimos las imágenes de ambas banderas
-    const ARGLanguage = this.add
-      .sprite(width * 0.3, height * 0.78, "Argentina")
+    let isPlayingAnimationPlay = false;
+    // Añadimos Bandera unica
+    const playGame = this.add
+      .sprite(width * 0.5 + 8, height * 0.78, "BoletoPlay")
       .setDepth(10)
       .setOrigin(0.5)
       .setScale(1.24);
-    ARGLanguage.setInteractive();
+    playGame.setInteractive();
 
-    ARGLanguage.on("pointerover", () => {
-      if (!isPlayingAnimationARG) {
-        isPlayingAnimationARG = true;
-        ARGLanguage.anims.play("Crush-ARG", true);
+    playGame.on("pointerover", () => {
+      if (!isPlayingAnimationPlay) {
+        isPlayingAnimationPlay = true;
+        playGame.anims.play("Crush-Play", true);
         // Cambia el tamaño de la imagen al pasar el mouse
         this.selector2.play();
 
@@ -48,27 +47,27 @@ export class LanguageScene extends BaseScene {
         });
 
         this.time.delayedCall(1000, () => {
-          ARGLanguage.anims.play("Idle-ARG", true);
-          ARGLanguage.setScale(1.24);
-          isPlayingAnimationARG = false;
+          playGame.anims.play("Idle-Play", true);
+          playGame.setScale(1.24);
+          isPlayingAnimationPlay = false;
         });
 
-        ARGLanguage.setScale(1.46);
+        playGame.setScale(1.46);
       }
     });
 
-    // ARGLanguage.on("pointerout", () => {
-    //   ARGLanguage.anims.play("Idle-ARG", true);
-    //   // Cambia el tamaño de la imagen al pasar el mouse
-    //   ARGLanguage.setScale(1.24);
-    // });
+    playGame.on("pointerout", () => {
+      playGame.anims.play("Idle-Play", true);
+      // Cambia el tamaño de la imagen al pasar el mouse
+      playGame.setScale(1.24);
+    });
 
-    ARGLanguage.on("pointerdown", () => {
-      ARGLanguage.setScale(1.6);
+    playGame.on("pointerdown", () => {
+      playGame.setScale(1.6);
       this.SelectTicket.play();
       // this.BreakTicket.play();
       getTranslations(ES_AR, () => {
-        ARGLanguage.anims.play("Crush-ARG", true);
+        playGame.anims.play("Crush-Play", true);
         this.time.addEvent({
           delay: 120,
           loop: true,
@@ -79,33 +78,86 @@ export class LanguageScene extends BaseScene {
       });
     });
 
-    const USALanguage = this.add
-      .sprite(width * 0.7, height * 0.78, "EstadosUnidos")
-      .setDepth(10)
-      .setOrigin(0.5)
-      .setScale(1.24);
-    USALanguage.setInteractive();
+    // let isPlayingAnimationARG = false; // Flag para controlar animación
 
-    let isPlayingAnimationUSA = false; // Flag para controlar animación de la bandera USA
+    // Añadimos las imágenes de ambas banderas
+    // const ARGLanguage = this.add
+    //   .sprite(width * 0.3, height * 0.78, "Argentina")
+    //   .setDepth(10)
+    //   .setOrigin(0.5)
+    //   .setScale(1.24);
+    // ARGLanguage.setInteractive();
 
-    USALanguage.on("pointerover", () => {
-      if (!isPlayingAnimationUSA) {
-        isPlayingAnimationUSA = true;
-        USALanguage.anims.play("Crush-EEUU", true);
-        USALanguage.setScale(1.46);
-        this.selector1.play();
+    // ARGLanguage.on("pointerover", () => {
+    //   if (!isPlayingAnimationARG) {
+    //     isPlayingAnimationARG = true;
+    //     ARGLanguage.anims.play("Crush-ARG", true);
+    //     // Cambia el tamaño de la imagen al pasar el mouse
+    //     this.selector2.play();
 
-        this.time.delayedCall(470, () => {
-          this.BreakTicket.play();
-        });
+    //     this.time.delayedCall(470, () => {
+    //       this.BreakTicket.play();
+    //     });
 
-        this.time.delayedCall(1000, () => {
-          USALanguage.anims.play("Idle-EEUU", true);
-          USALanguage.setScale(1.24);
-          isPlayingAnimationUSA = false; // Permitir que vuelva a reproducirse la animación
-        });
-      }
-    });
+    //     this.time.delayedCall(1000, () => {
+    //       ARGLanguage.anims.play("Idle-ARG", true);
+    //       ARGLanguage.setScale(1.24);
+    //       isPlayingAnimationARG = false;
+    //     });
+
+    //     ARGLanguage.setScale(1.46);
+    //   }
+    // });
+
+    // ARGLanguage.on("pointerout", () => {
+    //   ARGLanguage.anims.play("Idle-ARG", true);
+    //   // Cambia el tamaño de la imagen al pasar el mouse
+    //   ARGLanguage.setScale(1.24);
+    // });
+
+    // ARGLanguage.on("pointerdown", () => {
+    //   ARGLanguage.setScale(1.6);
+    //   this.SelectTicket.play();
+    //   // this.BreakTicket.play();
+    //   getTranslations(ES_AR, () => {
+    //     ARGLanguage.anims.play("Crush-ARG", true);
+    //     this.time.addEvent({
+    //       delay: 120,
+    //       loop: true,
+    //       callback: () => {
+    //         this.gotoMainScene(ES_AR); //Llama la escena Main
+    //       },
+    //     });
+    //   });
+    // });
+
+    // const USALanguage = this.add
+    //   .sprite(width * 0.7, height * 0.78, "EstadosUnidos")
+    //   .setDepth(10)
+    //   .setOrigin(0.5)
+    //   .setScale(1.24);
+    // USALanguage.setInteractive();
+
+    // let isPlayingAnimationUSA = false; // Flag para controlar animación de la bandera USA
+
+    // USALanguage.on("pointerover", () => {
+    //   if (!isPlayingAnimationUSA) {
+    //     isPlayingAnimationUSA = true;
+    //     USALanguage.anims.play("Crush-EEUU", true);
+    //     USALanguage.setScale(1.46);
+    //     this.selector1.play();
+
+    //     this.time.delayedCall(470, () => {
+    //       this.BreakTicket.play();
+    //     });
+
+    //     this.time.delayedCall(1000, () => {
+    //       USALanguage.anims.play("Idle-EEUU", true);
+    //       USALanguage.setScale(1.24);
+    //       isPlayingAnimationUSA = false; // Permitir que vuelva a reproducirse la animación
+    //     });
+    //   }
+    // });
 
     // USALanguage.on("pointerout", () => {
     //   USALanguage.anims.play("Idle-EEUU", true);
@@ -114,26 +166,26 @@ export class LanguageScene extends BaseScene {
     //   USALanguage.setScale(1.24);
     // });
 
-    USALanguage.on("pointerdown", () => {
-      USALanguage.setScale(1.6);
-      this.SelectTicket.play();
-      // this.BreakTicket.play();
-      getTranslations(EN_US, () => {
-        USALanguage.anims.play("Crush-EEUU", true);
-        this.time.addEvent({
-          delay: 120,
-          loop: true,
-          callback: () => {
-            this.gotoMainScene(EN_US); //Llama la escena Main
-          },
-        });
-      });
-    });
+    // USALanguage.on("pointerdown", () => {
+    //   USALanguage.setScale(1.6);
+    //   this.SelectTicket.play();
+    //   // this.BreakTicket.play();
+    //   getTranslations(EN_US, () => {
+    //     USALanguage.anims.play("Crush-EEUU", true);
+    //     this.time.addEvent({
+    //       delay: 120,
+    //       loop: true,
+    //       callback: () => {
+    //         this.gotoMainScene(EN_US); //Llama la escena Main
+    //       },
+    //     });
+    //   });
+    // });
   }
 
   gotoMainScene(lang) {
     this.time.delayedCall(200, () => {
-      this.scene.start("MainMenu", { 
+      this.scene.start("MainMenu", {
         language: lang,
       });
     });

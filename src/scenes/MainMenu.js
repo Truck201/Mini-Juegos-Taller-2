@@ -26,7 +26,8 @@ export class MainMenu extends BaseScene {
 
     this.logojuego = this.add
       .sprite(width * 0.5, height * 0.47, "logoJuego")
-      .setDepth(140).setOrigin(0.5);
+      .setDepth(140)
+      .setOrigin(0.5);
 
     // Primer tween: Expande el logo de 1.2 a 1.6 en 2 segundos
     this.tweens.add({
@@ -110,7 +111,7 @@ export class MainMenu extends BaseScene {
     const playVersusButton = this.createText(
       width / 2,
       height * 0.34,
-      getPhrase("JugarContra")
+      getPhrase("Versus") // key = JugarContra
     )
       .setScale(1.4)
       .setInteractive()
@@ -152,7 +153,7 @@ export class MainMenu extends BaseScene {
     const playCooperativeButton = this.createText(
       width / 2,
       height * 0.42,
-      getPhrase("JugarCoop")
+      getPhrase("Cooperativo") // key = JugarCoop
     )
       .setScale(1.4)
       .setInteractive()

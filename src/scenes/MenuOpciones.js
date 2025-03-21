@@ -22,7 +22,7 @@ export class MenuOpciones extends BaseScene {
     const mainMenuButton = this.createText(
       width * 0.5,
       height * 0.3,
-      getPhrase("VolverAlMenu")
+      getPhrase("Volver al menú") // key = VolverAlMenu
     )
       .setOrigin(0.5)
       .setScale(1.5)
@@ -46,7 +46,7 @@ export class MenuOpciones extends BaseScene {
     const volumeText = this.createText(
       width * 0.5,
       height * 0.45,
-      getPhrase("CambiarVolumen")
+      getPhrase("Cambiar el volumen") // key = CambiarVolumen
     )
       .setOrigin(0.5)
       .setScale(1.2)

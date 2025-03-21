@@ -3,24 +3,24 @@ export class Character {
     this.scene = scene;
     this.sprite = sprite;
     this.isPlayerOne = isPlayerOne;
-    this.isInCoop = isInCoop
+    this.isInCoop = isInCoop;
 
     if (this.isPlayerOne && !isInCoop) {
-      this.x = this.scene.game.config.width * 0.0667;
+      this.x = this.scene.game.config.width * 0.1; // 0.0667;
       this.y = this.scene.scale.height * 0.15;
-      this.scale = 1.2
-    } else if ((!this.isPlayerOne && !isInCoop)){
-      this.x = this.scene.game.config.width * 0.934;
+      this.scale = 1.2;
+    } else if (!this.isPlayerOne && !isInCoop) {
+      this.x = this.scene.game.config.width * 0.9; // 0.934;
       this.y = this.scene.scale.height * 0.15;
-      this.scale = 1.2
-    } else if((this.isPlayerOne && isInCoop)) {
+      this.scale = 1.2;
+    } else if (this.isPlayerOne && isInCoop) {
       this.x = this.scene.game.config.width * 0.097;
       this.y = this.scene.scale.height * 0.863;
-      this.scale = 1
-    } else if((!this.isPlayerOne && isInCoop)) {
+      this.scale = 1;
+    } else if (!this.isPlayerOne && isInCoop) {
       this.x = this.scene.game.config.width * 0.903;
       this.y = this.scene.scale.height * 0.863;
-      this.scale = 1
+      this.scale = 1;
     }
 
     this.characterSprite = this.scene.physics.add.sprite(

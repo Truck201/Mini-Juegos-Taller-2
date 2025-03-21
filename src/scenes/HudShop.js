@@ -32,20 +32,30 @@ export class HudShop extends BaseScene {
       {
         backgroundColor: "#ffffff",
       }
-    ).setOrigin(0.5).setDepth(10).setScale(1);
+    )
+      .setOrigin(0.5)
+      .setDepth(10)
+      .setScale(1);
 
     this.points_text2 = this.createText(
       // 0.855
       width * 0.835,
       height * 0.894,
       `${this.points2.toString().padStart(2, "0")}`
-    ).setOrigin(0.5).setDepth(10).setScale(1);
+    )
+      .setOrigin(0.5)
+      .setDepth(10)
+      .setScale(1);
 
     this.remaining_time_text = this.createText(
       width / 2,
       height * 0.6493,
-      `${getPhrase('TiempoRestante')} ${this.remaining_time.toString().padStart(2, "0")}s`
-    ).setOrigin(0.5).setDepth(10);
+      `${getPhrase("Tiempo restante")} ${this.remaining_time
+        .toString()
+        .padStart(2, "0")}s`
+    )
+      .setOrigin(0.5)
+      .setDepth(10);
 
     this.createText(
       this.scale.width * 0.14,
@@ -58,9 +68,15 @@ export class HudShop extends BaseScene {
       height * 0.6493,
       "\u2190 \u2191 \u2193 \u2192 Intro"
     ).setOrigin(0.5);
+
+    this.createText(
+      this.scale.width * 0.1,
+      height * 0.56,
+      "Listo 'Q'"
+    ).setOrigin(0.5);
   }
 
-  update(){
+  update() {
     this.update_sprites();
   }
 
@@ -77,21 +93,27 @@ export class HudShop extends BaseScene {
   update_sprites() {
     let width = this.game.scale.width;
     let height = this.game.scale.height;
-    
+
     if (this.sprite1) this.sprite1.destroy();
     if (this.sprite2) this.sprite2.destroy();
 
-    this.sprite1 = this.add.sprite(width * 0.218, height * 0.882, this.get_sprite_key(this.points1)).setScale(2.2).setDepth(7);
-    this.sprite2 = this.add.sprite(width * 0.782, height * 0.882, this.get_sprite_key(this.points2)).setScale(2.2).setDepth(7);
+    this.sprite1 = this.add
+      .sprite(width * 0.218, height * 0.882, this.get_sprite_key(this.points1))
+      .setScale(2.2)
+      .setDepth(7);
+    this.sprite2 = this.add
+      .sprite(width * 0.782, height * 0.882, this.get_sprite_key(this.points2))
+      .setScale(2.2)
+      .setDepth(7);
   }
 
   get_sprite_key(points) {
     if (points >= 70) {
-      return 'high-points';
+      return "high-points";
     } else if (points >= 40) {
-      return 'medium-points';
+      return "medium-points";
     } else if (points < 40) {
-      return 'low-points';
+      return "low-points";
     }
   }
 
@@ -102,7 +124,9 @@ export class HudShop extends BaseScene {
       }
       if (timeout >= 0) {
         this.remaining_time_text.setText(
-          `${getPhrase('TiempoRestante')} ${timeout.toString().padStart(2, "0")}s`
+          `${getPhrase("Tiempo restante")} ${timeout
+            .toString()
+            .padStart(2, "0")}s`
         );
       }
     }
