@@ -15,7 +15,7 @@ export class AtributeText extends BaseScene {
 
     this.createTextToScene(
       this.scene,
-      width * 0.18,
+      width * 0.22,
       height * 0.078,
       " A D\nSpace"
     )
@@ -24,7 +24,7 @@ export class AtributeText extends BaseScene {
 
     this.createTextToScene(
       this.scene,
-      width * 0.82,
+      width * 0.78,
       height * 0.078,
       " \u2190 \u2192\nIntro"
     )

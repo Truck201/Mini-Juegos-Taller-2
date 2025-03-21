@@ -62,19 +62,14 @@ export class Television {
 
   // Método para mostrar una onomatopeya
   showOnomatopoeia(sprite, scale) {
-    let margin = 40;
-    let randomX = Phaser.Math.Between(
-      this.television.x - margin,
-      this.television.x + margin
-    );
-    let randomY = Phaser.Math.Between(
-      this.television.y - margin,
-      this.television.y + margin
-    );
+    let teleX = this.television.x + 20;
+    let teleY = this.television.y - 18;
+    console.log(`Tele X ${teleX}`);
+    console.log(`Tele Y ${teleY}`);
 
     // Crear la onomatopeia con un tamaño inicial muy pequeño
     let onomatopoeia = this.scene.add
-      .sprite(randomX, randomY, sprite)
+      .sprite(teleX, teleY, sprite)
       .setScale(0) // Empieza en un tamaño de 0
       .setOrigin(0.5)
       .setDepth(1);
@@ -107,12 +102,12 @@ export class Television {
         if (playerAction === "BigKidKorn") {
           let random = Phaser.Math.Between(1, 4);
           let expresion = `boom${random}`;
-          this.showOnomatopoeia(expresion, 0.43); // "Boom!"
-          this.showOnomatopoeia("kaboom", 0.74); // "Boom!"
+          this.showOnomatopoeia(expresion, 0.62); // "Boom!"
+          this.showOnomatopoeia("kaboom", 0.9); // "Boom!"
         }
         if (playerAction === "Combo10") {
           let expresion = `crash1`;
-          this.showOnomatopoeia(expresion, 0.75); // "Wow!"
+          this.showOnomatopoeia(expresion, 0.81); // "Wow!"
         }
         break;
       case "battleScene":
@@ -128,10 +123,10 @@ export class Television {
             : this.showOnomatopoeia("ouch", 0.4); // "Ouch!"
         }
         if (playerAction === "attack") {
-          this.showOnomatopoeia("pfoom", 0.56);
+          this.showOnomatopoeia("pfoom", 0.62);
         }
         if (playerAction === "shield") {
-          this.showOnomatopoeia("oh", 0.2); // "Ouch!"
+          this.showOnomatopoeia("oh", 0.24); // "Ouch!"
         }
         break;
       default:
