@@ -112,7 +112,7 @@ export class Heart {
         scale: { from: 1.33, to: 2 }, // Agrandar el heart
         angle: 360, // Girar 360 grados
         alpha: { from: 1, to: 0 }, // Desvanecer
-        duration: 800, // Duración de la animación (0.8 segundos)
+        duration: 700, // Duración de la animación (0.8 segundos)
         ease: "Power2",
         onComplete: () => {
           this.sprite.destroy();

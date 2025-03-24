@@ -10,7 +10,7 @@ export class MedievalEvent {
     this.isShelded1 = false;
     this.isShelded2 = false;
 
-    this.heartTimer = 800;
+    this.heartTimer = 1200;
 
     this.isPicked1 = false;
     this.isPicked2 = false;
