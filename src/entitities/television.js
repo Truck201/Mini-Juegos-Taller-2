@@ -98,22 +98,20 @@ export class Television {
       case "recolectScene":
         if (playerAction === "start") {
           let expresion = `fireworksTV`;
-          let expresion2 = `swordsTV`;
-          this.showOnomatopoeia(expresion, 1.1); // "Fireworks"
-          this.showOnomatopoeia(expresion2, 1.1); // "Battle"
+          this.showOnomatopoeia(expresion, 1.3); // "Fireworks"
         }
         if (playerAction === "BigKidKorn") {
           let expresion = `appear`;
           this.showOnomatopoeia(expresion, 2.1); // "Boom!"
         }
         if (playerAction === "Combo10") {
-          let random = Phaser.Math.Between(1, 2);
+          let random = Phaser.Math.Between(1, 6);
           let expresion = `combo${random}`;
           this.showOnomatopoeia(expresion, 2.3); // "Wow!"
         }
         if (playerAction === "Terminado") {
           let expresion = `termina`;
-          this.showOnomatopoeia(expresion, 0.3);
+          this.showOnomatopoeia(expresion, 2.3);
         }
         break;
       case "battleScene":
@@ -121,18 +119,21 @@ export class Television {
           let expresion = `fireworksTV`;
           let expresion2 = `swordsTV`;
           let expresion3 = `battle`;
-          this.showOnomatopoeia(expresion, 1.1); // "Fireworks"
-          this.showOnomatopoeia(expresion2, 1.1); // "Battle"
-          this.showOnomatopoeia(expresion3, 1.2); // "Battle"
+          this.showOnomatopoeia(expresion, 1.3); // "Fireworks"
+          this.showOnomatopoeia(expresion2, 1.3); // "Battle"
+          this.showOnomatopoeia(expresion3, 1.4); // "Battle"
         }
         if (playerAction === "critical") {
-          this.showOnomatopoeia("ouch", 2); // "Ouch!"
+          let random = Phaser.Math.Between(1, 2);
+          this.showOnomatopoeia(`ouch${random}`, 2); // "Ouch!"
         }
         if (playerAction === "attack") {
-          this.showOnomatopoeia("combo2", 2.3);
+          let random = Phaser.Math.Between(1, 2);
+          this.showOnomatopoeia(`attack${random}`, 2.3);
         }
         if (playerAction === "shield") {
-          this.showOnomatopoeia("oh", 2); // "Ouch!"
+          let random = Phaser.Math.Between(1, 2);
+          this.showOnomatopoeia(`shield${random}`, 2); // "Ouch!"
         }
         break;
       default:

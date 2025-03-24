@@ -141,14 +141,22 @@ export class Preloader extends Scene {
 
     this.load.image("combo1", "/assets/versus/television/OYS-combo1.png");
     this.load.image("combo2", "/assets/versus/television/OYS-combo2.png");
+    this.load.image("combo3", "/assets/versus/television/OYS-combo3.png");
+    this.load.image("combo4", "/assets/versus/television/OYS-combo4.png");
+    this.load.image("combo5", "/assets/versus/television/OYS-combo5.png");
+    this.load.image("combo6", "/assets/versus/television/OYS-combo6.png");
+
     this.load.image("termina", "/assets/versus/television/OYS-termina.png");
 
-    this.load.image("ready1", "/assets/versus/television/OYS-getReady.png");
-    this.load.image("ready2", "/assets/versus/television/OYS-ready.png");
-
     this.load.image("battle", "/assets/versus/television/OYS-battle.png");
-    this.load.image("ouch", "/assets/versus/television/OYS-ouch.png");
-    this.load.image("oh", "/assets/versus/television/OYS-shield.png");
+    this.load.image("ouch1", "/assets/versus/television/OYS-ouch1.png");
+    this.load.image("ouch2", "/assets/versus/television/OYS-ouch2.png");
+
+    this.load.image("shield1", "/assets/versus/television/OYS-shield1.png");
+    this.load.image("shield2", "/assets/versus/television/OYS-shield2.png");
+
+    this.load.image("attack1", "/assets/versus/television/OYS-attack1.png");
+    this.load.image("attack2", "/assets/versus/television/OYS-attack2.png");
 
     // Barra Audio Master
     this.load.image("sliderHandle", "/assets/versus/menu/anillo_volumen.png"); // Derrota

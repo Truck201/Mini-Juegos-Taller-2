@@ -173,7 +173,7 @@ export class MedievalEvent {
           }
 
           this.destroyAndRespawn(sword);
-          this.scene.television.handleOnomatopoeias("battleScene", "attack");
+          // this.scene.television.handleOnomatopoeias("battleScene", "attack");
           const takeDamageSound = this.scene.takeDamageSound;
           takeDamageSound.play();
           const pickSword = this.scene.pickSword;
@@ -227,7 +227,7 @@ export class MedievalEvent {
           }
 
           this.destroyAndRespawn(sword);
-          this.scene.television.handleOnomatopoeias("battleScene", "attack");
+          // this.scene.television.handleOnomatopoeias("battleScene", "attack");
           const takeDamageSound = this.scene.takeDamageSound;
           takeDamageSound.play();
           const pickSword = this.scene.pickSword;
@@ -392,6 +392,10 @@ export class MedievalEvent {
 
   visualCritical() {
     this.scene.visualCritical();
+  }
+
+  visualAttack() {
+    this.scene.visualAttack();
   }
 
   idleCharacters() {

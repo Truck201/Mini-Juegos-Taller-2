@@ -189,16 +189,12 @@ export class BattleScene extends Scene {
   visualCritical() {
     criticalVisual(this);
     let num = Phaser.Math.Between(0, 1);
-    if (num >= 0.5) {
-      this.critical1.play();
-      // Cuando un jugador golpea a otro:
-      this.television.handleOnomatopoeias("battleScene", "critical");
-    }
-    if (num < 0.5) {
-      this.critical2.play();
-      // Cuando un jugador golpea a otro:
-      this.television.handleOnomatopoeias("battleScene", "critical");
-    }
+    num >= 0.5 ? this.critical1.play() : this.critical2.play();
+    this.television.handleOnomatopoeias("battleScene", "critical");
+  }
+
+  visualAttack() {
+    this.television.handleOnomatopoeias("battleScene", "attack");
   }
 
   gameOver(player, event) {

@@ -29,11 +29,13 @@ export function takeDamage(
   console.log("DAMAGE -->" + damage);
   console.log("CRITICAL -->" + critical);
 
-  if (critical > 0) {
+  if (critical >= 0) {
     const criticalChance = Phaser.Math.Between(0, 100);
     if (criticalChance < critical) {
       damage += damage;
       scene.visualCritical();
+    } else {
+      scene.visualAttack();
     }
   }
 

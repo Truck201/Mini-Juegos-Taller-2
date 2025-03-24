@@ -186,7 +186,7 @@ export class PopcornRaining {
           }
 
           const takeDamageSound = this.scene.takeDamageSound;
-          this.scene.television.handleOnomatopoeias("battleScene", "attack");
+          // this.scene.television.handleOnomatopoeias("battleScene", "attack");
           takeDamageSound.play();
           const pickSword = this.scene.pickSword;
           pickSword.play();
@@ -240,7 +240,7 @@ export class PopcornRaining {
           }
 
           const takeDamageSound = this.scene.takeDamageSound;
-          this.scene.television.handleOnomatopoeias("battleScene", "attack");
+          // this.scene.television.handleOnomatopoeias("battleScene", "attack");
           takeDamageSound.play();
           const pickSword = this.scene.pickSword;
           pickSword.play();
@@ -403,6 +403,10 @@ export class PopcornRaining {
 
   visualCritical() {
     this.scene.visualCritical();
+  }
+
+  visualAttack() {
+    this.scene.visualAttack();
   }
 
   idleCharacters() {

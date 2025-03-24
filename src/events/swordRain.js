@@ -86,7 +86,7 @@ export class SwordRain {
           }
 
           const takeDamageSound = this.scene.takeDamageSound;
-          this.scene.television.handleOnomatopoeias("battleScene", "attack");
+          // this.scene.television.handleOnomatopoeias("battleScene", "attack");
           takeDamageSound.play();
           const pickSword = this.scene.pickSword;
           pickSword.play();
@@ -140,7 +140,7 @@ export class SwordRain {
           }
 
           const takeDamageSound = this.scene.takeDamageSound;
-          this.scene.television.handleOnomatopoeias("battleScene", "attack");
+          // this.scene.television.handleOnomatopoeias("battleScene", "attack");
           takeDamageSound.play();
           const pickSword = this.scene.pickSword;
           pickSword.play();
@@ -230,6 +230,10 @@ export class SwordRain {
 
   visualCritical() {
     this.scene.visualCritical();
+  }
+
+  visualAttack() {
+    this.scene.visualAttack();
   }
 
   idleCharacters() {
