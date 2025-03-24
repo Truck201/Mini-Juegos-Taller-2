@@ -128,21 +128,27 @@ export class Preloader extends Scene {
     // Televisión
     this.load.image("TeleImagen", "/assets/versus/menu/tv.png"); // Derrota
 
-    // Onomatopeyas
-    this.load.image("boom1", "/assets/versus/television/OYS-boom.png"); // Onomatopeyas
-    this.load.image("boom2", "/assets/versus/television/OYS-boom2.png");
-    this.load.image("boom3", "/assets/versus/television/OYS-boom3.png");
-    this.load.image("boom4", "/assets/versus/television/OYS-boom4.png");
-    this.load.image("crash1", "/assets/versus/television/OYS-crash.png");
-    this.load.image("crash2", "/assets/versus/television/OYS-crash2.png");
+    // Cargar imágenes de versus para pantalla
+    this.load.image("battleTV", "/assets/versus/television/TV-battle.png");
+    this.load.image(
+      "fireworksTV",
+      "/assets/versus/television/TV-fireworks.png"
+    );
+    this.load.image("swordsTV", "/assets/versus/television/TV-swords.png");
+
+    // Onomatopeyas this.load.image("", "/assets/versus/television/.png");
+    this.load.image("appear", "/assets/versus/television/OYS-appear.png"); // Onomatopeyas
+
+    this.load.image("combo1", "/assets/versus/television/OYS-combo1.png");
+    this.load.image("combo2", "/assets/versus/television/OYS-combo2.png");
+    this.load.image("termina", "/assets/versus/television/OYS-termina.png");
+
     this.load.image("ready1", "/assets/versus/television/OYS-getReady.png");
     this.load.image("ready2", "/assets/versus/television/OYS-ready.png");
-    this.load.image("hello", "/assets/versus/television/OYS-hello.png");
-    this.load.image("kaboom", "/assets/versus/television/OYS-kaboom.png");
-    this.load.image("oh", "/assets/versus/television/OYS-oh.png");
+
+    this.load.image("battle", "/assets/versus/television/OYS-battle.png");
     this.load.image("ouch", "/assets/versus/television/OYS-ouch.png");
-    this.load.image("pfoom", "/assets/versus/television/OYS-pfoom.png");
-    this.load.image("whack", "/assets/versus/television/OYS-whack.png");
+    this.load.image("oh", "/assets/versus/television/OYS-shield.png");
 
     // Barra Audio Master
     this.load.image("sliderHandle", "/assets/versus/menu/anillo_volumen.png"); // Derrota

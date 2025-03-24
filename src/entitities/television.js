@@ -1,5 +1,5 @@
 export class Television {
-  constructor(scene, isInMenu) {
+  constructor(scene, isInMenu, isClose) {
     this.scene = scene;
 
     this.y = this.scene.scale.height * 0.4;
@@ -24,29 +24,25 @@ export class Television {
       // Shader
       this.television.setPostPipeline("TVStaticFx");
     } else if (!isInMenu) {
-      this.y = this.scene.scale.height * 0.43;
-      this.scale = 0.32; // 0.00092
+      this.y = this.scene.scale.height;
+      let tvY;
+      isClose ? (this.scale = 1.7) : (this.scale = 1.14);
+      isClose ? (tvY = this.y * 0.48) : (tvY = this.y * 0.43);
 
       // Sprite Television
       this.television = this.scene.physics.add
-        .sprite(this.x, this.y, "l-opacidad")
+        .sprite(this.x + 12, tvY, "battleTV")
         .setScale(this.scale)
-        .setAlpha(0.4)
+        .setAlpha(0.5)
         .setDepth(1);
       this.television.setImmovable;
       this.television.body.allowGravity = false;
-
-      this.filtrado = this.scene.physics.add
-        .sprite(this.x, this.y, "l-opacidad") //
-        .setScale(this.scale)
-        .setAlpha(0.08)
-        .setDepth(1);
-      this.filtrado.setImmovable;
-      this.filtrado.body.allowGravity = false;
+      this.television.setDepth(1);
 
       // Shader
       // this.television.setPostPipeline("TVDistortionFx");
-      this.filtrado.setPostPipeline("CRTPostFx");
+      // this.television.setPostPipeline("CRTPostFx");
+      this.television.setPostPipeline("TVStaticFx");
     }
 
     this.text = this.scene.add
@@ -71,6 +67,7 @@ export class Television {
     let onomatopoeia = this.scene.add
       .sprite(teleX, teleY, sprite)
       .setScale(0) // Empieza en un tamaño de 0
+      .setAlpha(0.87)
       .setOrigin(0.5)
       .setDepth(1);
 
@@ -99,34 +96,43 @@ export class Television {
       //   this.showOnomatopoeia("hello", 0.00); // "Hola!"
       //   break;
       case "recolectScene":
+        if (playerAction === "start") {
+          let expresion = `fireworksTV`;
+          let expresion2 = `swordsTV`;
+          this.showOnomatopoeia(expresion, 1.1); // "Fireworks"
+          this.showOnomatopoeia(expresion2, 1.1); // "Battle"
+        }
         if (playerAction === "BigKidKorn") {
-          let random = Phaser.Math.Between(1, 4);
-          let expresion = `boom${random}`;
-          this.showOnomatopoeia(expresion, 0.62); // "Boom!"
-          this.showOnomatopoeia("kaboom", 0.9); // "Boom!"
+          let expresion = `appear`;
+          this.showOnomatopoeia(expresion, 2.1); // "Boom!"
         }
         if (playerAction === "Combo10") {
-          let expresion = `crash1`;
-          this.showOnomatopoeia(expresion, 0.81); // "Wow!"
+          let random = Phaser.Math.Between(1, 2);
+          let expresion = `combo${random}`;
+          this.showOnomatopoeia(expresion, 2.3); // "Wow!"
+        }
+        if (playerAction === "Terminado") {
+          let expresion = `termina`;
+          this.showOnomatopoeia(expresion, 0.3);
         }
         break;
       case "battleScene":
         if (playerAction === "start") {
-          let random = Phaser.Math.Between(1, 2);
-          let expresion = `ready${random}`;
-          this.showOnomatopoeia(expresion, 0.46); // "Ready?"
+          let expresion = `fireworksTV`;
+          let expresion2 = `swordsTV`;
+          let expresion3 = `battle`;
+          this.showOnomatopoeia(expresion, 1.1); // "Fireworks"
+          this.showOnomatopoeia(expresion2, 1.1); // "Battle"
+          this.showOnomatopoeia(expresion3, 1.2); // "Battle"
         }
         if (playerAction === "critical") {
-          let random = Phaser.Math.Between(1, 2);
-          random === 1
-            ? this.showOnomatopoeia("crash2", 0.7)
-            : this.showOnomatopoeia("ouch", 0.4); // "Ouch!"
+          this.showOnomatopoeia("ouch", 2); // "Ouch!"
         }
         if (playerAction === "attack") {
-          this.showOnomatopoeia("pfoom", 0.62);
+          this.showOnomatopoeia("combo2", 2.3);
         }
         if (playerAction === "shield") {
-          this.showOnomatopoeia("oh", 0.24); // "Ouch!"
+          this.showOnomatopoeia("oh", 2); // "Ouch!"
         }
         break;
       default:

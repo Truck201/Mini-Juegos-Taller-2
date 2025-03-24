@@ -20,7 +20,7 @@ export class AtributeText extends BaseScene {
       " A D\nSpace"
     )
       .setOrigin(0.5)
-      .setDepth(3);
+      .setDepth(8);
 
     this.createTextToScene(
       this.scene,
@@ -29,7 +29,7 @@ export class AtributeText extends BaseScene {
       " \u2190 \u2192\nIntro"
     )
       .setOrigin(0.5)
-      .setDepth(3);
+      .setDepth(8);
 
     const width1 = width * 0.115;
     const width2 = width * 0.885;
@@ -49,7 +49,7 @@ export class AtributeText extends BaseScene {
       `${this.scene.player1HP.toString().padStart(2, "0")}`
     )
       .setOrigin(0.5)
-      .setDepth(3);
+      .setDepth(8);
 
     this.createTextWithIcon(width1, height1, "hp_icon", true);
 
@@ -60,7 +60,7 @@ export class AtributeText extends BaseScene {
       `${this.scene.player1Speed.toString().padStart(2, "0")}`
     )
       .setOrigin(0.5)
-      .setDepth(3);
+      .setDepth(8);
 
     this.createTextWithIcon(width1, height2, "speed_icon", true);
 
@@ -71,7 +71,7 @@ export class AtributeText extends BaseScene {
       `${this.scene.player1EvadeChance.toString().padStart(2, "0")}`
     )
       .setOrigin(0.5)
-      .setDepth(3);
+      .setDepth(8);
 
     this.createTextWithIcon(width1, height3, "evade_icon", true); // 0.68  // 0.78
 
@@ -82,7 +82,7 @@ export class AtributeText extends BaseScene {
       `${this.scene.player1Damage.toString().padStart(2, "0")}`
     )
       .setOrigin(0.5)
-      .setDepth(3);
+      .setDepth(8);
 
     this.createTextWithIcon(width1, height4, "damage_icon", true);
 
@@ -93,7 +93,7 @@ export class AtributeText extends BaseScene {
       `${this.scene.player1CriticalChance.toString().padStart(2, "0")}`
     )
       .setOrigin(0.5)
-      .setDepth(3);
+      .setDepth(8);
 
     this.createTextWithIcon(width1, height5, "crt_icon", true);
 
@@ -104,7 +104,7 @@ export class AtributeText extends BaseScene {
       `${this.scene.player1Anchor.toString().padStart(2, "0")}`
     )
       .setOrigin(0.5)
-      .setDepth(3);
+      .setDepth(8);
 
     this.createTextWithIcon(width1, height6, "anchor_icon", true);
 
@@ -116,7 +116,7 @@ export class AtributeText extends BaseScene {
       `${this.scene.player2HP.toString().padStart(2, "0")}`
     )
       .setOrigin(0.5)
-      .setDepth(3);
+      .setDepth(8);
 
     this.createTextWithIcon(width2, height1, "hp_icon", false);
 
@@ -127,7 +127,7 @@ export class AtributeText extends BaseScene {
       `${this.scene.player2Speed.toString().padStart(2, "0")}`
     )
       .setOrigin(0.5)
-      .setDepth(3);
+      .setDepth(8);
 
     this.createTextWithIcon(width2, height2, "speed_icon", false);
 
@@ -138,7 +138,7 @@ export class AtributeText extends BaseScene {
       `${this.scene.player2EvadeChance.toString().padStart(2, "0")}`
     )
       .setOrigin(0.5)
-      .setDepth(3);
+      .setDepth(8);
 
     this.createTextWithIcon(width2, height3, "evade_icon", false);
 
@@ -149,7 +149,7 @@ export class AtributeText extends BaseScene {
       `${this.scene.player2Damage.toString().padStart(2, "0")}`
     )
       .setOrigin(0.5)
-      .setDepth(3);
+      .setDepth(8);
 
     this.createTextWithIcon(width2, height4, "damage_icon", false);
 
@@ -160,7 +160,7 @@ export class AtributeText extends BaseScene {
       `${this.scene.player2CriticalChance.toString().padStart(2, "0")}`
     )
       .setOrigin(0.5)
-      .setDepth(3);
+      .setDepth(8);
 
     this.createTextWithIcon(width2, height5, "crt_icon", false);
 
@@ -171,7 +171,7 @@ export class AtributeText extends BaseScene {
       `${this.scene.player2Anchor.toString().padStart(2, "0")}`
     )
       .setOrigin(0.5)
-      .setDepth(3);
+      .setDepth(8);
 
     this.createTextWithIcon(width2, height6, "anchor_icon", false);
   }
@@ -188,7 +188,7 @@ export class AtributeText extends BaseScene {
     const iconObject = this.scene.add
       .sprite(x, y, iconKey)
       .setScale(0.9)
-      .setDepth(3)
+      .setDepth(8)
       .setOrigin(0.5); // Ajusta la posición y el tamaño del ícono
     return iconObject;
   }

@@ -49,7 +49,7 @@ export class Hud extends BaseScene {
 
     this.remaining_time_text = this.createText(
       this.scale.width / 2 + 17,
-      this.scale.height * 0.415,
+      this.scale.height * 0.078, // 0.415
       `${this.remaining_time.toString().padStart(2, "0")}`
     )
       .setOrigin(0.5)
@@ -76,7 +76,7 @@ export class Hud extends BaseScene {
         this.remaining_time_text.setText(
           `${timeout.toString().padStart(2, "0")}`
         );
-        this.remaining_time_text.setScale(2.2);
+        this.remaining_time_text.setScale(2.4);
 
         if (timeout <= 3 && timeout >= 0) {
           this.remaining_time_text.setScale(0.05).setDepth(20); // Escala grande
@@ -124,7 +124,7 @@ export class Hud extends BaseScene {
             },
           });
         } else {
-          this.remaining_time_text.setScale(2.2); // Escala normal
+          this.remaining_time_text.setScale(2.4); // Escala normal
         }
       }
     } else {
