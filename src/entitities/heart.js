@@ -95,6 +95,9 @@ export class Heart {
   respawn(scene, atributes) {
     if (atributes.getHitPoints() < 10) {
       atributes.updateAttributes({ hitPoints: 1 });
+      console.log(
+        `atributos son --> ${atributes} Hitpoints --> ${atributes.getHitPoints()}`
+      );
     }
     this.destroy();
     scene.time.delayedCall(Phaser.Math.Between(3000, 5000), () => {
@@ -104,8 +107,18 @@ export class Heart {
 
   destroy() {
     if (this.sprite) {
-      this.sprite.destroy();
-      this.sprite = null;
+      this.scene.tweens.add({
+        targets: this.sprite,
+        scale: { from: 1.33, to: 2 }, // Agrandar el heart
+        angle: 360, // Girar 360 grados
+        alpha: { from: 1, to: 0 }, // Desvanecer
+        duration: 800, // Duración de la animación (0.8 segundos)
+        ease: "Power2",
+        onComplete: () => {
+          this.sprite.destroy();
+          this.sprite = null;
+        },
+      });
     }
   }
 }

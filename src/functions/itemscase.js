@@ -448,8 +448,6 @@ export class ItemsCase {
             }
 
             description = description.replace(attributeRegex, `  `);
-            console.log(attributeRegex);
-            console.log(description);
           }
         }
 

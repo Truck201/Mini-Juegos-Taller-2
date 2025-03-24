@@ -1,7 +1,7 @@
 export function BattleSounds(scene) {
   // Default Battle Sounds
-  scene.critical1 = scene.sound.add("doCritical1", { volume: 0.12 });
-  scene.critical2 = scene.sound.add("doCritical2", { volume: 0.12 });
+  scene.critical1 = scene.sound.add("doCritical1", { volume: 0.24 });
+  scene.critical2 = scene.sound.add("doCritical2", { volume: 0.24 });
   scene.missSound = scene.sound.add("missSound", { volume: 0.22 });
   scene.hearbeats = scene.sound.add("heartBeats", { volume: 0.092 });
   scene.pickSword = scene.sound.add("pickSword", { volume: 0.09 });
@@ -46,7 +46,7 @@ export function BattleSounds(scene) {
   scene.collisionHeart = scene.sound.add("fallHeart", { volume: 0.09 });
 
   scene.isShelded = scene.sound.add("isShelded", { volume: 0.08 });
-  scene.pickHeart = scene.sound.add("pickHeart", { volume: 0.1 });
+  scene.pickHeart = scene.sound.add("pickHeart", { volume: 0.25 });
   scene.inmune = scene.sound.add("setInmune", { volume: 0.007 });
 
   scene.music1 = scene.sound.add("MusicV4", { volume: 0.1, loop: true });

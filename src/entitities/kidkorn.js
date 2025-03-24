@@ -11,7 +11,7 @@ export class KidKorn {
       volume: 0.1,
     });
     this.screamCartoon = this.scene.sound.add("screamCartoon", {
-      volume: 0.21,
+      volume: 0.26,
     });
 
     // Cargar los diálogos

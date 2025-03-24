@@ -10,6 +10,11 @@ export class MedievalEvent {
     this.isShelded1 = false;
     this.isShelded2 = false;
 
+    this.heartTimer = 800;
+
+    this.isPicked1 = false;
+    this.isPicked2 = false;
+
     this.enfriamiento = 2600;
 
     this.height = this.scene.game.scale.height;
@@ -77,12 +82,13 @@ export class MedievalEvent {
         movingBar1Sprite.getBounds(),
         this.heart.getBounds()
       ) &&
-      Phaser.Input.Keyboard.JustDown(this.spaceKey)
+      Phaser.Input.Keyboard.JustDown(this.spaceKey) &&
+      !this.isPicked1
     ) {
       const pickHeart = this.scene.pickHeart;
-      pickHeart.play();
 
       this.heart.respawn(this.scene, this.scene.player1Atributes);
+      pickHeart.play();
 
       // // Actualizar la vida
       this.scene.player1HP = Math.max(
@@ -94,6 +100,11 @@ export class MedievalEvent {
       );
       // // Actualizar la vida
       this.scene.createHealtBar1.updateHealthBar(this.scene.player1HP);
+
+      this.isPicked1 = true;
+      this.scene.time.delayedCall(this.heartTimer, () => {
+        this.isPicked1 = false;
+      });
     }
 
     if (
@@ -114,14 +125,15 @@ export class MedievalEvent {
         movingBar2Sprite.getBounds(),
         this.heart.getBounds()
       ) &&
-      Phaser.Input.Keyboard.JustDown(this.enterKey)
+      Phaser.Input.Keyboard.JustDown(this.enterKey) &&
+      !this.isPicked2
     ) {
       const pickHeart = this.scene.pickHeart;
-      pickHeart.play();
 
       this.heart.respawn(this.scene, this.scene.player2Atributes);
+      pickHeart.play();
 
-      // // Actualizar la vida
+      // Actualizar la vida
       this.scene.player2HP = Math.max(
         0,
         Math.floor(this.scene.player2Atributes.getHitPoints())
@@ -129,8 +141,14 @@ export class MedievalEvent {
       this.scene.player2HPText.setText(
         `${this.scene.player2HP.toString().padStart(2, "0")}`
       );
-      // // Actualizar la vida
+
+      // Actualizar la vida
       this.scene.createHealtBar2.updateHealthBar(this.scene.player2HP);
+
+      this.isPicked2 = true;
+      this.scene.time.delayedCall(this.heartTimer, () => {
+        this.isPicked2 = false;
+      });
     }
 
     this.swords.forEach((sword) => {
