@@ -102,8 +102,10 @@ export class MedievalEvent {
       this.scene.createHealtBar1.updateHealthBar(this.scene.player1HP);
 
       this.isPicked1 = true;
+      this.isPicked2 = true;
       this.scene.time.delayedCall(this.heartTimer, () => {
         this.isPicked1 = false;
+        this.isPicked2 = false;
       });
     }
 
@@ -146,8 +148,10 @@ export class MedievalEvent {
       this.scene.createHealtBar2.updateHealthBar(this.scene.player2HP);
 
       this.isPicked2 = true;
+      this.isPicked1 = true;
       this.scene.time.delayedCall(this.heartTimer, () => {
         this.isPicked2 = false;
+        this.isPicked1 = false;
       });
     }
 
