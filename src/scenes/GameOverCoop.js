@@ -24,7 +24,7 @@ export class GameOverCooperative extends BaseScene {
     // Si el puntaje actual es mayor al puntaje más alto guardado, actualiza el récord
     // Si el puntaje actual es mayor que el récord, actualizarlo
     if (this.point > recordData.score) {
-      let playerName = prompt(`${getPhrase("IngreseNombre")}`);
+      let playerName = prompt(`${getPhrase("Ingrese tu nombre")}`); // key = IngreseNombre
       if (playerName) {
         // Guardar el nuevo récord en localStorage
         recordData.name = playerName;
@@ -40,9 +40,9 @@ export class GameOverCooperative extends BaseScene {
       .setDepth(27);
 
     this.backgroundPoints = this.add
-      .sprite(width * 0.5, - height, "fondoPuntajeAmarillo")
+      .sprite(width * 0.5, -height, "fondoPuntajeAmarillo")
       .setDepth(30);
-      
+
     // Animación
     this.tweens.add({
       targets: this.backgroundPoints,
@@ -50,10 +50,10 @@ export class GameOverCooperative extends BaseScene {
       duration: 1000,
       ease: "Bounce.easeOut",
       onComplete: () => {
-        this.text1.setVisible(true)
-        this.text2.setVisible(true)
-        this.text3.setVisible(true)
-        this.text4.setVisible(true)
+        this.text1.setVisible(true);
+        this.text2.setVisible(true);
+        this.text3.setVisible(true);
+        this.text4.setVisible(true);
       },
     });
 
@@ -63,17 +63,17 @@ export class GameOverCooperative extends BaseScene {
       `${getPhrase("Jugador")}: ${recordData.name}`
     )
       .setOrigin(0.5)
-      .setScale(1.2)
+      .setScale(1.54)
       .setVisible(false)
       .setDepth(45);
 
     this.text2 = this.createText(
       width * 0.5,
       height * 0.4,
-      `${getPhrase("HighScore")}: ${recordData.score}`
+      `${getPhrase("HighScore")}: $ ${recordData.score}`
     )
       .setOrigin(0.5)
-      .setScale(1.2)
+      .setScale(1.54)
       .setVisible(false)
       .setDepth(45);
 
@@ -87,7 +87,7 @@ export class GameOverCooperative extends BaseScene {
       .setVisible(false)
       .setDepth(45);
 
-    this.text4 = this.createText(width * 0.5, height * 0.6, `$$ ${this.point}`)
+    this.text4 = this.createText(width * 0.5, height * 0.6, `$ ${this.point}`)
       .setOrigin(0.5)
       .setScale(1.1)
       .setVisible(false)

@@ -84,7 +84,7 @@ export class WallBrick extends Phaser.GameObjects.Group {
     createBrickGroup(leftOffsetX);
     createBrickGroup(rightOffsetX);
   }
-  
+
   checkAndRegenerateWall() {
     let rowsEmptyLeft = Array(this.filas).fill(true);
     let colsEmptyLeft = Array(this.columnas).fill(true);
@@ -135,9 +135,11 @@ export class WallBrick extends Phaser.GameObjects.Group {
       const { y } = this.brickPositions[row][col];
       const color = this.getRandomBrickColor();
       const randomType = this.getType();
-      const newOffset = isLeftSide ? 98 : 94
+      const newOffset = isLeftSide ? 98 : 94;
       const x =
-        offsetX + col * (this.collisionWidth + newOffset) + this.collisionWidth / 2; // Ajusta el cálculo de X aquí
+        offsetX +
+        col * (this.collisionWidth + newOffset) +
+        this.collisionWidth / 2; // Ajusta el cálculo de X aquí
 
       const brick = new Brick(
         this.scene,

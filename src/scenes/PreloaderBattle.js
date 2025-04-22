@@ -13,6 +13,9 @@ export class PreloaderBattle extends Scene {
 
   preload() {
     // Battle
+    // Winner Character
+    this.load.image("Mimbo-win", "/assets/versus/mimbo/mimbo.png");
+    this.load.image("Luho-win", "/assets/versus/luho/luho.png");
     // Sword
     this.load.image(
       "static-sword",
@@ -128,10 +131,7 @@ export class PreloaderBattle extends Scene {
     );
 
     // Sprite Health Static
-    this.load.image(
-      "healthStatic",
-      "/assets/versus/battle/vida/hearth.png"
-    );
+    this.load.image("healthStatic", "/assets/versus/battle/vida/hearth.png");
     this.load.image(
       "healthStaticDeath",
       "/assets/versus/battle/vida/dead-hearth.png"
@@ -148,14 +148,10 @@ export class PreloaderBattle extends Scene {
     );
 
     // Spritesheet Thunder
-    this.load.spritesheet(
-      "thunderbolt",
-      "/assets/versus/battle/thunder.png",
-      {
-        frameWidth: 68,
-        frameHeight: 240,
-      }
-    );
+    this.load.spritesheet("thunderbolt", "/assets/versus/battle/thunder.png", {
+      frameWidth: 68,
+      frameHeight: 240,
+    });
 
     // Anims HealthBar
     this.load.spritesheet(
@@ -204,41 +200,17 @@ export class PreloaderBattle extends Scene {
     );
 
     // Barra de vida
-    this.load.image(
-      "healthBar5",
-      "/assets/versus/battle/vida/vida5.png"
-    );
-    this.load.image(
-      "healthBar4",
-      "/assets/versus/battle/vida/vida4.png"
-    );
-    this.load.image(
-      "healthBar3",
-      "/assets/versus/battle/vida/vida3.png"
-    );
-    this.load.image(
-      "healthBar2",
-      "/assets/versus/battle/vida/vida2.png"
-    );
-    this.load.image(
-      "healthBar1",
-      "/assets/versus/battle/vida/vida1.png"
-    );
-    this.load.image(
-      "healthBarNo",
-      "/assets/versus/battle/vida/vida0.png"
-    );
+    this.load.image("healthBar5", "/assets/versus/battle/vida/vida5.png");
+    this.load.image("healthBar4", "/assets/versus/battle/vida/vida4.png");
+    this.load.image("healthBar3", "/assets/versus/battle/vida/vida3.png");
+    this.load.image("healthBar2", "/assets/versus/battle/vida/vida2.png");
+    this.load.image("healthBar1", "/assets/versus/battle/vida/vida1.png");
+    this.load.image("healthBarNo", "/assets/versus/battle/vida/vida0.png");
 
     // Hearts on top Bar
-    this.load.image(
-      "HeartLive",
-      "/assets/versus/battle/vida/hearth.png"
-    );
+    this.load.image("HeartLive", "/assets/versus/battle/vida/hearth.png");
 
-    this.load.image(
-      "HeartDeath",
-      "/assets/versus/battle/vida/dead-hearth.png"
-    );
+    this.load.image("HeartDeath", "/assets/versus/battle/vida/dead-hearth.png");
 
     this.load.spritesheet(
       "AnimsHeart",

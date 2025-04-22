@@ -5,6 +5,7 @@ export class GameOver extends BaseScene {
   constructor() {
     super("GameOver");
     this.spriteName;
+    this.spriteCharacter;
   }
 
   init(data) {
@@ -13,11 +14,13 @@ export class GameOver extends BaseScene {
     if (this.loser === 1) {
       this.loser = "Mimbo";
       this.spriteName = "fondoPuntajeAzul";
+      this.spriteCharacter = "Luho-win";
       this.winner = 2;
     }
     if (this.loser === 2) {
       this.spriteName = "fondoPuntajeRojo";
       this.loser = "Luho";
+      this.spriteCharacter = "Mimbo-win";
       this.winner = 1;
     }
   }
@@ -36,6 +39,12 @@ export class GameOver extends BaseScene {
       .sprite(width * 0.51, -height, this.spriteName)
       .setDepth(42);
 
+    this.backgroundCharacter = this.add
+      .sprite(width * 0.51, -height, this.spriteCharacter)
+      .setDepth(43)
+      .setAlpha(0.78)
+      .setScale(1.35);
+
     // Animación
     this.tweens.add({
       targets: this.backgroundPoints,
@@ -48,9 +57,19 @@ export class GameOver extends BaseScene {
       },
     });
 
+    this.tweens.add({
+      targets: this.backgroundCharacter,
+      y: height * 0.33, // Nueva posición Y
+      duration: 900,
+      ease: "Bounce.easeOut",
+      onComplete: () => {
+        console.log("SAPE APARECE PERSONAJE");
+      },
+    });
+
     this.text1 = this.createText(
       width * 0.51,
-      height * 0.38,
+      height * 0.44,
       `${getPhrase("Ganador")} ${this.winner}`
     )
       .setOrigin(0.5)
@@ -61,7 +80,7 @@ export class GameOver extends BaseScene {
     this.text2 = this.createText(
       width * 0.51,
       height * 0.54,
-      `${getPhrase("VolverAlMenu")}`
+      `${getPhrase("Volver al Menú")}` // key = VolverAlMenu
     )
       .setOrigin(0.5)
       .setScale(1.1)

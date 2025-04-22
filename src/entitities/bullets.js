@@ -7,7 +7,7 @@ export class Bullets extends Phaser.Physics.Arcade.Sprite {
     this.setCollideWorldBounds(false);
     this.body.setSize(40, 40);
     this.body.allowGravity = false;
-    this.setDepth(10)
+    this.setDepth(10);
   }
 
   destroyBullet() {

@@ -33,8 +33,8 @@ export class BattleScene extends Scene {
 
   create() {
     BattleSounds(this);
-    initialAnimsBattle(this)
-    
+    initialAnimsBattle(this);
+
     this.music1.play();
 
     this.width = this.game.scale.width;
@@ -91,12 +91,16 @@ export class BattleScene extends Scene {
       }
     });
 
-    this.television = new Television(this, false);
+    this.television = new Television(this, false, false);
     this.television.handleOnomatopoeias("battleScene", "start"); // Al inicio de la batalla
 
-    let background = this.add.sprite(width * 0.5, height * 0.465, "escenario");
-    background.setScale(1.15);
+    let background = this.add.sprite(width * 0.5, height * 0.5, "escenario");
     background.setDepth(2);
+    background.setScale(1.15);
+
+    let shadows = this.add.sprite(width * 0.5, height * 0.5, "shadowTotal");
+    shadows.setDepth(3);
+    shadows.setScale(1);
 
     this.player1 = new Character(this, "mimbo", true, false);
     this.player2 = new Character(this, "luho", false, false);
@@ -185,16 +189,12 @@ export class BattleScene extends Scene {
   visualCritical() {
     criticalVisual(this);
     let num = Phaser.Math.Between(0, 1);
-    if (num >= 0.5) {
-      this.critical1.play();
-      // Cuando un jugador golpea a otro:
-      this.television.handleOnomatopoeias("battleScene", "critical");
-    }
-    if (num < 0.5) {
-      this.critical2.play();
-      // Cuando un jugador golpea a otro:
-      this.television.handleOnomatopoeias("battleScene", "critical");
-    }
+    num >= 0.5 ? this.critical1.play() : this.critical2.play();
+    this.television.handleOnomatopoeias("battleScene", "critical");
+  }
+
+  visualAttack() {
+    this.television.handleOnomatopoeias("battleScene", "attack");
   }
 
   gameOver(player, event) {

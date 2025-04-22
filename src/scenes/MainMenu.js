@@ -16,6 +16,7 @@ export class MainMenu extends BaseScene {
     this.cameras.main.fadeIn(500, 0, 0, 0);
     this.allicons = [];
     this.language = data.language || getLanguageConfig();
+    this.playerEmail = data.email || "sin_email@ejemplo.com"; // Default si no hay email
   }
 
   create() {
@@ -26,7 +27,8 @@ export class MainMenu extends BaseScene {
 
     this.logojuego = this.add
       .sprite(width * 0.5, height * 0.47, "logoJuego")
-      .setDepth(140).setOrigin(0.5);
+      .setDepth(140)
+      .setOrigin(0.5);
 
     // Primer tween: Expande el logo de 1.2 a 1.6 en 2 segundos
     this.tweens.add({
@@ -110,7 +112,7 @@ export class MainMenu extends BaseScene {
     const playVersusButton = this.createText(
       width / 2,
       height * 0.34,
-      getPhrase("JugarContra")
+      getPhrase("Versus") // key = JugarContra
     )
       .setScale(1.4)
       .setInteractive()
@@ -152,7 +154,7 @@ export class MainMenu extends BaseScene {
     const playCooperativeButton = this.createText(
       width / 2,
       height * 0.42,
-      getPhrase("JugarCoop")
+      getPhrase("Cooperativo") // key = JugarCoop
     )
       .setScale(1.4)
       .setInteractive()
@@ -243,6 +245,17 @@ export class MainMenu extends BaseScene {
       });
     });
 
+    this.user_ico = this.add
+      .image(width * 0.025, height * 0.04, "user_ico")
+      .setDepth(150)
+      .setOrigin(0.5);
+
+    this.user_email = this.createText(
+      width * 0.05,
+      height * 0.02,
+      `${this.playerEmail}`
+    ).setDepth(150);
+
     this.television = new Television(this, true);
   }
 
@@ -311,6 +324,8 @@ export class MainMenu extends BaseScene {
   }
 
   transitionToVersus() {
+    this.user_ico.destroy();
+    this.user_email.destroy();
     // Crear el efecto de zoom out
     this.cameras.main.zoomTo(0.6, 1300); // Reducir el zoom en 1 segundo (1000 ms)   0.4179
 
@@ -326,6 +341,9 @@ export class MainMenu extends BaseScene {
   }
 
   transitionToCoperative() {
+    this.user_ico.destroy();
+    this.user_email.destroy();
+
     this.cameras.main.zoomTo(1.4179, 1300);
     this.mainMenuMusic.stop();
     // Esperar un poco antes de iniciar la siguiente escena

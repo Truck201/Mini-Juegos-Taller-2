@@ -69,8 +69,13 @@ export class RecolectScene extends Scene {
           }, 980);
         }
 
-        if (this.game_over_timeout === 10) {
+        if (this.game_over_timeout === 12) {
           this.kidKorn.showKidKornBig(); // Mostrar KidKorn cuando queden 10 segundos
+        }
+
+        if (this.game_over_timeout === 0) {
+          // Añadimos onomatopeya de Fin de juego
+          this.television.handleOnomatopoeias("recolectScene", "Terminado");
         }
       },
     });
@@ -95,7 +100,7 @@ export class RecolectScene extends Scene {
     // Iniciar la música de fondo
     this.backgroundMusic.play();
 
-    this.television = new Television(this, false);
+    this.television = new Television(this, false, false);
 
     this.kidKorn = new KidKorn(this, this.dialogues);
 
@@ -109,6 +114,9 @@ export class RecolectScene extends Scene {
     let shadows = this.add.sprite(width * 0.5, height * 0.5, "shadowTotal");
     shadows.setDepth(3);
     shadows.setScale(1.15);
+
+    // Start Game Recolect
+    this.television.handleOnomatopoeias("recolectScene", "start");
 
     // Crear la barra principal
     let barraX = width / 2; // Posición Barra en X

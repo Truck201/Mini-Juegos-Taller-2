@@ -29,7 +29,8 @@ export class PauseMenu extends Scene {
 
     // Agregar texto al menú de pausa
     this.add
-      .text(width / 2, height * 0.3, `${getPhrase("PausaMensaje")}`, {
+      .text(width / 2, height * 0.3, `${getPhrase("Pausa")}`, {
+        // key= PausaMensaje
         fontSize: "45px",
         fontFamily: "'Press Start 2P'",
         color: "#fff",
@@ -48,7 +49,8 @@ export class PauseMenu extends Scene {
 
     // Agregar un botón para volver al menú principal
     const mainMenuButton = this.add
-      .text(width / 2, height * 0.5, `${getPhrase("VolverAlMenu")}`, {
+      .text(width / 2, height * 0.5, `${getPhrase("Volver al menú")}`, {
+        // key = VolverAlMenu
         fontSize: "25px",
         fontFamily: "'Press Start 2P'",
         color: "#fff",
@@ -72,14 +74,14 @@ export class PauseMenu extends Scene {
         }
         if (this.sceneShop) {
           this.sceneShop.scene.stop();
-          this.sceneShop.scene.stop("hudShop")
+          this.sceneShop.scene.stop("hudShop");
         }
         if (this.sceneBattle) {
           this.sceneBattle.scene.stop();
         }
         if (this.sceneCoop) {
           this.sceneCoop.scene.stop();
-          this.sceneCoop.scene.stop("hudCoop")
+          this.sceneCoop.scene.stop("hudCoop");
         }
 
         this.scene.start("MainMenu");
@@ -97,7 +99,8 @@ export class PauseMenu extends Scene {
     });
 
     this.add
-      .text(width / 2, height * 0.6, `${getPhrase("ReanudarJuego")} Esc`, {
+      .text(width / 2, height * 0.6, `${getPhrase("Reanudar el juego")} Esc`, {
+        // key = ReanudarJuego
         fontSize: "25px",
         fontFamily: "'Press Start 2P'",
         color: "#fff",

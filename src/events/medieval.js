@@ -10,6 +10,11 @@ export class MedievalEvent {
     this.isShelded1 = false;
     this.isShelded2 = false;
 
+    this.heartTimer = 1200;
+
+    this.isPicked1 = false;
+    this.isPicked2 = false;
+
     this.enfriamiento = 2600;
 
     this.height = this.scene.game.scale.height;
@@ -71,21 +76,19 @@ export class MedievalEvent {
       isShelded.play();
       this.scene.television.handleOnomatopoeias("battleScene", "shield");
       this.shield.respawn(this.scene, this.scene.player1Atributes);
-      console.log("respawn shield pj 1");
     }
     if (
       this.checkCollision(
         movingBar1Sprite.getBounds(),
         this.heart.getBounds()
       ) &&
-      Phaser.Input.Keyboard.JustDown(this.spaceKey)
+      Phaser.Input.Keyboard.JustDown(this.spaceKey) &&
+      !this.isPicked1
     ) {
       const pickHeart = this.scene.pickHeart;
-      pickHeart.play();
 
-      console.log("ATRIBUTOS 1 -- > " + this.scene.player1Atributes);
       this.heart.respawn(this.scene, this.scene.player1Atributes);
-      console.log("respawn heart pj 1");
+      pickHeart.play();
 
       // // Actualizar la vida
       this.scene.player1HP = Math.max(
@@ -97,6 +100,13 @@ export class MedievalEvent {
       );
       // // Actualizar la vida
       this.scene.createHealtBar1.updateHealthBar(this.scene.player1HP);
+
+      this.isPicked1 = true;
+      this.isPicked2 = true;
+      this.scene.time.delayedCall(this.heartTimer, () => {
+        this.isPicked1 = false;
+        this.isPicked2 = false;
+      });
     }
 
     if (
@@ -110,8 +120,6 @@ export class MedievalEvent {
       isShelded.play();
       this.scene.television.handleOnomatopoeias("battleScene", "shield");
       this.shield.respawn(this.scene, this.scene.player2Atributes);
-
-      console.log("respawn shield pj 2");
     }
 
     if (
@@ -119,14 +127,15 @@ export class MedievalEvent {
         movingBar2Sprite.getBounds(),
         this.heart.getBounds()
       ) &&
-      Phaser.Input.Keyboard.JustDown(this.enterKey)
+      Phaser.Input.Keyboard.JustDown(this.enterKey) &&
+      !this.isPicked2
     ) {
       const pickHeart = this.scene.pickHeart;
-      pickHeart.play();
 
       this.heart.respawn(this.scene, this.scene.player2Atributes);
+      pickHeart.play();
 
-      // // Actualizar la vida
+      // Actualizar la vida
       this.scene.player2HP = Math.max(
         0,
         Math.floor(this.scene.player2Atributes.getHitPoints())
@@ -134,8 +143,16 @@ export class MedievalEvent {
       this.scene.player2HPText.setText(
         `${this.scene.player2HP.toString().padStart(2, "0")}`
       );
-      // // Actualizar la vida
+
+      // Actualizar la vida
       this.scene.createHealtBar2.updateHealthBar(this.scene.player2HP);
+
+      this.isPicked2 = true;
+      this.isPicked1 = true;
+      this.scene.time.delayedCall(this.heartTimer, () => {
+        this.isPicked2 = false;
+        this.isPicked1 = false;
+      });
     }
 
     this.swords.forEach((sword) => {
@@ -161,7 +178,7 @@ export class MedievalEvent {
           this.scene.player2.change_emotion("Luho", 1); // daño
           this.scene.player1.change_emotion("Mimbo", 2); // win
 
-          this.thunderboltRight.setVisible(true)
+          this.thunderboltRight.setVisible(true);
           this.thunderboltRight.anims.play("Thunderbolt-Light");
           this.thunderboltRight.on("animationcomplete", () => {
             this.thunderboltRight.setVisible(false); // Cambiar a la imagen estática
@@ -178,7 +195,7 @@ export class MedievalEvent {
           }
 
           this.destroyAndRespawn(sword);
-          this.scene.television.handleOnomatopoeias("battleScene", "attack");
+          // this.scene.television.handleOnomatopoeias("battleScene", "attack");
           const takeDamageSound = this.scene.takeDamageSound;
           takeDamageSound.play();
           const pickSword = this.scene.pickSword;
@@ -232,7 +249,7 @@ export class MedievalEvent {
           }
 
           this.destroyAndRespawn(sword);
-          this.scene.television.handleOnomatopoeias("battleScene", "attack");
+          // this.scene.television.handleOnomatopoeias("battleScene", "attack");
           const takeDamageSound = this.scene.takeDamageSound;
           takeDamageSound.play();
           const pickSword = this.scene.pickSword;
@@ -259,7 +276,7 @@ export class MedievalEvent {
     if (typeof this.destroy === "function") {
       this.destroy(sword); // Destruir la attackBar
 
-      this.scene.time.delayedCall(Phaser.Math.Between(1500, 3500), () => {
+      this.scene.time.delayedCall(Phaser.Math.Between(840, 1900), () => {
         if (typeof this.respawn === "function") {
           let num = Phaser.Math.Between(0, 1);
           num === 1 ? this.addNewSword(1) : this.addNewSword(1);
@@ -302,12 +319,10 @@ export class MedievalEvent {
     const index = this.swords.indexOf(sword);
     if (index > -1) {
       this.swords.splice(index, 1);
-      console.log("Destruye");
     }
   }
 
   isShelded(player) {
-    console.log("PLAYER ES -- >" + player);
     if (player === this.scene.player1Atributes) {
       this.isShelded1 = true;
       console.log("Player 1 is now shielded!");
@@ -399,6 +414,10 @@ export class MedievalEvent {
 
   visualCritical() {
     this.scene.visualCritical();
+  }
+
+  visualAttack() {
+    this.scene.visualAttack();
   }
 
   idleCharacters() {

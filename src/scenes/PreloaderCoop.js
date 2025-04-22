@@ -85,7 +85,7 @@ export class PreloaderCooperative extends Scene {
     // Game Over
     this.load.image(
       "fondoPuntajeAmarillo",
-      "/assets/versus/escenario/puntajes-amarillo.png"
+      "/assets/coop/escenarios/puntajes-amarillo.png"
     );
 
     // Background Spritesheet

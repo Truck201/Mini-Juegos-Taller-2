@@ -11,7 +11,7 @@ export class KidKorn {
       volume: 0.1,
     });
     this.screamCartoon = this.scene.sound.add("screamCartoon", {
-      volume: 0.21,
+      volume: 0.26,
     });
 
     // Cargar los diálogos
@@ -42,72 +42,74 @@ export class KidKorn {
     let width = this.scene.game.scale.width;
     let height = this.scene.game.scale.height;
 
-    // Hacer visible el sprite de KidKorn
-    this.kidKornBig.setVisible(true);
-    this.appear.play();
-    this.screamCartoon.play();
-
-    // Siempre aplicar la animación idle de BigKidKorn
-    this.kidKornBig.anims.play("idle-BigKorn", true);
-
-    // Seleccionar una frase aleatoria
-    const randomIndex = Phaser.Math.Between(
-      0,
-      this.dialogues.Efusive.length - 1
-    );
-    const randomDialogue = this.dialogues.Efusive[randomIndex];
-
-    // Mostrar la frase en el juego
-    const text = this.scene.add
-      .text(this.x / 2, this.y * 0.6, randomDialogue, {
-        fontSize: 50,
-        fontFamily: "'Press Start 2P'",
-        color: "#fff",
-        stroke: "black",
-        strokeThickness: 4,
-        lineSpacing: 9, // Espaciado entre líneas
-        letterSpacing: 3, // Espaciado entre letras
-        maxLines: 4,
-        shadow: {
-          color: "#000000",
-          fill: true,
-          offsetX: 5.7,
-          offsetY: 5.7,
-        },
-      })
-      .setOrigin(0.5)
-      .setDepth(23);
-
     this.scene.television.handleOnomatopoeias("recolectScene", "BigKidKorn");
     this.dialogueSound.play();
 
-    // Animar a KidKorn para que suba desde la parte inferior
-    this.scene.tweens.add({
-      targets: this.kidKornBig,
-      y: height * 0.425, // Subir hasta la mitad de la pantalla
-      duration: 2500, // Duración de la animación (2 segundos)
-      ease: "Power2", // Tipo de easing
-      onComplete: () => {
-        // Una vez que llega a la mitad, comenzar a generar pochoclos
-        this.scene.startGeneratingPopcorn(true);
-        // Luego de 6 segundos, ocultar a KidKorn y detener la generación de pochoclos
-        this.scene.time.delayedCall(5400, () => {
-          this.hideKidKornBig();
-          text.destroy(); // Destruir el texto después de que KidKorn desaparezca
-        });
-      },
-    });
+    this.scene.time.delayedCall(1000, () => {
+      // Hacer visible el sprite de KidKorn
+      this.kidKornBig.setVisible(true);
+      this.appear.play();
+      this.screamCartoon.play();
 
-    // Efecto de shake (temblor) mientras sube
-    this.scene.tweens.add({
-      targets: this.kidKornBig,
-      x: {
-        value: width / 2 + 10, // Pequeño desplazamiento en X
-        duration: 50, // Duración corta
-        ease: "Power1",
-        yoyo: true, // Regresar a la posición original
-        repeat: -1, // Repetir indefinidamente durante la subida
-      },
+      // Siempre aplicar la animación idle de BigKidKorn
+      this.kidKornBig.anims.play("idle-BigKorn", true);
+
+      // Seleccionar una frase aleatoria
+      const randomIndex = Phaser.Math.Between(
+        0,
+        this.dialogues.Efusive.length - 1
+      );
+      const randomDialogue = this.dialogues.Efusive[randomIndex];
+
+      // Mostrar la frase en el juego
+      const text = this.scene.add
+        .text(this.x / 2, this.y * 0.6, randomDialogue, {
+          fontSize: 50,
+          fontFamily: "'Press Start 2P'",
+          color: "#fff",
+          stroke: "black",
+          strokeThickness: 4,
+          lineSpacing: 9, // Espaciado entre líneas
+          letterSpacing: 3, // Espaciado entre letras
+          maxLines: 4,
+          shadow: {
+            color: "#000000",
+            fill: true,
+            offsetX: 5.7,
+            offsetY: 5.7,
+          },
+        })
+        .setOrigin(0.5)
+        .setDepth(23);
+
+      // Animar a KidKorn para que suba desde la parte inferior
+      this.scene.tweens.add({
+        targets: this.kidKornBig,
+        y: height * 0.425, // Subir hasta la mitad de la pantalla
+        duration: 2500, // Duración de la animación (2 segundos)
+        ease: "Power2", // Tipo de easing
+        onComplete: () => {
+          // Una vez que llega a la mitad, comenzar a generar pochoclos
+          this.scene.startGeneratingPopcorn(true);
+          // Luego de 6 segundos, ocultar a KidKorn y detener la generación de pochoclos
+          this.scene.time.delayedCall(4100, () => {
+            this.hideKidKornBig();
+            text.destroy(); // Destruir el texto después de que KidKorn desaparezca
+          });
+        },
+      });
+
+      // Efecto de shake (temblor) mientras sube
+      this.scene.tweens.add({
+        targets: this.kidKornBig,
+        x: {
+          value: width / 2 + 10, // Pequeño desplazamiento en X
+          duration: 50, // Duración corta
+          ease: "Power1",
+          yoyo: true, // Regresar a la posición original
+          repeat: -1, // Repetir indefinidamente durante la subida
+        },
+      });
     });
   }
 
@@ -185,7 +187,7 @@ export class KidKorn {
     this.scene.tweens.add({
       targets: sprite,
       x: endX,
-      duration: 900, // Duración de la animación (2 segundos)
+      duration: 600, // Duración de la animación (2 segundos)
       ease: "Power2",
       onComplete: () => {
         // Explosión dos veces, luego cambiar a animación de Idle

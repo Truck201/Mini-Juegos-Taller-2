@@ -46,7 +46,7 @@ export class Game1v1 extends Scene {
         color: "#fff",
         stroke: "black",
         strokeThickness: 4,
-        lineSpacing: 9, 
+        lineSpacing: 9,
         letterSpacing: 3,
         maxLines: 4,
         shadow: {
@@ -57,7 +57,7 @@ export class Game1v1 extends Scene {
         },
       })
       .setDepth(5)
-      .setOrigin(0.5); 
+      .setOrigin(0.5);
 
     // Obtener los diálogos cargados
     this.tutorials = loadedTutorials.tutorial;
@@ -87,7 +87,7 @@ export class Game1v1 extends Scene {
       })
       .setDepth(5)
       .setOrigin(0.5);
-      
+
     // Función para avanzar al siguiente párrafo
     const nextParagraph = () => {
       this.currentParagraph++;
@@ -117,7 +117,7 @@ export class Game1v1 extends Scene {
     this.input.keyboard.on("keydown-SPACE", nextParagraph);
 
     // Crear Televisor Instancar
-    this.television = new Television(this, false);
+    this.television = new Television(this, false, true);
     this.television.handleOnomatopoeias("game1vs1");
 
     let background = this.add.sprite(

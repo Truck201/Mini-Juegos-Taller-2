@@ -50,7 +50,7 @@ export class Shop extends Scene {
 
     this.createBackground();
     this.Monsters = new MonsterShop(this);
-    
+
     this.music = this.sound.add("MusicV3", { volume: 0.1, loop: true });
 
     this.startShop = this.sound.add("starterSoundShop", { volume: 0.003 });
@@ -86,10 +86,18 @@ export class Shop extends Scene {
       }
     });
 
-    this.timerForSecond();
-    
+    // Saltar el tutorial con la tecla Q
+    this.input.keyboard.on("keydown-Q", () => {
+      this.scene.get("hudShop").update_cameras(); // Actualizar cámaras al Time 0
+      this.time.delayedCall(980, () => {
+        this.startBattleScene();
+        this.scene.stop("hudShop");
+        this.scene.stop("Shop");
+      });
+    });
 
-    
+    this.timerForSecond();
+
     this.startBarking();
   }
 

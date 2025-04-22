@@ -1,5 +1,5 @@
 export class Television {
-  constructor(scene, isInMenu) {
+  constructor(scene, isInMenu, isClose) {
     this.scene = scene;
 
     this.y = this.scene.scale.height * 0.4;
@@ -24,29 +24,25 @@ export class Television {
       // Shader
       this.television.setPostPipeline("TVStaticFx");
     } else if (!isInMenu) {
-      this.y = this.scene.scale.height * 0.43;
-      this.scale = 0.32; // 0.00092
+      this.y = this.scene.scale.height;
+      let tvY;
+      isClose ? (this.scale = 1.7) : (this.scale = 1.14);
+      isClose ? (tvY = this.y * 0.48) : (tvY = this.y * 0.43);
 
       // Sprite Television
       this.television = this.scene.physics.add
-        .sprite(this.x, this.y, "l-opacidad")
+        .sprite(this.x + 12, tvY, "battleTV")
         .setScale(this.scale)
-        .setAlpha(0.4)
+        .setAlpha(0.5)
         .setDepth(1);
       this.television.setImmovable;
       this.television.body.allowGravity = false;
-
-      this.filtrado = this.scene.physics.add
-        .sprite(this.x, this.y, "l-opacidad") //
-        .setScale(this.scale)
-        .setAlpha(0.08)
-        .setDepth(1);
-      this.filtrado.setImmovable;
-      this.filtrado.body.allowGravity = false;
+      this.television.setDepth(1);
 
       // Shader
       // this.television.setPostPipeline("TVDistortionFx");
-      this.filtrado.setPostPipeline("CRTPostFx");
+      // this.television.setPostPipeline("CRTPostFx");
+      this.television.setPostPipeline("TVStaticFx");
     }
 
     this.text = this.scene.add
@@ -62,20 +58,16 @@ export class Television {
 
   // Método para mostrar una onomatopeya
   showOnomatopoeia(sprite, scale) {
-    let margin = 40;
-    let randomX = Phaser.Math.Between(
-      this.television.x - margin,
-      this.television.x + margin
-    );
-    let randomY = Phaser.Math.Between(
-      this.television.y - margin,
-      this.television.y + margin
-    );
+    let teleX = this.television.x + 20;
+    let teleY = this.television.y - 18;
+    console.log(`Tele X ${teleX}`);
+    console.log(`Tele Y ${teleY}`);
 
     // Crear la onomatopeia con un tamaño inicial muy pequeño
     let onomatopoeia = this.scene.add
-      .sprite(randomX, randomY, sprite)
+      .sprite(teleX, teleY, sprite)
       .setScale(0) // Empieza en un tamaño de 0
+      .setAlpha(0.87)
       .setOrigin(0.5)
       .setDepth(1);
 
@@ -104,34 +96,44 @@ export class Television {
       //   this.showOnomatopoeia("hello", 0.00); // "Hola!"
       //   break;
       case "recolectScene":
+        if (playerAction === "start") {
+          let expresion = `fireworksTV`;
+          this.showOnomatopoeia(expresion, 1.3); // "Fireworks"
+        }
         if (playerAction === "BigKidKorn") {
-          let random = Phaser.Math.Between(1, 4);
-          let expresion = `boom${random}`;
-          this.showOnomatopoeia(expresion, 0.43); // "Boom!"
-          this.showOnomatopoeia("kaboom", 0.74); // "Boom!"
+          let expresion = `appear`;
+          this.showOnomatopoeia(expresion, 2.1); // "Boom!"
         }
         if (playerAction === "Combo10") {
-          let expresion = `crash1`;
-          this.showOnomatopoeia(expresion, 0.75); // "Wow!"
+          let random = Phaser.Math.Between(1, 6);
+          let expresion = `combo${random}`;
+          this.showOnomatopoeia(expresion, 2.3); // "Wow!"
+        }
+        if (playerAction === "Terminado") {
+          let expresion = `termina`;
+          this.showOnomatopoeia(expresion, 2.3);
         }
         break;
       case "battleScene":
         if (playerAction === "start") {
-          let random = Phaser.Math.Between(1, 2);
-          let expresion = `ready${random}`;
-          this.showOnomatopoeia(expresion, 0.46); // "Ready?"
+          let expresion = `fireworksTV`;
+          let expresion2 = `swordsTV`;
+          let expresion3 = `battle`;
+          this.showOnomatopoeia(expresion, 1.3); // "Fireworks"
+          this.showOnomatopoeia(expresion2, 1.3); // "Battle"
+          this.showOnomatopoeia(expresion3, 1.4); // "Battle"
         }
         if (playerAction === "critical") {
           let random = Phaser.Math.Between(1, 2);
-          random === 1
-            ? this.showOnomatopoeia("crash2", 0.7)
-            : this.showOnomatopoeia("ouch", 0.4); // "Ouch!"
+          this.showOnomatopoeia(`ouch${random}`, 2); // "Ouch!"
         }
         if (playerAction === "attack") {
-          this.showOnomatopoeia("pfoom", 0.56);
+          let random = Phaser.Math.Between(1, 2);
+          this.showOnomatopoeia(`attack${random}`, 2.3);
         }
         if (playerAction === "shield") {
-          this.showOnomatopoeia("oh", 0.2); // "Ouch!"
+          let random = Phaser.Math.Between(1, 2);
+          this.showOnomatopoeia(`shield${random}`, 2); // "Ouch!"
         }
         break;
       default:
