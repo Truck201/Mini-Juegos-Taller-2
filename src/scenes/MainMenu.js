@@ -16,6 +16,7 @@ export class MainMenu extends BaseScene {
     this.cameras.main.fadeIn(500, 0, 0, 0);
     this.allicons = [];
     this.language = data.language || getLanguageConfig();
+    this.playerEmail = data.email || "sin_email@ejemplo.com"; // Default si no hay email
   }
 
   create() {
@@ -244,6 +245,17 @@ export class MainMenu extends BaseScene {
       });
     });
 
+    this.user_ico = this.add
+      .image(width * 0.025, height * 0.04, "user_ico")
+      .setDepth(150)
+      .setOrigin(0.5);
+
+    this.user_email = this.createText(
+      width * 0.05,
+      height * 0.02,
+      `${this.playerEmail}`
+    ).setDepth(150);
+
     this.television = new Television(this, true);
   }
 
@@ -312,6 +324,8 @@ export class MainMenu extends BaseScene {
   }
 
   transitionToVersus() {
+    this.user_ico.destroy();
+    this.user_email.destroy();
     // Crear el efecto de zoom out
     this.cameras.main.zoomTo(0.6, 1300); // Reducir el zoom en 1 segundo (1000 ms)   0.4179
 
@@ -327,6 +341,9 @@ export class MainMenu extends BaseScene {
   }
 
   transitionToCoperative() {
+    this.user_ico.destroy();
+    this.user_email.destroy();
+
     this.cameras.main.zoomTo(1.4179, 1300);
     this.mainMenuMusic.stop();
     // Esperar un poco antes de iniciar la siguiente escena

@@ -113,6 +113,8 @@ export class Preloader extends Scene {
         frameHeight: 76,
       }
     );
+    // User Logo
+    this.load.image("user_ico", "/assets/user-ico.png");
 
     //  Main Menu
     // Logojuego

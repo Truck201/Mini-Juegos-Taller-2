@@ -30,6 +30,7 @@
     "dependencies": {
         "@fontsource/press-start-2p": "^5.1.0",
         "cors": "^2.8.5",
+        "firebase": "^11.6.0",
         "lts": "^1.2.0",
         "phaser": "^3.85.2"
     }

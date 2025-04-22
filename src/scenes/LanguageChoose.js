@@ -184,9 +184,12 @@ export class LanguageScene extends BaseScene {
   }
 
   gotoMainScene(lang) {
+    const savedEmail =
+      localStorage.getItem("userEmail") || "sin_email@ejemplo.com";
     this.time.delayedCall(200, () => {
       this.scene.start("MainMenu", {
         language: lang,
+        email: savedEmail,
       });
     });
   }
