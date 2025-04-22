@@ -20,7 +20,7 @@ document.getElementById("login-button").addEventListener("click", () => {
       startGame();
     })
     .catch((error) => {
-      showMessage("Login incorrecto: " + error.message);
+      showMessage("Inicio de sesión incorrecto: " + error.message);
     });
 });
 
